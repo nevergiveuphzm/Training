@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    android:background="@drawable/grass_green_round_stroke_no_padding_bg"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_ListView"
+        android:layout_width="670dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/grass_green_round_stroke_no_padding_bg"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/grass_green_round_stroke_no_padding_bg"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:id="@+id/tv_add"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="添加"
+                android:textColor="#FF333333"
+                android:textSize="25sp" />
+
+            <com.oucb303.training.widget.HorizontalListView
+                android:id="@+id/horizontal_listview"
+                android:layout_width="wrap_content"
+                android:layout_height="85dp"
+
+                >
+            </com.oucb303.training.widget.HorizontalListView>
+        </LinearLayout>
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#FFAAAAAA" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:text="小明"
+                    android:textColor="#FF333333"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/tv_org"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text=""
+                    android:textColor="@color/green"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </LinearLayout>
+</LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_last"
+            android:layout_width="670dp"
+           android:gravity="center"
+            android:layout_height="50dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FF333333"
+            android:text="添加序列"
+            android:textSize="35sp"
+            >
+
+        </TextView>
+
+
+    </LinearLayout>
+
+</LinearLayout><!-- From: file:/D:/ASworkspase/ResponseTraining/Training/src/main/res/layout/item_sequenceset_lv_vertical.xml -->
