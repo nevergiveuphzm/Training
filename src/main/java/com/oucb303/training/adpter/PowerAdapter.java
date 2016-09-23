@@ -57,9 +57,40 @@ public class PowerAdapter extends BaseAdapter
 
         tvDeviceNum.setText("设备" + powerInfos.get(i).get("deviceNum"));
         tvPower.setText(powerInfos.get(i).get("power") + "%");
-        switch ((int)powerInfos.get(i).get("power"))
+        switch ((int) powerInfos.get(i).get("power"))
         {
             case 8:
+                imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim8);
+                break;
+            case 15:
+                imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim15);
+                break;
+            case 25:
+                imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim25);
+                break;
+            case 35:
+                imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim35);
+                break;
+            case 45:
+                imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim45);
+                break;
+            case 55:
+                imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim55);
+                break;
+            case 65:
+                imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim65);
+                break;
+            case 75:
+                imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim75);
+                break;
+            case 85:
+                imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim85);
+                break;
+            case 95:
+                imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim95);
+                break;
+            case 100:
+                imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim100);
                 break;
         }
         return view1;
