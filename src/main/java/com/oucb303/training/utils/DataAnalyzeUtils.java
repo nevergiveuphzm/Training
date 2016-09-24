@@ -1,5 +1,10 @@
 package com.oucb303.training.utils;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,10 +18,13 @@ import java.util.Map;
 public class DataAnalyzeUtils
 {
     //解析返回的电量信息
-    public static List<Map<String, Object>> analyzePowerData(String data)
+    public static List<Map<String, Object>> analyzePowerData(String data, Context context)
     {
         List<Map<String, Object>> powerInfos = new ArrayList<>();
+        //低电量设备
+        List<String> lowPowerDevice = new ArrayList<>();
         String data_time = data;
+        Log.i("AAAA", data);
         for (int i = 0; i < data_time.length(); i++)
         {
             if (data_time.charAt(i) == '#')
@@ -34,7 +42,8 @@ public class DataAnalyzeUtils
                 }
                 else if (power <= 49)
                 {
-                    power = 49;
+                    lowPowerDevice.add(num);
+                    continue;
                 }
                 Map<String, Object> map = new HashMap<>();
                 map.put("deviceNum", num);
@@ -42,6 +51,28 @@ public class DataAnalyzeUtils
                 powerInfos.add(map);
             }
         }
+
+        //存在低电量设备
+        if (lowPowerDevice.size() > 0)
+        {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("警告");
+            String unstr = lowPowerDevice.toString();
+            builder.setMessage("                          " + unstr
+                    + "号设备电量过低，请更换电池！\n");
+            builder.setNegativeButton("确定", new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface dialog, int which)
+                {
+                }
+            });
+            AlertDialog alertdialog = builder.create();
+            alertdialog.setCancelable(false);
+            alertdialog.show();
+        }
+
+
         return powerInfos;
     }
 }

@@ -6,14 +6,22 @@ import android.util.Log;
 import com.ftdi.j2xx.D2xxManager;
 import com.ftdi.j2xx.FT_Device;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by huzhiming on 16/9/7.
  * Description：
  */
 public class Device
 {
-    public FT_Device ftDev;
-    private D2xxManager ftdid2xx;
+    //设备灯列表
+    public static List<Map<String, Object>> DEVICE_LIST = null;
+
+    public static FT_Device ftDev;
+    private static D2xxManager ftdid2xx;
+    private static Device device;
+
     //设备数量
     public int devCount;
     //是否已经初始化
@@ -26,15 +34,20 @@ public class Device
     byte dataBit = 8; /* 8:8bit, 7: 7bit */
     byte parity = 0; /* 0: none, 1: odd, 2: even, 3: mark, 4: space */
 
-    public Device(Context context)
+    public static Device getInstance(Context context)
     {
-        try
+        if (device == null)
         {
-            this.ftdid2xx = D2xxManager.getInstance(context);
-        } catch (D2xxManager.D2xxException e)
-        {
-            e.printStackTrace();
+            try
+            {
+                ftdid2xx = D2xxManager.getInstance(context);
+            } catch (D2xxManager.D2xxException e)
+            {
+                e.printStackTrace();
+            }
+            device = new Device();
         }
+        return device;
     }
 
     // 关闭activity时调用该方法
@@ -121,8 +134,10 @@ public class Device
         }
     }
 
-    public void sendGetPowerOrder(String writeData)
+    public void sendGetPowerOrder()
     {
+        // 获取全部设备电量指令
+        String data = "#06@Zc";
         if (ftDev.isOpen() == false)
         {
             Log.e("j2xx", "SendMessage: device not open");
@@ -130,8 +145,8 @@ public class Device
         }
         ftDev.setLatencyTimer((byte) 2);
 
-        byte[] OutData = writeData.getBytes();
-        ftDev.write(OutData, writeData.length());
+        byte[] OutData = data.getBytes();
+        ftDev.write(OutData, data.length());
     }
 
 }

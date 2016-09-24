@@ -10,7 +10,7 @@ import com.ftdi.j2xx.FT_Device;
  * Created by huzhiming on 16/9/7.
  * Description：
  */
-public class ReceiveThread extends Thread
+public class ReceiveThread extends Thread implements Runnable
 {
     private Handler handler;
     // 电量接收/时间接收标志
@@ -32,14 +32,11 @@ public class ReceiveThread extends Thread
         this.ftDev = device;
         this.threadFlag = threadFlag;
         this.msgFlag = msgFlag;
-        this.setPriority(Thread.MAX_PRIORITY);
     }
 
     @Override
     public void run()
     {
-        super.run();
-
         //检测电量线程
         if (threadFlag == POWER_RECEIVE_THREAD)
         {

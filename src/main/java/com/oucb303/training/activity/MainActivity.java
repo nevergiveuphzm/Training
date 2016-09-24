@@ -23,7 +23,6 @@ import com.oucb303.training.device.Device;
 import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.utils.DataAnalyzeUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -57,6 +56,7 @@ public class MainActivity extends Activity
     private Device device;
     private final int POWER_RECEIVE = 1;
     private PowerAdapter powerAdapter;
+
 
     Handler handler = new Handler()
     {
@@ -100,9 +100,7 @@ public class MainActivity extends Activity
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
-        device = new Device(MainActivity.this);
-
+        device = Device.getInstance(MainActivity.this);
         //注册USB插入和拔出广播接收者
         IntentFilter filter = new IntentFilter();
         filter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED);
@@ -112,12 +110,11 @@ public class MainActivity extends Activity
         btnCheck.setEnabled(false);
         powerAdapter = new PowerAdapter(MainActivity.this, null);
         lvBattery.setAdapter(powerAdapter);
+        initDevice();
     }
 
-    @Override
-    protected void onStart()
+    public void initDevice()
     {
-        super.onStart();
         device.createDeviceList(MainActivity.this);
         // 判断是否插入协调器，
         if (device.devCount > 0)
@@ -128,6 +125,7 @@ public class MainActivity extends Activity
         }
         else
         {
+            btnCheck.setEnabled(false);
             // 未检测到协调器
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle("温馨提示");
@@ -147,7 +145,8 @@ public class MainActivity extends Activity
         try
         {
             Thread.sleep(2000);
-            btnCheck.setEnabled(true);
+            if (device.devCount > 0)
+                btnCheck.setEnabled(true);
         } catch (InterruptedException e)
         {
             e.printStackTrace();
@@ -155,9 +154,15 @@ public class MainActivity extends Activity
     }
 
     @Override
+    protected void onStart()
+    {
+        super.onStart();
+    }
+
+    @Override
     protected void onPause()
     {
-        device.disconnectFunction();
+        //device.disconnectFunction();
         super.onPause();
     }
 
@@ -195,8 +200,7 @@ public class MainActivity extends Activity
         powerAdapter.setPowerInfos(null);
         powerAdapter.notifyDataSetChanged();
         // 发送获取全部设备电量指令
-        String data = "#06@Zc";
-        device.sendGetPowerOrder(data);
+        device.sendGetPowerOrder();
         //开启接收电量的线程
         new ReceiveThread(handler, device.ftDev, ReceiveThread.POWER_RECEIVE_THREAD,
                 POWER_RECEIVE).start();
@@ -217,44 +221,16 @@ public class MainActivity extends Activity
     {
         if (data.length() > 0)
         {
-            List<Map<String, Object>> powerInfos = DataAnalyzeUtils.analyzePowerData(data);
-            List<String> lowPowerDevice = new ArrayList<>();
-            for (int i = 0; i < powerInfos.size(); i++)
-            {
-                Log.i("AAAA",(int) powerInfos.get(i).get("power")+"");
-                if ((int) powerInfos.get(i).get("power") == 0)
-                {
-                    lowPowerDevice.add(powerInfos.get(i).get("deviceNum").toString());
-                    powerInfos.remove(i);
-                    i--;
-                }
-            }
+            //获取电量信息
+            List<Map<String, Object>> powerInfos = DataAnalyzeUtils.analyzePowerData(data, MainActivity.this);
+            //将电量信息赋值到全局变量中
+            Device.DEVICE_LIST = powerInfos;
             if (powerInfos.size() > 0)
             {
                 //更新电量信息
                 powerAdapter.setPowerInfos(powerInfos);
                 powerAdapter.notifyDataSetChanged();
-                Log.i("AAA",powerInfos.size()+"");
-            }
-            //存在低电量设备
-            if (lowPowerDevice.size()>0)
-            {
-                AlertDialog.Builder builder = new AlertDialog.Builder(
-                        MainActivity.this);
-                builder.setTitle("警告");
-                String unstr = lowPowerDevice.toString();
-                builder.setMessage("                          " + unstr
-                        + "号设备电量过低，请更换电池！\n");
-                builder.setNegativeButton("确定", new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                    }
-                });
-                AlertDialog alertdialog = builder.create();
-                alertdialog.setCancelable(false);
-                alertdialog.show();
+                Log.i("AAA", powerInfos.size() + "");
             }
         }
         else
@@ -264,6 +240,13 @@ public class MainActivity extends Activity
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle("提示");
             builder.setMessage("                       未检测到任何设备，请先开启设备！\n");
+            builder.setNegativeButton("取消", new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface dialog, int which)
+                {
+                }
+            });
             builder.setPositiveButton("重新检测", new DialogInterface.OnClickListener()
             {
                 @Override

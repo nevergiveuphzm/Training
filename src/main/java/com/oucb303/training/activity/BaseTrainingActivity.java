@@ -30,24 +30,26 @@ public class BaseTrainingActivity extends Activity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basetraining);
         ButterKnife.bind(this);
     }
 
     @OnClick({R.id.btn_times_random, R.id.btn_time_random, R.id.btn_sequence_training, R
-            .id.btn_sequences,R.id.layout_cancel})
+            .id.btn_sequences, R.id.layout_cancel})
     public void onClick(View view)
     {
+        Intent intent;
         switch (view.getId())
         {
             case R.id.btn_times_random:
+                intent = new Intent(this, RandomTrainingActivity.class);
+                startActivity(intent);
                 break;
             case R.id.btn_time_random:
                 break;
             case R.id.btn_sequence_training:
-                Intent intent = new Intent(this, SequenceTrainingActivity.class);
+                intent = new Intent(this, SequenceTrainingActivity.class);
                 startActivity(intent);
                 break;
             case R.id.btn_sequences:
