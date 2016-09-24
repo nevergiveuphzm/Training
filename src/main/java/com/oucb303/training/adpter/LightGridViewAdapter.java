@@ -1,42 +1,40 @@
 package com.oucb303.training.adpter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.oucb303.training.R;
 import com.oucb303.training.device.Light;
 
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Created by baichangcai on 2016/9/20.
+ * Created by baichangcai on 2016/9/23.
  */
-public class HorizonListViewAdapter extends BaseAdapter {
-
+public class LightGridViewAdapter extends BaseAdapter{
     private LayoutInflater inflater = null;
-    private List<Light> list_light = new ArrayList<>();
+    private List<Light> list_light;
+    public LightGridViewAdapter(Context context,int[] images) {
+        inflater = LayoutInflater.from(context);
 
-    public HorizonListViewAdapter(Context context, List<Light> list) {
-        this.inflater = LayoutInflater.from(context);
-        this.list_light = list;
+        list_light = new ArrayList<>();
+
+        for (int i = 0; i < images.length; i++)
+        {
+            Light light = new Light(images[i]);
+            list_light.add(light);
+        }
     }
+
 
     @Override
     public int getCount() {
-        //如果goods是空的话，返回1，因为要把“添加”按钮加到最后
-        if (list_light.size() == 0) {
-            return 1;
-        } else {
-            return list_light.size();
-        }
+        return list_light.size();
     }
 
     @Override
@@ -56,21 +54,16 @@ public class HorizonListViewAdapter extends BaseAdapter {
             holder = new ViewHolder();
             convertView = inflater.inflate(R.layout.item_sequenceset_lv_horizontal, null);
             holder.image = (ImageView) convertView.findViewById(R.id.iv_light);
-            holder.item = (LinearLayout) convertView.findViewById(R.id.ll_item);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-            holder.image.setImageResource(list_light.get(position).getImageId());
-
+        holder.image.setImageResource(list_light.get(position).getImageId());
 
         return convertView;
     }
-
     class ViewHolder {
-        LinearLayout item;
+
         ImageView image;
     }
-
 }
-
