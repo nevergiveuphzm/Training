@@ -121,4 +121,17 @@ public class Device
         }
     }
 
+    public void sendGetPowerOrder(String writeData)
+    {
+        if (ftDev.isOpen() == false)
+        {
+            Log.e("j2xx", "SendMessage: device not open");
+            return;
+        }
+        ftDev.setLatencyTimer((byte) 2);
+
+        byte[] OutData = writeData.getBytes();
+        ftDev.write(OutData, writeData.length());
+    }
+
 }

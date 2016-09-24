@@ -14,15 +14,18 @@ public class Light
     //灯的图片
     private int imageId;
 
-    public int getImageId() {
+    public int getImageId()
+    {
         return imageId;
     }
 
-    public void setImageId(int imageId) {
+    public void setImageId(int imageId)
+    {
         this.imageId = imageId;
     }
 
-    public Light(int imageId) {
+    public Light(int imageId)
+    {
         this.imageId = imageId;
     }
 }

@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:state_pressed="true" android:drawable="@color/grey1"></item>
-
-</selector> <!-- From: file:/D:/ASworkspase/ResponseTraining/Training/src/main/res/drawable/button_color_grey.xml -->

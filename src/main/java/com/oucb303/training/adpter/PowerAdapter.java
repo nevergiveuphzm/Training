@@ -29,9 +29,21 @@ public class PowerAdapter extends BaseAdapter
         this.inflater = LayoutInflater.from(context);
     }
 
+    public List<Map<String, Object>> getPowerInfos()
+    {
+        return powerInfos;
+    }
+
+    public void setPowerInfos(List<Map<String, Object>> powerInfos)
+    {
+        this.powerInfos = powerInfos;
+    }
+
     @Override
     public int getCount()
     {
+        if (powerInfos == null)
+            return 0;
         return powerInfos.size();
     }
 
@@ -56,40 +68,40 @@ public class PowerAdapter extends BaseAdapter
         ImageView imgPower = (ImageView) view1.findViewById(R.id.img_power);
 
         tvDeviceNum.setText("设备" + powerInfos.get(i).get("deviceNum"));
-        tvPower.setText(powerInfos.get(i).get("power") + "%");
+        tvPower.setText(powerInfos.get(i).get("power") + "0%");
         switch ((int) powerInfos.get(i).get("power"))
         {
-            case 8:
+            case 0:
                 imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim8);
                 break;
-            case 15:
+            case 1:
                 imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim15);
                 break;
-            case 25:
+            case 2:
                 imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim25);
                 break;
-            case 35:
+            case 3:
                 imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim35);
                 break;
-            case 45:
+            case 4:
                 imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim45);
                 break;
-            case 55:
+            case 5:
                 imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim55);
                 break;
-            case 65:
+            case 6:
                 imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim65);
                 break;
-            case 75:
+            case 7:
                 imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim75);
                 break;
-            case 85:
+            case 8:
                 imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim85);
                 break;
-            case 95:
+            case 9:
                 imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim95);
                 break;
-            case 100:
+            case 10:
                 imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim100);
                 break;
         }

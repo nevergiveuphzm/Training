@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:descendantFocusability="blocksDescendants"
-    android:background="@drawable/grass_green_round_stroke_no_padding_bg"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/grass_green_round_stroke_no_padding_bg"
+              android:descendantFocusability="blocksDescendants"
+              android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/ll_ListView"
@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/grass_green_round_stroke_no_padding_bg"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="60dp"
             android:layout_height="60dp"
@@ -27,7 +28,7 @@
                 android:gravity="center"
                 android:text="添加"
                 android:textColor="#FF333333"
-                android:textSize="25sp" />
+                android:textSize="25sp"/>
 
             <com.oucb303.training.widget.HorizontalListView
                 android:id="@+id/horizontal_listview"
@@ -37,6 +38,7 @@
                 >
             </com.oucb303.training.widget.HorizontalListView>
         </LinearLayout>
+
         <LinearLayout
 
             android:layout_width="match_parent"
@@ -46,7 +48,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="#FFAAAAAA" />
+                android:background="#FFAAAAAA"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -62,7 +64,7 @@
                     android:layout_marginLeft="30dp"
                     android:text="小明"
                     android:textColor="#FF333333"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"/>
 
                 <TextView
                     android:id="@+id/tv_org"
@@ -71,23 +73,25 @@
 
                     android:text=""
                     android:textColor="@color/green"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"/>
             </LinearLayout>
         </LinearLayout>
-</LinearLayout>
-        <LinearLayout
-            android:id="@+id/ll_last"
-            android:layout_width="670dp"
-           android:gravity="center"
-            android:layout_height="50dp"
-            android:orientation="vertical"
-            android:visibility="gone">
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_last"
+        android:layout_width="670dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
         <TextView
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#FF333333"
             android:text="添加序列"
+            android:textColor="#FF333333"
             android:textSize="35sp"
             >
 

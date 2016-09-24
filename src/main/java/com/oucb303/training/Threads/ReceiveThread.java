@@ -1,4 +1,4 @@
-package com.oucb303.training.Threads;
+package com.oucb303.training.threads;
 
 import android.os.Handler;
 import android.os.Message;
