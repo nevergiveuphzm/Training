@@ -55,7 +55,7 @@ public class HorizonListViewAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = inflater.inflate(R.layout.item_sequenceset_lv_horizontal, null);
-            holder.image = (ImageView) convertView.findViewById(R.id.iv_history_bill);
+            holder.image = (ImageView) convertView.findViewById(R.id.iv_light);
             holder.item = (LinearLayout) convertView.findViewById(R.id.ll_item);
             convertView.setTag(holder);
         } else {

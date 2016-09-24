@@ -15,7 +15,7 @@
 
 
         <ImageView
-            android:id="@+id/iv_history_bill"
+            android:id="@+id/iv_light"
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:layout_alignParentLeft="true"

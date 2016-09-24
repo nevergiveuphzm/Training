@@ -48,7 +48,7 @@ public class BaseTrainingActivity$$ViewBinder<T extends com.oucb303.training.act
           target.onClick(p0);
         }
       });
-    view = finder.findRequiredView(source, 2131296364, "method 'onClick'");
+    view = finder.findRequiredView(source, 2131296367, "method 'onClick'");
     view.setOnClickListener(
       new butterknife.internal.DebouncingOnClickListener() {
         @Override public void doClick(
