@@ -60,7 +60,14 @@
                                 android:layout_height="match_parent"
                                 android:layout_marginLeft="10dip"
                                 android:gravity="center"
-                                android:text="40厘米"
+                                android:text="40"
+                                android:textSize="28sp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="10dip"
+                                android:gravity="center"
+                                android:text="厘米"
                                 android:textSize="28sp" />
                         </LinearLayout>
 
@@ -147,7 +154,14 @@
                                 android:layout_height="match_parent"
                                 android:layout_marginLeft="10dip"
                                 android:gravity="center"
-                                android:text="0.05秒"
+                                android:text="0.05"
+                                android:textSize="28sp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="10dip"
+                                android:gravity="center"
+                                android:text="秒"
                                 android:textSize="28sp" />
                         </LinearLayout>
 
@@ -235,7 +249,14 @@
                                 android:layout_height="match_parent"
                                 android:layout_marginLeft="10dip"
                                 android:gravity="center"
-                                android:text="5秒"
+                                android:text="5"
+                                android:textSize="28sp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="10dip"
+                                android:gravity="center"
+                                android:text="秒"
                                 android:textSize="28sp" />
                         </LinearLayout>
 

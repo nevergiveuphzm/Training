@@ -33,7 +33,7 @@ public class MySeekBarListener implements SeekBar.OnSeekBarChangeListener
         else
         {
             int value = (progress * maxValue) / seekBar.getMax();
-            textView.setText(value);
+            textView.setText(value + "");
         }
     }
 

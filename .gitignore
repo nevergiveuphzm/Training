@@ -1,3 +1,4 @@
-:dbg
-:build
 build/*
+:build
+build/
+build

@@ -134,6 +134,7 @@ public class Device
         }
     }
 
+    //发送区全部设备电量命令
     public void sendGetPowerOrder()
     {
         // 获取全部设备电量指令
@@ -145,6 +146,43 @@ public class Device
         }
         ftDev.setLatencyTimer((byte) 2);
 
+        byte[] OutData = data.getBytes();
+        ftDev.write(OutData, data.length());
+    }
+
+    //开一个灯命令
+    public void turnOnLight(char num)
+    {
+        String data = "#06@" + num + "a";
+        sendMessage(data);
+    }
+    // 关一个灯命令
+    public void turnOffLight(char num)
+    {
+        String data = "#06@" + num + "b";
+        sendMessage(data);
+    }
+    // 开所有的灯
+    public void turnOnAllLight()
+    {
+        String data = "#06@Za";
+        sendMessage(data);
+    }
+    // 关所有的灯
+    public void turnOffAll()
+    {
+        String data = "#06@Zb";
+        sendMessage(data);
+    }
+
+    private void sendMessage(String data)
+    {
+        if (ftDev.isOpen() == false)
+        {
+            Log.e("j2xx", "SendMessage: device not open");
+            return;
+        }
+        ftDev.setLatencyTimer((byte) 32);
         byte[] OutData = data.getBytes();
         ftDev.write(OutData, data.length());
     }

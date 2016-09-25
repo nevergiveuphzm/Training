@@ -4,7 +4,6 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.SeekBar;
-import android.widget.TextView;
 
 /**
  * Created by huzhiming on 16/9/24.
@@ -13,7 +12,6 @@ import android.widget.TextView;
 
 public class ChangeBarClickListener implements View.OnTouchListener
 {
-    private TextView textView;
     private SeekBar seekBar;
     //按钮类型 0:加 1:减
     private int type;
@@ -35,7 +33,7 @@ public class ChangeBarClickListener implements View.OnTouchListener
         {
             threadStopFlag = false;
             Log.i("AAAA", "down");
-            new Thread(new MyThread()).start();
+            new MyThread().start();
         }
         if (motionEvent.getAction() == MotionEvent.ACTION_UP || motionEvent.getAction() == MotionEvent.ACTION_MOVE)
         {
@@ -45,7 +43,7 @@ public class ChangeBarClickListener implements View.OnTouchListener
         return true;
     }
 
-    private class MyThread implements Runnable
+    private class MyThread extends Thread
     {
         @Override
         public void run()

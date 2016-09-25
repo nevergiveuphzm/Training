@@ -2,7 +2,6 @@ package com.oucb303.training.threads;
 
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 import com.ftdi.j2xx.FT_Device;
 
@@ -10,7 +9,7 @@ import com.ftdi.j2xx.FT_Device;
  * Created by huzhiming on 16/9/7.
  * Description：
  */
-public class ReceiveThread extends Thread implements Runnable
+public class ReceiveThread extends Thread
 {
     private Handler handler;
     // 电量接收/时间接收标志
@@ -22,9 +21,8 @@ public class ReceiveThread extends Thread implements Runnable
     //线程标志 电量检测和设备返回时间线程
     public final static int POWER_RECEIVE_THREAD = 1;
     public final static int TIME_RECEIVE_THREAD = 2;
-
     //标志为1 线程停止
-    private int threadStopFlag = 0;
+    public static int THREAD_STOP_FLAG = 0;
 
     public ReceiveThread(Handler handler, FT_Device device, int threadFlag, int msgFlag)
     {
@@ -37,6 +35,7 @@ public class ReceiveThread extends Thread implements Runnable
     @Override
     public void run()
     {
+        THREAD_STOP_FLAG = 0;
         //检测电量线程
         if (threadFlag == POWER_RECEIVE_THREAD)
         {
@@ -52,7 +51,7 @@ public class ReceiveThread extends Thread implements Runnable
         //接收设备返回时间线程
         else if (threadFlag == TIME_RECEIVE_THREAD)
         {
-            while (threadStopFlag == 0)
+            while (THREAD_STOP_FLAG == 0)
             {
                 readData();
                 try
@@ -75,16 +74,12 @@ public class ReceiveThread extends Thread implements Runnable
             String result = "";
             if (iavailable > 0)
             {
-                Log.i("AAAA", "iavailable=" + iavailable);
+                //Log.i("AAAA", "iavailable=" + iavailable);
                 readData = new byte[iavailable];
                 ftDev.read(readData, iavailable);
                 //返回的结果转String
                 result = new String(readData);
-                Log.i("AAAA", result);
-            }
-            else
-            {
-                System.out.println("iavailable=" + iavailable);
+                //Log.i("AAAA", result);
             }
             Message msg = new Message();
             msg.what = msgFlag;
@@ -93,8 +88,8 @@ public class ReceiveThread extends Thread implements Runnable
         }
     }
 
-    public void stopThread()
+    public static void stopThread()
     {
-        threadStopFlag = 1;
+        THREAD_STOP_FLAG = 1;
     }
 }
