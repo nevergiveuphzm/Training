@@ -10,13 +10,12 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.oucb303.training.Listener.ChangeBarClickListener;
-import com.oucb303.training.Listener.CheckBoxClickListener;
-import com.oucb303.training.Listener.MySeekBarListener;
 import com.oucb303.training.R;
 import com.oucb303.training.device.Device;
+import com.oucb303.training.listener.ChangeBarClickListener;
+import com.oucb303.training.listener.CheckBoxClickListener;
+import com.oucb303.training.listener.MySeekBarListener;
 import com.oucb303.training.model.CheckBox;
-import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.utils.DataAnalyzeUtils;
 
 import java.util.ArrayList;
@@ -79,6 +78,13 @@ public class RandomTrainingActivity extends Activity
     //感应模式和灯光模式集合
     private List<CheckBox> actionModeCheckBoxs, lightModeCheckBoxs;
     private final int POWER_RECEIVE = 1;
+    private Device device;
+    //运行的总次数
+    private int totalTimes;
+    //延迟时间 单位是毫秒
+    private int delayTime;
+    //超时时间 单位毫秒
+    private int overTime;
 
     Handler handler = new Handler()
     {
@@ -103,17 +109,16 @@ public class RandomTrainingActivity extends Activity
         setContentView(R.layout.activity_randomtraining);
         ButterKnife.bind(this);
         initView();
+        device = Device.getInstance(RandomTrainingActivity.this);
     }
 
     public void initView()
     {
         //设置seekbar 拖动事件的监听器
         barTrainingTimes.setOnSeekBarChangeListener(new MySeekBarListener
-                (tvTrainingTimes, 500, "次"));
-        barDelayTime.setOnSeekBarChangeListener(new MySeekBarListener(tvDelayTime, 10,
-                "秒"));
-        barOverTime.setOnSeekBarChangeListener(new MySeekBarListener(tvOverTime, 30,
-                "秒"));
+                (tvTrainingTimes, 500));
+        barDelayTime.setOnSeekBarChangeListener(new MySeekBarListener(tvDelayTime, 10));
+        barOverTime.setOnSeekBarChangeListener(new MySeekBarListener(tvOverTime, 30));
         //设置加减按钮的监听事件
         imgTrainingTimesSub.setOnTouchListener(new ChangeBarClickListener
                 (barTrainingTimes, 0));
@@ -144,11 +149,7 @@ public class RandomTrainingActivity extends Activity
     @OnClick(R.id.btn_begin)
     public void onClick()
     {
-        Device device = Device.getInstance(RandomTrainingActivity.this);
-        device.sendGetPowerOrder();
-        //开启接收电量的线程
-        new ReceiveThread(handler, device.ftDev, ReceiveThread.POWER_RECEIVE_THREAD,
-                POWER_RECEIVE).start();
+        totalTimes = new Integer(tvTrainingTimes.getText().toString().trim());
 
     }
 }

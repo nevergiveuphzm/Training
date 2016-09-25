@@ -113,6 +113,7 @@ public class MainActivity extends Activity
         initDevice();
     }
 
+    //初始化串口
     public void initDevice()
     {
         device.createDeviceList(MainActivity.this);

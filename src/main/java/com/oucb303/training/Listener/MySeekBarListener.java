@@ -1,4 +1,4 @@
-package com.oucb303.training.Listener;
+package com.oucb303.training.listener;
 
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -12,16 +12,13 @@ public class MySeekBarListener implements SeekBar.OnSeekBarChangeListener
 {
     //显示控件
     private TextView textView;
-    //单位
-    private String suffix;
     //显示的最大值
     private int maxValue;
 
-    public MySeekBarListener(TextView textView, int maxValue, String suffix)
+    public MySeekBarListener(TextView textView, int maxValue)
     {
         this.textView = textView;
         this.maxValue = maxValue;
-        this.suffix = suffix;
     }
 
     @Override
@@ -31,12 +28,12 @@ public class MySeekBarListener implements SeekBar.OnSeekBarChangeListener
         if ((progress * maxValue) % seekBar.getMax() != 0)
         {
             double value = 1.0 * (progress * maxValue) / seekBar.getMax();
-            textView.setText(value + suffix);
+            textView.setText(value + "");
         }
         else
         {
             int value = (progress * maxValue) / seekBar.getMax();
-            textView.setText(value + suffix);
+            textView.setText(value);
         }
     }
 
