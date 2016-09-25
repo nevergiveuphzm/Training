@@ -4,13 +4,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -37,7 +35,8 @@ import butterknife.OnClick;
 /**
  * Created by baichangcai on 2016/9/18.
  */
-public class SequenceTrainingActivity extends Activity {
+public class SequenceTrainingActivity extends Activity
+{
     private SequenceTrainingActivity sequenceSetActivity;
     @Bind(R.id.tv_title)
     TextView tv_title;
@@ -81,8 +80,10 @@ public class SequenceTrainingActivity extends Activity {
     private HorizonListViewAdapter horizonListViewAdapter;//横向ListView布局适配器
     private SequenceSetListViewAdapter sequenceSetListViewAdapter;//纵向ListView布局适配器
     private LightGridViewAdapter lightGridViewAdapter;//网格布局适配器
-    private List<Light> list_light_noCheck = new ArrayList<>();;//初始化时，还没有被选中的灯
-    private List<Light>  list_light_check = new ArrayList<>();;//被选中的灯
+    private List<Light> list_light_noCheck = new ArrayList<>();
+    ;//初始化时，还没有被选中的灯
+    private List<Light> list_light_check = new ArrayList<>();
+    ;//被选中的灯
     private Light lights;//灯
     private Context mcontext;
     private String[] str = {"步骤一", "12"};//步骤名称
@@ -94,14 +95,19 @@ public class SequenceTrainingActivity extends Activity {
      * 实现类，响应按钮点击事件
      * 点击Dialog中的每个灯，设置灯的状态
      */
-    private LightGridViewAdapter.ChangeLightClickListener changeLightClickListener = new LightGridViewAdapter.ChangeLightClickListener() {
+    private LightGridViewAdapter.ChangeLightClickListener changeLightClickListener = new LightGridViewAdapter.ChangeLightClickListener()
+    {
         @Override
-        public void myOnClick(int position, View v) {
+        public void myOnClick(int position, View v)
+        {
             //改变等的选中与未选中状态
-            if (!list_light_noCheck.get(position).isChecked()) {
+            if (!list_light_noCheck.get(position).isChecked())
+            {
                 list_light_noCheck.get(position).setChecked(true);
                 list_light_check.add(list_light_noCheck.get(position));
-            } else {
+            }
+            else
+            {
                 list_light_noCheck.get(position).setChecked(false);
                 list_light_check.remove(list_light_noCheck.get(position));
             }
@@ -112,10 +118,13 @@ public class SequenceTrainingActivity extends Activity {
      * 实现类，响应按钮点击事件
      * 点击“添加”，设置灯的数量
      */
-    private SequenceSetListViewAdapter.AddLightClickListener addLightClickListener = new SequenceSetListViewAdapter.AddLightClickListener() {
+    private SequenceSetListViewAdapter.AddLightClickListener addLightClickListener = new SequenceSetListViewAdapter.AddLightClickListener()
+    {
         @Override
-        public void myOnClick(final int position, View v) {
-            switch (v.getId()) {
+        public void myOnClick(final int position, View v)
+        {
+            switch (v.getId())
+            {
                 //添加灯
                 case R.id.tv_add:
                     AlertDialog.Builder builder = new AlertDialog.Builder(sequenceSetActivity);
@@ -126,7 +135,8 @@ public class SequenceTrainingActivity extends Activity {
                     Button btn_cancel = (Button) view.findViewById(R.id.btn_cancel);
                     //如果有16个设备，那默认的加进去16个灯
                     list_light_noCheck = new ArrayList<>();
-                    for (int i = 0; i < 16; i++) {
+                    for (int i = 0; i < 16; i++)
+                    {
                         Light light = new Light(i, false, R.drawable.iv_circle);
                         list_light_noCheck.add(light);
                     }
@@ -134,21 +144,25 @@ public class SequenceTrainingActivity extends Activity {
                     gridView.setAdapter(lightGridViewAdapter);
                     final AlertDialog alertDialog = builder.create();
                     //确定
-                    btn_sure.setOnClickListener(new View.OnClickListener() {
+                    btn_sure.setOnClickListener(new View.OnClickListener()
+                    {
                         @Override
-                        public void onClick(View v) {
+                        public void onClick(View v)
+                        {
                             //将被选中的灯装入到横向ListView中
                             horizonListViewAdapter = new HorizonListViewAdapter(mcontext, list_light_check);
-                            sequenceSetListViewAdapter = new SequenceSetListViewAdapter(mcontext,str,horizonListViewAdapter,addLightClickListener);
+                            sequenceSetListViewAdapter = new SequenceSetListViewAdapter(mcontext, str, horizonListViewAdapter, addLightClickListener);
                             sequenceSetListview.setAdapter(sequenceSetListViewAdapter);
                             sequenceSetListViewAdapter.notifyDataSetChanged();
                             alertDialog.dismiss();
                         }
                     });
                     //取消
-                    btn_cancel.setOnClickListener(new View.OnClickListener() {
+                    btn_cancel.setOnClickListener(new View.OnClickListener()
+                    {
                         @Override
-                        public void onClick(View v) {
+                        public void onClick(View v)
+                        {
                             alertDialog.dismiss();
                         }
                     });
@@ -162,13 +176,14 @@ public class SequenceTrainingActivity extends Activity {
     };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sequence_training);
         ButterKnife.bind(this);
         sequenceSetActivity = this;
         mcontext = this.getApplicationContext();
-       //此Activity标题
+        //此Activity标题
         tv_title.setText("序列编程");
         //初始化右侧ListView
         initListView();
@@ -176,14 +191,12 @@ public class SequenceTrainingActivity extends Activity {
 
     }
 
-    private void initListView() {
+    private void initListView()
+    {
         //设置seekbar 拖动事件的监听器
-        barDistance.setOnSeekBarChangeListener(new MySeekBarListener
-                (tvDistance, 80, "厘米"));
-        barDelayTime.setOnSeekBarChangeListener(new MySeekBarListener(tvDelayTime, 10,
-                "秒"));
-        barOverTime.setOnSeekBarChangeListener(new MySeekBarListener(tvOverTime, 30,
-                "秒"));
+        barDistance.setOnSeekBarChangeListener(new MySeekBarListener(tvDistance, 80));
+        barDelayTime.setOnSeekBarChangeListener(new MySeekBarListener(tvDelayTime, 10));
+        barOverTime.setOnSeekBarChangeListener(new MySeekBarListener(tvOverTime, 30));
         //设置加减按钮的监听事件
         imgDistanceSub.setOnTouchListener(new ChangeBarClickListener
                 (barDistance, 0));
@@ -210,15 +223,18 @@ public class SequenceTrainingActivity extends Activity {
         lightModeCheckBoxs.add(new CheckBox(2, false, imgLightModeBeside));
         new CheckBoxClickListener(lightModeCheckBoxs);
         //纵向的ListView适配器
-        horizonListViewAdapter = new HorizonListViewAdapter(mcontext,list_light_noCheck);
+        horizonListViewAdapter = new HorizonListViewAdapter(mcontext, list_light_noCheck);
         //初始化纵向布局适配器
-        sequenceSetListViewAdapter = new SequenceSetListViewAdapter(mcontext, str,horizonListViewAdapter, addLightClickListener);
+        sequenceSetListViewAdapter = new SequenceSetListViewAdapter(mcontext, str, horizonListViewAdapter, addLightClickListener);
         sequenceSetListview.setAdapter(sequenceSetListViewAdapter);
     }
-    @OnClick(R.id.layout_cancel)
-    public void onClick(View view) {
 
-        switch (view.getId()) {
+    @OnClick(R.id.layout_cancel)
+    public void onClick(View view)
+    {
+
+        switch (view.getId())
+        {
             //头部返回按钮
             case R.id.layout_cancel:
                 finish();
