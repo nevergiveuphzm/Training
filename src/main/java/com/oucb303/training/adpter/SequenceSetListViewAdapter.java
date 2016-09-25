@@ -20,9 +20,10 @@ public class SequenceSetListViewAdapter extends BaseAdapter{
     private String [] data;
     private AddLightClickListener mListener;
     private Context mcontext;
+    HorizontalListView mListView;
     private HorizonListViewAdapter adapter;
-    public SequenceSetListViewAdapter(Context context, String []data, HorizonListViewAdapter adapter, AddLightClickListener listener) {
-        this.adapter =adapter;
+    public SequenceSetListViewAdapter(Context context, String []data,HorizonListViewAdapter adapter, AddLightClickListener listener) {
+this.adapter = adapter;
         this.data = data;
         this.mcontext = context;
         this.mListener = listener;
@@ -52,10 +53,10 @@ public class SequenceSetListViewAdapter extends BaseAdapter{
 //            holder = new ViewHolder();
         convertView = LayoutInflater.from(mcontext).inflate(R.layout.item_sequenceset_lv_vertical, null);
             TextView step = (TextView) convertView.findViewById(R.id.tv_name);
-        HorizontalListView mListView = (HorizontalListView) convertView.findViewById(R.id.horizontal_listview);
-           LinearLayout ll_last = (LinearLayout)convertView.findViewById(R.id.ll_last);
-            LinearLayout ll_ListView = (LinearLayout) convertView.findViewById(R.id.ll_ListView);
+            mListView = (HorizontalListView) convertView.findViewById(R.id.horizontal_listview);
             TextView tv_add = (TextView)convertView.findViewById(R.id.tv_add);
+            LinearLayout ll_ListView = (LinearLayout) convertView.findViewById(R.id.ll_ListView);
+            LinearLayout ll_last = (LinearLayout) convertView.findViewById(R.id.ll_last);
 //            convertView.setTag(holder);
 //        } else {
 //            holder = (ViewHolder) convertView.getTag();
@@ -65,17 +66,25 @@ public class SequenceSetListViewAdapter extends BaseAdapter{
             ll_ListView.setVisibility(View.GONE);
             ll_last.setVisibility(View.VISIBLE);
         }else {
+            ll_ListView.setVisibility(View.VISIBLE);
             step.setText(data[position]);
         }
         //添加按钮的点击事件
         tv_add.setOnClickListener(mListener);
-        tv_add.setTag(position);
+       tv_add.setTag(position);
+        mListView.setTag(position);
         mListView.setAdapter(adapter);
+//        adapter.notifyDataSetChanged();
         return convertView;
     }
+//    public void setHorizonListViewAdapter(HorizonListViewAdapter adapter){
+//
+//        mListView.setAdapter(adapter);
+//
+//    }
 //    class ViewHolder {
-//        LinearLayout ll_last;//最后一个用于显示“添加序列”得条目
-//        LinearLayout ll_ListView;//包含整个横向ListView和添加按钮
+//        LinearLayout ll_last;
+//        LinearLayout ll_ListView;
 //        HorizontalListView mListView;//整个横向ListView
 //        TextView step;//步骤
 //        TextView tv_add;//添加按钮

@@ -51,15 +51,16 @@
                                 android:layout_height="match_parent"
                                 android:layout_marginLeft="10dip"
                                 android:gravity="center"
-                                android:text="训练次数:"
+                                android:text="感应距离:"
                                 android:textSize="28sp" />
 
                             <TextView
+                                android:id="@+id/tv_distance"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_marginLeft="10dip"
                                 android:gravity="center"
-                                android:text="40次"
+                                android:text="40厘米"
                                 android:textSize="28sp" />
                         </LinearLayout>
 
@@ -71,6 +72,7 @@
                             android:orientation="horizontal">
 
                             <ImageView
+                                android:id="@+id/iv_distance_sub"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
@@ -86,21 +88,22 @@
                                 android:textSize="20dp" />
 
                             <SeekBar
-                                android:id="@+id/seekBar1"
+                                android:id="@+id/bar_distance"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:max="100"
-                                android:progress="50" />
+                                android:max="80"
+                                android:progress="40" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
-                                android:text="50"
+                                android:text="80"
                                 android:textSize="20dp" />
 
                             <ImageView
+                                android:id="@+id/iv_distance_plus"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="0dp"
@@ -139,6 +142,7 @@
                                 android:textSize="28sp" />
 
                             <TextView
+                                android:id="@+id/tv_delay_time"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_marginLeft="10dip"
@@ -156,6 +160,7 @@
                             android:orientation="horizontal">
 
                             <ImageView
+                                android:id="@+id/iv_delaytime_sub"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
@@ -171,12 +176,12 @@
                                 android:textSize="20dp" />
 
                             <SeekBar
-                                android:id="@+id/seekBar2"
+                                android:id="@+id/bar_delay_time"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:max="100"
-                                android:progress="50" />
+                                android:max="200"
+                                android:progress="0"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -186,6 +191,7 @@
                                 android:textSize="20dp" />
 
                             <ImageView
+                                android:id="@+id/img_delay_time_add"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="0dp"
@@ -224,6 +230,7 @@
                                 android:textSize="28sp" />
 
                             <TextView
+                                android:id="@+id/tv_over_time"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_marginLeft="10dip"
@@ -241,6 +248,7 @@
                             android:orientation="horizontal">
 
                             <ImageView
+                                android:id="@+id/img_over_time_sub"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
@@ -256,12 +264,12 @@
                                 android:textSize="20dp" />
 
                             <SeekBar
-                                android:id="@+id/seekBar3"
+                                android:id="@+id/bar_over_time"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:max="100"
-                                android:progress="50" />
+                                android:max="30"
+                                android:progress="5"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -271,6 +279,7 @@
                                 android:textSize="20dp" />
 
                             <ImageView
+                                android:id="@+id/img_over_time_add"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="0dp"
@@ -389,7 +398,7 @@
                                 android:gravity="center"
                                 android:singleLine="true"
                                 android:text="感应模式："
-                                android:textSize="32sp" />
+                                android:textSize="32sp"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -400,12 +409,13 @@
                             android:orientation="horizontal">
 
                             <ImageView
+                                android:id="@+id/img_action_mode_touch"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
                                 android:background="@drawable/button_color_grey"
                                 android:clickable="true"
-                                android:src="@drawable/btn_checkbox" />
+                                android:src="@drawable/btn_checkbox"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -413,7 +423,7 @@
                                 android:layout_marginLeft="5dip"
                                 android:gravity="center"
                                 android:text="  触  碰"
-                                android:textSize="28sp" />
+                                android:textSize="28sp"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -424,12 +434,13 @@
                             android:orientation="horizontal">
 
                             <ImageView
+                                android:id="@+id/img_action_mode_light"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
                                 android:background="@drawable/button_color_grey"
                                 android:clickable="true"
-                                android:src="@drawable/btn_uncheckbox" />
+                                android:src="@drawable/btn_uncheckbox"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -437,7 +448,7 @@
                                 android:layout_marginLeft="5dip"
                                 android:gravity="center"
                                 android:text="  感  应"
-                                android:textSize="28sp" />
+                                android:textSize="28sp"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -448,12 +459,13 @@
                             android:orientation="horizontal">
 
                             <ImageView
+                                android:id="@+id/img_action_mode_together"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
                                 android:background="@drawable/button_color_grey"
                                 android:clickable="true"
-                                android:src="@drawable/btn_uncheckbox" />
+                                android:src="@drawable/btn_uncheckbox"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -461,7 +473,7 @@
                                 android:layout_marginLeft="5dip"
                                 android:gravity="center"
                                 android:text="  同  时"
-                                android:textSize="28sp" />
+                                android:textSize="28sp"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -502,6 +514,7 @@
                             android:orientation="horizontal">
 
                             <ImageView
+                                android:id="@+id/img_light_mode_center"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
@@ -526,6 +539,7 @@
                             android:orientation="horizontal">
 
                             <ImageView
+                                android:id="@+id/img_light_mode_all"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
@@ -550,6 +564,7 @@
                             android:orientation="horizontal">
 
                             <ImageView
+                                android:id="@+id/img_light_mode_beside"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
@@ -574,7 +589,7 @@
 
                     </LinearLayout>
 
-                </LinearLayout>
+            </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -596,7 +611,7 @@
             android:orientation="vertical">
 
             <com.oucb303.training.widget.SequenceSetListview
-                android:id="@+id/mylist"
+                android:id="@+id/lv_sequenceSet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:divider="#F0F0F0"
