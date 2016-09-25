@@ -10,9 +10,9 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.oucb303.training.Listener.ChangeBarClickListener;
-import com.oucb303.training.Listener.CheckBoxClickListener;
-import com.oucb303.training.Listener.MySeekBarListener;
+import com.oucb303.training.listener.ChangeBarClickListener;
+import com.oucb303.training.listener.CheckBoxClickListener;
+import com.oucb303.training.listener.MySeekBarListener;
 import com.oucb303.training.R;
 import com.oucb303.training.device.Device;
 import com.oucb303.training.model.CheckBox;

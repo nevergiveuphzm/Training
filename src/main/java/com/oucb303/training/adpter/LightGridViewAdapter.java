@@ -6,11 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.oucb303.training.R;
-import com.oucb303.training.device.Light;
+import com.oucb303.training.model.Light;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,16 +19,13 @@ import java.util.List;
 public class LightGridViewAdapter extends BaseAdapter{
     private LayoutInflater inflater = null;
     private List<Light> list_light;
-    public LightGridViewAdapter(Context context,int[] images) {
+    private ChangeLightClickListener mListener;
+    public LightGridViewAdapter(Context context,List<Light> list,ChangeLightClickListener listener) {
+        this.mListener = listener;
+        //接收灯的数量，初始化
+        this.list_light = list;
         inflater = LayoutInflater.from(context);
 
-        list_light = new ArrayList<>();
-
-        for (int i = 0; i < images.length; i++)
-        {
-            Light light = new Light(images[i]);
-            list_light.add(light);
-        }
     }
 
 
@@ -54,16 +51,35 @@ public class LightGridViewAdapter extends BaseAdapter{
             holder = new ViewHolder();
             convertView = inflater.inflate(R.layout.item_sequenceset_lv_horizontal, null);
             holder.image = (ImageView) convertView.findViewById(R.id.iv_light);
+            holder.tv_light_num = (TextView) convertView.findViewById(R.id.tv_light_num);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.image.setImageResource(list_light.get(position).getImageId());
+        //如果被选中，选择亮图片
+        if(list_light.get(position).isChecked()){
+            holder.image.setImageResource(R.drawable.aerow_winter);
+        }else {
+            holder.image.setImageResource(R.drawable.iv_circle);
+        }
+        holder.image.setOnClickListener(mListener);
+        holder.image.setTag(position);
 
         return convertView;
     }
     class ViewHolder {
 
+        TextView tv_light_num;
         ImageView image;
+    }
+    //* 用于回调的抽象类
+    public static abstract class ChangeLightClickListener implements View.OnClickListener {
+        /**
+         * 基类的onClick方法
+         */
+        public void onClick(View v) {
+            myOnClick((Integer) v.getTag(), v);
+        }
+        public abstract void myOnClick(int position, View v);
     }
 }

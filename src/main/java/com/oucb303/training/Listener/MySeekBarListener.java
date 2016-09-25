@@ -1,4 +1,4 @@
-package com.oucb303.training.Listener;
+package com.oucb303.training.listener;
 
 import android.widget.SeekBar;
 import android.widget.TextView;

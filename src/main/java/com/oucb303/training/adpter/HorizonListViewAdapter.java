@@ -10,10 +10,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.oucb303.training.R;
-import com.oucb303.training.device.Light;
+import com.oucb303.training.model.Light;
 
 
 /**
@@ -31,12 +30,7 @@ public class HorizonListViewAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        //如果goods是空的话，返回1，因为要把“添加”按钮加到最后
-        if (list_light.size() == 0) {
-            return 1;
-        } else {
             return list_light.size();
-        }
     }
 
     @Override
@@ -61,9 +55,12 @@ public class HorizonListViewAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-            holder.image.setImageResource(list_light.get(position).getImageId());
-
-
+        if (list_light.get(position).isChecked()){
+            holder.image.setImageResource(R.drawable.aerow_winter);
+        }else {
+            holder.image.setImageResource(R.drawable.iv_circle);
+        }
+        holder.image.setTag(position);
         return convertView;
     }
 
