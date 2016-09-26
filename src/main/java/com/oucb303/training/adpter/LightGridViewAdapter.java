@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.oucb303.training.R;
@@ -50,27 +51,30 @@ public class LightGridViewAdapter extends BaseAdapter{
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = inflater.inflate(R.layout.item_sequenceset_lv_horizontal, null);
-            holder.image = (ImageView) convertView.findViewById(R.id.iv_light);
-            holder.tv_light_num = (TextView) convertView.findViewById(R.id.tv_light_num);
+            holder.ll_image = (LinearLayout) convertView.findViewById(R.id.ll_image);
+            holder.tv_num = (TextView) convertView.findViewById(R.id.tv_light_num);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
         //如果被选中，选择亮图片
         if(list_light.get(position).isChecked()){
-            holder.image.setImageResource(R.drawable.aerow_winter);
+            holder.ll_image.setBackgroundResource(R.drawable.aerow_winter);
+
+            holder.tv_num.setText(""+list_light.get(position).getNum());
         }else {
-            holder.image.setImageResource(R.drawable.iv_circle);
+            holder.ll_image.setBackgroundResource(R.drawable.iv_circle);
+            holder.tv_num.setText(""+list_light.get(position).getNum());
         }
-        holder.image.setOnClickListener(mListener);
-        holder.image.setTag(position);
+        holder.ll_image.setOnClickListener(mListener);
+        holder.ll_image.setTag(position);
 
         return convertView;
     }
     class ViewHolder {
 
-        TextView tv_light_num;
-        ImageView image;
+        TextView tv_num;
+        LinearLayout ll_image;
     }
     //* 用于回调的抽象类
     public static abstract class ChangeLightClickListener implements View.OnClickListener {

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -12,32 +13,36 @@ import android.widget.TextView;
 import com.oucb303.training.R;
 import com.oucb303.training.widget.HorizontalListView;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by baichangcai on 2016/9/22.
  */
 public class SequenceSetListViewAdapter extends BaseAdapter{
     private LayoutInflater inflater = null;
-    private String [] data;
+    private List<Map<String,Object>> list_sequence;
     private AddLightClickListener mListener;
     private Context mcontext;
     HorizontalListView mListView;
+    private List<HorizonListViewAdapter> list_adapter;
     private HorizonListViewAdapter adapter;
-    public SequenceSetListViewAdapter(Context context, String []data,HorizonListViewAdapter adapter, AddLightClickListener listener) {
-this.adapter = adapter;
-        this.data = data;
+    public SequenceSetListViewAdapter(Context context, List<Map<String,Object>> list,List<HorizonListViewAdapter> list_adapter, AddLightClickListener listener) {
+        this.list_adapter = list_adapter;
+        this.list_sequence = list;
         this.mcontext = context;
         this.mListener = listener;
     }
     @Override
     public int getCount() {
         // TODO Auto-generated method stub
-        return data.length;
+        return list_sequence.size();
     }
 
     @Override
     public Object getItem(int position) {
         // TODO Auto-generated method stub
-        return data[position];
+        return list_sequence.get(position);
     }
 
     @Override
@@ -62,18 +67,18 @@ this.adapter = adapter;
 //            holder = (ViewHolder) convertView.getTag();
 //        }
         //将最后一个item显示“添加序列”
-        if(position == data.length-1){
+        if(position == list_sequence.size()-1){
             ll_ListView.setVisibility(View.GONE);
             ll_last.setVisibility(View.VISIBLE);
+
         }else {
-            ll_ListView.setVisibility(View.VISIBLE);
-            step.setText(data[position]);
+            step.setText(""+list_sequence.get(position).get("step_name"));
         }
         //添加按钮的点击事件
         tv_add.setOnClickListener(mListener);
        tv_add.setTag(position);
         mListView.setTag(position);
-        mListView.setAdapter(adapter);
+        mListView.setAdapter(list_adapter.get(position));
 //        adapter.notifyDataSetChanged();
         return convertView;
     }

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/grass_green_round_stroke_no_padding_bg"
-
+    android:descendantFocusability="blocksDescendants"
     android:orientation="vertical">
 
     <LinearLayout
@@ -76,7 +76,7 @@
 
     <LinearLayout
         android:id="@+id/ll_last"
-        android:layout_width="670dp"
+        android:layout_width="570dp"
         android:layout_height="50dp"
         android:gravity="center"
         android:orientation="vertical"

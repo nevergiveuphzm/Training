@@ -2,29 +2,30 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="2dp" >
+    android:padding="2dp"
+    android:descendantFocusability="blocksDescendants"
+    >
 
     <LinearLayout
-        android:id="@+id/ll_item"
+        android:id="@+id/ll_image"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:clickable="true"
-        android:orientation="horizontal">
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:background="@drawable/aerow_winter">
+
 
         <TextView
+            android:id="@+id/tv_light_num"
+            android:text="1"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1"
-            android:visibility="gone"
-            android:id="@+id/tv_light_num" />
-
-        <ImageView
-            android:id="@+id/iv_light"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_alignParentLeft="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/aerow_winter" />
+             />
 
     </LinearLayout>
 
