@@ -8,11 +8,13 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.oucb303.training.R;
+import com.oucb303.training.adpter.RandomTimeAdapter;
 import com.oucb303.training.device.Device;
 import com.oucb303.training.listener.ChangeBarClickListener;
 import com.oucb303.training.listener.CheckBoxClickListener;
@@ -24,6 +26,7 @@ import com.oucb303.training.utils.DataAnalyzeUtils;
 import com.oucb303.training.utils.RandomUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -84,6 +87,8 @@ public class RandomTrainingActivity extends Activity
     Button btnBegin;
     @Bind(R.id.ll_params)
     LinearLayout llParams;
+    @Bind(R.id.lv_times)
+    ListView lvTimes;
 
 
     //感应模式和灯光模式集合
@@ -94,6 +99,8 @@ public class RandomTrainingActivity extends Activity
     private final int TIME_RECEIVE = 2;
     //停止训练标志
     private final int STOP_TRAINING = 3;
+    //更新时间
+    private final int CHANGE_TIME_LIST = 4;
     private Device device;
     //运行的总次数、当前运行的次数
     private int totalTimes, currentTimes = 0;
@@ -107,6 +114,8 @@ public class RandomTrainingActivity extends Activity
     private int durationTime;
     //超时线程
     private OverTimeThread overTimeThread;
+    private ArrayList<Map<String, Object>> timeList = new ArrayList<>();
+    private RandomTimeAdapter timeAdapter;
 
     Handler handler = new Handler()
     {
@@ -118,6 +127,13 @@ public class RandomTrainingActivity extends Activity
                 case STOP_TRAINING:
                     stopTraining();
                     break;
+                case CHANGE_TIME_LIST:
+                    if (timeAdapter != null)
+                    {
+                        timeAdapter.notifyDataSetChanged();
+                        lvTimes.setSelection(timeList.size() - 1);
+                    }
+                    break;
                 //获取到电量信息
                 case POWER_RECEIVE:
                     DataAnalyzeUtils.analyzePowerData(msg.obj.toString(),
@@ -128,21 +144,25 @@ public class RandomTrainingActivity extends Activity
                     //返回数据不为空
                     if (data != null && !data.equals(""))
                     {
-                        if (currentTimes == totalTimes)
-                            stopTraining();
-                        else
+                        if (data.length() >= 7)
                         {
-                            //添加延时
-                            try
-                            {
-                                Thread.sleep(delayTime);
-                            } catch (InterruptedException e)
-                            {
-                                e.printStackTrace();
-                            }
-                            //发送开灯命令
-                            device.turnOnLight(getLightNum());
+                            timeList.addAll(DataAnalyzeUtils.analyzeTimeData(data));
+                            timeAdapter.notifyDataSetChanged();
+                            lvTimes.setSelection(timeList.size() - 1);
                         }
+                        //添加延时
+                        try
+                        {
+                            Thread.sleep(delayTime);
+                        } catch (InterruptedException e)
+                        {
+                            e.printStackTrace();
+                        }
+                        if (currentTimes < totalTimes)
+                            //发送开灯命令
+                            turnOnLight();
+                        else
+                            stopTraining();
                     }
                     break;
             }
@@ -156,14 +176,37 @@ public class RandomTrainingActivity extends Activity
         setContentView(R.layout.activity_randomtraining);
         ButterKnife.bind(this);
         initView();
-        device = Device.getInstance(RandomTrainingActivity.this);
+        device = new Device(RandomTrainingActivity.this);
+    }
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        device.createDeviceList(RandomTrainingActivity.this);
+        // 判断是否插入协调器，
+        if (device.devCount > 0)
+        {
+            device.connectFunction(RandomTrainingActivity.this);
+            device.initConfig();
+        }
+    }
+
+    @Override
+    protected void onPause()
+    {
+        device.disconnectFunction();
+        stopTraining();
+        super.onPause();
     }
 
     public void initView()
     {
+        timeAdapter = new RandomTimeAdapter(this, timeList);
+        lvTimes.setAdapter(timeAdapter);
         //设置seekbar 拖动事件的监听器
         barTrainingTimes.setOnSeekBarChangeListener(new MySeekBarListener
-                (tvTrainingTimes, 500));
+                (tvTrainingTimes, 10000));
         barDelayTime.setOnSeekBarChangeListener(new MySeekBarListener(tvDelayTime, 10));
         barOverTime.setOnSeekBarChangeListener(new MySeekBarListener(tvOverTime, 30));
         //设置加减按钮的监听事件
@@ -196,10 +239,11 @@ public class RandomTrainingActivity extends Activity
     @OnClick(R.id.btn_begin)
     public void onClick()
     {
-        if (device.devCount == 0)
+        if (device.devCount <= 0)
         {
             Toast.makeText(RandomTrainingActivity.this, "还未插入协调器,请插入协调器!", Toast
                     .LENGTH_SHORT).show();
+            return;
         }
         if (DEVICE_LIST.isEmpty() || DEVICE_LIST.size() == 0)
         {
@@ -212,20 +256,24 @@ public class RandomTrainingActivity extends Activity
         {
             btnBegin.setText("停止");
             totalTimes = new Integer(tvTrainingTimes.getText().toString().trim());
+            //totalTimes = 10000;
             delayTime = (int) ((new Double(tvDelayTime.getText().toString().trim())) * 1000);
             overTime = new Integer(tvOverTime.getText().toString().trim());
-            Log.d(Constant.LOG_TAG, totalTimes + "-" + delayTime + "-" + overTime);
-            //发送开灯命令
-            device.turnOnLight(getLightNum());
-            currentTimes++;
-            //开启超时线程
+            Log.d(Constant.LOG_TAG, "系统参数:" + totalTimes + "-" + delayTime + "-" +
+                    overTime);
+            //数据清空
+            currentTimes = 0;
             durationTime = 0;
+            timeList.clear();
+            timeAdapter.notifyDataSetChanged();
+            //发送开灯命令
+            turnOnLight();
+            //开启超时线程
             overTimeThread = new OverTimeThread();
             overTimeThread.start();
             //开启接收返回灭灯时间线程
-            new ReceiveThread(handler, Device.ftDev, ReceiveThread.TIME_RECEIVE_THREAD,
+            new ReceiveThread(handler, device.ftDev, ReceiveThread.TIME_RECEIVE_THREAD,
                     TIME_RECEIVE).start();
-
         }
         else if (btnBeginText.equals("停止"))
         {
@@ -238,9 +286,9 @@ public class RandomTrainingActivity extends Activity
     {
         Map<String, Object> light = Device.DEVICE_LIST.get(RandomUtils.getRandomNum
                 (Device.DEVICE_LIST.size()));
-        char num = ((String) light.get("deviceNum")).charAt(0);
+        char num = ((char) light.get("deviceNum"));
         currentLight = num;
-        Log.d(Constant.LOG_TAG, num + "-" + currentTimes);
+        Log.d(Constant.LOG_TAG, "turn on :" + num + "-" + currentTimes);
         return num;
     }
 
@@ -251,7 +299,37 @@ public class RandomTrainingActivity extends Activity
         device.turnOffAll();
         //结束接收返回灭灯时间线程
         ReceiveThread.stopThread();
-        overTimeThread.stopThread();
+        if (overTimeThread != null)
+            overTimeThread.stopThread();
+    }
+
+    //开灯
+    private void turnOnLight()
+    {
+        device.turnOnLight(getLightNum());
+        currentTimes++;
+        durationTime = 0;
+    }
+
+    //关灯
+    private void turnOffLight()
+    {
+        device.turnOffLight(currentLight);
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("deviceNum", currentLight);
+        map.put("time", overTime * 1000);
+        timeList.add(map);
+        Message msg = new Message();
+        msg.what = CHANGE_TIME_LIST;
+        handler.sendMessage(msg);
+
+        if (currentTimes == totalTimes)
+        {
+            Message msg1 = new Message();
+            msg1.what = STOP_TRAINING;
+            handler.sendMessage(msg1);
+        }
     }
 
     //超时线程
@@ -272,15 +350,8 @@ public class RandomTrainingActivity extends Activity
                 durationTime += 100;
                 if (durationTime == overTime * 1000)
                 {
-                    durationTime = 0;
                     //发送关灯命令
-                    device.turnOffLight(currentLight);
-                    if (currentTimes == totalTimes)
-                    {
-                        Message msg = new Message();
-                        msg.what = STOP_TRAINING;
-                        handler.sendMessage(msg);
-                    }
+                    turnOffLight();
                     try
                     {
                         Thread.sleep(delayTime);
@@ -288,8 +359,8 @@ public class RandomTrainingActivity extends Activity
                     {
                         e.printStackTrace();
                     }
-                    device.turnOnLight(getLightNum());
-                    currentTimes++;
+                    if (currentTimes < totalTimes)
+                        turnOnLight();
                 }
                 try
                 {

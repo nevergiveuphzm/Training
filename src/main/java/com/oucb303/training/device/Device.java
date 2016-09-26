@@ -6,6 +6,7 @@ import android.util.Log;
 import com.ftdi.j2xx.D2xxManager;
 import com.ftdi.j2xx.FT_Device;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -16,11 +17,10 @@ import java.util.Map;
 public class Device
 {
     //设备灯列表
-    public static List<Map<String, Object>> DEVICE_LIST = null;
+    public static List<Map<String, Object>> DEVICE_LIST = new ArrayList<>();
 
-    public static FT_Device ftDev;
-    private static D2xxManager ftdid2xx;
-    private static Device device;
+    public  FT_Device ftDev;
+    private  D2xxManager ftdid2xx;
 
     //设备数量
     public int devCount;
@@ -34,20 +34,15 @@ public class Device
     byte dataBit = 8; /* 8:8bit, 7: 7bit */
     byte parity = 0; /* 0: none, 1: odd, 2: even, 3: mark, 4: space */
 
-    public static Device getInstance(Context context)
+    public Device(Context context)
     {
-        if (device == null)
+        try
         {
-            try
-            {
-                ftdid2xx = D2xxManager.getInstance(context);
-            } catch (D2xxManager.D2xxException e)
-            {
-                e.printStackTrace();
-            }
-            device = new Device();
+            ftdid2xx = D2xxManager.getInstance(context);
+        } catch (D2xxManager.D2xxException e)
+        {
+            e.printStackTrace();
         }
-        return device;
     }
 
     // 关闭activity时调用该方法
@@ -182,7 +177,7 @@ public class Device
             Log.e("j2xx", "SendMessage: device not open");
             return;
         }
-        ftDev.setLatencyTimer((byte) 32);
+        ftDev.setLatencyTimer((byte) 128);
         byte[] OutData = data.getBytes();
         ftDev.write(OutData, data.length());
     }

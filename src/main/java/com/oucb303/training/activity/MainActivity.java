@@ -66,7 +66,8 @@ public class MainActivity extends Activity
             switch (msg.what)
             {
                 case POWER_RECEIVE:
-                    readPowerData(msg.obj.toString());
+                    String data = msg.obj.toString();
+                    readPowerData(data);
                     break;
             }
         }
@@ -100,7 +101,7 @@ public class MainActivity extends Activity
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        device = Device.getInstance(MainActivity.this);
+        device = new Device(MainActivity.this);
         //注册USB插入和拔出广播接收者
         IntentFilter filter = new IntentFilter();
         filter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED);
@@ -110,7 +111,6 @@ public class MainActivity extends Activity
         btnCheck.setEnabled(false);
         powerAdapter = new PowerAdapter(MainActivity.this, null);
         lvBattery.setAdapter(powerAdapter);
-        initDevice();
     }
 
     //初始化串口
@@ -158,12 +158,13 @@ public class MainActivity extends Activity
     protected void onStart()
     {
         super.onStart();
+        initDevice();
     }
 
     @Override
     protected void onPause()
     {
-        //device.disconnectFunction();
+        device.disconnectFunction();
         super.onPause();
     }
 
@@ -220,12 +221,13 @@ public class MainActivity extends Activity
     //读取电量信息
     private void readPowerData(String data)
     {
-        if (data.length() > 0)
+        if (data.length() >= 7)
         {
             //获取电量信息
             List<Map<String, Object>> powerInfos = DataAnalyzeUtils.analyzePowerData(data, MainActivity.this);
             //将电量信息赋值到全局变量中
-            Device.DEVICE_LIST = powerInfos;
+            Device.DEVICE_LIST.clear();
+            Device.DEVICE_LIST.addAll(powerInfos);
             if (powerInfos.size() > 0)
             {
                 //更新电量信息
