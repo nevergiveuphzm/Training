@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.oucb303.training.R;
 import com.oucb303.training.model.Light;
@@ -28,9 +29,15 @@ public class HorizonListViewAdapter extends BaseAdapter {
         this.list_light = list;
     }
 
+    public void setList(List<Light> list){
+        this.list_light = list;
+    }
     @Override
     public int getCount() {
-            return list_light.size();
+        if(list_light==null){
+            return 0;
+        }
+        return list_light.size();
     }
 
     @Override
@@ -49,24 +56,27 @@ public class HorizonListViewAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = inflater.inflate(R.layout.item_sequenceset_lv_horizontal, null);
-            holder.image = (ImageView) convertView.findViewById(R.id.iv_light);
-            holder.item = (LinearLayout) convertView.findViewById(R.id.ll_item);
+            holder.ll_image = (LinearLayout) convertView.findViewById(R.id.ll_image);
+            holder.tv_num = (TextView) convertView.findViewById(R.id.tv_light_num);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
         if (list_light.get(position).isChecked()){
-            holder.image.setImageResource(R.drawable.aerow_winter);
+            holder.ll_image.setBackgroundResource(R.drawable.aerow_winter);
+
+            holder.tv_num.setText(""+list_light.get(position).getNum());
         }else {
-            holder.image.setImageResource(R.drawable.iv_circle);
+            holder.ll_image.setBackgroundResource(R.drawable.iv_circle);
+            holder.tv_num.setText(""+list_light.get(position).getNum());
         }
-        holder.image.setTag(position);
+        holder.ll_image.setTag(position);
         return convertView;
     }
 
     class ViewHolder {
-        LinearLayout item;
-        ImageView image;
+        LinearLayout ll_image;
+        TextView tv_num;
     }
 
 }
