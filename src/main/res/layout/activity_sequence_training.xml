@@ -99,8 +99,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:max="80"
-                                android:progress="40" />
+                                android:max="8"
+                                android:progress="4" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -154,7 +154,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_marginLeft="10dip"
                                 android:gravity="center"
-                                android:text="0.05"
+                                android:text="0.00"
                                 android:textSize="28sp" />
                             <TextView
                                 android:layout_width="wrap_content"
@@ -324,80 +324,6 @@
                     android:layout_height="220dip"
                     android:background="@color/blue"
                     android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dip"
-                        android:layout_weight="2"
-                        android:background="@color/grey"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="0dip"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="10dip"
-                                android:gravity="center"
-                                android:singleLine="true"
-                                android:text="训练模式："
-                                android:textSize="32sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dip"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2"
-                            android:gravity="center"
-                            android:orientation="horizontal">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:background="@drawable/button_color_grey"
-                                android:clickable="true"
-                                android:src="@drawable/btn_checkbox" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="10dip"
-                                android:gravity="center"
-                                android:text="固定次数"
-                                android:textSize="28sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dip"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2"
-                            android:gravity="center"
-                            android:orientation="horizontal">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:background="@drawable/button_color_grey"
-                                android:clickable="true"
-                                android:src="@drawable/btn_uncheckbox" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="10dip"
-                                android:layout_marginRight="20dp"
-                                android:gravity="center"
-                                android:text="固定时间"
-                                android:textSize="28sp" />
-                        </LinearLayout>
-
-                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"

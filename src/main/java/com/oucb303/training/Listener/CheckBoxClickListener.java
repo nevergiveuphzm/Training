@@ -1,11 +1,10 @@
 package com.oucb303.training.listener;
 
 import android.view.View;
+import android.widget.ImageView;
 
 import com.oucb303.training.R;
 import com.oucb303.training.model.CheckBox;
-
-import java.util.List;
 
 /**
  * Created by huzhiming on 16/9/24.
@@ -14,32 +13,38 @@ import java.util.List;
 
 public class CheckBoxClickListener implements View.OnClickListener
 {
-    private List<CheckBox> boxs;
+    private CheckBox checkBox;
 
-    public CheckBoxClickListener(List<CheckBox> boxs)
+    public CheckBoxClickListener(CheckBox checkBox)
     {
-        this.boxs = boxs;
-        for (CheckBox box : boxs)
+        this.checkBox = checkBox;
+        for (ImageView view:checkBox.getViews())
         {
-            box.getView().setOnClickListener(this);
+            view.setOnClickListener(this);
         }
     }
 
     @Override
     public void onClick(View view)
     {
-        for (CheckBox box : boxs)
+        for (int i = 0; i < checkBox.getViews().length; i++)
         {
-            if (box.getView().getId() == view.getId())
+            if (checkBox.getViews()[i].getId() == view.getId())
             {
-                box.setChecked(true);
-                box.getView().setImageResource(R.drawable.btn_checkbox);
+                checkBox.setCheckId(i);
             }
+        }
+        changeState();
+    }
+
+    public void changeState()
+    {
+        for (int i = 0; i < checkBox.getViews().length; i++)
+        {
+            if (i == checkBox.getCheckId())
+                checkBox.getViews()[i].setImageResource(R.drawable.btn_checkbox);
             else
-            {
-                box.setChecked(false);
-                box.getView().setImageResource(R.drawable.btn_uncheckbox);
-            }
+                checkBox.getViews()[i].setImageResource(R.drawable.btn_uncheckbox);
         }
     }
 }

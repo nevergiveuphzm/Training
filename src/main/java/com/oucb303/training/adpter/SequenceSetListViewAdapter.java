@@ -4,10 +4,9 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.oucb303.training.R;
@@ -19,90 +18,91 @@ import java.util.Map;
 /**
  * Created by baichangcai on 2016/9/22.
  */
-public class SequenceSetListViewAdapter extends BaseAdapter{
+public class SequenceSetListViewAdapter extends BaseAdapter
+{
     private LayoutInflater inflater = null;
-    private List<Map<String,Object>> list_sequence;
+    private List<Map<String, Object>> list_sequence;
     private AddLightClickListener mListener;
     private Context mcontext;
     HorizontalListView mListView;
     private List<HorizonListViewAdapter> list_adapter;
     private HorizonListViewAdapter adapter;
-    public SequenceSetListViewAdapter(Context context, List<Map<String,Object>> list,List<HorizonListViewAdapter> list_adapter, AddLightClickListener listener) {
+    private AdapterView.OnItemClickListener itemClickListener;
+
+    public SequenceSetListViewAdapter(Context context, List<Map<String, Object>> list,
+                                      List<HorizonListViewAdapter> list_adapter,
+                                      AddLightClickListener listener,
+                                      AdapterView.OnItemClickListener itemClickListener)
+    {
         this.list_adapter = list_adapter;
         this.list_sequence = list;
         this.mcontext = context;
         this.mListener = listener;
-    }
-    @Override
-    public int getCount() {
-        // TODO Auto-generated method stub
-        return list_sequence.size();
+        this.itemClickListener = itemClickListener;
     }
 
     @Override
-    public Object getItem(int position) {
-        // TODO Auto-generated method stub
-        return list_sequence.get(position);
+    public int getCount()
+    {
+        if (list_adapter == null)
+            return 0;
+        return list_adapter.size();
     }
 
     @Override
-    public long getItemId(int position) {
+    public Object getItem(int position)
+    {
+        return list_adapter.get(position);
+    }
+
+    @Override
+    public long getItemId(int position)
+    {
         // TODO Auto-generated method stub
         return position;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-//        ViewHolder holder = null;
-//        if (convertView == null) {
-//            holder = new ViewHolder();
+    public View getView(int position, View convertView, ViewGroup parent)
+    {
         convertView = LayoutInflater.from(mcontext).inflate(R.layout.item_sequenceset_lv_vertical, null);
-            TextView step = (TextView) convertView.findViewById(R.id.tv_name);
-            mListView = (HorizontalListView) convertView.findViewById(R.id.horizontal_listview);
-            TextView tv_add = (TextView)convertView.findViewById(R.id.tv_add);
-            LinearLayout ll_ListView = (LinearLayout) convertView.findViewById(R.id.ll_ListView);
-            LinearLayout ll_last = (LinearLayout) convertView.findViewById(R.id.ll_last);
-//            convertView.setTag(holder);
-//        } else {
-//            holder = (ViewHolder) convertView.getTag();
-//        }
+        TextView step = (TextView) convertView.findViewById(R.id.tv_name);
+        mListView = (HorizontalListView) convertView.findViewById(R.id.horizontal_listview);
+        TextView tv_add = (TextView) convertView.findViewById(R.id.tv_add);
+        LinearLayout ll_ListView = (LinearLayout) convertView.findViewById(R.id.ll_ListView);
+        LinearLayout ll_last = (LinearLayout) convertView.findViewById(R.id.ll_last);
+
         //将最后一个item显示“添加序列”
-        if(position == list_sequence.size()-1){
+        if (position == list_adapter.size() - 1)
+        {
             ll_ListView.setVisibility(View.GONE);
             ll_last.setVisibility(View.VISIBLE);
-
-        }else {
-            step.setText(""+list_sequence.get(position).get("step_name"));
         }
-        //添加按钮的点击事件
-        tv_add.setOnClickListener(mListener);
-       tv_add.setTag(position);
-        mListView.setTag(position);
-        mListView.setAdapter(list_adapter.get(position));
-//        adapter.notifyDataSetChanged();
+        else
+        {
+            step.setText(list_sequence.get(position).get("step_name") + "  " +
+                    "延迟时间:" + list_sequence.get(position).get("delay_time") + "秒");
+            //添加按钮的点击事件
+            tv_add.setOnClickListener(mListener);
+            tv_add.setTag(position);
+            mListView.setTag(position);
+            mListView.setAdapter(list_adapter.get(position));
+            mListView.setOnItemClickListener(itemClickListener);
+        }
         return convertView;
     }
-//    public void setHorizonListViewAdapter(HorizonListViewAdapter adapter){
-//
-//        mListView.setAdapter(adapter);
-//
-//    }
-//    class ViewHolder {
-//        LinearLayout ll_last;
-//        LinearLayout ll_ListView;
-//        HorizontalListView mListView;//整个横向ListView
-//        TextView step;//步骤
-//        TextView tv_add;//添加按钮
-//    }
+
     //* 用于回调的抽象类
-    public static abstract class AddLightClickListener implements View.OnClickListener {
+    public static abstract class AddLightClickListener implements View.OnClickListener
+    {
         /**
          * 基类的onClick方法
          */
-        public void onClick(View v) {
+        public void onClick(View v)
+        {
             myOnClick((Integer) v.getTag(), v);
         }
+
         public abstract void myOnClick(int position, View v);
     }
-
 }

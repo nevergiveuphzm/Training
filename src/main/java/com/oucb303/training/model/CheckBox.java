@@ -9,46 +9,33 @@ import android.widget.ImageView;
 
 public class CheckBox
 {
-    //checkbox 的编号
-    private int id;
-    //是否被选中
-    private boolean checked;
-    private ImageView view;
+    //被选中的id
+    private int checkId;
+    private ImageView[] views;
 
-    public CheckBox(int id, boolean checked, ImageView view)
+    public CheckBox(int checkId, ImageView[] views)
     {
-        this.id = id;
-        this.checked = checked;
-        this.view = view;
+        this.checkId = checkId;
+        this.views = views;
     }
 
-    public boolean getChecked()
+    public int getCheckId()
     {
-        return checked;
+        return checkId;
     }
 
-    public void setChecked(boolean checked)
+    public void setCheckId(int checkId)
     {
-        this.checked = checked;
+        this.checkId = checkId;
     }
 
-    public ImageView getView()
+    public ImageView[] getViews()
     {
-        return view;
+        return views;
     }
 
-    public void setView(ImageView view)
+    public void setViews(ImageView[] views)
     {
-        this.view = view;
-    }
-
-    public int getId()
-    {
-        return id;
-    }
-
-    public void setId(int id)
-    {
-        this.id = id;
+        this.views = views;
     }
 }

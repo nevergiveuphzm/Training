@@ -48,4 +48,9 @@ public class MySeekBarListener implements SeekBar.OnSeekBarChangeListener
     {
 
     }
+
+    public TextView getTextView()
+    {
+        return textView;
+    }
 }

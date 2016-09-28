@@ -123,6 +123,7 @@ public class MainActivity extends Activity
             device.connectFunction(MainActivity.this);
             device.initConfig();
             sendGetPowerOrder();
+            btnCheck.setEnabled(true);
         }
         else
         {
@@ -141,16 +142,6 @@ public class MainActivity extends Activity
             });
             AlertDialog alertdialog = builder.create();
             alertdialog.show();
-        }
-        btnCheck.setEnabled(false);
-        try
-        {
-            Thread.sleep(2000);
-            if (device.devCount > 0)
-                btnCheck.setEnabled(true);
-        } catch (InterruptedException e)
-        {
-            e.printStackTrace();
         }
     }
 

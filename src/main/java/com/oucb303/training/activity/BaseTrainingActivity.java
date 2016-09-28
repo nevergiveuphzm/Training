@@ -44,9 +44,13 @@ public class BaseTrainingActivity extends Activity
         {
             case R.id.btn_times_random:
                 intent = new Intent(this, RandomTrainingActivity.class);
+                intent.putExtra("randomMode", 0);
                 startActivity(intent);
                 break;
             case R.id.btn_time_random:
+                intent = new Intent(this, RandomTrainingActivity.class);
+                intent.putExtra("randomMode", 1);
+                startActivity(intent);
                 break;
             case R.id.btn_sequence_training:
                 intent = new Intent(this, SequenceTrainingActivity.class);
