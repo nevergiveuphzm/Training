@@ -2,8 +2,10 @@ package com.oucb303.training.threads;
 
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import com.ftdi.j2xx.FT_Device;
+import com.oucb303.training.model.Constant;
 
 /**
  * Created by huzhiming on 16/9/7.
@@ -74,12 +76,13 @@ public class ReceiveThread extends Thread
             String result = "";
             if (iavailable > 0)
             {
-                //Log.i("AAAA", "iavailable=" + iavailable);
                 readData = new byte[iavailable];
                 ftDev.read(readData, iavailable);
                 //返回的结果转String
                 result = new String(readData);
                 //Log.i("AAAA", result);
+                Log.d(Constant.LOG_TAG, "origin Data: length--" + iavailable + "data--" +
+                        result);
             }
             Message msg = new Message();
             msg.what = msgFlag;

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/grey"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/grey"
+              android:orientation="vertical">
 
-    <include layout="@layout/layout_titlebar" />
+    <include layout="@layout/layout_title_bar"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -37,7 +37,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="0dip"
-                            android:layout_weight="0.5" />
+                            android:layout_weight="0.5"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -52,7 +52,7 @@
                                 android:layout_marginLeft="10dip"
                                 android:gravity="center"
                                 android:text="感应距离:"
-                                android:textSize="28sp" />
+                                android:textSize="28sp"/>
 
                             <TextView
                                 android:id="@+id/tv_distance"
@@ -61,14 +61,15 @@
                                 android:layout_marginLeft="10dip"
                                 android:gravity="center"
                                 android:text="40"
-                                android:textSize="28sp" />
+                                android:textSize="28sp"/>
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_marginLeft="10dip"
                                 android:gravity="center"
                                 android:text="厘米"
-                                android:textSize="28sp" />
+                                android:textSize="28sp"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -85,14 +86,14 @@
                                 android:layout_marginLeft="20dp"
                                 android:background="@drawable/button_color_grey"
                                 android:clickable="true"
-                                android:src="@drawable/btn_sub" />
+                                android:src="@drawable/btn_sub"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
                                 android:text="0"
-                                android:textSize="20dp" />
+                                android:textSize="20dp"/>
 
                             <SeekBar
                                 android:id="@+id/bar_distance"
@@ -100,14 +101,14 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:max="8"
-                                android:progress="4" />
+                                android:progress="4"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
                                 android:text="80"
-                                android:textSize="20dp" />
+                                android:textSize="20dp"/>
 
                             <ImageView
                                 android:id="@+id/iv_distance_plus"
@@ -116,7 +117,7 @@
                                 android:layout_marginLeft="0dp"
                                 android:background="@drawable/button_color_grey"
                                 android:clickable="true"
-                                android:src="@drawable/btn_plus" />
+                                android:src="@drawable/btn_plus"/>
                         </LinearLayout>
 
 
@@ -131,7 +132,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="0dip"
-                            android:layout_weight="0.5" />
+                            android:layout_weight="0.5"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -146,7 +147,7 @@
                                 android:layout_marginLeft="10dip"
                                 android:gravity="center"
                                 android:text="延迟时间："
-                                android:textSize="28sp" />
+                                android:textSize="28sp"/>
 
                             <TextView
                                 android:id="@+id/tv_delay_time"
@@ -155,14 +156,15 @@
                                 android:layout_marginLeft="10dip"
                                 android:gravity="center"
                                 android:text="0.00"
-                                android:textSize="28sp" />
+                                android:textSize="28sp"/>
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_marginLeft="10dip"
                                 android:gravity="center"
                                 android:text="秒"
-                                android:textSize="28sp" />
+                                android:textSize="28sp"/>
                         </LinearLayout>
 
 
@@ -180,14 +182,14 @@
                                 android:layout_marginLeft="20dp"
                                 android:background="@drawable/button_color_grey"
                                 android:clickable="true"
-                                android:src="@drawable/btn_sub" />
+                                android:src="@drawable/btn_sub"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
                                 android:text="0"
-                                android:textSize="20dp" />
+                                android:textSize="20dp"/>
 
                             <SeekBar
                                 android:id="@+id/bar_delay_time"
@@ -202,7 +204,7 @@
                                 android:layout_height="match_parent"
                                 android:gravity="center"
                                 android:text="10"
-                                android:textSize="20dp" />
+                                android:textSize="20dp"/>
 
                             <ImageView
                                 android:id="@+id/img_delay_time_add"
@@ -211,7 +213,7 @@
                                 android:layout_marginLeft="0dp"
                                 android:background="@drawable/button_color_grey"
                                 android:clickable="true"
-                                android:src="@drawable/btn_plus" />
+                                android:src="@drawable/btn_plus"/>
                         </LinearLayout>
 
 
@@ -226,7 +228,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="0dip"
-                            android:layout_weight="0.5" />
+                            android:layout_weight="0.5"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -241,7 +243,7 @@
                                 android:layout_marginLeft="10dip"
                                 android:gravity="center"
                                 android:text="超时时间："
-                                android:textSize="28sp" />
+                                android:textSize="28sp"/>
 
                             <TextView
                                 android:id="@+id/tv_over_time"
@@ -250,14 +252,15 @@
                                 android:layout_marginLeft="10dip"
                                 android:gravity="center"
                                 android:text="5"
-                                android:textSize="28sp" />
+                                android:textSize="28sp"/>
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_marginLeft="10dip"
                                 android:gravity="center"
                                 android:text="秒"
-                                android:textSize="28sp" />
+                                android:textSize="28sp"/>
                         </LinearLayout>
 
 
@@ -275,14 +278,14 @@
                                 android:layout_marginLeft="20dp"
                                 android:background="@drawable/button_color_grey"
                                 android:clickable="true"
-                                android:src="@drawable/btn_sub" />
+                                android:src="@drawable/btn_sub"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
                                 android:text="0"
-                                android:textSize="20dp" />
+                                android:textSize="20dp"/>
 
                             <SeekBar
                                 android:id="@+id/bar_over_time"
@@ -297,7 +300,7 @@
                                 android:layout_height="match_parent"
                                 android:gravity="center"
                                 android:text="30"
-                                android:textSize="20dp" />
+                                android:textSize="20dp"/>
 
                             <ImageView
                                 android:id="@+id/img_over_time_add"
@@ -306,7 +309,7 @@
                                 android:layout_marginLeft="0dp"
                                 android:background="@drawable/button_color_grey"
                                 android:clickable="true"
-                                android:src="@drawable/btn_plus" />
+                                android:src="@drawable/btn_plus"/>
                         </LinearLayout>
 
                     </LinearLayout>
@@ -314,10 +317,10 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0dip"
-                        android:layout_weight="0.5" />
+                        android:layout_weight="0.5"/>
                 </LinearLayout>
 
-                <include layout="@layout/layout_line_horizontal" />
+                <include layout="@layout/layout_line_horizontal"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -450,7 +453,7 @@
                                 android:layout_marginLeft="10dip"
                                 android:gravity="center"
                                 android:text="灯光模式："
-                                android:textSize="32sp" />
+                                android:textSize="32sp"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -467,7 +470,7 @@
                                 android:layout_marginLeft="10dp"
                                 android:background="@drawable/button_color_grey"
                                 android:clickable="true"
-                                android:src="@drawable/btn_checkbox" />
+                                android:src="@drawable/btn_checkbox"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -475,7 +478,7 @@
                                 android:layout_marginLeft="5dip"
                                 android:gravity="center"
                                 android:text="  中  间"
-                                android:textSize="28sp" />
+                                android:textSize="28sp"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -492,7 +495,7 @@
                                 android:layout_marginLeft="10dp"
                                 android:background="@drawable/button_color_grey"
                                 android:clickable="true"
-                                android:src="@drawable/btn_uncheckbox" />
+                                android:src="@drawable/btn_uncheckbox"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -500,7 +503,7 @@
                                 android:layout_marginLeft="5dip"
                                 android:gravity="center"
                                 android:text="  全  部"
-                                android:textSize="28sp" />
+                                android:textSize="28sp"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -517,7 +520,7 @@
                                 android:layout_marginLeft="10dp"
                                 android:background="@drawable/button_color_grey"
                                 android:clickable="true"
-                                android:src="@drawable/btn_uncheckbox" />
+                                android:src="@drawable/btn_uncheckbox"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -525,7 +528,7 @@
                                 android:layout_marginLeft="5dip"
                                 android:gravity="center"
                                 android:text="  外  圈"
-                                android:textSize="28sp" />
+                                android:textSize="28sp"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -536,7 +539,7 @@
 
                     </LinearLayout>
 
-            </LinearLayout>
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -560,11 +563,15 @@
             <com.oucb303.training.widget.SequenceSetListview
                 android:id="@+id/lv_sequenceSet"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:divider="#F0F0F0"
-                android:dividerHeight="5dp"
-                >
-            </com.oucb303.training.widget.SequenceSetListview>
+                android:dividerHeight="5dp"/>
+            <Button
+                android:id="@+id/btn_save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="保存"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -2,6 +2,7 @@ package com.oucb303.training.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,11 +21,13 @@ import android.widget.ListView;
 import com.oucb303.training.R;
 import com.oucb303.training.adpter.PowerAdapter;
 import com.oucb303.training.device.Device;
+import com.oucb303.training.model.PowerInfo;
+import com.oucb303.training.model.PowerInfoComparetor;
 import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.utils.DataAnalyzeUtils;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -56,6 +59,7 @@ public class MainActivity extends Activity
     private Device device;
     private final int POWER_RECEIVE = 1;
     private PowerAdapter powerAdapter;
+    private ProgressDialog progressDialog;
 
 
     Handler handler = new Handler()
@@ -68,6 +72,7 @@ public class MainActivity extends Activity
                 case POWER_RECEIVE:
                     String data = msg.obj.toString();
                     readPowerData(data);
+                    progressDialog.dismiss();
                     break;
             }
         }
@@ -111,6 +116,10 @@ public class MainActivity extends Activity
         btnCheck.setEnabled(false);
         powerAdapter = new PowerAdapter(MainActivity.this, null);
         lvBattery.setAdapter(powerAdapter);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("设备检测中...");
+        progressDialog.setCanceledOnTouchOutside(false);
     }
 
     //初始化串口
@@ -162,21 +171,39 @@ public class MainActivity extends Activity
     @OnClick({R.id.btn_check, R.id.btn_level_one, R.id.btn_level_two, R.id.btn_level_three, R.id.btn_level_four, R.id.btn_base_training, R.id.btn_statistic})
     public void onClick(View view)
     {
+        int level = 0;
+        Intent intent;
         switch (view.getId())
         {
             case R.id.btn_check:
                 sendGetPowerOrder();
                 break;
             case R.id.btn_level_one:
+                level = 1;
+                intent = new Intent(MainActivity.this, TrainingListActivity.class);
+                intent.putExtra("level", level);
+                startActivity(intent);
                 break;
             case R.id.btn_level_two:
+                level = 2;
+                intent = new Intent(MainActivity.this, TrainingListActivity.class);
+                intent.putExtra("level", level);
+                startActivity(intent);
                 break;
             case R.id.btn_level_three:
+                level = 3;
+                intent = new Intent(MainActivity.this, TrainingListActivity.class);
+                intent.putExtra("level", level);
+                startActivity(intent);
                 break;
             case R.id.btn_level_four:
+                level = 4;
+                intent = new Intent(MainActivity.this, TrainingListActivity.class);
+                intent.putExtra("level", level);
+                startActivity(intent);
                 break;
             case R.id.btn_base_training:
-                Intent intent = new Intent();
+                intent = new Intent();
                 intent.setClass(MainActivity.this, BaseTrainingActivity.class);
                 startActivity(intent);
                 break;
@@ -189,6 +216,7 @@ public class MainActivity extends Activity
     // 获得所有设备电量
     public void sendGetPowerOrder()
     {
+        progressDialog.show();
         //清空电量列表
         powerAdapter.setPowerInfos(null);
         powerAdapter.notifyDataSetChanged();
@@ -210,12 +238,14 @@ public class MainActivity extends Activity
     }
 
     //读取电量信息
-    private void readPowerData(String data)
+    private void readPowerData(final String data)
     {
         if (data.length() >= 7)
         {
             //获取电量信息
-            List<Map<String, Object>> powerInfos = DataAnalyzeUtils.analyzePowerData(data, MainActivity.this);
+            List<PowerInfo> powerInfos = DataAnalyzeUtils.analyzePowerData(data, MainActivity
+                    .this);
+            Collections.sort(powerInfos, new PowerInfoComparetor());
             //将电量信息赋值到全局变量中
             Device.DEVICE_LIST.clear();
             Device.DEVICE_LIST.addAll(powerInfos);
@@ -246,6 +276,7 @@ public class MainActivity extends Activity
                 @Override
                 public void onClick(DialogInterface dialog, int which)
                 {
+                    dialog.dismiss();
                     sendGetPowerOrder();
                 }
             });

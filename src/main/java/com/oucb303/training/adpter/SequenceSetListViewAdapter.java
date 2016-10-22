@@ -80,7 +80,7 @@ public class SequenceSetListViewAdapter extends BaseAdapter
         }
         else
         {
-            step.setText(list_sequence.get(position).get("step_name") + "  " +
+            step.setText("步骤:" + list_sequence.get(position).get("step_name") + "  " +
                     "延迟时间:" + list_sequence.get(position).get("delay_time") + "秒");
             //添加按钮的点击事件
             tv_add.setOnClickListener(mListener);

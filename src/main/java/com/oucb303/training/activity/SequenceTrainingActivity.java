@@ -10,15 +10,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.oucb303.training.App;
 import com.oucb303.training.R;
 import com.oucb303.training.adpter.HorizonListViewAdapter;
 import com.oucb303.training.adpter.LightGridViewAdapter;
 import com.oucb303.training.adpter.SequenceSetListViewAdapter;
+import com.oucb303.training.daoservice.SequenceSer;
 import com.oucb303.training.listener.ChangeBarClickListener;
 import com.oucb303.training.listener.CheckBoxClickListener;
 import com.oucb303.training.listener.MySeekBarListener;
@@ -97,6 +101,7 @@ public class SequenceTrainingActivity extends Activity
     private CheckBox actionModeCheckBox, lightModeCheckBox;
     //选中的灯
     private Point choseLight = new Point();
+    private SequenceSer sequenceSer;
 
     //横向灯的点击事件
     private AdapterView.OnItemClickListener lightsItemClickListener = new AdapterView.OnItemClickListener()
@@ -199,7 +204,9 @@ public class SequenceTrainingActivity extends Activity
                             for (Light light : list_light_noCheck)
                             {
                                 if (light.isChecked())
+                                {
                                     list_light.add(light);
+                                }
                             }
                             list_sequence.get(position).put("list_light", list_light);
                             OperateUtils.toast(sequenceSetActivity, list_light.size() + "");
@@ -235,6 +242,7 @@ public class SequenceTrainingActivity extends Activity
         ButterKnife.bind(this);
         sequenceSetActivity = this;
         mcontext = this.getApplicationContext();
+        sequenceSer = new SequenceSer(((App) getApplication()).getDaoSession());
         //此Activity标题
         tv_title.setText("序列编程");
         //初始化右侧ListView
@@ -251,7 +259,7 @@ public class SequenceTrainingActivity extends Activity
                 if (position == list_adepter.size() - 1)
                 {
                     Map<String, Object> map = new HashMap<String, Object>();
-                    map.put("step_name", "步骤:" + (position + 1));
+                    map.put("step_name", (position + 1));
                     map.put("list_light", null);
                     map.put("delay_time", 0.00);
                     list_sequence.add(list_sequence.size() - 1, map);
@@ -297,7 +305,7 @@ public class SequenceTrainingActivity extends Activity
         changeWidgetState(false);
     }
 
-    @OnClick(R.id.layout_cancel)
+    @OnClick({R.id.layout_cancel, R.id.btn_save})
     public void onClick(View view)
     {
         switch (view.getId())
@@ -305,6 +313,42 @@ public class SequenceTrainingActivity extends Activity
             //头部返回按钮
             case R.id.layout_cancel:
                 finish();
+                break;
+            //保存
+            case R.id.btn_save:
+                AlertDialog.Builder builder = new AlertDialog.Builder(sequenceSetActivity);
+                View v = LayoutInflater.from(mcontext).inflate(R.layout.dialog_add_sequence, null);
+                builder.setView(v);
+                Button btnSave = (Button) v.findViewById(R.id.btn_save);
+                Button btnCancel = (Button) v.findViewById(R.id.btn_cancel);
+                final EditText etTitle = (EditText) v.findViewById(R.id.et_title);
+                final AlertDialog dialog = builder.create();
+                btnSave.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View view)
+                    {
+                        String title = etTitle.getText().toString();
+                        long res = sequenceSer.addSequence(list_sequence, title);
+                        if (res > 0)
+                            Toast.makeText(SequenceTrainingActivity.this, "添加成功!", Toast.LENGTH_SHORT).show();
+                        else if (res == -1)
+                            Toast.makeText(SequenceTrainingActivity.this, "序列名称已存在,保存失败!", Toast.LENGTH_SHORT).show();
+                        else
+                            Toast.makeText(SequenceTrainingActivity.this, "添加失败!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                btnCancel.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View view)
+                    {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+                //设置占屏比
+                OperateUtils.setScreenWidth(sequenceSetActivity, dialog, Constant.SCREEN_WIDTH16, Constant.SCREEN_HEIGHT);
                 break;
         }
     }
@@ -329,6 +373,7 @@ public class SequenceTrainingActivity extends Activity
         imgLightModeCenter.setEnabled(state);
     }
 
+    //seekbar 更新事件监听器
     private class SequenceSeekBarChangeListener extends MySeekBarListener
     {
         public SequenceSeekBarChangeListener(TextView textView, int maxValue)
@@ -358,9 +403,11 @@ public class SequenceTrainingActivity extends Activity
         }
     }
 
+    //checkbox 更新监听事件
     private class SequenceCheckBoxListener extends CheckBoxClickListener
     {
         private int id;
+
         public SequenceCheckBoxListener(CheckBox checkBox, int id)
         {
             super(checkBox);

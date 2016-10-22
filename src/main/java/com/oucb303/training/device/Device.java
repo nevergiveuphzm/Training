@@ -2,13 +2,15 @@ package com.oucb303.training.device;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.ftdi.j2xx.D2xxManager;
 import com.ftdi.j2xx.FT_Device;
+import com.oucb303.training.model.Constant;
+import com.oucb303.training.model.PowerInfo;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by huzhiming on 16/9/7.
@@ -17,10 +19,10 @@ import java.util.Map;
 public class Device
 {
     //设备灯列表
-    public static List<Map<String, Object>> DEVICE_LIST = new ArrayList<>();
+    public static List<PowerInfo> DEVICE_LIST = new ArrayList<>();
 
-    public  FT_Device ftDev;
-    private  D2xxManager ftdid2xx;
+    public FT_Device ftDev;
+    private D2xxManager ftdid2xx;
 
     //设备数量
     public int devCount;
@@ -43,6 +45,22 @@ public class Device
         {
             e.printStackTrace();
         }
+    }
+
+    //检测设备
+    public boolean checkDevice(Context context)
+    {
+        if (devCount <= 0)
+        {
+            Toast.makeText(context, "还未插入协调器,请插入协调器!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (DEVICE_LIST.isEmpty() || DEVICE_LIST.size() == 0)
+        {
+            Toast.makeText(context, "未检测到任何设备,请开启设备!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
     // 关闭activity时调用该方法
@@ -72,7 +90,7 @@ public class Device
 
     public void initConfig()
     {
-        if (ftDev.isOpen() == false)
+        if (ftDev == null || !ftDev.isOpen())
         {
             Log.e("j2xx", "SetConfig: device not open");
             return;
@@ -132,6 +150,7 @@ public class Device
     //发送区全部设备电量命令
     public void sendGetPowerOrder()
     {
+        Log.d(Constant.LOG_TAG, " send get All PowerInfo Order!");
         // 获取全部设备电量指令
         String data = "#06@Zc";
         if (ftDev.isOpen() == false)
@@ -151,18 +170,21 @@ public class Device
         String data = "#06@" + num + "a";
         sendMessage(data);
     }
+
     // 关一个灯命令
     public void turnOffLight(char num)
     {
         String data = "#06@" + num + "b";
         sendMessage(data);
     }
+
     // 开所有的灯
     public void turnOnAllLight()
     {
         String data = "#06@Za";
         sendMessage(data);
     }
+
     // 关所有的灯
     public void turnOffAll()
     {

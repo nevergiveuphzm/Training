@@ -1,6 +1,7 @@
 package com.oucb303.training.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,20 +23,20 @@ import com.oucb303.training.listener.CheckBoxClickListener;
 import com.oucb303.training.listener.MySeekBarListener;
 import com.oucb303.training.model.CheckBox;
 import com.oucb303.training.model.Constant;
+import com.oucb303.training.model.PowerInfo;
+import com.oucb303.training.model.TimeInfo;
 import com.oucb303.training.threads.ReceiveThread;
+import com.oucb303.training.threads.Timer;
 import com.oucb303.training.utils.DataAnalyzeUtils;
 import com.oucb303.training.utils.RandomUtils;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static com.oucb303.training.device.Device.DEVICE_LIST;
 
 /**
  * Created by baichangcai on 2016/9/7.
@@ -110,6 +111,8 @@ public class RandomTrainingActivity extends Activity
     LinearLayout llTrainingTime;
     @Bind(R.id.ll_training_times)
     LinearLayout llTrainingTimes;
+    @Bind(R.id.img_help)
+    ImageView imgHelp;
 
 
     //感应模式和灯光模式集合
@@ -145,10 +148,10 @@ public class RandomTrainingActivity extends Activity
     //超时线程
     private OverTimeThread overTimeThread;
     //时间列表
-    private ArrayList<Map<String, Object>> timeList = new ArrayList<>();
+    private ArrayList<TimeInfo> timeList = new ArrayList<>();
     private RandomTimeAdapter timeAdapter;
 
-    private int timer;
+    private Timer timer;
 
 
     Handler handler = new Handler()
@@ -161,7 +164,7 @@ public class RandomTrainingActivity extends Activity
                 case STOP_TRAINING:
                     stopTraining();
                     break;
-                case CHANGE_TIME_LIST:
+                case Timer.TIMER_FLAG:
                     if (timeAdapter != null)
                     {
                         timeAdapter.notifyDataSetChanged();
@@ -170,18 +173,22 @@ public class RandomTrainingActivity extends Activity
                     tvCurrentTimes.setText(timeList.size() + "");
                     tvLostTimes.setText(lostTimes + "");
                     //开始到现在持续的时间
-                    int time = timer;
-                    if (randomMode == 0)
-                        time = (int) (System.currentTimeMillis() - beginTime);
-                    int minute = time / (1000 * 60);
-                    int second = (time / 1000) % 60;
-                    int msec = time % 1000;
-                    tvTotalTime.setText(minute + "分" + second + "秒" + msec + "毫秒");
+                    tvTotalTime.setText(msg.obj.toString());
+
+                    if (randomMode == 1 && timer.time >= trainingTime)
+                    {
+                        stopTraining();
+                    }
                     break;
                 //获取到电量信息
                 case POWER_RECEIVE:
-                    DataAnalyzeUtils.analyzePowerData(msg.obj.toString(),
-                            RandomTrainingActivity.this);
+                    btnBegin.setEnabled(true);
+                    //获取电量信息
+                    List<PowerInfo> powerInfos = DataAnalyzeUtils.analyzePowerData(msg.obj
+                            .toString(), RandomTrainingActivity.this);
+                    //将电量信息赋值到全局变量中
+                    Device.DEVICE_LIST.clear();
+                    Device.DEVICE_LIST.addAll(powerInfos);
                     break;
                 case TIME_RECEIVE:
                     String data = msg.obj.toString();
@@ -252,6 +259,8 @@ public class RandomTrainingActivity extends Activity
 
     public void initView()
     {
+        tvTitle.setText("随机训练");
+        imgHelp.setVisibility(View.VISIBLE);
         timeAdapter = new RandomTimeAdapter(this, timeList);
         lvTimes.setAdapter(timeAdapter);
         if (randomMode == 0)
@@ -302,24 +311,14 @@ public class RandomTrainingActivity extends Activity
         new CheckBoxClickListener(lightModeCheckBox);
     }
 
-    @OnClick({R.id.btn_begin, R.id.layout_cancel})
+    @OnClick({R.id.btn_begin, R.id.layout_cancel, R.id.img_help})
     public void onClick(View view)
     {
         switch (view.getId())
         {
             case R.id.btn_begin:
-                if (device.devCount <= 0)
-                {
-                    Toast.makeText(RandomTrainingActivity.this, "还未插入协调器,请插入协调器!", Toast
-                            .LENGTH_SHORT).show();
+                if (!device.checkDevice(RandomTrainingActivity.this))
                     return;
-                }
-                if (DEVICE_LIST.isEmpty() || DEVICE_LIST.size() == 0)
-                {
-                    Toast.makeText(RandomTrainingActivity.this, "未检测到任何设备,请开启设备!", Toast
-                            .LENGTH_SHORT).show();
-                    return;
-                }
                 if (!trainingFlag)
                     beginTraining();
                 else
@@ -329,15 +328,18 @@ public class RandomTrainingActivity extends Activity
             case R.id.layout_cancel:
                 finish();
                 break;
+            case R.id.img_help:
+                Intent intent = new Intent(this, VideoActivity.class);
+                startActivity(intent);
+                break;
         }
     }
 
     //获取设备灯编号
     private char getLightNum()
     {
-        Map<String, Object> light = Device.DEVICE_LIST.get(RandomUtils.getRandomNum
-                (Device.DEVICE_LIST.size()));
-        char num = ((char) light.get("deviceNum"));
+        PowerInfo light = Device.DEVICE_LIST.get(RandomUtils.getRandomNum(Device.DEVICE_LIST.size()));
+        char num = light.getDeviceNum();
         currentLight = num;
         Log.d(Constant.LOG_TAG, "turn on :" + num + "-" + currentTimes);
         return num;
@@ -348,7 +350,6 @@ public class RandomTrainingActivity extends Activity
     {
         //训练开始
         trainingFlag = true;
-        timer = 0;
         btnBegin.setText("停止");
         totalTimes = new Integer(tvTrainingTimes.getText().toString().trim());
         delayTime = (int) ((new Double(tvDelayTime.getText().toString().trim())) * 1000);
@@ -366,20 +367,25 @@ public class RandomTrainingActivity extends Activity
         timeAdapter.notifyDataSetChanged();
         //发送开灯命令
         turnOnLight();
-        beginTime = System.currentTimeMillis();
+
         //开启超时线程
         overTimeThread = new OverTimeThread();
         overTimeThread.start();
         //开启接收返回灭灯时间线程
         new ReceiveThread(handler, device.ftDev, ReceiveThread.TIME_RECEIVE_THREAD,
                 TIME_RECEIVE).start();
-        if (randomMode == 1)
-            new TimerThread().start();
+        //开启计时线程
+        beginTime = System.currentTimeMillis();
+        timer = new Timer(handler);
+        timer.setBeginTime(beginTime);
+        timer.start();
     }
 
     //判断训练是否结束
     public void isTrainingOver()
     {
+        if (!trainingFlag)
+            return;
         if (delayTime > 0)
         {
             //添加延时
@@ -402,7 +408,6 @@ public class RandomTrainingActivity extends Activity
         }
         else//时间随机
             turnOnLight();
-
     }
 
     //停止训练
@@ -410,24 +415,33 @@ public class RandomTrainingActivity extends Activity
     {
         trainingFlag = false;
         btnBegin.setText("开始");
-        if (device.devCount > 0)
-            device.turnOffAll();
-        //结束接收返回灭灯时间线程
-        ReceiveThread.stopThread();
+        btnBegin.setEnabled(false);
         if (overTimeThread != null)
             overTimeThread.stopThread();
+        if (timer != null)
+            timer.stopTimer();
+        if (device.devCount > 0)
+            device.turnOffAll();
 
         //计算平均时间
         int totalTime = 0;
-        for (Map<String, Object> time : timeList)
+        for (TimeInfo info : timeList)
         {
-            if (time.get("time") != null)
-                totalTime += (int) time.get("time");
+            totalTime += info.getTime();
         }
         totalTime += lostTimes * overTime;
         Log.d(Constant.LOG_TAG, totalTime + "");
-        tvAverageTime.setText(new DecimalFormat("0.00").format((totalTime * 1.0 /
-                timeList.size())) + "毫秒");
+        tvAverageTime.setText(new DecimalFormat("0.00").format((totalTime * 1.0 / timeList.size())) + "毫秒");
+        //暂停0.5秒,等全部数据返回结束接收线程
+        Timer.sleep(500);
+        //结束接收返回灭灯时间线程
+        ReceiveThread.stopThread();
+        Timer.sleep(500);
+        // 发送获取全部设备电量指令
+        device.sendGetPowerOrder();
+        //开启接收电量的线程
+        new ReceiveThread(handler, device.ftDev, ReceiveThread.POWER_RECEIVE_THREAD,
+                POWER_RECEIVE).start();
     }
 
     //开灯
@@ -442,20 +456,9 @@ public class RandomTrainingActivity extends Activity
     private void turnOffLight()
     {
         device.turnOffLight(currentLight);
-        Map<String, Object> map = new HashMap<>();
-
-        map.put("deviceNum", currentLight);
-        timeList.add(map);
-        Message msg = new Message();
-        msg.what = CHANGE_TIME_LIST;
-        handler.sendMessage(msg);
-
-        if (currentTimes == totalTimes)
-        {
-            Message msg1 = new Message();
-            msg1.what = STOP_TRAINING;
-            handler.sendMessage(msg1);
-        }
+        TimeInfo info = new TimeInfo();
+        info.setDeviceNum(currentLight);
+        timeList.add(info);
     }
 
     //超时线程
@@ -490,44 +493,6 @@ public class RandomTrainingActivity extends Activity
                 {
                     e.printStackTrace();
                 }
-            }
-        }
-    }
-
-    //计时线程
-    private class TimerThread extends Thread
-    {
-        @Override
-        public void run()
-        {
-            super.run();
-            while (true)
-            {
-                timer += 50;
-                //刷新界面
-                Message msg = new Message();
-                msg.what = CHANGE_TIME_LIST;
-                handler.sendMessage(msg);
-
-                //训练结束计时结束
-                if (trainingFlag == false)
-                    break;
-                if (timer >= trainingTime)
-                {
-                    Message msg1 = new Message();
-                    msg1.what = STOP_TRAINING;
-                    handler.sendMessage(msg1);
-                    break;
-                }
-
-                try
-                {
-                    Thread.sleep(50);
-                } catch (InterruptedException e)
-                {
-                    e.printStackTrace();
-                }
-
             }
         }
     }

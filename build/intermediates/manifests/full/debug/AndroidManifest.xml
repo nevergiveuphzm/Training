@@ -10,7 +10,13 @@
 
     <uses-feature android:name="android.hardware.usb.host" />
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
+        android:name="com.oucb303.training.App"
         android:allowBackup="true"
         android:icon="@mipmap/appicon"
         android:label="@string/app_name"
@@ -42,6 +48,19 @@
         <activity
             android:name="com.oucb303.training.activity.SequenceTrainingActivity"
             android:windowSoftInputMode="stateUnchanged|adjustPan" />
+        <activity
+            android:name="com.oucb303.training.activity.TrainingListActivity"
+            android:windowSoftInputMode="stateUnchanged|adjustPan" />
+        <activity android:name="com.oucb303.training.activity.ShuttleRunActivity" >
+        </activity>
+        <activity android:name="com.oucb303.training.activity.VideoActivity" >
+        </activity>
+        <activity
+            android:name="io.vov.vitamio.activity.InitActivity"
+            android:configChanges="orientation|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
     </application>
 
 </manifest>

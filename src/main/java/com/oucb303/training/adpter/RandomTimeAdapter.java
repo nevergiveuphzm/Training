@@ -8,9 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.oucb303.training.R;
+import com.oucb303.training.model.TimeInfo;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by huzhiming on 16/9/26.
@@ -19,11 +19,11 @@ import java.util.Map;
 
 public class RandomTimeAdapter extends BaseAdapter
 {
-    private List<Map<String, Object>> timeList;
+    private List<TimeInfo> timeList;
     private Context context;
     private LayoutInflater inflater;
 
-    public RandomTimeAdapter(Context context, List<Map<String, Object>> list)
+    public RandomTimeAdapter(Context context, List<TimeInfo> list)
     {
         this.timeList = list;
         this.context = context;
@@ -54,19 +54,19 @@ public class RandomTimeAdapter extends BaseAdapter
     @Override
     public View getView(int i, View view, ViewGroup viewGroup)
     {
-        View v = inflater.inflate(R.layout.sample_time, null);
+        View v = inflater.inflate(R.layout.item_statistics_time, null);
         TextView num = (TextView) v.findViewById(R.id.tv_num);
         TextView time = (TextView) v.findViewById(R.id.tv_time);
         TextView note = (TextView) v.findViewById(R.id.tv_note);
         num.setText((i + 1) + "");
-        if (timeList.get(i).get("time") == null)
+        if (timeList.get(i).getTime() == 0)
         {
             time.setText("---");
             note.setText("超时");
         }
         else
         {
-            time.setText(timeList.get(i).get("time").toString() + "毫秒");
+            time.setText(timeList.get(i).getTime() + "毫秒");
             note.setText("---");
         }
         return v;

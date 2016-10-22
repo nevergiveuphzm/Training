@@ -9,9 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.oucb303.training.R;
+import com.oucb303.training.model.PowerInfo;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by huzhiming on 16/9/23.
@@ -20,21 +20,21 @@ import java.util.Map;
 
 public class PowerAdapter extends BaseAdapter
 {
-    private List<Map<String, Object>> powerInfos;
+    private List<PowerInfo> powerInfos;
     private LayoutInflater inflater = null;
 
-    public PowerAdapter(Context context, List<Map<String, Object>> powerInfos)
+    public PowerAdapter(Context context, List<PowerInfo> powerInfos)
     {
         this.powerInfos = powerInfos;
         this.inflater = LayoutInflater.from(context);
     }
 
-    public List<Map<String, Object>> getPowerInfos()
+    public List<PowerInfo> getPowerInfos()
     {
         return powerInfos;
     }
 
-    public void setPowerInfos(List<Map<String, Object>> powerInfos)
+    public void setPowerInfos(List<PowerInfo> powerInfos)
     {
         this.powerInfos = powerInfos;
     }
@@ -62,14 +62,14 @@ public class PowerAdapter extends BaseAdapter
     @Override
     public View getView(int i, View view, ViewGroup viewGroup)
     {
-        View view1 = inflater.inflate(R.layout.sample_power, null);
+        View view1 = inflater.inflate(R.layout.item_power, null);
         TextView tvDeviceNum = (TextView) view1.findViewById(R.id.tv_device_num);
         TextView tvPower = (TextView) view1.findViewById(R.id.tv_power);
         ImageView imgPower = (ImageView) view1.findViewById(R.id.img_power);
 
-        tvDeviceNum.setText("设备" + powerInfos.get(i).get("deviceNum"));
-        tvPower.setText(powerInfos.get(i).get("power") + "0%");
-        switch ((int) powerInfos.get(i).get("power"))
+        tvDeviceNum.setText("设备" + powerInfos.get(i).getDeviceNum());
+        tvPower.setText(powerInfos.get(i).getPower() + "0%");
+        switch (powerInfos.get(i).getPower())
         {
             case 0:
                 imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim8);

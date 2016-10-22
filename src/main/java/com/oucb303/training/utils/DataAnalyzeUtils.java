@@ -6,11 +6,11 @@ import android.content.DialogInterface;
 import android.util.Log;
 
 import com.oucb303.training.model.Constant;
+import com.oucb303.training.model.PowerInfo;
+import com.oucb303.training.model.TimeInfo;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,13 +22,13 @@ import java.util.regex.Pattern;
 public class DataAnalyzeUtils
 {
     //解析返回的电量信息
-    public static List<Map<String, Object>> analyzePowerData(String data, Context context)
+    public static List<PowerInfo> analyzePowerData(String data, Context context)
     {
-        List<Map<String, Object>> powerInfos = new ArrayList<>();
+        List<PowerInfo> powerInfos = new ArrayList<>();
         //低电量设备
         List<String> lowPowerDevice = new ArrayList<>();
         String data_time = data;
-        Log.d(Constant.LOG_TAG, data);
+        Log.d(Constant.LOG_TAG, "origin Power Data" + data);
         for (int i = 0; i < data_time.length(); i++)
         {
             if (data_time.charAt(i) == '#')
@@ -40,19 +40,32 @@ public class DataAnalyzeUtils
                 //电量
                 int power = new Integer(data_time.substring(i + 6, i + digit));
                 System.out.println(digit + "-" + num + "-" + power);
-                if (power >= 59)
+                boolean exist = false;
+                //检测设备是否已经添加到数组中
+                for (PowerInfo info : powerInfos)
                 {
-                    power = 59;
+                    if (info.getDeviceNum() == num.charAt(0))
+                    {
+                        exist = true;
+                        break;
+                    }
                 }
-                else if (power <= 49)
+                if (!exist)
                 {
-                    lowPowerDevice.add(num);
-                    continue;
+                    if (power >= 59)
+                    {
+                        power = 59;
+                    }
+                    else if (power <= 49)
+                    {
+                        lowPowerDevice.add(num);
+                        continue;
+                    }
+                    PowerInfo info = new PowerInfo();
+                    info.setDeviceNum(num.charAt(0));
+                    info.setPower(power - 49);
+                    powerInfos.add(info);
                 }
-                Map<String, Object> map = new HashMap<>();
-                map.put("deviceNum", num.charAt(0));
-                map.put("power", power - 49);
-                powerInfos.add(map);
             }
         }
 
@@ -78,10 +91,10 @@ public class DataAnalyzeUtils
         return powerInfos;
     }
 
-    public static List<Map<String, Object>> analyzeTimeData(String data)
+    public static List<TimeInfo> analyzeTimeData(String data)
     {
-        Log.d(Constant.LOG_TAG, "origin Data:" + data);
-        List<Map<String, Object>> timeList = new ArrayList<>();
+        Log.d(Constant.LOG_TAG, "origin Time Data:" + data);
+        List<TimeInfo> timeList = new ArrayList<>();
         for (int i = 0; i < data.length(); i++)
         {
             if (data.charAt(i) == '#' && (data.length() - i) >= 7)
@@ -111,11 +124,11 @@ public class DataAnalyzeUtils
                 //时间
                 int time = new Integer(str3);
                 //Log.d(Constant.LOG_TAG, digit + "-" + num + "-" + time);
-                Map<String, Object> map = new HashMap<>();
-                map.put("deviceNum", num.charAt(0));
-                map.put("time", time);
-                timeList.add(map);
-                break;
+                TimeInfo timeInfo = new TimeInfo();
+                timeInfo.setDeviceNum(num.charAt(0));
+                timeInfo.setTime(time);
+                timeList.add(timeInfo);
+                //break;
             }
         }
         return timeList;
