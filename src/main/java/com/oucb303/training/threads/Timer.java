@@ -3,6 +3,8 @@ package com.oucb303.training.threads;
 import android.os.Handler;
 import android.os.Message;
 
+import java.text.DecimalFormat;
+
 /**
  * Created by huzhiming on 16/10/13.
  * Description：
@@ -45,8 +47,9 @@ public class Timer extends Thread
             int second = (time / 1000) % 60;
             int msec = time % 1000;
             String res = "";
-            res += minute == 0 ? "" : minute + ":";
-            res += second + ":" + msec / 10;
+            res += new DecimalFormat("00").format(minute) + ":";
+            res += new DecimalFormat("00").format(second) + ":";
+            res += new DecimalFormat("00").format(msec / 10);
             Message msg = new Message();
             msg.what = TIMER_FLAG;
             msg.obj = res;

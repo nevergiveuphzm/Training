@@ -112,7 +112,7 @@
                     </LinearLayout>
 
                     <ListView
-                        android:id="@+id/ll_group"
+                        android:id="@+id/lv_group"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scrollbars="none">

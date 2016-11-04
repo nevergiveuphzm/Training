@@ -75,7 +75,7 @@ public class HorizonListViewAdapter extends BaseAdapter
         }
         if (list_light.get(position).isChecked())
         {
-            holder.ll_image.setBackgroundResource(R.drawable.aerow_winter);
+            holder.ll_image.setBackgroundResource(R.drawable.light);
 
             holder.tv_num.setText("" + list_light.get(position).getNum());
         }

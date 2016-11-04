@@ -49,8 +49,6 @@ public class ShuttleRunActivity extends AppCompatActivity
     Spinner spGroupNum;
     @Bind(R.id.img_help)
     ImageView imgHelp;
-    @Bind(R.id.ll_group)
-    ListView llGroup;
     @Bind(R.id.sv_container)
     ScrollView svContainer;
     @Bind(R.id.img_action_mode_touch)
@@ -77,6 +75,8 @@ public class ShuttleRunActivity extends AppCompatActivity
     private final int POWER_RECEIVE = 2;
     @Bind(R.id.lv_times)
     ListView lvTimes;
+    @Bind(R.id.lv_group)
+    ListView lvGroup;
     //做多分组数目
     private int maxGroupNum;
     //每组所需设备个数
@@ -131,7 +131,6 @@ public class ShuttleRunActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shuttle_run);
         ButterKnife.bind(this);
-        test();
         device = new Device(this);
         device.createDeviceList(this);
         // 判断是否插入协调器，
@@ -221,9 +220,9 @@ public class ShuttleRunActivity extends AppCompatActivity
 
         ///初始化分组listView
         groupListViewAdapter = new GroupListViewAdapter(ShuttleRunActivity.this, groupSize);
-        llGroup.setAdapter(groupListViewAdapter);
+        lvGroup.setAdapter(groupListViewAdapter);
         //解决listView 与scrollView的滑动冲突
-        llGroup.setOnTouchListener(new View.OnTouchListener()
+        lvGroup.setOnTouchListener(new View.OnTouchListener()
         {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent)
@@ -345,8 +344,7 @@ public class ShuttleRunActivity extends AppCompatActivity
                 {
                     //时间数据无效
                     info.setValid(false);
-                }
-                else
+                } else
                 {
                     if (groupTimes.get(0).getDeviceNum() == info.getDeviceNum())
                         groupTrainingTimes[groupId][0] += 1;
@@ -357,8 +355,7 @@ public class ShuttleRunActivity extends AppCompatActivity
             if (groupTrainingTimes[groupId][0] == trainingTimes)
             {
                 groupTrainingTimes[groupId][1] = (int) (System.currentTimeMillis() - startTime);
-            }
-            else
+            } else
                 turnLight(info.getDeviceNum());
         }
         shuttleRunAdapter.notifyDataSetChanged();
@@ -405,8 +402,6 @@ public class ShuttleRunActivity extends AppCompatActivity
         menu.setMode(SlidingMenu.LEFT);
         // 设置触摸屏幕的模式
         menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-        //menu.setShadowWidthRes(R.dimen.shadow_width);
-        // menu.setShadowDrawable(R.drawable.shadow);
         // 设置滑动菜单视图的宽度
         menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
         //设置渐入渐出效果的值
@@ -423,16 +418,5 @@ public class ShuttleRunActivity extends AppCompatActivity
         ft.commit();
     }
 
-    public void test()
-    {
-        int a = 0xFF;
-        int b = 0x08;
-        String res = (char) a + "" + (char) b;
-
-        String s = res;
-        for (int i = 0; i < s.length(); i++)
-            Log.d("AAAAA", ((int) s.charAt(i)) + "");
-        //Log.d("AAAAA", res);
-    }
 
 }

@@ -133,8 +133,7 @@ public class MainActivity extends Activity
             device.initConfig();
             sendGetPowerOrder();
             btnCheck.setEnabled(true);
-        }
-        else
+        } else
         {
             btnCheck.setEnabled(false);
             // 未检测到协调器
@@ -256,8 +255,7 @@ public class MainActivity extends Activity
                 powerAdapter.notifyDataSetChanged();
                 Log.i("AAA", powerInfos.size() + "");
             }
-        }
-        else
+        } else
         {
             //此时是没有可用设备，弹出对话框，可以点击取消，或是点击重新检测
             // 将主界面上所有的电量置为不可见

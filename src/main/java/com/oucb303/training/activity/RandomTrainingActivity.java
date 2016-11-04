@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.oucb303.training.R;
 import com.oucb303.training.adpter.RandomTimeAdapter;
 import com.oucb303.training.device.Device;
-import com.oucb303.training.listener.ChangeBarClickListener;
+import com.oucb303.training.listener.AddOrSubBtnClickListener;
 import com.oucb303.training.listener.CheckBoxClickListener;
 import com.oucb303.training.listener.MySeekBarListener;
 import com.oucb303.training.model.CheckBox;
@@ -39,7 +39,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by baichangcai on 2016/9/7.
+ * 随机训练
  */
 public class RandomTrainingActivity extends Activity
 {
@@ -270,9 +270,9 @@ public class RandomTrainingActivity extends Activity
             llTrainingTime.setVisibility(View.GONE);
             barTrainingTimes.setOnSeekBarChangeListener(new MySeekBarListener
                     (tvTrainingTimes, 500));
-            imgTrainingTimesSub.setOnTouchListener(new ChangeBarClickListener
+            imgTrainingTimesSub.setOnTouchListener(new AddOrSubBtnClickListener
                     (barTrainingTimes, 0));
-            imgTrainingTimesAdd.setOnTouchListener(new ChangeBarClickListener
+            imgTrainingTimesAdd.setOnTouchListener(new AddOrSubBtnClickListener
                     (barTrainingTimes, 1));
         }
         else
@@ -282,22 +282,22 @@ public class RandomTrainingActivity extends Activity
             llTrainingTime.setVisibility(View.VISIBLE);
             barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener
                     (tvTrainingTime, 30));
-            imgTrainingTimeSub.setOnTouchListener(new ChangeBarClickListener
+            imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener
                     (barTrainingTime, 0));
-            imgTrainingTimeAdd.setOnTouchListener(new ChangeBarClickListener
+            imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener
                     (barTrainingTime, 1));
         }
         //设置seekbar 拖动事件的监听器
         barDelayTime.setOnSeekBarChangeListener(new MySeekBarListener(tvDelayTime, 10));
         barOverTime.setOnSeekBarChangeListener(new MySeekBarListener(tvOverTime, 30));
         //设置加减按钮的监听事件
-        imgDelayTimeSub.setOnTouchListener(new ChangeBarClickListener
+        imgDelayTimeSub.setOnTouchListener(new AddOrSubBtnClickListener
                 (barDelayTime, 0));
-        imgDelayTimeAdd.setOnTouchListener(new ChangeBarClickListener
+        imgDelayTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener
                 (barDelayTime, 1));
-        imgOverTimeSub.setOnTouchListener(new ChangeBarClickListener
+        imgOverTimeSub.setOnTouchListener(new AddOrSubBtnClickListener
                 (barOverTime, 0));
-        imgOverTimeAdd.setOnTouchListener(new ChangeBarClickListener
+        imgOverTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener
                 (barOverTime, 1));
         //设定感应模式checkBox组合的点击事件
         ImageView[] views = new ImageView[]{imgActionModeTouch, imgActionModeLight,
@@ -320,7 +320,7 @@ public class RandomTrainingActivity extends Activity
                 if (!device.checkDevice(RandomTrainingActivity.this))
                     return;
                 if (!trainingFlag)
-                    beginTraining();
+                    startTraining();
                 else
                     stopTraining();
                 break;
@@ -346,7 +346,7 @@ public class RandomTrainingActivity extends Activity
     }
 
     //开始训练
-    public void beginTraining()
+    public void startTraining()
     {
         //训练开始
         trainingFlag = true;

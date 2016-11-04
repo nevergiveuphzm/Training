@@ -13,7 +13,7 @@
         android:clickable="true"
         android:gravity="center"
         android:orientation="horizontal"
-        android:background="@drawable/aerow_winter">
+        android:background="@drawable/light">
 
 
         <TextView

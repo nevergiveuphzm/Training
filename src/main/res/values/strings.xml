@@ -8,7 +8,7 @@
     <string name="btn_levelthree">水平三</string>
     <string name="btn_levelforth">水平四</string>
 
-    <string name="btn_mainactivity_set">设   置</string>
+    <string name="btn_mainactivity_set">学生信息</string>
     <string name="btn_mainactivity_check">设备检测</string>
     <string name="randomsequenceset">随机序列设置</string>
     <string name="randomsequenceresult">随机序列结果</string>

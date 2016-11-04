@@ -231,7 +231,7 @@
                         android:layout_height="fill_parent"
                         android:layout_weight="3"
                         android:background="@drawable/bt_orange"
-                        android:text="@string/btn_mainactivity_set"
+                        android:text="设置"
                         android:textSize="25sp"/>
 
                     <View

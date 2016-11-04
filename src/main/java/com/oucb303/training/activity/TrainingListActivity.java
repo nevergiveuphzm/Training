@@ -32,11 +32,11 @@ public class TrainingListActivity extends Activity
 
     private Object[][] items = {
             //项目名称、项目描述、项目图标、项目id、项目所属水平等级
-            {"折返跑", "描述1", R.drawable.zfp, 1, "1 2"},
-            {"纵跳摸高", "描述1", R.drawable.bg_activity_main, 2, "1 2 3 4"},
-            {"仰卧起坐", "描述1", R.drawable.ywqz, 3, "2 3"},
-            {"换物跑", "描述1", R.drawable.aerow_winter, 4, "3 4"},
-            {"运球比赛", "描述1", R.drawable.btn_uncheckbox, 5, "1 2 3"}
+            {"折返跑", "描述1", R.drawable.run, 1, "1 2"},
+            {"纵跳摸高", "描述1", R.drawable.jump, 2, "1 2 3 4"},
+            {"仰卧起坐", "描述1", R.drawable.ywqz, 3, "1 2 3"},
+            {"换物跑", "描述1", R.drawable.bwp, 4, "1 3 4"},
+            {"运球比赛", "描述1", R.drawable.ball, 5, "1 2 3"}
     };
 
     @Override
@@ -72,6 +72,9 @@ public class TrainingListActivity extends Activity
                     case 2:
                         break;
                     case 3:
+                        intent.setClass(TrainingListActivity.this, SitUpsActivity.class);
+                        intent.putExtra("level", level);
+                        startActivity(intent);
                         break;
                 }
             }

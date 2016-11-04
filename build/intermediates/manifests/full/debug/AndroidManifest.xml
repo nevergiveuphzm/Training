@@ -55,6 +55,8 @@
         </activity>
         <activity android:name="com.oucb303.training.activity.VideoActivity" >
         </activity>
+        <activity android:name="com.oucb303.training.activity.SitUpsActivity" >
+        </activity>
         <activity
             android:name="io.vov.vitamio.activity.InitActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation"

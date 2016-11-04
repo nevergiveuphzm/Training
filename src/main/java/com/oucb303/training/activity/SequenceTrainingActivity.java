@@ -23,7 +23,7 @@ import com.oucb303.training.adpter.HorizonListViewAdapter;
 import com.oucb303.training.adpter.LightGridViewAdapter;
 import com.oucb303.training.adpter.SequenceSetListViewAdapter;
 import com.oucb303.training.daoservice.SequenceSer;
-import com.oucb303.training.listener.ChangeBarClickListener;
+import com.oucb303.training.listener.AddOrSubBtnClickListener;
 import com.oucb303.training.listener.CheckBoxClickListener;
 import com.oucb303.training.listener.MySeekBarListener;
 import com.oucb303.training.model.CheckBox;
@@ -42,7 +42,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by baichangcai on 2016/9/18.
+ * 序列编程
  */
 public class SequenceTrainingActivity extends Activity
 {
@@ -280,12 +280,12 @@ public class SequenceTrainingActivity extends Activity
         barDelayTime.setOnSeekBarChangeListener(new SequenceSeekBarChangeListener(tvDelayTime, 10));
         barOverTime.setOnSeekBarChangeListener(new SequenceSeekBarChangeListener(tvOverTime, 30));
         //设置加减按钮的监听事件
-        imgDistanceSub.setOnTouchListener(new ChangeBarClickListener(barDistance, 0));
-        imgDistanceAdd.setOnTouchListener(new ChangeBarClickListener(barDistance, 1));
-        imgDelayTimeSub.setOnTouchListener(new ChangeBarClickListener(barDelayTime, 0));
-        imgDelayTimeAdd.setOnTouchListener(new ChangeBarClickListener(barDelayTime, 1));
-        imgOverTimeSub.setOnTouchListener(new ChangeBarClickListener(barOverTime, 0));
-        imgOverTimeAdd.setOnTouchListener(new ChangeBarClickListener(barOverTime, 1));
+        imgDistanceSub.setOnTouchListener(new AddOrSubBtnClickListener(barDistance, 0));
+        imgDistanceAdd.setOnTouchListener(new AddOrSubBtnClickListener(barDistance, 1));
+        imgDelayTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 0));
+        imgDelayTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 1));
+        imgOverTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barOverTime, 0));
+        imgOverTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barOverTime, 1));
         //设定感应模式checkBox组合的点击事件
         ImageView[] views = new ImageView[]{imgActionModeTouch, imgActionModeLight,
                 imgActionModeTogether};
