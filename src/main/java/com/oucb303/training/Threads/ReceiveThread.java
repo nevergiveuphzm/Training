@@ -58,7 +58,7 @@ public class ReceiveThread extends Thread
                 readData();
                 try
                 {
-                    Thread.sleep(15);
+                    Thread.sleep(10);
                 } catch (InterruptedException e)
                 {
                     e.printStackTrace();

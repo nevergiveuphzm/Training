@@ -478,14 +478,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="犯规次数"
-                    android:textSize="18sp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="总时间"
+                    android:text="备注"
                     android:textSize="18sp"/>
             </LinearLayout>
 

@@ -114,8 +114,7 @@ public class Device
         if (null == ftDev)
         {
             ftDev = ftdid2xx.openByIndex(context, index);
-        }
-        else
+        } else
         {
             synchronized (ftDev)
             {
@@ -139,8 +138,7 @@ public class Device
             {
                 devCount = tempDevCount;
             }
-        }
-        else
+        } else
         {
             devCount = -1;
             index = -1;
@@ -168,6 +166,7 @@ public class Device
     public void turnOnLight(char num)
     {
         String data = "#06@" + num + "a";
+        Log.d(Constant.LOG_TAG, "turn on the light:" + num);
         sendMessage(data);
     }
 
@@ -175,12 +174,14 @@ public class Device
     public void turnOffLight(char num)
     {
         String data = "#06@" + num + "b";
+        Log.d(Constant.LOG_TAG, "turn off the light:" + num);
         sendMessage(data);
     }
 
     // 开所有的灯
     public void turnOnAllLight()
     {
+        Log.d(Constant.LOG_TAG, "turn on all the light");
         String data = "#06@Za";
         sendMessage(data);
     }
@@ -188,8 +189,16 @@ public class Device
     // 关所有的灯
     public void turnOffAll()
     {
+        Log.d(Constant.LOG_TAG, "turn off all the light");
         String data = "#06@Zb";
         sendMessage(data);
+    }
+
+    public void sendOrder(String lightIds, Order.LightColor color, Order.VoiceMode voiceMode, Order.BlinkModel blinkModel,
+                          Order.LightModel lightModel, Order.ActionModel actionModel)
+    {
+        String order = Order.getOrder(lightIds, color, voiceMode, blinkModel, lightModel, actionModel);
+        sendMessage(order);
     }
 
     private void sendMessage(String data)

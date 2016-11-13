@@ -59,7 +59,6 @@ public class MainActivity extends Activity
     private Device device;
     private final int POWER_RECEIVE = 1;
     private PowerAdapter powerAdapter;
-    private ProgressDialog progressDialog;
 
 
     Handler handler = new Handler()
@@ -72,7 +71,6 @@ public class MainActivity extends Activity
                 case POWER_RECEIVE:
                     String data = msg.obj.toString();
                     readPowerData(data);
-                    progressDialog.dismiss();
                     break;
             }
         }
@@ -116,10 +114,6 @@ public class MainActivity extends Activity
         btnCheck.setEnabled(false);
         powerAdapter = new PowerAdapter(MainActivity.this, null);
         lvBattery.setAdapter(powerAdapter);
-
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("设备检测中...");
-        progressDialog.setCanceledOnTouchOutside(false);
     }
 
     //初始化串口
@@ -167,7 +161,8 @@ public class MainActivity extends Activity
         super.onPause();
     }
 
-    @OnClick({R.id.btn_check, R.id.btn_level_one, R.id.btn_level_two, R.id.btn_level_three, R.id.btn_level_four, R.id.btn_base_training, R.id.btn_statistic})
+    @OnClick({R.id.btn_check, R.id.btn_level_one, R.id.btn_level_two, R.id.btn_level_three,
+            R.id.btn_level_four, R.id.btn_base_training, R.id.btn_statistic,R.id.btn_test})
     public void onClick(View view)
     {
         int level = 0;
@@ -208,6 +203,11 @@ public class MainActivity extends Activity
                 break;
             case R.id.btn_statistic:
                 break;
+            case R.id.btn_test:
+                intent = new Intent();
+                intent.setClass(MainActivity.this, TestActivity.class);
+                startActivity(intent);
+                break;
         }
     }
 
@@ -215,7 +215,6 @@ public class MainActivity extends Activity
     // 获得所有设备电量
     public void sendGetPowerOrder()
     {
-        progressDialog.show();
         //清空电量列表
         powerAdapter.setPowerInfos(null);
         powerAdapter.notifyDataSetChanged();

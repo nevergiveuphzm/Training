@@ -7,7 +7,7 @@
     <dimen name="param_level1_font_size">25sp</dimen>
     <dimen name="param_level2_font_size">23sp</dimen>
     <dimen name="para_level3_font_size">20sp</dimen>
-    <dimen name="para_level4_font_size">18sp</dimen>
+    <dimen name="para_level4_font_size">16sp</dimen>
 
     <dimen name="slidingmenu_offset">1000dp</dimen>
 </resources>

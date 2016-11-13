@@ -40,6 +40,10 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 折返跑
+ */
+
 public class ShuttleRunActivity extends AppCompatActivity
 {
 
@@ -325,7 +329,6 @@ public class ShuttleRunActivity extends AppCompatActivity
                 Log.d(Constant.LOG_TAG, "turn on light :" + c);
             }
         }).start();
-
     }
 
     //解析返回来的时间数据
@@ -334,6 +337,8 @@ public class ShuttleRunActivity extends AppCompatActivity
         for (TimeInfo info : infos)
         {
             int groupId = findDeviceGroupId(info.getDeviceNum());
+            if (groupId>=groupNum)
+                continue;
             Log.d(Constant.LOG_TAG, info.getDeviceNum() + " groupId:" + groupId);
             List<TimeInfo> groupTimes = timeList[groupId];
             if (groupTimes.size() != 0)

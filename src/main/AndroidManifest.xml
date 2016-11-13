@@ -48,6 +48,8 @@
         </activity>
         <activity android:name=".activity.SitUpsActivity">
         </activity>
+        <activity android:name=".activity.TestActivity">
+        </activity>
     </application>
 
 </manifest>

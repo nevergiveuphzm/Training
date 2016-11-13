@@ -76,6 +76,11 @@ public class TrainingListActivity extends Activity
                         intent.putExtra("level", level);
                         startActivity(intent);
                         break;
+                    case 4:
+                        intent.setClass(TrainingListActivity.this, RandomTrainingActivity.class);
+                        intent.putExtra("level", level);
+                        startActivity(intent);
+                        break;
                 }
             }
         });
