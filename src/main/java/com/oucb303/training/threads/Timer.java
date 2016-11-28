@@ -50,7 +50,7 @@ public class Timer extends Thread
             res += new DecimalFormat("00").format(minute) + ":";
             res += new DecimalFormat("00").format(second) + ":";
             res += new DecimalFormat("00").format(msec / 10);
-            Message msg = new Message();
+            Message msg = Message.obtain();
             msg.what = TIMER_FLAG;
             msg.obj = res;
             handler.sendMessage(msg);

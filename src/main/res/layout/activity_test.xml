@@ -22,6 +22,13 @@
             android:orientation="vertical"
             android:padding="10dp">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="设备灯调试"
+                android:textSize="@dimen/para_level3_font_size"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -36,9 +43,9 @@
 
                 <EditText
                     android:id="@+id/et_light_id"
-                    android:layout_width="250dp"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:hint="可输入多个编号,如:ABCD"/>
+                    android:hint="如:ABCD"/>
 
             </LinearLayout>
 
@@ -56,7 +63,7 @@
 
                 <Spinner
                     android:id="@+id/sp_color"
-                    android:layout_width="250dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/spinner">
 
@@ -78,7 +85,7 @@
 
                 <Spinner
                     android:id="@+id/sp_voice"
-                    android:layout_width="250dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/spinner">
 
@@ -100,7 +107,7 @@
 
                 <Spinner
                     android:id="@+id/sp_blink"
-                    android:layout_width="250dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/spinner">
 
@@ -123,7 +130,7 @@
 
                 <Spinner
                     android:id="@+id/sp_light"
-                    android:layout_width="250dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/spinner">
 
@@ -146,7 +153,7 @@
 
                 <Spinner
                     android:id="@+id/sp_action_model"
-                    android:layout_width="250dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/spinner">
 
@@ -154,6 +161,27 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="扑灭时响:"/>
+
+                <CheckBox
+                    android:id="@+id/cb_end_voice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""/>
+
+
+            </LinearLayout>
 
 
             <LinearLayout
@@ -174,12 +202,220 @@
                     android:layout_height="wrap_content"
                     android:text="清空"/>
             </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/tab_base_color">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:text="序号"
+                    android:textSize="@dimen/para_level3_font_size"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:text="时间"
+                    android:textSize="@dimen/para_level3_font_size"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:text="灯编号"
+                    android:textSize="@dimen/para_level3_font_size"/>
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/lv_times"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </ListView>
+
+        </LinearLayout>
+
+        <include layout="@layout/layout_line_vertical"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="设备初始化"
+                android:textSize="@dimen/para_level3_font_size"/>
+
+
+            <Button
+                android:id="@+id/btn_get_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="获取设备短地址"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="短地址:"/>
+
+                <Spinner
+                    android:id="@+id/sp_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/spinner">
+
+                </Spinner>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PAN_ID:"/>
+
+                <EditText
+                    android:id="@+id/et_pan_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLength="4"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="设备编号:"/>
+
+                <EditText
+                    android:id="@+id/et_light_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLength="1"/>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_change"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="修改"/>
+
+
+            <include layout="@layout/layout_line_horizontal"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="协调器PAN_ID:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <EditText
+                    android:maxLength="4"
+                    android:id="@+id/et_pan_id1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <Button
+                android:text="修改"
+                android:id="@+id/btn_change1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/tab_base_color"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:text="编号"
+                    android:textSize="@dimen/para_level3_font_size"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:text="短地址"
+                    android:textSize="@dimen/para_level3_font_size"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:text="编号"
+                    android:textSize="@dimen/para_level3_font_size"/>
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/lv_address"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </ListView>
+
 
         </LinearLayout>
 

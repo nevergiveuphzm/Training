@@ -48,7 +48,13 @@
         </activity>
         <activity android:name=".activity.SitUpsActivity">
         </activity>
-        <activity android:name=".activity.TestActivity">
+        <activity
+            android:name=".activity.TestActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize">
+        </activity>
+        <activity android:name=".activity.JumpHighActivity">
+        </activity>
+        <activity android:name=".activity.GroupConfrontationActivity">
         </activity>
     </application>
 

@@ -69,14 +69,17 @@ public class TrainingListActivity extends Activity
                         intent.putExtra("level", level);
                         startActivity(intent);
                         break;
-                    case 2:
+                    case 2://纵跳摸高
+                        intent.setClass(TrainingListActivity.this,JumpHighActivity.class);
+                        intent.putExtra("level",level);
+                        startActivity(intent);
                         break;
-                    case 3:
+                    case 3://仰卧起坐
                         intent.setClass(TrainingListActivity.this, SitUpsActivity.class);
                         intent.putExtra("level", level);
                         startActivity(intent);
                         break;
-                    case 4:
+                    case 4://抱物跑
                         intent.setClass(TrainingListActivity.this, RandomTrainingActivity.class);
                         intent.putExtra("level", level);
                         startActivity(intent);

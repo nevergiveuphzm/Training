@@ -84,7 +84,7 @@ public class ReceiveThread extends Thread
                 Log.d(Constant.LOG_TAG, "origin Data: length--" + iavailable + "data--" +
                         result);
             }
-            Message msg = new Message();
+            Message msg = Message.obtain();
             msg.what = msgFlag;
             msg.obj = result;
             handler.sendMessage(msg);
@@ -94,5 +94,10 @@ public class ReceiveThread extends Thread
     public static void stopThread()
     {
         THREAD_STOP_FLAG = 1;
+    }
+
+    public void setMsgFlag(int msgFlag)
+    {
+        this.msgFlag = msgFlag;
     }
 }

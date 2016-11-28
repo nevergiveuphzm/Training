@@ -20,9 +20,11 @@ import com.oucb303.training.R;
 import com.oucb303.training.adpter.GroupListViewAdapter;
 import com.oucb303.training.adpter.SitUpsTimeListAdapter;
 import com.oucb303.training.device.Device;
+import com.oucb303.training.device.Order;
 import com.oucb303.training.listener.AddOrSubBtnClickListener;
 import com.oucb303.training.listener.CheckBoxClickListener;
 import com.oucb303.training.listener.MySeekBarListener;
+import com.oucb303.training.listener.SpinnerItemSelectedListener;
 import com.oucb303.training.model.CheckBox;
 import com.oucb303.training.model.PowerInfoComparetor;
 import com.oucb303.training.model.TimeInfo;
@@ -79,9 +81,17 @@ public class SitUpsActivity extends AppCompatActivity
     ScrollView svContainer;
     @Bind(R.id.lv_times)
     ListView lvTimes;
+    @Bind(R.id.img_light_color_blue)
+    ImageView imgLightColorBlue;
+    @Bind(R.id.img_light_color_red)
+    ImageView imgLightColorRed;
+    @Bind(R.id.img_light_color_blue_red)
+    ImageView imgLightColorBlueRed;
+    @Bind(R.id.cb_voice)
+    android.widget.CheckBox cbVoice;
 
     private Device device;
-    private CheckBox actionModeCheckBox, lightModeCheckBox;
+    private CheckBox actionModeCheckBox, lightModeCheckBox, lightColorCheckBox;
     private final int TIME_RECEIVE = 1, POWER_RECEIVER = 2;
     //训练时间  单位毫秒
     private int trainingTime;
@@ -186,15 +196,11 @@ public class SitUpsActivity extends AppCompatActivity
         //初始化分组下拉框
         if (maxGroupNum > Device.DEVICE_LIST.size() / 2)
             maxGroupNum = Device.DEVICE_LIST.size() / 2;
-        final List<String> groupNumChoose = new ArrayList<>();
-        groupNumChoose.add(" ");
+        String[] groupNumChoose = new String[maxGroupNum + 1];
+        groupNumChoose[0] = " ";
         for (int i = 1; i <= maxGroupNum; i++)
-            groupNumChoose.add(i + " 组");
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(SitUpsActivity.this,
-                android.R.layout.simple_spinner_item, groupNumChoose);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spGroupNum.setAdapter(adapter);
-        spGroupNum.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+            groupNumChoose[i] = i + " 组";
+        spGroupNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(SitUpsActivity.this, spGroupNum, groupNumChoose)
         {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
@@ -202,11 +208,6 @@ public class SitUpsActivity extends AppCompatActivity
                 groupNum = i;
                 groupListViewAdapter.setGroupNum(i);
                 groupListViewAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView)
-            {
             }
         });
 
@@ -217,15 +218,17 @@ public class SitUpsActivity extends AppCompatActivity
         imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
 
         //设定感应模式checkBox组合的点击事件
-        ImageView[] views = new ImageView[]{imgActionModeTouch, imgActionModeLight,
-                imgActionModeTogether};
-        actionModeCheckBox = new CheckBox(0, views);
+        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
+        actionModeCheckBox = new CheckBox(1, views);
         new CheckBoxClickListener(actionModeCheckBox);
         //设定灯光模式checkBox组合的点击事件
-        ImageView[] views1 = new ImageView[]{imgLightModeCenter, imgLightModeAll,
-                imgLightModeBeside};
-        lightModeCheckBox = new CheckBox(0, views1);
+        ImageView[] views1 = new ImageView[]{imgLightModeBeside, imgLightModeCenter, imgLightModeAll,};
+        lightModeCheckBox = new CheckBox(1, views1);
         new CheckBoxClickListener(lightModeCheckBox);
+        //设定灯光颜色checkBox组合的点击事件
+        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
+        lightColorCheckBox = new CheckBox(1, views2);
+        new CheckBoxClickListener(lightColorCheckBox);
 
         sitUpsTimeListAdapter = new SitUpsTimeListAdapter(this);
         lvTimes.setAdapter(sitUpsTimeListAdapter);
@@ -259,11 +262,13 @@ public class SitUpsActivity extends AppCompatActivity
         trainingTime = (int) (new Double(tvTrainingTime.getText().toString()) * 60 * 1000);
 
         //亮每组设备的第一个灯
+        String lightIds = "";
         for (int i = 0; i < groupNum; i++)
         {
-            device.turnOnLight(Device.DEVICE_LIST.get(i * 2).getDeviceNum());
-            Timer.sleep(50);
+            lightIds += Device.DEVICE_LIST.get(i * 2).getDeviceNum();
         }
+        sendOrder(lightIds);
+
         //开启接受时间线程
         new ReceiveThread(handler, device.ftDev, ReceiveThread.TIME_RECEIVE_THREAD, TIME_RECEIVE).start();
 
@@ -280,8 +285,7 @@ public class SitUpsActivity extends AppCompatActivity
         timer.stopTimer();
         //结束接收时间线程
         ReceiveThread.stopThread();
-        device.turnOffAll();
-
+        device.turnOffAllTheLight();
     }
 
     //解析时间
@@ -290,6 +294,7 @@ public class SitUpsActivity extends AppCompatActivity
         //训练已结束
         if (!isTraining)
             return;
+        String lightIds = "";
         for (TimeInfo info : infos)
         {
             int groupId = findDeviceGroupId(info.getDeviceNum());
@@ -300,9 +305,19 @@ public class SitUpsActivity extends AppCompatActivity
                 scores[groupId] += 1;
                 sitUpsTimeListAdapter.notifyDataSetChanged();
             }
-            device.turnOnLight(next);
-            Timer.sleep(50);
+            lightIds += next;
         }
+        sendOrder(lightIds);
+    }
+
+    public void sendOrder(String lightIds)
+    {
+        device.sendOrder(lightIds, Order.LightColor.values()[lightColorCheckBox.getCheckId()],
+                Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
+                Order.BlinkModel.NONE,
+                Order.LightModel.values()[lightModeCheckBox.getCheckId()],
+                Order.ActionModel.LIGHT,
+                Order.EndVoice.NONE);
     }
 
     //查找设备属于第几组

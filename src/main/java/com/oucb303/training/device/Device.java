@@ -20,6 +20,8 @@ public class Device
 {
     //设备灯列表
     public static List<PowerInfo> DEVICE_LIST = new ArrayList<>();
+    //设备短地址列表
+    public static List<Integer> DEVICE_ADDRESS = new ArrayList<>();
 
     public FT_Device ftDev;
     private D2xxManager ftdid2xx;
@@ -150,7 +152,7 @@ public class Device
     {
         Log.d(Constant.LOG_TAG, " send get All PowerInfo Order!");
         // 获取全部设备电量指令
-        String data = "#06@Zc";
+        String data = "#04c";
         if (ftDev.isOpen() == false)
         {
             Log.e("j2xx", "SendMessage: device not open");
@@ -162,46 +164,35 @@ public class Device
         ftDev.write(OutData, data.length());
     }
 
-    //开一个灯命令
-    public void turnOnLight(char num)
-    {
-        String data = "#06@" + num + "a";
-        Log.d(Constant.LOG_TAG, "turn on the light:" + num);
-        sendMessage(data);
-    }
 
-    // 关一个灯命令
-    public void turnOffLight(char num)
+    public void turnOffAllTheLight()
     {
-        String data = "#06@" + num + "b";
-        Log.d(Constant.LOG_TAG, "turn off the light:" + num);
-        sendMessage(data);
-    }
-
-    // 开所有的灯
-    public void turnOnAllLight()
-    {
-        Log.d(Constant.LOG_TAG, "turn on all the light");
-        String data = "#06@Za";
-        sendMessage(data);
-    }
-
-    // 关所有的灯
-    public void turnOffAll()
-    {
-        Log.d(Constant.LOG_TAG, "turn off all the light");
-        String data = "#06@Zb";
-        sendMessage(data);
+        //关闭全部灯
+        if (devCount > 0)
+        {
+            String ids = "";
+            for (PowerInfo info : Device.DEVICE_LIST)
+            {
+                ids += info.getDeviceNum();
+            }
+            sendOrder(ids,
+                    Order.LightColor.NONE,
+                    Order.VoiceMode.NONE,
+                    Order.BlinkModel.NONE,
+                    Order.LightModel.TURN_OFF,
+                    Order.ActionModel.TURN_OFF,
+                    Order.EndVoice.NONE);
+        }
     }
 
     public void sendOrder(String lightIds, Order.LightColor color, Order.VoiceMode voiceMode, Order.BlinkModel blinkModel,
-                          Order.LightModel lightModel, Order.ActionModel actionModel)
+                          Order.LightModel lightModel, Order.ActionModel actionModel, Order.EndVoice endVoice)
     {
-        String order = Order.getOrder(lightIds, color, voiceMode, blinkModel, lightModel, actionModel);
+        String order = Order.getOrder(lightIds, color, voiceMode, blinkModel, lightModel, actionModel, endVoice);
         sendMessage(order);
     }
 
-    private void sendMessage(String data)
+    public void sendMessage(String data)
     {
         if (ftDev.isOpen() == false)
         {
@@ -212,5 +203,4 @@ public class Device
         byte[] OutData = data.getBytes();
         ftDev.write(OutData, data.length());
     }
-
 }

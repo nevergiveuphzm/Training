@@ -18,7 +18,7 @@ public class Order
     public static enum LightColor
     {
         /*无、蓝色、红色*/
-        NONE, BLUE, RED,BLUE_RED
+        NONE, BLUE, RED, BLUE_RED
     }
 
     /*蜂鸣器*/
@@ -49,10 +49,17 @@ public class Order
         NONE, SLOW, FAST, BLINK_AND_TURN_ON
     }
 
+    /*感应毁灭时操作*/
+    public static enum EndVoice
+    {
+        /*无、扑灭时响*/
+        NONE, SHORT
+    }
+
 
     /*获取命令*/
-    public static String getOrder(String lightIds, LightColor color, VoiceMode voiceMode,BlinkModel blinkModel,
-                                  LightModel lightModel, ActionModel actionModel)
+    public static String getOrder(String lightIds, LightColor color, VoiceMode voiceMode, BlinkModel blinkModel,
+                                  LightModel lightModel, ActionModel actionModel, EndVoice endVoice)
     {
 
         String order = "*" + getLightIds(lightIds);
@@ -62,9 +69,10 @@ public class Order
 
         String str4 = orderToBinaryString(lightModel.ordinal(), 3);
         String str5 = orderToBinaryString(actionModel.ordinal(), 3);
+        String str6 = endVoice.ordinal() + "";
 
         String operation1 = "0" + str1 + str2 + str3;
-        String operation2 = "0" + str4 + str5 + "0";
+        String operation2 = "0" + str4 + str5 + str6;
 
         Log.d(Constant.LOG_TAG, "operation 1:" + operation1);
         Log.d(Constant.LOG_TAG, "operation 2:" + operation2);

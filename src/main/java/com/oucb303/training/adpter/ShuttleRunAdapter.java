@@ -21,7 +21,8 @@ public class ShuttleRunAdapter extends BaseAdapter
 {
     private List<TimeInfo>[] timeList;
     private Context context;
-    private int[][] groupTrainingTimes;
+    private int[] completedTimes;
+    private int[] finishTime;
 
     public ShuttleRunAdapter(Context context)
     {
@@ -59,7 +60,7 @@ public class ShuttleRunAdapter extends BaseAdapter
         TextView tvInvalid = (TextView) view.findViewById(R.id.tv_invalid);
         TextView tvGroupTotalTime = (TextView) view.findViewById(R.id.tv_total_time);
         tvGroupId.setText("第 " + (position + 1) + " 组");
-        tvFinishTimes.setText(groupTrainingTimes[position][0] + "");
+        tvFinishTimes.setText(completedTimes[position] + "");
         int invalid = 0;
         for (TimeInfo info : infos)
         {
@@ -67,9 +68,9 @@ public class ShuttleRunAdapter extends BaseAdapter
                 invalid++;
         }
         tvInvalid.setText(invalid + "");
-        if (groupTrainingTimes[position][1] != 0)
+        if (finishTime[position] != 0)
         {
-            int time = groupTrainingTimes[position][1];
+            int time = finishTime[position];
             int minute = time / (1000 * 60);
             int second = (time / 1000) % 60;
             int msec = time % 1000;
@@ -77,8 +78,7 @@ public class ShuttleRunAdapter extends BaseAdapter
             res += minute == 0 ? "" : minute + ":";
             res += second + ":" + msec / 10;
             tvGroupTotalTime.setText(res);
-        }
-        else
+        } else
             tvGroupTotalTime.setText("---");
 
         return view;
@@ -89,8 +89,13 @@ public class ShuttleRunAdapter extends BaseAdapter
         this.timeList = timeList;
     }
 
-    public void setGroupTrainingTimes(int[][] groupTrainingTimes)
+    public void setFinishTime(int[] finishTime)
     {
-        this.groupTrainingTimes = groupTrainingTimes;
+        this.finishTime = finishTime;
+    }
+
+    public void setCompletedTimes(int[] completedTimes)
+    {
+        this.completedTimes = completedTimes;
     }
 }

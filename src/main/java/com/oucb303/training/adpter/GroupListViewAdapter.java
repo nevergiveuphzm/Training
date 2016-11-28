@@ -34,6 +34,11 @@ public class GroupListViewAdapter extends BaseAdapter
         this.groupNum = groupNum;
     }
 
+    public void setGroupSize(int groupSize)
+    {
+        this.groupSize = groupSize;
+    }
+
     @Override
     public int getCount()
     {
@@ -65,7 +70,7 @@ public class GroupListViewAdapter extends BaseAdapter
         {
             int n = position * groupSize + i;
             //设置设备灯的分组
-            Device.DEVICE_LIST.get(n).setGroupNum(position);
+            //Device.DEVICE_LIST.get(n).setGroupNum(position);
             deviceStr += Device.DEVICE_LIST.get(n).getDeviceNum() + " ";
         }
         tvGroupDevice.setText(deviceStr);

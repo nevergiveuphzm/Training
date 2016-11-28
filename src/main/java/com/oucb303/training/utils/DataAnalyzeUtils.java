@@ -31,7 +31,7 @@ public class DataAnalyzeUtils
         Log.d(Constant.LOG_TAG, "origin Power Data" + data);
         for (int i = 0; i < data_time.length(); i++)
         {
-            if (data_time.charAt(i) == '#')
+            if (data_time.charAt(i) == '#' && data_time.charAt(i + 5) == ')')
             {
                 //数据总长度
                 int digit = new Integer(data_time.substring(i + 1, i + 3));
@@ -55,8 +55,7 @@ public class DataAnalyzeUtils
                     if (power >= 59)
                     {
                         power = 59;
-                    }
-                    else if (power <= 49)
+                    } else if (power <= 49)
                     {
                         lowPowerDevice.add(num);
                         continue;
@@ -97,7 +96,7 @@ public class DataAnalyzeUtils
         List<TimeInfo> timeList = new ArrayList<>();
         for (int i = 0; i < data.length(); i++)
         {
-            if (data.charAt(i) == '#' && (data.length() - i) >= 7)
+            if (data.charAt(i) == '#' && data.charAt(i + 5) == '(' && (data.length() - i) >= 7)
             {
                 String str1 = data.substring(i + 1, i + 3);
                 //数据总长度
@@ -132,5 +131,32 @@ public class DataAnalyzeUtils
             }
         }
         return timeList;
+    }
+
+    public static List<String> analyzeAddressData(String data)
+    {
+        Log.d(Constant.LOG_TAG, "origin address Data:" + data);
+        List<String> res = new ArrayList<>();
+        for (int i = 0; i < data.length(); i++)
+        {
+            if (data.charAt(i) == '#' && (data.length() - i) >= 7 && data.charAt(i + 5) == '*')
+            {
+                String str3 = data.substring(i + 6);
+
+                String regex = "\\d*";
+                Pattern p = Pattern.compile(regex);
+                Matcher m = p.matcher(str3);
+                while (m.find())
+                {
+                    if (!"".equals(m.group()))
+                    {
+                        str3 = m.group();
+                        break;
+                    }
+                }
+                res.add(str3);
+            }
+        }
+        return res;
     }
 }

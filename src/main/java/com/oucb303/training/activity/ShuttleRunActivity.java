@@ -23,7 +23,9 @@ import com.oucb303.training.R;
 import com.oucb303.training.adpter.GroupListViewAdapter;
 import com.oucb303.training.adpter.ShuttleRunAdapter;
 import com.oucb303.training.device.Device;
+import com.oucb303.training.device.Order;
 import com.oucb303.training.listener.CheckBoxClickListener;
+import com.oucb303.training.listener.SpinnerItemSelectedListener;
 import com.oucb303.training.model.CheckBox;
 import com.oucb303.training.model.Constant;
 import com.oucb303.training.model.PowerInfoComparetor;
@@ -81,6 +83,14 @@ public class ShuttleRunActivity extends AppCompatActivity
     ListView lvTimes;
     @Bind(R.id.lv_group)
     ListView lvGroup;
+    @Bind(R.id.img_light_color_blue)
+    ImageView imgLightColorBlue;
+    @Bind(R.id.img_light_color_red)
+    ImageView imgLightColorRed;
+    @Bind(R.id.img_light_color_blue_red)
+    ImageView imgLightColorBlueRed;
+    @Bind(R.id.cb_voice)
+    android.widget.CheckBox cbVoice;
     //做多分组数目
     private int maxGroupNum;
     //每组所需设备个数
@@ -88,19 +98,21 @@ public class ShuttleRunActivity extends AppCompatActivity
     //分组数量
     private int groupNum;
     //总的训练次数
-    private int trainingTimes;
+    private int totalTrainingTimes;
     private GroupListViewAdapter groupListViewAdapter;
     private ShuttleRunAdapter shuttleRunAdapter;
     private Device device;
     //训练开始标志
     private boolean trainingBeginFlag = false;
     //感应模式和灯光模式集合
-    private CheckBox actionModeCheckBox, lightModeCheckBox;
+    private CheckBox actionModeCheckBox, lightModeCheckBox, lightColorCheckBox;
 
     //时间数据
     private ArrayList<TimeInfo>[] timeList;
     //每组已完成的训练次数,和每组完成训练所用的时间
-    private int[][] groupTrainingTimes;
+    private int[] completedTimes;
+    //每组训练完成的时间
+    private int[] finishTime;
     private Timer timer;
     //训练开始时间
     private long startTime;
@@ -175,29 +187,22 @@ public class ShuttleRunActivity extends AppCompatActivity
 
         //初始化分组下拉框
         maxGroupNum = Device.DEVICE_LIST.size() / 2;
-        final List<String> groupNumChoose = new ArrayList<>();
-        groupNumChoose.add(" ");
+        String[] groupNumChoose = new String[maxGroupNum + 1];
+        groupNumChoose[0] = " ";
         for (int i = 1; i <= maxGroupNum; i++)
-            groupNumChoose.add(i + " 组");
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(ShuttleRunActivity.this,
-                android.R.layout.simple_spinner_item, groupNumChoose);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spGroupNum.setAdapter(adapter);
-        spGroupNum.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+            groupNumChoose[i] = (i + " 组");
+        spGroupNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(ShuttleRunActivity.this, spGroupNum, groupNumChoose)
         {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
             {
+                super.onItemSelected(adapterView, view, i, l);
                 groupNum = i;
                 groupListViewAdapter.setGroupNum(i);
                 groupListViewAdapter.notifyDataSetChanged();
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView)
-            {
-            }
         });
+
 
         //初始化训练强度下拉框
         String[] trainingOptions = new String[10];
@@ -205,22 +210,15 @@ public class ShuttleRunActivity extends AppCompatActivity
         {
             trainingOptions[i - 1] = "50米 * " + i * 2;
         }
-        ArrayAdapter<String> trainingTimesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, trainingOptions);
-        trainingTimesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spTrainingTimes.setAdapter(trainingTimesAdapter);
-        spTrainingTimes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        spTrainingTimes.setOnItemSelectedListener(new SpinnerItemSelectedListener(ShuttleRunActivity.this, spTrainingTimes, trainingOptions)
         {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
             {
-                trainingTimes = (i + 1) * 2;
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView)
-            {
+                totalTrainingTimes = (i + 1) * 2;
             }
         });
+
 
         ///初始化分组listView
         groupListViewAdapter = new GroupListViewAdapter(ShuttleRunActivity.this, groupSize);
@@ -246,15 +244,17 @@ public class ShuttleRunActivity extends AppCompatActivity
 
 
         //设定感应模式checkBox组合的点击事件
-        ImageView[] views = new ImageView[]{imgActionModeTouch, imgActionModeLight,
-                imgActionModeTogether};
-        actionModeCheckBox = new CheckBox(0, views);
+        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
+        actionModeCheckBox = new CheckBox(1, views);
         new CheckBoxClickListener(actionModeCheckBox);
         //设定灯光模式checkBox组合的点击事件
-        ImageView[] views1 = new ImageView[]{imgLightModeCenter, imgLightModeAll,
-                imgLightModeBeside};
-        lightModeCheckBox = new CheckBox(0, views1);
+        ImageView[] views1 = new ImageView[]{imgLightModeBeside, imgLightModeCenter, imgLightModeAll};
+        lightModeCheckBox = new CheckBox(1, views1);
         new CheckBoxClickListener(lightModeCheckBox);
+        //设定灯光颜色checkBox组合的点击事件
+        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
+        lightColorCheckBox = new CheckBox(1, views2);
+        new CheckBoxClickListener(lightColorCheckBox);
     }
 
     @OnClick({R.id.layout_cancel, R.id.img_help, R.id.btn_begin})
@@ -285,13 +285,30 @@ public class ShuttleRunActivity extends AppCompatActivity
         timeList = new ArrayList[groupNum];
         for (int i = 0; i < groupNum; i++)
             timeList[i] = new ArrayList<>();
-        groupTrainingTimes = new int[groupNum][2];
+        completedTimes = new int[groupNum];
+        finishTime = new int[groupNum];
         shuttleRunAdapter.setTimeList(timeList);
-        shuttleRunAdapter.setGroupTrainingTimes(groupTrainingTimes);
+        shuttleRunAdapter.setCompletedTimes(completedTimes);
+        shuttleRunAdapter.setFinishTime(finishTime);
         shuttleRunAdapter.notifyDataSetChanged();
 
         btnBegin.setText("停止");
-        device.turnOnAllLight();
+        //开全灯
+        String ids = "";
+        for (int i = 0; i < groupNum * groupSize; i++)
+        {
+            ids += Device.DEVICE_LIST.get(i).getDeviceNum();
+        }
+        Log.d(Constant.LOG_TAG, "ids:" + ids);
+        device.sendOrder(ids,
+                Order.LightColor.values()[lightColorCheckBox.getCheckId()],
+                Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
+                Order.BlinkModel.NONE,
+                Order.LightModel.values()[lightModeCheckBox.getCheckId()],
+                Order.ActionModel.LIGHT,
+                Order.EndVoice.NONE);
+
+
         //开启接收设备返回时间的监听线程
         new ReceiveThread(handler, device.ftDev, ReceiveThread.TIME_RECEIVE_THREAD, TIME_RECEIVE).start();
         startTime = System.currentTimeMillis();
@@ -307,25 +324,25 @@ public class ShuttleRunActivity extends AppCompatActivity
         btnBegin.setText("开始");
         //停止接收线程
         ReceiveThread.stopThread();
-        device.turnOffAll();
+        device.turnOffAllTheLight();
         timer.stopTimer();
     }
 
-    public void turnLight(final char c)
+    public void turnOnLight(final char c)
     {
         new Thread(new Runnable()
         {
             @Override
             public void run()
             {
-                try
-                {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e)
-                {
-                    e.printStackTrace();
-                }
-                device.turnOnLight(c);
+                Timer.sleep(1000);
+                device.sendOrder(c + "",
+                        Order.LightColor.values()[lightColorCheckBox.getCheckId()],
+                        Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
+                        Order.BlinkModel.NONE,
+                        Order.LightModel.values()[lightModeCheckBox.getCheckId()],
+                        Order.ActionModel.LIGHT,
+                        Order.EndVoice.NONE);
                 Log.d(Constant.LOG_TAG, "turn on light :" + c);
             }
         }).start();
@@ -337,7 +354,7 @@ public class ShuttleRunActivity extends AppCompatActivity
         for (TimeInfo info : infos)
         {
             int groupId = findDeviceGroupId(info.getDeviceNum());
-            if (groupId>=groupNum)
+            if (groupId >= groupNum)
                 continue;
             Log.d(Constant.LOG_TAG, info.getDeviceNum() + " groupId:" + groupId);
             List<TimeInfo> groupTimes = timeList[groupId];
@@ -352,16 +369,16 @@ public class ShuttleRunActivity extends AppCompatActivity
                 } else
                 {
                     if (groupTimes.get(0).getDeviceNum() == info.getDeviceNum())
-                        groupTrainingTimes[groupId][0] += 1;
+                        completedTimes[groupId] += 1;
                 }
             }
             groupTimes.add(info);
             //该组训练结束
-            if (groupTrainingTimes[groupId][0] == trainingTimes)
+            if (completedTimes[groupId] == totalTrainingTimes)
             {
-                groupTrainingTimes[groupId][1] = (int) (System.currentTimeMillis() - startTime);
+                finishTime[groupId] = (int) (System.currentTimeMillis() - startTime);
             } else
-                turnLight(info.getDeviceNum());
+                turnOnLight(info.getDeviceNum());
         }
         shuttleRunAdapter.notifyDataSetChanged();
         if (isTrainingOver())
@@ -390,7 +407,7 @@ public class ShuttleRunActivity extends AppCompatActivity
         for (int i = 0; i < groupNum; i++)
         {
             //只要有一组训练没完成 则训练就未结束
-            if (groupTrainingTimes[i][0] < trainingTimes)
+            if (completedTimes[i] < totalTrainingTimes)
                 return false;
         }
         return true;

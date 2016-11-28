@@ -31,7 +31,7 @@ public class CheckBoxClickListener implements View.OnClickListener
         {
             if (checkBox.getViews()[i].getId() == view.getId())
             {
-                checkBox.setCheckId(i);
+                checkBox.setCheckId(i+1);
             }
         }
         changeState();
@@ -41,7 +41,7 @@ public class CheckBoxClickListener implements View.OnClickListener
     {
         for (int i = 0; i < checkBox.getViews().length; i++)
         {
-            if (i == checkBox.getCheckId())
+            if ((i+1) == checkBox.getCheckId())
                 checkBox.getViews()[i].setImageResource(R.drawable.btn_checkbox);
             else
                 checkBox.getViews()[i].setImageResource(R.drawable.btn_uncheckbox);

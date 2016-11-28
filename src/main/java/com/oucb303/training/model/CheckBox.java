@@ -10,7 +10,7 @@ import android.widget.ImageView;
 public class CheckBox
 {
     //被选中的id
-    private int checkId;
+    private int checkId = 1;
     private ImageView[] views;
 
     public CheckBox(int checkId, ImageView[] views)

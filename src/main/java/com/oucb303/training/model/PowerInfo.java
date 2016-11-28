@@ -21,8 +21,7 @@ public class PowerInfo
     private char deviceNum;
     //电量
     private int power;
-    //所属分组
-    private int GroupNum;
+
 
     public char getDeviceNum()
     {
@@ -44,13 +43,5 @@ public class PowerInfo
         this.power = power;
     }
 
-    public int getGroupNum()
-    {
-        return GroupNum;
-    }
 
-    public void setGroupNum(int groupNum)
-    {
-        GroupNum = groupNum;
-    }
 }

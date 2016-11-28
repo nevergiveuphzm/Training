@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.oucb303.training.R;
 import com.oucb303.training.adpter.RandomTimeAdapter;
 import com.oucb303.training.device.Device;
+import com.oucb303.training.device.Order;
 import com.oucb303.training.listener.AddOrSubBtnClickListener;
 import com.oucb303.training.listener.CheckBoxClickListener;
 import com.oucb303.training.listener.MySeekBarListener;
@@ -113,10 +114,20 @@ public class RandomTrainingActivity extends Activity
     LinearLayout llTrainingTimes;
     @Bind(R.id.img_help)
     ImageView imgHelp;
+    @Bind(R.id.cb_voice)
+    android.widget.CheckBox cbVoice;
+    @Bind(R.id.img_light_color_blue)
+    ImageView imgLightColorBlue;
+    @Bind(R.id.img_light_color_red)
+    ImageView imgLightColorRed;
+    @Bind(R.id.img_light_color_blue_red)
+    ImageView imgLightColorBlueRed;
+    @Bind(R.id.cb_end_voice)
+    android.widget.CheckBox cbEndVoice;
 
 
     //感应模式和灯光模式集合
-    private CheckBox actionModeCheckBox, lightModeCheckBox;
+    private CheckBox actionModeCheckBox, lightModeCheckBox, lightColorCheckBox;
     //接收到电量信息标志
     private final int POWER_RECEIVE = 1;
     //接收到灭灯时间标志
@@ -124,7 +135,7 @@ public class RandomTrainingActivity extends Activity
     //停止训练标志
     private final int STOP_TRAINING = 3;
     //更新时间运行次数等信息
-    private final int CHANGE_TIME_LIST = 4;
+    private final int LOST_TIME = 4;
     private final int IS_TRAINING_OVER = 5;
 
     //随机模式 0:次数随机  1:时间随机
@@ -154,6 +165,25 @@ public class RandomTrainingActivity extends Activity
     private Timer timer;
 
 
+    private Handler timerHandler = new Handler()
+    {
+        @Override
+        public void handleMessage(Message msg)
+        {
+            if (msg.what == timer.TIMER_FLAG)
+            {
+                if (randomMode == 1 && timer.time >= trainingTime)
+                {
+                    Log.d(Constant.LOG_TAG + "xx:", timer.time + "");
+                    timer.stopTimer();
+                    stopTraining();
+                }
+                //开始到现在持续的时间
+                tvTotalTime.setText(msg.obj.toString());
+            }
+        }
+    };
+
     Handler handler = new Handler()
     {
         @Override
@@ -161,25 +191,7 @@ public class RandomTrainingActivity extends Activity
         {
             switch (msg.what)
             {
-                case STOP_TRAINING:
-                    stopTraining();
-                    break;
-                case Timer.TIMER_FLAG:
-                    if (timeAdapter != null)
-                    {
-                        timeAdapter.notifyDataSetChanged();
-                        lvTimes.setSelection(timeList.size() - 1);
-                    }
-                    tvCurrentTimes.setText(timeList.size() + "");
-                    tvLostTimes.setText(lostTimes + "");
-                    //开始到现在持续的时间
-                    tvTotalTime.setText(msg.obj.toString());
 
-                    if (randomMode == 1 && timer.time >= trainingTime)
-                    {
-                        stopTraining();
-                    }
-                    break;
                 //获取到电量信息
                 case POWER_RECEIVE:
                     btnBegin.setEnabled(true);
@@ -193,18 +205,24 @@ public class RandomTrainingActivity extends Activity
                 case TIME_RECEIVE:
                     String data = msg.obj.toString();
                     //返回数据不为空
-                    if (data != null && !data.equals(""))
+                    if (data != null && data.length() >= 7)
                     {
-                        if (data.length() >= 7)
-                            timeList.addAll(DataAnalyzeUtils.analyzeTimeData(data));
-                        //通知更新时间信息
-                        Message msg1 = new Message();
-                        msg1.what = CHANGE_TIME_LIST;
-                        handler.sendMessage(msg1);
+                        timeList.addAll(DataAnalyzeUtils.analyzeTimeData(data));
+                        if (timeAdapter != null)
+                        {
+                            timeAdapter.notifyDataSetChanged();
+                            lvTimes.setSelection(timeList.size() - 1);
+                        }
+                        tvCurrentTimes.setText(timeList.size() + "");
                         isTrainingOver();
                     }
                     break;
-                case IS_TRAINING_OVER:
+                case STOP_TRAINING:
+                    stopTraining();
+                    break;
+                //遗漏
+                case LOST_TIME:
+                    tvLostTimes.setText(lostTimes + "");
                     isTrainingOver();
                     break;
             }
@@ -274,8 +292,7 @@ public class RandomTrainingActivity extends Activity
                     (barTrainingTimes, 0));
             imgTrainingTimesAdd.setOnTouchListener(new AddOrSubBtnClickListener
                     (barTrainingTimes, 1));
-        }
-        else
+        } else
         {
             //时间随机
             llTrainingTimes.setVisibility(View.GONE);
@@ -300,15 +317,17 @@ public class RandomTrainingActivity extends Activity
         imgOverTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener
                 (barOverTime, 1));
         //设定感应模式checkBox组合的点击事件
-        ImageView[] views = new ImageView[]{imgActionModeTouch, imgActionModeLight,
-                imgActionModeTogether};
-        actionModeCheckBox = new CheckBox(0, views);
+        ImageView[] views = new ImageView[]{imgActionModeTouch, imgActionModeLight, imgActionModeTogether};
+        actionModeCheckBox = new CheckBox(1, views);
         new CheckBoxClickListener(actionModeCheckBox);
         //设定灯光模式checkBox组合的点击事件
-        ImageView[] views1 = new ImageView[]{imgLightModeCenter, imgLightModeAll,
-                imgLightModeBeside};
-        lightModeCheckBox = new CheckBox(0, views1);
+        ImageView[] views1 = new ImageView[]{imgLightModeBeside, imgLightModeCenter, imgLightModeAll};
+        lightModeCheckBox = new CheckBox(1, views1);
         new CheckBoxClickListener(lightModeCheckBox);
+        //设定灯光颜色checkBox组合的点击事件
+        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
+        lightColorCheckBox = new CheckBox(1, views2);
+        new CheckBoxClickListener(lightColorCheckBox);
     }
 
     @OnClick({R.id.btn_begin, R.id.layout_cancel, R.id.img_help})
@@ -376,7 +395,7 @@ public class RandomTrainingActivity extends Activity
                 TIME_RECEIVE).start();
         //开启计时线程
         beginTime = System.currentTimeMillis();
-        timer = new Timer(handler);
+        timer = new Timer(timerHandler);
         timer.setBeginTime(beginTime);
         timer.start();
     }
@@ -405,8 +424,7 @@ public class RandomTrainingActivity extends Activity
                 turnOnLight();
             else
                 stopTraining();
-        }
-        else//时间随机
+        } else//时间随机
             turnOnLight();
     }
 
@@ -420,8 +438,7 @@ public class RandomTrainingActivity extends Activity
             overTimeThread.stopThread();
         if (timer != null)
             timer.stopTimer();
-        if (device.devCount > 0)
-            device.turnOffAll();
+        device.turnOffAllTheLight();
 
         //计算平均时间
         int totalTime = 0;
@@ -447,7 +464,13 @@ public class RandomTrainingActivity extends Activity
     //开灯
     private void turnOnLight()
     {
-        device.turnOnLight(getLightNum());
+        device.sendOrder(getLightNum() + "",
+                Order.LightColor.values()[lightColorCheckBox.getCheckId()],
+                Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
+                Order.BlinkModel.NONE,
+                Order.LightModel.values()[lightModeCheckBox.getCheckId()],
+                Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
+                Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
         currentTimes++;
         durationTime = 0;
     }
@@ -455,11 +478,19 @@ public class RandomTrainingActivity extends Activity
     //关灯
     private void turnOffLight()
     {
-        device.turnOffLight(currentLight);
+        //device.turnOffLight(currentLight);
+        device.sendOrder(currentLight + "",
+                Order.LightColor.NONE,
+                Order.VoiceMode.SHORT,
+                Order.BlinkModel.NONE,
+                Order.LightModel.TURN_OFF,
+                Order.ActionModel.TURN_OFF,
+                Order.EndVoice.NONE);
         TimeInfo info = new TimeInfo();
         info.setDeviceNum(currentLight);
         timeList.add(info);
     }
+
 
     //超时线程
     class OverTimeThread extends Thread
@@ -483,16 +514,10 @@ public class RandomTrainingActivity extends Activity
                     turnOffLight();
                     lostTimes++;
                     Message msg = new Message();
-                    msg.what = IS_TRAINING_OVER;
+                    msg.what = LOST_TIME;
                     handler.sendMessage(msg);
                 }
-                try
-                {
-                    Thread.sleep(100);
-                } catch (InterruptedException e)
-                {
-                    e.printStackTrace();
-                }
+                Timer.sleep(100);
             }
         }
     }
