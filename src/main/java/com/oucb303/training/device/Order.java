@@ -74,13 +74,15 @@ public class Order
         String operation1 = "0" + str1 + str2 + str3;
         String operation2 = "0" + str4 + str5 + str6;
 
-        Log.d(Constant.LOG_TAG, "operation 1:" + operation1);
-        Log.d(Constant.LOG_TAG, "operation 2:" + operation2);
+        //Log.d(Constant.LOG_TAG, "operation 1:" + operation1);
+        //Log.d(Constant.LOG_TAG, "operation 2:" + operation2);
         char c1 = binaryStringToChar(operation1);
         char c2 = binaryStringToChar(operation2);
         Log.d(Constant.LOG_TAG, "C1:" + c1 + "  C2:" + c2);
         order = order + "" + c1 + c2;
-        Log.d(Constant.LOG_TAG, "order: length-" + order.length() + "-" + order);
+        Log.d(Constant.LOG_TAG, "order: length -" + order.length() + "-" + order);
+
+        Log.d(Constant.LOG_TAG, "turn on lights:" + lightIds);
 
         return order;
     }
@@ -109,7 +111,7 @@ public class Order
             for (int j = 0; j < 7; j++)
                 temp += lights[i * 7 + j];
 
-            Log.d("AAAA", "Light char " + i + " :" + temp);
+            //Log.d("AAAA", "Light char " + i + " :" + temp);
             res += binaryStringToChar(temp);
         }
         return res;
@@ -128,7 +130,7 @@ public class Order
             else if (str.charAt(i) == '1')
                 value = value * 2 + 1;
         }
-        Log.d("AAAA", "values:" + value);
+        //Log.d("AAAA", "values:" + value);
         return (char) value;
     }
 

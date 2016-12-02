@@ -71,9 +71,9 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
+                            android:layout_marginBottom="5dp"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:layout_marginBottom="5dp"
                             android:orientation="horizontal">
 
                             <ImageView
@@ -576,6 +576,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="100dp"
+                    android:gravity="center_horizontal"
                     android:text="总时间:"
                     android:textSize="@dimen/param_level2_font_size"/>
 
@@ -584,6 +585,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
+                    android:gravity="center_horizontal"
                     android:text="---"
                     android:textSize="@dimen/param_level2_font_size"/>
 
@@ -603,6 +605,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:gravity="center_horizontal"
                     android:text="组号"
                     android:textSize="18sp"/>
 
@@ -610,26 +613,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="已完成次数"
+                    android:gravity="center_horizontal"
+                    android:text="灭灯数"
                     android:textSize="18sp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="犯规次数"
+                    android:gravity="center_horizontal"
+                    android:text="总得分"
                     android:textSize="18sp"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="总时间"
-                    android:textSize="18sp"/>
             </LinearLayout>
 
             <ListView
-                android:id="@+id/lv_times"
+                android:id="@+id/lv_scores"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1">

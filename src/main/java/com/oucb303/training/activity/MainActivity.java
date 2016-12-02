@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.oucb303.training.R;
 import com.oucb303.training.adpter.PowerAdapter;
@@ -23,6 +24,7 @@ import com.oucb303.training.device.Device;
 import com.oucb303.training.model.PowerInfo;
 import com.oucb303.training.model.PowerInfoComparetor;
 import com.oucb303.training.threads.ReceiveThread;
+import com.oucb303.training.threads.Timer;
 import com.oucb303.training.utils.DataAnalyzeUtils;
 
 import java.util.Collections;
@@ -54,6 +56,8 @@ public class MainActivity extends Activity
     Button btnCheck;
     @Bind(R.id.lv_battery)
     ListView lvBattery;
+    @Bind(R.id.tv_device_count)
+    TextView tvDeviceCount;
 
     private Device device;
     private final int POWER_RECEIVE = 1;
@@ -161,7 +165,7 @@ public class MainActivity extends Activity
     }
 
     @OnClick({R.id.btn_check, R.id.btn_level_one, R.id.btn_level_two, R.id.btn_level_three,
-            R.id.btn_level_four, R.id.btn_base_training, R.id.btn_statistic,R.id.btn_test})
+            R.id.btn_level_four, R.id.btn_base_training, R.id.btn_statistic, R.id.btn_test})
     public void onClick(View view)
     {
         int level = 0;
@@ -219,24 +223,21 @@ public class MainActivity extends Activity
         powerAdapter.notifyDataSetChanged();
         // 发送获取全部设备电量指令
         device.sendGetPowerOrder();
+
+        Timer.sleep(3000);
         //开启接收电量的线程
         new ReceiveThread(handler, device.ftDev, ReceiveThread.POWER_RECEIVE_THREAD,
                 POWER_RECEIVE).start();
         //将电量检测按钮不可见
         btnCheck.setEnabled(false);
-        try
-        {
-            Thread.sleep(2000);
-            btnCheck.setEnabled(true);
-        } catch (InterruptedException e)
-        {
-            e.printStackTrace();
-        }
     }
 
     //读取电量信息
     private void readPowerData(final String data)
     {
+        //将电量检测置为可用
+        btnCheck.setEnabled(true);
+
         if (data.length() >= 7)
         {
             //获取电量信息
@@ -251,6 +252,7 @@ public class MainActivity extends Activity
                 //更新电量信息
                 powerAdapter.setPowerInfos(powerInfos);
                 powerAdapter.notifyDataSetChanged();
+                tvDeviceCount.setText("共" + powerInfos.size() + "个设备");
                 Log.i("AAA", powerInfos.size() + "");
             }
         } else

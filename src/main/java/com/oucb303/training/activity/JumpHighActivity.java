@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.oucb303.training.R;
 import com.oucb303.training.adpter.GroupListViewAdapter;
+import com.oucb303.training.adpter.JumpHighAdapter;
 import com.oucb303.training.device.Device;
 import com.oucb303.training.device.Order;
 import com.oucb303.training.listener.AddOrSubBtnClickListener;
@@ -25,17 +26,24 @@ import com.oucb303.training.listener.CheckBoxClickListener;
 import com.oucb303.training.listener.MySeekBarListener;
 import com.oucb303.training.listener.SpinnerItemSelectedListener;
 import com.oucb303.training.model.CheckBox;
+import com.oucb303.training.model.Constant;
 import com.oucb303.training.model.PowerInfo;
 import com.oucb303.training.model.TimeInfo;
 import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.threads.Timer;
 import com.oucb303.training.utils.DataAnalyzeUtils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.vov.vitamio.utils.Log;
 
 public class JumpHighActivity extends AppCompatActivity
 {
@@ -82,17 +90,24 @@ public class JumpHighActivity extends AppCompatActivity
     Button btnBegin;
     @Bind(R.id.tv_total_time)
     TextView tvTotalTime;
-
-    private final int TIME_RECEIVE = 1;
     @Bind(R.id.cb_voice)
     android.widget.CheckBox cbVoice;
     @Bind(R.id.cb_end_voice)
     android.widget.CheckBox cbEndVoice;
+    @Bind(R.id.lv_scores)
+    ListView lvScores;
+
+    private final int TIME_RECEIVE = 1, UPDATE_SCORES = 2;
+
     private Device device;
     private CheckBox actionModeCheckBox, lightModeCheckBox, lightColorCheckBox;
     private GroupListViewAdapter groupListViewAdapter;
     private Timer timer; //计时器
-
+    //同一组的最小间隔
+    private int duration = 200;
+    private JumpHighAdapter jumpHighAdapter;
+    private List<JumpHighTrainingInfo> groupTrainingInfos = new ArrayList<>();
+    private List<HashMap<String, Object>> scores = new ArrayList<>();
     //训练的总时间
     private int trainingTime;
     //每组设备个数、分组数
@@ -112,14 +127,46 @@ public class JumpHighActivity extends AppCompatActivity
                 //更新计时
                 case Timer.TIMER_FLAG:
                     tvTotalTime.setText(data);
+                    for (int i = 0; i < groupNum; i++)
+                    {
+                        JumpHighTrainingInfo trainingInfo = groupTrainingInfos.get(i);
+                        //距离最先挥灭的灯 超过200毫秒
+                        if (trainingInfo.deviceList.size() > 0 && System.currentTimeMillis() - trainingInfo.firstReceivedTime > duration)
+                        {
+                            Map<String, Object> map = scores.get(i);
+                            String lights = "";
+                            int score = 0;
+                            if (map.get("score") != null)
+                                score = (int) map.get("score");
+                            int s = 0;
+                            for (String str : trainingInfo.deviceList)
+                            {
+                                lights += str + " ";
+                                int temp = findPosition(str.charAt(0)) + 1;
+                                if (temp > s)
+                                    s = temp;
+                            }
+                            score += s;
+                            map.put("lights", lights);
+                            map.put("score", score);
+
+                            jumpHighAdapter.notifyDataSetChanged();
+                            trainingInfo.deviceList.clear();
+                        }
+                    }
                     if (timer.time >= trainingTime)
                     {
+                        timer.stopTimer();
                         stopTraining();
                     }
                     break;
 
                 case TIME_RECEIVE://接收到设备返回的时间
                     analyseData(data);
+                    break;
+                //更新成绩
+                case UPDATE_SCORES:
+                    jumpHighAdapter.notifyDataSetChanged();
                     break;
             }
         }
@@ -156,6 +203,8 @@ public class JumpHighActivity extends AppCompatActivity
     {
         tvTitle.setText("纵跳摸高");
         imgHelp.setVisibility(View.VISIBLE);
+        jumpHighAdapter = new JumpHighAdapter(this, scores);
+        lvScores.setAdapter(jumpHighAdapter);
 
         ///初始化分组listView
         groupListViewAdapter = new GroupListViewAdapter(JumpHighActivity.this, groupSize);
@@ -205,7 +254,7 @@ public class JumpHighActivity extends AppCompatActivity
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
             {
                 groupNum = i;
-                if (Device.DEVICE_LIST.size() / groupSize < i)
+                if (Device.DEVICE_LIST.size() / groupSize < groupNum)
                 {
                     Toast.makeText(JumpHighActivity.this, "当前设备数量为" + Device.DEVICE_LIST.size() + ",不能分成" + i + "组!",
                             Toast.LENGTH_LONG).show();
@@ -265,6 +314,16 @@ public class JumpHighActivity extends AppCompatActivity
         trainingFlag = true;
         trainingTime = (int) (new Double(tvTrainingTime.getText().toString()) * 60 * 1000);
 
+
+        groupTrainingInfos.clear();
+        scores.clear();
+        for (int i = 0; i < groupNum; i++)
+        {
+            groupTrainingInfos.add(new JumpHighTrainingInfo());
+            scores.add(new HashMap<String, Object>());
+        }
+        jumpHighAdapter.notifyDataSetChanged();
+
         //开启接收时间线程
         new ReceiveThread(handler, device.ftDev, ReceiveThread.TIME_RECEIVE_THREAD, TIME_RECEIVE).start();
 
@@ -282,6 +341,7 @@ public class JumpHighActivity extends AppCompatActivity
         turnOnLights(lightIds);
     }
 
+    //结束训练
     private void stopTraining()
     {
         timer.stopTimer();
@@ -298,25 +358,47 @@ public class JumpHighActivity extends AppCompatActivity
             @Override
             public void run()
             {
+                if (data.length() < 7)
+                    return;
                 List<TimeInfo> infos = DataAnalyzeUtils.analyzeTimeData(data);
+                String lightIds = "";
                 for (TimeInfo info : infos)
                 {
                     int groupId = findGroupId(info.getDeviceNum());
+                    JumpHighTrainingInfo traningInfo = groupTrainingInfos.get(groupId);
 
+                    if (traningInfo.deviceList.size() == 0)
+                    {
+                        traningInfo.firstReceivedTime = System.currentTimeMillis();
+                    }
+                    traningInfo.deviceList.add(info.getDeviceNum() + "");
+                    lightIds += info.getDeviceNum();
                 }
+
+                if (!lightIds.equals(""))
+                    turnOnLights(lightIds);
             }
         }).start();
     }
 
     //开启一组的全部灯
-    private void turnOnLights(String lightIds)
+    private void turnOnLights(final String lightIds)
     {
-        device.sendOrder(lightIds, Order.LightColor.values()[lightColorCheckBox.getCheckId()],
-                Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                Order.BlinkModel.NONE,
-                Order.LightModel.values()[lightModeCheckBox.getCheckId()],
-                Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                Timer.sleep(500);
+                device.sendOrder(lightIds, Order.LightColor.values()[lightColorCheckBox.getCheckId()],
+                        Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
+                        Order.BlinkModel.NONE,
+                        Order.LightModel.values()[lightModeCheckBox.getCheckId()],
+                        Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
+                        Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
+
+            }
+        }).start();
     }
 
     //返回某一组设备的全部编号
@@ -342,4 +424,24 @@ public class JumpHighActivity extends AppCompatActivity
         return i / groupSize;
     }
 
+    private int findPosition(char deviceNum)
+    {
+        int i = 0;
+        for (PowerInfo info : Device.DEVICE_LIST)
+        {
+            if (info.getDeviceNum() == deviceNum)
+                break;
+            i++;
+        }
+        return i % groupSize;
+    }
+
+    //记录每次挥灭灯的信息
+    public class JumpHighTrainingInfo
+    {
+        //最先挥灭灯的时间
+        public long firstReceivedTime;
+        //一次性挥灭所有灯的灯编号
+        public ArrayList<String> deviceList = new ArrayList<>();
+    }
 }

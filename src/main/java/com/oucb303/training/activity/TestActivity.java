@@ -31,6 +31,7 @@ import com.oucb303.training.utils.DataAnalyzeUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -86,6 +87,7 @@ public class TestActivity extends AppCompatActivity
 
     private List<TimeInfo> timeInfos = new ArrayList<>();
     private List<String> addressList = new ArrayList<>();
+    private List<String> deviceNums = new ArrayList<>();
     private ReceiveThread thread;
     ArrayAdapter<String> adapter;
 
@@ -110,8 +112,15 @@ public class TestActivity extends AppCompatActivity
                     //接收到地址信息
                     if (data.length() > 0)
                     {
-                        addressList.clear();
-                        addressList.addAll(DataAnalyzeUtils.analyzeAddressData(data));
+                        List<Map<String, String>> list = DataAnalyzeUtils.analyzeAddressData(data);
+                        for (Map<String, String> map : list)
+                        {
+                            if (!addressList.contains(map.get("address")))
+                            {
+                                addressList.add(map.get("address"));
+                                deviceNums.add(map.get("deviceNum"));
+                            }
+                        }
                         Log.d("AAAA", addressList.size() + "xx");
                         addressAdapter.notifyDataSetChanged();
                         adapter.notifyDataSetChanged();
@@ -227,6 +236,8 @@ public class TestActivity extends AppCompatActivity
                 break;
             case R.id.btn_get_address:
                 thread.setMsgFlag(2);
+                addressList.clear();
+                deviceNums.clear();
                 device.sendMessage("#04a");
                 break;
             case R.id.btn_change:
@@ -374,6 +385,7 @@ public class TestActivity extends AppCompatActivity
 
             id.setText((i + 1) + "");
             address.setText(addressList.get(i));
+            lightNum.setText(deviceNums.get(i));
 
             return view;
         }

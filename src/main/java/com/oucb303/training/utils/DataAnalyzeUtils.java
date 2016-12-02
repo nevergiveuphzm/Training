@@ -10,7 +10,9 @@ import com.oucb303.training.model.PowerInfo;
 import com.oucb303.training.model.TimeInfo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,7 +33,7 @@ public class DataAnalyzeUtils
         Log.d(Constant.LOG_TAG, "origin Power Data" + data);
         for (int i = 0; i < data_time.length(); i++)
         {
-            if (data_time.charAt(i) == '#' && data_time.charAt(i + 5) == ')')
+            if (data_time.charAt(i) == '#' && (data.length() - i) >= 7 && data_time.charAt(i + 5) == ')')
             {
                 //数据总长度
                 int digit = new Integer(data_time.substring(i + 1, i + 3));
@@ -57,7 +59,8 @@ public class DataAnalyzeUtils
                         power = 59;
                     } else if (power <= 49)
                     {
-                        lowPowerDevice.add(num);
+                        if (!lowPowerDevice.contains(num))
+                            lowPowerDevice.add(num);
                         continue;
                     }
                     PowerInfo info = new PowerInfo();
@@ -96,7 +99,7 @@ public class DataAnalyzeUtils
         List<TimeInfo> timeList = new ArrayList<>();
         for (int i = 0; i < data.length(); i++)
         {
-            if (data.charAt(i) == '#' && data.charAt(i + 5) == '(' && (data.length() - i) >= 7)
+            if (data.charAt(i) == '#' && (data.length() - i) >= 7 && data.charAt(i + 5) == '(')
             {
                 String str1 = data.substring(i + 1, i + 3);
                 //数据总长度
@@ -126,37 +129,65 @@ public class DataAnalyzeUtils
                 TimeInfo timeInfo = new TimeInfo();
                 timeInfo.setDeviceNum(num.charAt(0));
                 timeInfo.setTime(time);
-                timeList.add(timeInfo);
+
+                boolean flag = false;
+                for (TimeInfo info : timeList)
+                {
+                    if (info.getDeviceNum() == timeInfo.getDeviceNum())
+                    {
+                        flag = true;
+                        break;
+                    }
+                }
+                if (!flag)
+                    timeList.add(timeInfo);
                 //break;
             }
         }
         return timeList;
     }
 
-    public static List<String> analyzeAddressData(String data)
+    public static List<Map<String, String>> analyzeAddressData(String data)
     {
         Log.d(Constant.LOG_TAG, "origin address Data:" + data);
-        List<String> res = new ArrayList<>();
+        List<Map<String, String>> res = new ArrayList<>();
         for (int i = 0; i < data.length(); i++)
         {
             if (data.charAt(i) == '#' && (data.length() - i) >= 7 && data.charAt(i + 5) == '*')
             {
-                String str3 = data.substring(i + 6);
+                String address = data.substring(i + 6);
+                String deviceNum = data.charAt(i + 3) + "";
 
                 String regex = "\\d*";
                 Pattern p = Pattern.compile(regex);
-                Matcher m = p.matcher(str3);
+                Matcher m = p.matcher(address);
                 while (m.find())
                 {
                     if (!"".equals(m.group()))
                     {
-                        str3 = m.group();
+                        address = m.group();
                         break;
                     }
                 }
-                res.add(str3);
+                Map<String, String> map = new HashMap<>();
+                map.put("deviceNum", deviceNum);
+                map.put("address", address);
+                res.add(map);
             }
         }
         return res;
     }
+
+    //判断数据是否有效
+    public static boolean dataIsValid(String data)
+    {
+        if (data.length() < 7)
+            return false;
+        char num = data.charAt(3);
+        if (data.charAt(0) == '#' && ((num >= 'A' && num <= 'Z') || (num >= 'a' && num <= 'f')))
+            return true;
+        else
+            return false;
+    }
+
 }

@@ -3,14 +3,11 @@ package com.oucb303.training.activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -18,7 +15,6 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.oucb303.training.R;
 import com.oucb303.training.adpter.GroupListViewAdapter;
 import com.oucb303.training.adpter.ShuttleRunAdapter;
@@ -75,10 +71,6 @@ public class ShuttleRunActivity extends AppCompatActivity
     Button btnBegin;
     @Bind(R.id.tv_total_time)
     TextView tvTotalTime;
-
-
-    private final int TIME_RECEIVE = 1;
-    private final int POWER_RECEIVE = 2;
     @Bind(R.id.lv_times)
     ListView lvTimes;
     @Bind(R.id.lv_group)
@@ -91,6 +83,10 @@ public class ShuttleRunActivity extends AppCompatActivity
     ImageView imgLightColorBlueRed;
     @Bind(R.id.cb_voice)
     android.widget.CheckBox cbVoice;
+    @Bind(R.id.cb_end_voice)
+    android.widget.CheckBox cbEndVoice;
+
+    private final int TIME_RECEIVE = 1, POWER_RECEIVE = 2, UPDATE_TIMES = 3, STOP_TRAINING = 4;
     //做多分组数目
     private int maxGroupNum;
     //每组所需设备个数
@@ -134,8 +130,14 @@ public class ShuttleRunActivity extends AppCompatActivity
                     String data = msg.obj.toString();
                     if (data.length() > 7)
                     {
-                        analyzeTimeData(DataAnalyzeUtils.analyzeTimeData(data));
+                        analyzeTimeData(data);
                     }
+                    break;
+                case UPDATE_TIMES:
+                    shuttleRunAdapter.notifyDataSetChanged();
+                    break;
+                case STOP_TRAINING:
+                    stopTraining();
                     break;
             }
         }
@@ -156,7 +158,6 @@ public class ShuttleRunActivity extends AppCompatActivity
             device.initConfig();
         }
         initView();
-        initSlidingMenu();
     }
 
     @Override
@@ -328,7 +329,7 @@ public class ShuttleRunActivity extends AppCompatActivity
         timer.stopTimer();
     }
 
-    public void turnOnLight(final char c)
+    public void turnOnLight(final String lightIds)
     {
         new Thread(new Runnable()
         {
@@ -336,53 +337,75 @@ public class ShuttleRunActivity extends AppCompatActivity
             public void run()
             {
                 Timer.sleep(1000);
-                device.sendOrder(c + "",
+                device.sendOrder(lightIds,
                         Order.LightColor.values()[lightColorCheckBox.getCheckId()],
                         Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
                         Order.BlinkModel.NONE,
                         Order.LightModel.values()[lightModeCheckBox.getCheckId()],
                         Order.ActionModel.LIGHT,
-                        Order.EndVoice.NONE);
-                Log.d(Constant.LOG_TAG, "turn on light :" + c);
+                        Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
             }
         }).start();
     }
 
     //解析返回来的时间数据
-    public void analyzeTimeData(List<TimeInfo> infos)
+    public void analyzeTimeData(final String data)
     {
-        for (TimeInfo info : infos)
+        new Thread(new Runnable()
         {
-            int groupId = findDeviceGroupId(info.getDeviceNum());
-            if (groupId >= groupNum)
-                continue;
-            Log.d(Constant.LOG_TAG, info.getDeviceNum() + " groupId:" + groupId);
-            List<TimeInfo> groupTimes = timeList[groupId];
-            if (groupTimes.size() != 0)
+            @Override
+            public void run()
             {
-                TimeInfo last = groupTimes.get(groupTimes.size() - 1);
-                //本次熄灭的灯和上一次熄灭的灯相同,犯规
-                if (last.getDeviceNum() == info.getDeviceNum())
+                List<TimeInfo> infos = DataAnalyzeUtils.analyzeTimeData(data);
+                String lightIds = "";
+                for (TimeInfo info : infos)
                 {
-                    //时间数据无效
-                    info.setValid(false);
-                } else
+                    int groupId = findDeviceGroupId(info.getDeviceNum());
+                    if (groupId >= groupNum)
+                        continue;
+                    Log.d(Constant.LOG_TAG, info.getDeviceNum() + " groupId:" + groupId);
+                    List<TimeInfo> groupTimes = timeList[groupId];
+                    if (groupTimes.size() != 0)
+                    {
+                        TimeInfo last = groupTimes.get(groupTimes.size() - 1);
+                        //本次熄灭的灯和上一次熄灭的灯相同,犯规
+                        if (last.getDeviceNum() == info.getDeviceNum())
+                        {
+                            //时间数据无效
+                            info.setValid(false);
+                        } else
+                        {
+                            if (groupTimes.get(0).getDeviceNum() == info.getDeviceNum())
+                                completedTimes[groupId] += 1;
+                        }
+                    }
+                    groupTimes.add(info);
+                    //该组训练结束
+                    if (completedTimes[groupId] == totalTrainingTimes)
+                    {
+                        finishTime[groupId] = (int) (System.currentTimeMillis() - startTime);
+                    } else
+                    {
+                        lightIds += info.getDeviceNum();
+                    }
+                }
+                if (!lightIds.equals(""))
+                    turnOnLight(lightIds);
+
+                Message msg = Message.obtain();
+                msg.what = UPDATE_TIMES;
+                msg.obj = "";
+                handler.sendMessage(msg);
+
+                if (isTrainingOver())
                 {
-                    if (groupTimes.get(0).getDeviceNum() == info.getDeviceNum())
-                        completedTimes[groupId] += 1;
+                    Message msg1 = Message.obtain();
+                    msg1.what = STOP_TRAINING;
+                    msg1.obj = "";
+                    handler.sendMessage(msg1);
                 }
             }
-            groupTimes.add(info);
-            //该组训练结束
-            if (completedTimes[groupId] == totalTrainingTimes)
-            {
-                finishTime[groupId] = (int) (System.currentTimeMillis() - startTime);
-            } else
-                turnOnLight(info.getDeviceNum());
-        }
-        shuttleRunAdapter.notifyDataSetChanged();
-        if (isTrainingOver())
-            stopTraining();
+        }).start();
     }
 
 
@@ -412,33 +435,5 @@ public class ShuttleRunActivity extends AppCompatActivity
         }
         return true;
     }
-
-
-    SlidingMenu menu;
-
-    //初始化侧滑菜单
-    private void initSlidingMenu()
-    {
-        // configure the SlidingMenu
-        menu = new SlidingMenu(this);
-        menu.setMode(SlidingMenu.LEFT);
-        // 设置触摸屏幕的模式
-        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-        // 设置滑动菜单视图的宽度
-        menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-        //设置渐入渐出效果的值
-        menu.setFadeDegree(0.35f);
-        /** * SLIDING_WINDOW will include the Title/ActionBar in the content
-         * section of the SlidingMenu, while SLIDING_CONTENT does not. */
-        menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-        //为侧滑菜单设置布局
-        menu.setMenu(R.layout.slidmenu_left);
-
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction ft = manager.beginTransaction();
-        ft.replace(R.id.ll_left_menu, new FragmentLeftSlidMenu());
-        ft.commit();
-    }
-
 
 }

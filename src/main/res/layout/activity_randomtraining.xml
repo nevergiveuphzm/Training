@@ -722,6 +722,16 @@
                             android:textColor="@color/font_lightdark"
                             android:textSize="@dimen/param_level2_font_size"/>
 
+                        <CheckBox
+                            android:id="@+id/cb_over_time_voice"
+                            style="@style/custom_checkbox"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="超时响"
+                            android:textColor="@color/font_lightdark"
+                            android:textSize="@dimen/param_level2_font_size"/>
+
                     </LinearLayout>
 
                 </LinearLayout>
@@ -829,13 +839,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="编号"
+                    android:gravity="center_horizontal"
+                    android:text="序号"
                     android:textSize="18sp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:gravity="center_horizontal"
                     android:text="所用时间"
                     android:textSize="18sp"/>
 
@@ -843,8 +855,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:gravity="center_horizontal"
                     android:text="备注"
                     android:textSize="18sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:text="编号"
+                    android:textSize="18sp"/>
+
             </LinearLayout>
 
             <ListView

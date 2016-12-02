@@ -92,7 +92,7 @@ public class SitUpsActivity extends AppCompatActivity
 
     private Device device;
     private CheckBox actionModeCheckBox, lightModeCheckBox, lightColorCheckBox;
-    private final int TIME_RECEIVE = 1, POWER_RECEIVER = 2;
+    private final int TIME_RECEIVE = 1, POWER_RECEIVER = 2, UPDATE_DATA = 3;
     //训练时间  单位毫秒
     private int trainingTime;
     //计时器
@@ -150,9 +150,10 @@ public class SitUpsActivity extends AppCompatActivity
                 case TIME_RECEIVE:
                     String data = msg.obj.toString();
                     if (data.length() > 7)
-                    {
-                        analyzeTimeData(DataAnalyzeUtils.analyzeTimeData(data));
-                    }
+                        analyzeTimeData(data);
+                    break;
+                case UPDATE_DATA:
+                    sitUpsTimeListAdapter.notifyDataSetChanged();
                     break;
             }
         }
@@ -289,25 +290,37 @@ public class SitUpsActivity extends AppCompatActivity
     }
 
     //解析时间
-    private void analyzeTimeData(List<TimeInfo> infos)
+    private void analyzeTimeData(final String data)
     {
         //训练已结束
         if (!isTraining)
             return;
-        String lightIds = "";
-        for (TimeInfo info : infos)
+        new Thread(new Runnable()
         {
-            int groupId = findDeviceGroupId(info.getDeviceNum());
-            char next = Device.DEVICE_LIST.get(groupId * groupSize).getDeviceNum();
-            if (next == info.getDeviceNum())
+            @Override
+            public void run()
             {
-                next = Device.DEVICE_LIST.get(groupId * groupSize + 1).getDeviceNum();
-                scores[groupId] += 1;
-                sitUpsTimeListAdapter.notifyDataSetChanged();
+                List<TimeInfo> infos = DataAnalyzeUtils.analyzeTimeData(data);
+                String lightIds = "";
+                for (TimeInfo info : infos)
+                {
+                    int groupId = findDeviceGroupId(info.getDeviceNum());
+                    char next = Device.DEVICE_LIST.get(groupId * groupSize).getDeviceNum();
+                    if (next == info.getDeviceNum())
+                    {
+                        next = Device.DEVICE_LIST.get(groupId * groupSize + 1).getDeviceNum();
+                        scores[groupId] += 1;
+                    }
+                    lightIds += next;
+                }
+                Message msg = Message.obtain();
+                msg.obj = "";
+                msg.what = UPDATE_DATA;
+                handler.sendMessage(msg);
+                sendOrder(lightIds);
             }
-            lightIds += next;
-        }
-        sendOrder(lightIds);
+        }).start();
+
     }
 
     public void sendOrder(String lightIds)

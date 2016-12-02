@@ -30,10 +30,12 @@ import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.threads.Timer;
 import com.oucb303.training.utils.DataAnalyzeUtils;
 import com.oucb303.training.utils.RandomUtils;
+import com.oucb303.training.widget.ToastUtils;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimerTask;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -124,6 +126,8 @@ public class RandomTrainingActivity extends Activity
     ImageView imgLightColorBlueRed;
     @Bind(R.id.cb_end_voice)
     android.widget.CheckBox cbEndVoice;
+    @Bind(R.id.cb_over_time_voice)
+    android.widget.CheckBox cbOverTimeVoice;
 
 
     //感应模式和灯光模式集合
@@ -205,15 +209,17 @@ public class RandomTrainingActivity extends Activity
                 case TIME_RECEIVE:
                     String data = msg.obj.toString();
                     //返回数据不为空
-                    if (data != null && data.length() >= 7)
+                    if (data != null)
                     {
+                        if (!DataAnalyzeUtils.dataIsValid(data))
+                            return;
                         timeList.addAll(DataAnalyzeUtils.analyzeTimeData(data));
                         if (timeAdapter != null)
                         {
                             timeAdapter.notifyDataSetChanged();
                             lvTimes.setSelection(timeList.size() - 1);
                         }
-                        tvCurrentTimes.setText(timeList.size() + "");
+                        tvCurrentTimes.setText(currentTimes + "");
                         isTrainingOver();
                     }
                     break;
@@ -336,6 +342,7 @@ public class RandomTrainingActivity extends Activity
         switch (view.getId())
         {
             case R.id.btn_begin:
+                ToastUtils.MakeText(this, "测试", true).show();
                 if (!device.checkDevice(RandomTrainingActivity.this))
                     return;
                 if (!trainingFlag)
@@ -357,11 +364,10 @@ public class RandomTrainingActivity extends Activity
     //获取设备灯编号
     private char getLightNum()
     {
-        PowerInfo light = Device.DEVICE_LIST.get(RandomUtils.getRandomNum(Device.DEVICE_LIST.size()));
-        char num = light.getDeviceNum();
-        currentLight = num;
-        Log.d(Constant.LOG_TAG, "turn on :" + num + "-" + currentTimes);
-        return num;
+        int position = RandomUtils.getRandomNum(100) % Device.DEVICE_LIST.size();
+        currentLight = Device.DEVICE_LIST.get(position).getDeviceNum();
+        Log.d(Constant.LOG_TAG, "turn on :" + currentLight + "-" + currentTimes);
+        return currentLight;
     }
 
     //开始训练
@@ -383,6 +389,7 @@ public class RandomTrainingActivity extends Activity
         lostTimes = 0;
         timeList.clear();
         tvAverageTime.setText("---");
+        tvLostTimes.setText("---");
         timeAdapter.notifyDataSetChanged();
         //发送开灯命令
         turnOnLight();
@@ -405,19 +412,11 @@ public class RandomTrainingActivity extends Activity
     {
         if (!trainingFlag)
             return;
-        if (delayTime > 0)
-        {
-            //添加延时
-            try
-            {
-                Thread.sleep(delayTime);
-            } catch (InterruptedException e)
-            {
-                e.printStackTrace();
-            }
-        }
+
+
         //次数随机
         if (randomMode == 0)
+
         {
             if (currentTimes < totalTimes)
                 //发送开灯命令
@@ -425,6 +424,7 @@ public class RandomTrainingActivity extends Activity
             else
                 stopTraining();
         } else//时间随机
+
             turnOnLight();
     }
 
@@ -453,10 +453,11 @@ public class RandomTrainingActivity extends Activity
         Timer.sleep(500);
         //结束接收返回灭灯时间线程
         ReceiveThread.stopThread();
-        Timer.sleep(500);
+        Timer.sleep(1000);
         // 发送获取全部设备电量指令
         device.sendGetPowerOrder();
         //开启接收电量的线程
+        Timer.sleep(2000);
         new ReceiveThread(handler, device.ftDev, ReceiveThread.POWER_RECEIVE_THREAD,
                 POWER_RECEIVE).start();
     }
@@ -464,15 +465,25 @@ public class RandomTrainingActivity extends Activity
     //开灯
     private void turnOnLight()
     {
-        device.sendOrder(getLightNum() + "",
-                Order.LightColor.values()[lightColorCheckBox.getCheckId()],
-                Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                Order.BlinkModel.NONE,
-                Order.LightModel.values()[lightModeCheckBox.getCheckId()],
-                Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
-        currentTimes++;
-        durationTime = 0;
+        java.util.Timer timer1 = new java.util.Timer();
+        TimerTask timerTask = new TimerTask()
+        {
+            @Override
+            public void run()
+            {
+                device.sendOrder(getLightNum() + "",
+                        Order.LightColor.values()[lightColorCheckBox.getCheckId()],
+                        Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
+                        Order.BlinkModel.NONE,
+                        Order.LightModel.values()[lightModeCheckBox.getCheckId()],
+                        Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
+                        Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
+                currentTimes++;
+                durationTime = 0;
+            }
+        };
+        timer1.schedule(timerTask, delayTime);
+
     }
 
     //关灯
@@ -481,7 +492,7 @@ public class RandomTrainingActivity extends Activity
         //device.turnOffLight(currentLight);
         device.sendOrder(currentLight + "",
                 Order.LightColor.NONE,
-                Order.VoiceMode.SHORT,
+                Order.VoiceMode.values()[cbOverTimeVoice.isChecked() ? 1 : 0],
                 Order.BlinkModel.NONE,
                 Order.LightModel.TURN_OFF,
                 Order.ActionModel.TURN_OFF,

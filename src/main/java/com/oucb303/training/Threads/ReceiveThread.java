@@ -41,13 +41,6 @@ public class ReceiveThread extends Thread
         //检测电量线程
         if (threadFlag == POWER_RECEIVE_THREAD)
         {
-            try
-            {
-                Thread.sleep(1000);
-            } catch (InterruptedException e1)
-            {
-                e1.printStackTrace();
-            }
             readData();
         }
         //接收设备返回时间线程
@@ -58,7 +51,7 @@ public class ReceiveThread extends Thread
                 readData();
                 try
                 {
-                    Thread.sleep(10);
+                    Thread.sleep(5);
                 } catch (InterruptedException e)
                 {
                     e.printStackTrace();
@@ -66,6 +59,7 @@ public class ReceiveThread extends Thread
             }
         }
     }
+
 
     public void readData()
     {

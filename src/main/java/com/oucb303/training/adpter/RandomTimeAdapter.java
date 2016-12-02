@@ -54,19 +54,20 @@ public class RandomTimeAdapter extends BaseAdapter
     @Override
     public View getView(int i, View view, ViewGroup viewGroup)
     {
-        View v = inflater.inflate(R.layout.item_statistics_time, null);
+        View v = inflater.inflate(R.layout.item_statistics_time1, null);
         TextView num = (TextView) v.findViewById(R.id.tv_num);
         TextView time = (TextView) v.findViewById(R.id.tv_time);
         TextView note = (TextView) v.findViewById(R.id.tv_note);
+        TextView lightNum = (TextView) v.findViewById(R.id.tv_light_num);
         num.setText((i + 1) + "");
         if (timeList.get(i).getTime() == 0)
         {
             time.setText("---");
             note.setText("超时");
-        }
-        else
+        } else
         {
             time.setText(timeList.get(i).getTime() + "毫秒");
+            lightNum.setText(timeList.get(i).getDeviceNum() + "");
             note.setText("---");
         }
         return v;
