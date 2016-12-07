@@ -177,12 +177,12 @@ public class ShuttleRunActivity extends AppCompatActivity
         /*Device.DEVICE_LIST.clear();
         for (int i = 0; i < 10; i++)
         {
-            PowerInfo info = new PowerInfo();
+            DeviceInfo info = new DeviceInfo();
             info.setDeviceNum((char) ('A' + i * 2));
             Device.DEVICE_LIST.add(info);
         }
-        Device.DEVICE_LIST.add(new PowerInfo('B'));
-        Device.DEVICE_LIST.add(new PowerInfo('F'));*/
+        Device.DEVICE_LIST.add(new DeviceInfo('B'));
+        Device.DEVICE_LIST.add(new DeviceInfo('F'));*/
         //设备排序
         Collections.sort(Device.DEVICE_LIST, new PowerInfoComparetor());
 
@@ -295,19 +295,16 @@ public class ShuttleRunActivity extends AppCompatActivity
 
         btnBegin.setText("停止");
         //开全灯
-        String ids = "";
         for (int i = 0; i < groupNum * groupSize; i++)
         {
-            ids += Device.DEVICE_LIST.get(i).getDeviceNum();
+            device.sendOrder(Device.DEVICE_LIST.get(i).getDeviceNum(),
+                    Order.LightColor.values()[lightColorCheckBox.getCheckId()],
+                    Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
+                    Order.BlinkModel.NONE,
+                    Order.LightModel.values()[lightModeCheckBox.getCheckId()],
+                    Order.ActionModel.LIGHT,
+                    Order.EndVoice.NONE);
         }
-        Log.d(Constant.LOG_TAG, "ids:" + ids);
-        device.sendOrder(ids,
-                Order.LightColor.values()[lightColorCheckBox.getCheckId()],
-                Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                Order.BlinkModel.NONE,
-                Order.LightModel.values()[lightModeCheckBox.getCheckId()],
-                Order.ActionModel.LIGHT,
-                Order.EndVoice.NONE);
 
 
         //开启接收设备返回时间的监听线程
@@ -329,23 +326,15 @@ public class ShuttleRunActivity extends AppCompatActivity
         timer.stopTimer();
     }
 
-    public void turnOnLight(final String lightIds)
+    public void turnOnLight(char deviceNum)
     {
-        new Thread(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                Timer.sleep(1000);
-                device.sendOrder(lightIds,
-                        Order.LightColor.values()[lightColorCheckBox.getCheckId()],
-                        Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                        Order.BlinkModel.NONE,
-                        Order.LightModel.values()[lightModeCheckBox.getCheckId()],
-                        Order.ActionModel.LIGHT,
-                        Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
-            }
-        }).start();
+        device.sendOrder(deviceNum,
+                Order.LightColor.values()[lightColorCheckBox.getCheckId()],
+                Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
+                Order.BlinkModel.NONE,
+                Order.LightModel.values()[lightModeCheckBox.getCheckId()],
+                Order.ActionModel.LIGHT,
+                Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
     }
 
     //解析返回来的时间数据
@@ -357,7 +346,6 @@ public class ShuttleRunActivity extends AppCompatActivity
             public void run()
             {
                 List<TimeInfo> infos = DataAnalyzeUtils.analyzeTimeData(data);
-                String lightIds = "";
                 for (TimeInfo info : infos)
                 {
                     int groupId = findDeviceGroupId(info.getDeviceNum());
@@ -386,11 +374,9 @@ public class ShuttleRunActivity extends AppCompatActivity
                         finishTime[groupId] = (int) (System.currentTimeMillis() - startTime);
                     } else
                     {
-                        lightIds += info.getDeviceNum();
+                        turnOnLight(info.getDeviceNum());
                     }
                 }
-                if (!lightIds.equals(""))
-                    turnOnLight(lightIds);
 
                 Message msg = Message.obtain();
                 msg.what = UPDATE_TIMES;

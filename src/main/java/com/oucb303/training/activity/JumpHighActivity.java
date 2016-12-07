@@ -26,24 +26,20 @@ import com.oucb303.training.listener.CheckBoxClickListener;
 import com.oucb303.training.listener.MySeekBarListener;
 import com.oucb303.training.listener.SpinnerItemSelectedListener;
 import com.oucb303.training.model.CheckBox;
-import com.oucb303.training.model.Constant;
-import com.oucb303.training.model.PowerInfo;
+import com.oucb303.training.model.DeviceInfo;
 import com.oucb303.training.model.TimeInfo;
 import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.threads.Timer;
 import com.oucb303.training.utils.DataAnalyzeUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.vov.vitamio.utils.Log;
 
 public class JumpHighActivity extends AppCompatActivity
 {
@@ -327,18 +323,15 @@ public class JumpHighActivity extends AppCompatActivity
         //开启接收时间线程
         new ReceiveThread(handler, device.ftDev, ReceiveThread.TIME_RECEIVE_THREAD, TIME_RECEIVE).start();
 
+        //开启全部灯
+        for (int i = 0; i < groupNum * groupSize; i++)
+        {
+            turnOnLights(Device.DEVICE_LIST.get(i).getDeviceNum());
+        }
         //开启计时器
         timer = new Timer(handler);
         timer.setBeginTime(System.currentTimeMillis());
         timer.start();
-
-        //开启全部灯
-        String lightIds = "";
-        for (int i = 0; i < groupNum; i++)
-        {
-            lightIds += getGroupLightIds(i);
-        }
-        turnOnLights(lightIds);
     }
 
     //结束训练
@@ -361,7 +354,6 @@ public class JumpHighActivity extends AppCompatActivity
                 if (data.length() < 7)
                     return;
                 List<TimeInfo> infos = DataAnalyzeUtils.analyzeTimeData(data);
-                String lightIds = "";
                 for (TimeInfo info : infos)
                 {
                     int groupId = findGroupId(info.getDeviceNum());
@@ -372,17 +364,15 @@ public class JumpHighActivity extends AppCompatActivity
                         traningInfo.firstReceivedTime = System.currentTimeMillis();
                     }
                     traningInfo.deviceList.add(info.getDeviceNum() + "");
-                    lightIds += info.getDeviceNum();
-                }
 
-                if (!lightIds.equals(""))
-                    turnOnLights(lightIds);
+                    turnOnLights(info.getDeviceNum());
+                }
             }
         }).start();
     }
 
     //开启一组的全部灯
-    private void turnOnLights(final String lightIds)
+    private void turnOnLights(final char deviceNum)
     {
         new Thread(new Runnable()
         {
@@ -390,7 +380,7 @@ public class JumpHighActivity extends AppCompatActivity
             public void run()
             {
                 Timer.sleep(500);
-                device.sendOrder(lightIds, Order.LightColor.values()[lightColorCheckBox.getCheckId()],
+                device.sendOrder(deviceNum, Order.LightColor.values()[lightColorCheckBox.getCheckId()],
                         Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
                         Order.BlinkModel.NONE,
                         Order.LightModel.values()[lightModeCheckBox.getCheckId()],
@@ -401,21 +391,12 @@ public class JumpHighActivity extends AppCompatActivity
         }).start();
     }
 
-    //返回某一组设备的全部编号
-    private String getGroupLightIds(int groupId)
-    {
-        String lightIds = "";
-        for (int i = 0; i < groupSize; i++)
-            lightIds += Device.DEVICE_LIST.get(groupId * groupSize + i).getDeviceNum();
-        return lightIds;
-    }
-
 
     //查找设备所属分组
     private int findGroupId(char deviceNum)
     {
         int i = 0;
-        for (PowerInfo info : Device.DEVICE_LIST)
+        for (DeviceInfo info : Device.DEVICE_LIST)
         {
             if (info.getDeviceNum() == deviceNum)
                 break;
@@ -427,7 +408,7 @@ public class JumpHighActivity extends AppCompatActivity
     private int findPosition(char deviceNum)
     {
         int i = 0;
-        for (PowerInfo info : Device.DEVICE_LIST)
+        for (DeviceInfo info : Device.DEVICE_LIST)
         {
             if (info.getDeviceNum() == deviceNum)
                 break;

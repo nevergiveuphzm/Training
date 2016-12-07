@@ -5,14 +5,14 @@ package com.oucb303.training.model;
  * Description：
  */
 
-public class PowerInfo
+public class DeviceInfo
 {
-    public PowerInfo()
+    public DeviceInfo()
     {
 
     }
 
-    public PowerInfo(char num)
+    public DeviceInfo(char num)
     {
         this.deviceNum = num;
     }
@@ -21,6 +21,8 @@ public class PowerInfo
     private char deviceNum;
     //电量
     private int power;
+    //短地址
+    private String address;
 
 
     public char getDeviceNum()
@@ -43,5 +45,23 @@ public class PowerInfo
         this.power = power;
     }
 
+    public String getAddress()
+    {
+        return address;
+    }
 
+    public void setAddress(String address)
+    {
+        this.address = address;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "DeviceInfo{" +
+                "deviceNum=" + deviceNum +
+                ", power=" + power +
+                ", address='" + address + '\'' +
+                '}';
+    }
 }

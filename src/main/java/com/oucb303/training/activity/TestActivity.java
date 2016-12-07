@@ -25,6 +25,7 @@ import com.oucb303.training.device.Device;
 import com.oucb303.training.device.Order;
 import com.oucb303.training.listener.SpinnerItemSelectedListener;
 import com.oucb303.training.model.Constant;
+import com.oucb303.training.model.DeviceInfo;
 import com.oucb303.training.model.TimeInfo;
 import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.utils.DataAnalyzeUtils;
@@ -87,9 +88,7 @@ public class TestActivity extends AppCompatActivity
 
     private List<TimeInfo> timeInfos = new ArrayList<>();
     private List<String> addressList = new ArrayList<>();
-    private List<String> deviceNums = new ArrayList<>();
-    private ReceiveThread thread;
-    ArrayAdapter<String> adapter;
+    ArrayAdapter<String> spAddressAdapter;
 
 
     private Device device;
@@ -112,18 +111,14 @@ public class TestActivity extends AppCompatActivity
                     //接收到地址信息
                     if (data.length() > 0)
                     {
-                        List<Map<String, String>> list = DataAnalyzeUtils.analyzeAddressData(data);
-                        for (Map<String, String> map : list)
+                        List<DeviceInfo> infos = DataAnalyzeUtils.analyzePowerData(data);
+                        addressList.clear();
+                        for (DeviceInfo info : infos)
                         {
-                            if (!addressList.contains(map.get("address")))
-                            {
-                                addressList.add(map.get("address"));
-                                deviceNums.add(map.get("deviceNum"));
-                            }
+                            addressList.add(info.getAddress());
                         }
-                        Log.d("AAAA", addressList.size() + "xx");
                         addressAdapter.notifyDataSetChanged();
-                        adapter.notifyDataSetChanged();
+                        spAddressAdapter.notifyDataSetChanged();
                     }
                     break;
             }
@@ -147,10 +142,6 @@ public class TestActivity extends AppCompatActivity
         {
             device.connectFunction(TestActivity.this);
             device.initConfig();
-
-            //开启接收时间的线程
-            thread = new ReceiveThread(handler, device.ftDev, ReceiveThread.TIME_RECEIVE_THREAD, 1);
-            thread.start();
         }
 
         lvTimes.setAdapter(timesAdapter);
@@ -203,9 +194,9 @@ public class TestActivity extends AppCompatActivity
             }
         });
 
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, addressList);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spAddress.setAdapter(adapter);
+        spAddressAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, addressList);
+        spAddressAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spAddress.setAdapter(spAddressAdapter);
 
     }
 
@@ -231,15 +222,17 @@ public class TestActivity extends AppCompatActivity
                 break;
             case R.id.btn_send_order:
                 //线程设置成是接收时间线程
-                thread.setMsgFlag(1);
+                if (!ReceiveThread.THREAD_RUNNING_FLAG)
+                    new ReceiveThread(handler, device.ftDev, ReceiveThread.TIME_RECEIVE_THREAD, 1).start();
                 sendOrder();
                 break;
             case R.id.btn_get_address:
-                thread.setMsgFlag(2);
+                ReceiveThread.stopThread();
                 addressList.clear();
-                deviceNums.clear();
-                device.sendMessage("#04a");
+                device.sendGetDeviceInfo();
+                new ReceiveThread(handler, device.ftDev, ReceiveThread.POWER_RECEIVE_THREAD, 1).start();
                 break;
+
             case R.id.btn_change:
                 changeAddress();
                 break;
@@ -309,13 +302,16 @@ public class TestActivity extends AppCompatActivity
 
         if (!device.checkDevice(TestActivity.this))
             return;
-        device.sendOrder(ids,
-                color,
-                voice,
-                blinkModel,
-                lightModel,
-                actionModel,
-                Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
+        for (int i = 0; i < ids.length(); i++)
+        {
+            device.sendOrder(ids.charAt(i),
+                    color,
+                    voice,
+                    blinkModel,
+                    lightModel,
+                    actionModel,
+                    Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
+        }
     }
 
     private BaseAdapter timesAdapter = new BaseAdapter()
@@ -359,7 +355,7 @@ public class TestActivity extends AppCompatActivity
         @Override
         public int getCount()
         {
-            return addressList.size();
+            return Device.DEVICE_LIST.size();
         }
 
         @Override
@@ -384,8 +380,8 @@ public class TestActivity extends AppCompatActivity
             TextView lightNum = (TextView) view.findViewById(R.id.tv_note);
 
             id.setText((i + 1) + "");
-            address.setText(addressList.get(i));
-            lightNum.setText(deviceNums.get(i));
+            address.setText(Device.DEVICE_LIST.get(i).getAddress());
+            lightNum.setText(Device.DEVICE_LIST.get(i).getDeviceNum() + "");
 
             return view;
         }

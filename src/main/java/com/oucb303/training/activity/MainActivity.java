@@ -21,7 +21,7 @@ import android.widget.TextView;
 import com.oucb303.training.R;
 import com.oucb303.training.adpter.PowerAdapter;
 import com.oucb303.training.device.Device;
-import com.oucb303.training.model.PowerInfo;
+import com.oucb303.training.model.DeviceInfo;
 import com.oucb303.training.model.PowerInfoComparetor;
 import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.threads.Timer;
@@ -222,9 +222,8 @@ public class MainActivity extends Activity
         powerAdapter.setPowerInfos(null);
         powerAdapter.notifyDataSetChanged();
         // 发送获取全部设备电量指令
-        device.sendGetPowerOrder();
+        device.sendGetDeviceInfo();
 
-        Timer.sleep(3000);
         //开启接收电量的线程
         new ReceiveThread(handler, device.ftDev, ReceiveThread.POWER_RECEIVE_THREAD,
                 POWER_RECEIVE).start();
@@ -241,8 +240,7 @@ public class MainActivity extends Activity
         if (data.length() >= 7)
         {
             //获取电量信息
-            List<PowerInfo> powerInfos = DataAnalyzeUtils.analyzePowerData(data, MainActivity
-                    .this);
+            List<DeviceInfo> powerInfos = DataAnalyzeUtils.analyzePowerData(data);
             Collections.sort(powerInfos, new PowerInfoComparetor());
             //将电量信息赋值到全局变量中
             Device.DEVICE_LIST.clear();

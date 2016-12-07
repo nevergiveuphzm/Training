@@ -7,7 +7,8 @@ import android.widget.Toast;
 import com.ftdi.j2xx.D2xxManager;
 import com.ftdi.j2xx.FT_Device;
 import com.oucb303.training.model.Constant;
-import com.oucb303.training.model.PowerInfo;
+import com.oucb303.training.model.DeviceInfo;
+import com.oucb303.training.threads.Timer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +20,7 @@ import java.util.List;
 public class Device
 {
     //设备灯列表
-    public static List<PowerInfo> DEVICE_LIST = new ArrayList<>();
-    //设备短地址列表
-    public static List<Integer> DEVICE_ADDRESS = new ArrayList<>();
+    public static List<DeviceInfo> DEVICE_LIST = new ArrayList<>();
 
     public FT_Device ftDev;
     private D2xxManager ftdid2xx;
@@ -147,12 +146,14 @@ public class Device
         }
     }
 
-    //发送区全部设备电量命令
-    public void sendGetPowerOrder()
+    /**
+     * 区全部设备信息 电量、编号、短地址
+     */
+    public void sendGetDeviceInfo()
     {
-        Log.d(Constant.LOG_TAG, " send get All PowerInfo Order!");
+        Log.d(Constant.LOG_TAG, " send get All DeviceInfo Order!");
         // 获取全部设备电量指令
-        String data = "#04c";
+        String data = "#04a";
         if (ftDev.isOpen() == false)
         {
             Log.e("j2xx", "SendMessage: device not open");
@@ -170,30 +171,31 @@ public class Device
         //关闭全部灯
         if (devCount > 0)
         {
-            String ids = "";
-            for (PowerInfo info : Device.DEVICE_LIST)
+            for (DeviceInfo info : Device.DEVICE_LIST)
             {
-                ids += info.getDeviceNum();
+                sendOrder(info.getDeviceNum(),
+                        Order.LightColor.NONE,
+                        Order.VoiceMode.NONE,
+                        Order.BlinkModel.NONE,
+                        Order.LightModel.TURN_OFF,
+                        Order.ActionModel.TURN_OFF,
+                        Order.EndVoice.NONE);
             }
-            sendOrder(ids,
-                    Order.LightColor.NONE,
-                    Order.VoiceMode.NONE,
-                    Order.BlinkModel.NONE,
-                    Order.LightModel.TURN_OFF,
-                    Order.ActionModel.TURN_OFF,
-                    Order.EndVoice.NONE);
         }
     }
 
-    public void sendOrder(String lightIds, Order.LightColor color, Order.VoiceMode voiceMode, Order.BlinkModel blinkModel,
+    public void sendOrder(char lightId, Order.LightColor color, Order.VoiceMode voiceMode, Order.BlinkModel blinkModel,
                           Order.LightModel lightModel, Order.ActionModel actionModel, Order.EndVoice endVoice)
     {
-        String order = Order.getOrder(lightIds, color, voiceMode, blinkModel, lightModel, actionModel, endVoice);
+        String order = Order.getOrder(lightId, color, voiceMode, blinkModel, lightModel, actionModel, endVoice);
         sendMessage(order);
+        Timer.sleep(10);
     }
 
     public void sendMessage(String data)
     {
+        Log.d(Constant.LOG_TAG, "send message:" + data);
+
         if (ftDev.isOpen() == false)
         {
             Log.e("j2xx", "SendMessage: device not open");

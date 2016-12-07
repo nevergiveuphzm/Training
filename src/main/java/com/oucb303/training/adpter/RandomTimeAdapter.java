@@ -64,12 +64,13 @@ public class RandomTimeAdapter extends BaseAdapter
         {
             time.setText("---");
             note.setText("超时");
+
         } else
         {
             time.setText(timeList.get(i).getTime() + "毫秒");
-            lightNum.setText(timeList.get(i).getDeviceNum() + "");
             note.setText("---");
         }
+        lightNum.setText(timeList.get(i).getDeviceNum() + "");
         return v;
     }
 }

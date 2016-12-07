@@ -68,22 +68,23 @@ public class HorizonListViewAdapter extends BaseAdapter
             holder.ll_image = (LinearLayout) convertView.findViewById(R.id.ll_image);
             holder.tv_num = (TextView) convertView.findViewById(R.id.tv_light_num);
             convertView.setTag(holder);
-        }
-        else
+        } else
         {
             holder = (ViewHolder) convertView.getTag();
         }
-        if (list_light.get(position).isChecked())
-        {
-            holder.ll_image.setBackgroundResource(R.drawable.light);
 
-            holder.tv_num.setText("" + list_light.get(position).getNum());
-        }
+        if (list_light.get(position).isChecked())
+            holder.ll_image.setBackgroundResource(R.drawable.light);
         else
-        {
             holder.ll_image.setBackgroundResource(R.drawable.iv_circle);
-            holder.tv_num.setText("" + list_light.get(position).getNum());
-        }
+
+        char num = 'A';
+        if (list_light.get(position).getNum() <= 26)
+            num = (char) (list_light.get(position).getNum() + 'A' - 1);
+        else
+            num = (char) (list_light.get(position).getNum() + 'a' - 1);
+
+        holder.tv_num.setText(num + "");
         holder.ll_image.setTag(position);
         return convertView;
     }

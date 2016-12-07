@@ -6,7 +6,7 @@ import android.content.DialogInterface;
 import android.util.Log;
 
 import com.oucb303.training.model.Constant;
-import com.oucb303.training.model.PowerInfo;
+import com.oucb303.training.model.DeviceInfo;
 import com.oucb303.training.model.TimeInfo;
 
 import java.util.ArrayList;
@@ -21,32 +21,50 @@ import java.util.regex.Pattern;
  * Description：解析设备灯返回数据
  */
 
+
+/**
+ * 解析返回的地址、电量、编号信息
+ * <p>
+ * #13J@32236a70
+ */
 public class DataAnalyzeUtils
 {
     //解析返回的电量信息
-    public static List<PowerInfo> analyzePowerData(String data, Context context)
+    public static List<DeviceInfo> analyzePowerData(String data)
     {
-        List<PowerInfo> powerInfos = new ArrayList<>();
+        List<DeviceInfo> deviceInfos = new ArrayList<>();
         //低电量设备
-        List<String> lowPowerDevice = new ArrayList<>();
-        String data_time = data;
+        //List<String> lowPowerDevice = new ArrayList<>();
         Log.d(Constant.LOG_TAG, "origin Power Data" + data);
-        for (int i = 0; i < data_time.length(); i++)
+        for (int i = 0; i < data.length(); i++)
         {
-            if (data_time.charAt(i) == '#' && (data.length() - i) >= 7 && data_time.charAt(i + 5) == ')')
+            if (data.charAt(i) == '#' && (data.length() - i) >= 12 && data.charAt(i + 10) == 'a')
             {
-                //数据总长度
-                int digit = new Integer(data_time.substring(i + 1, i + 3));
                 //设备编号
-                String num = data_time.substring(i + 3, i + 4);
+                char num = data.charAt(i + 3);
+                String address = data.substring(i + 5, i + 10);
+
+                String temp = data.substring(i + 11);
+                String regex = "\\d*";
+                Pattern p = Pattern.compile(regex);
+                Matcher m = p.matcher(temp);
+                while (m.find())
+                {
+                    if (!"".equals(m.group()))
+                    {
+                        temp = m.group();
+                        break;
+                    }
+                }
+
                 //电量
-                int power = new Integer(data_time.substring(i + 6, i + digit));
-                System.out.println(digit + "-" + num + "-" + power);
+                int power = new Integer(temp);
+
                 boolean exist = false;
                 //检测设备是否已经添加到数组中
-                for (PowerInfo info : powerInfos)
+                for (DeviceInfo info : deviceInfos)
                 {
-                    if (info.getDeviceNum() == num.charAt(0))
+                    if (info.getDeviceNum() == num)
                     {
                         exist = true;
                         break;
@@ -55,23 +73,20 @@ public class DataAnalyzeUtils
                 if (!exist)
                 {
                     if (power >= 59)
-                    {
                         power = 59;
-                    } else if (power <= 49)
-                    {
-                        if (!lowPowerDevice.contains(num))
-                            lowPowerDevice.add(num);
-                        continue;
-                    }
-                    PowerInfo info = new PowerInfo();
-                    info.setDeviceNum(num.charAt(0));
+                    if (power <= 49)
+                        power = 49;
+                    DeviceInfo info = new DeviceInfo();
+                    info.setDeviceNum(num);
                     info.setPower(power - 49);
-                    powerInfos.add(info);
+                    info.setAddress(address);
+                    deviceInfos.add(info);
+                    Log.d(Constant.LOG_TAG, info.toString());
                 }
             }
         }
 
-        //存在低电量设备
+       /* //存在低电量设备
         if (lowPowerDevice.size() > 0)
         {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -89,8 +104,9 @@ public class DataAnalyzeUtils
             AlertDialog alertdialog = builder.create();
             alertdialog.setCancelable(false);
             alertdialog.show();
-        }
-        return powerInfos;
+        }*/
+
+        return deviceInfos;
     }
 
     public static List<TimeInfo> analyzeTimeData(String data)

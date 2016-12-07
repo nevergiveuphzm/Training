@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.oucb303.training.R;
-import com.oucb303.training.model.PowerInfo;
+import com.oucb303.training.model.DeviceInfo;
 
 import java.util.List;
 
@@ -20,21 +20,21 @@ import java.util.List;
 
 public class PowerAdapter extends BaseAdapter
 {
-    private List<PowerInfo> powerInfos;
+    private List<DeviceInfo> powerInfos;
     private LayoutInflater inflater = null;
 
-    public PowerAdapter(Context context, List<PowerInfo> powerInfos)
+    public PowerAdapter(Context context, List<DeviceInfo> powerInfos)
     {
         this.powerInfos = powerInfos;
         this.inflater = LayoutInflater.from(context);
     }
 
-    public List<PowerInfo> getPowerInfos()
+    public List<DeviceInfo> getPowerInfos()
     {
         return powerInfos;
     }
 
-    public void setPowerInfos(List<PowerInfo> powerInfos)
+    public void setPowerInfos(List<DeviceInfo> powerInfos)
     {
         this.powerInfos = powerInfos;
     }
@@ -68,7 +68,10 @@ public class PowerAdapter extends BaseAdapter
         ImageView imgPower = (ImageView) view1.findViewById(R.id.img_power);
 
         tvDeviceNum.setText("设备" + powerInfos.get(i).getDeviceNum());
-        tvPower.setText(powerInfos.get(i).getPower() + "0%");
+        if (powerInfos.get(i).getPower() == 0)
+            tvPower.setText("5%");
+        else
+            tvPower.setText(powerInfos.get(i).getPower() + "0%");
         switch (powerInfos.get(i).getPower())
         {
             case 0:

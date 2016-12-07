@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,14 +24,18 @@
             <include layout="@layout/layout_line_horizontal"/>
 
         </LinearLayout>
+
         <GridView
             android:id="@+id/gv_light"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:numColumns="8"
             android:columnWidth="70dp"
-            android:stretchMode="columnWidth"
-            ></GridView>
+            android:stretchMode="columnWidth">
+
+
+        </GridView>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

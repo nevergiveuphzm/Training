@@ -24,13 +24,12 @@ import com.oucb303.training.listener.CheckBoxClickListener;
 import com.oucb303.training.listener.MySeekBarListener;
 import com.oucb303.training.model.CheckBox;
 import com.oucb303.training.model.Constant;
-import com.oucb303.training.model.PowerInfo;
+import com.oucb303.training.model.DeviceInfo;
 import com.oucb303.training.model.TimeInfo;
 import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.threads.Timer;
 import com.oucb303.training.utils.DataAnalyzeUtils;
 import com.oucb303.training.utils.RandomUtils;
-import com.oucb303.training.widget.ToastUtils;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -195,13 +194,11 @@ public class RandomTrainingActivity extends Activity
         {
             switch (msg.what)
             {
-
                 //获取到电量信息
                 case POWER_RECEIVE:
                     btnBegin.setEnabled(true);
                     //获取电量信息
-                    List<PowerInfo> powerInfos = DataAnalyzeUtils.analyzePowerData(msg.obj
-                            .toString(), RandomTrainingActivity.this);
+                    List<DeviceInfo> powerInfos = DataAnalyzeUtils.analyzePowerData(msg.obj.toString());
                     //将电量信息赋值到全局变量中
                     Device.DEVICE_LIST.clear();
                     Device.DEVICE_LIST.addAll(powerInfos);
@@ -323,7 +320,7 @@ public class RandomTrainingActivity extends Activity
         imgOverTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener
                 (barOverTime, 1));
         //设定感应模式checkBox组合的点击事件
-        ImageView[] views = new ImageView[]{imgActionModeTouch, imgActionModeLight, imgActionModeTogether};
+        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
         actionModeCheckBox = new CheckBox(1, views);
         new CheckBoxClickListener(actionModeCheckBox);
         //设定灯光模式checkBox组合的点击事件
@@ -342,7 +339,7 @@ public class RandomTrainingActivity extends Activity
         switch (view.getId())
         {
             case R.id.btn_begin:
-                ToastUtils.MakeText(this, "测试", true).show();
+                Toast.makeText(getApplicationContext(), "测试", Toast.LENGTH_SHORT).show();
                 if (!device.checkDevice(RandomTrainingActivity.this))
                     return;
                 if (!trainingFlag)
@@ -376,11 +373,11 @@ public class RandomTrainingActivity extends Activity
         //训练开始
         trainingFlag = true;
         btnBegin.setText("停止");
-        totalTimes = new Integer(tvTrainingTimes.getText().toString().trim());
+        //totalTimes = new Integer(tvTrainingTimes.getText().toString().trim());
+        totalTimes = 10000;
         delayTime = (int) ((new Double(tvDelayTime.getText().toString().trim())) * 1000);
         overTime = new Integer(tvOverTime.getText().toString().trim()) * 1000;
-        trainingTime = (int) ((new Double(tvTrainingTime.getText().toString().trim()))
-                * 60 * 1000);
+        trainingTime = (int) ((new Double(tvTrainingTime.getText().toString().trim())) * 60 * 1000);
         Log.d(Constant.LOG_TAG, "系统参数:" + totalTimes + "-" + delayTime + "-" +
                 overTime);
         //数据清空
@@ -416,7 +413,6 @@ public class RandomTrainingActivity extends Activity
 
         //次数随机
         if (randomMode == 0)
-
         {
             if (currentTimes < totalTimes)
                 //发送开灯命令
@@ -424,7 +420,6 @@ public class RandomTrainingActivity extends Activity
             else
                 stopTraining();
         } else//时间随机
-
             turnOnLight();
     }
 
@@ -455,11 +450,9 @@ public class RandomTrainingActivity extends Activity
         ReceiveThread.stopThread();
         Timer.sleep(1000);
         // 发送获取全部设备电量指令
-        device.sendGetPowerOrder();
+        device.sendGetDeviceInfo();
         //开启接收电量的线程
-        Timer.sleep(2000);
-        new ReceiveThread(handler, device.ftDev, ReceiveThread.POWER_RECEIVE_THREAD,
-                POWER_RECEIVE).start();
+        new ReceiveThread(handler, device.ftDev, ReceiveThread.POWER_RECEIVE_THREAD, POWER_RECEIVE).start();
     }
 
     //开灯
@@ -471,7 +464,7 @@ public class RandomTrainingActivity extends Activity
             @Override
             public void run()
             {
-                device.sendOrder(getLightNum() + "",
+                device.sendOrder(getLightNum(),
                         Order.LightColor.values()[lightColorCheckBox.getCheckId()],
                         Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
                         Order.BlinkModel.NONE,
@@ -490,7 +483,7 @@ public class RandomTrainingActivity extends Activity
     private void turnOffLight()
     {
         //device.turnOffLight(currentLight);
-        device.sendOrder(currentLight + "",
+        device.sendOrder(currentLight,
                 Order.LightColor.NONE,
                 Order.VoiceMode.values()[cbOverTimeVoice.isChecked() ? 1 : 0],
                 Order.BlinkModel.NONE,

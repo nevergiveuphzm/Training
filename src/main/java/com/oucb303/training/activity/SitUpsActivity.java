@@ -185,12 +185,12 @@ public class SitUpsActivity extends AppCompatActivity
         /*Device.DEVICE_LIST.clear();
         for (int i = 0; i < 10; i++)
         {
-            PowerInfo info = new PowerInfo();
+            DeviceInfo info = new DeviceInfo();
             info.setDeviceNum((char) ('A' + i * 2));
             Device.DEVICE_LIST.add(info);
         }
-        Device.DEVICE_LIST.add(new PowerInfo('B'));
-        Device.DEVICE_LIST.add(new PowerInfo('F'));*/
+        Device.DEVICE_LIST.add(new DeviceInfo('B'));
+        Device.DEVICE_LIST.add(new DeviceInfo('F'));*/
         //设备排序
         Collections.sort(Device.DEVICE_LIST, new PowerInfoComparetor());
 
@@ -263,12 +263,11 @@ public class SitUpsActivity extends AppCompatActivity
         trainingTime = (int) (new Double(tvTrainingTime.getText().toString()) * 60 * 1000);
 
         //亮每组设备的第一个灯
-        String lightIds = "";
         for (int i = 0; i < groupNum; i++)
         {
-            lightIds += Device.DEVICE_LIST.get(i * 2).getDeviceNum();
+            sendOrder(Device.DEVICE_LIST.get(i * 2).getDeviceNum());
         }
-        sendOrder(lightIds);
+
 
         //开启接受时间线程
         new ReceiveThread(handler, device.ftDev, ReceiveThread.TIME_RECEIVE_THREAD, TIME_RECEIVE).start();
@@ -301,7 +300,6 @@ public class SitUpsActivity extends AppCompatActivity
             public void run()
             {
                 List<TimeInfo> infos = DataAnalyzeUtils.analyzeTimeData(data);
-                String lightIds = "";
                 for (TimeInfo info : infos)
                 {
                     int groupId = findDeviceGroupId(info.getDeviceNum());
@@ -311,21 +309,21 @@ public class SitUpsActivity extends AppCompatActivity
                         next = Device.DEVICE_LIST.get(groupId * groupSize + 1).getDeviceNum();
                         scores[groupId] += 1;
                     }
-                    lightIds += next;
+                    sendOrder(next);
                 }
                 Message msg = Message.obtain();
                 msg.obj = "";
                 msg.what = UPDATE_DATA;
                 handler.sendMessage(msg);
-                sendOrder(lightIds);
+
             }
         }).start();
 
     }
 
-    public void sendOrder(String lightIds)
+    public void sendOrder(char deviceNum)
     {
-        device.sendOrder(lightIds, Order.LightColor.values()[lightColorCheckBox.getCheckId()],
+        device.sendOrder(deviceNum, Order.LightColor.values()[lightColorCheckBox.getCheckId()],
                 Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
                 Order.BlinkModel.NONE,
                 Order.LightModel.values()[lightModeCheckBox.getCheckId()],

@@ -23,8 +23,8 @@ public class ReceiveThread extends Thread
     //线程标志 电量检测和设备返回时间线程
     public final static int POWER_RECEIVE_THREAD = 1;
     public final static int TIME_RECEIVE_THREAD = 2;
-    //标志为1 线程停止
-    public static int THREAD_STOP_FLAG = 0;
+    //标志false 线程停止
+    public static boolean THREAD_RUNNING_FLAG = false;
 
     public ReceiveThread(Handler handler, FT_Device device, int threadFlag, int msgFlag)
     {
@@ -37,21 +37,22 @@ public class ReceiveThread extends Thread
     @Override
     public void run()
     {
-        THREAD_STOP_FLAG = 0;
+        THREAD_RUNNING_FLAG = true;
         //检测电量线程
         if (threadFlag == POWER_RECEIVE_THREAD)
         {
+            Timer.sleep(2000);
             readData();
         }
         //接收设备返回时间线程
         else if (threadFlag == TIME_RECEIVE_THREAD)
         {
-            while (THREAD_STOP_FLAG == 0)
+            while (THREAD_RUNNING_FLAG)
             {
                 readData();
                 try
                 {
-                    Thread.sleep(5);
+                    Thread.sleep(10);
                 } catch (InterruptedException e)
                 {
                     e.printStackTrace();
@@ -87,11 +88,7 @@ public class ReceiveThread extends Thread
 
     public static void stopThread()
     {
-        THREAD_STOP_FLAG = 1;
+        THREAD_RUNNING_FLAG = false;
     }
 
-    public void setMsgFlag(int msgFlag)
-    {
-        this.msgFlag = msgFlag;
-    }
 }

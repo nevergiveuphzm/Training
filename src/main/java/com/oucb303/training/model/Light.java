@@ -22,9 +22,11 @@ public class Light
     //超时时间
     private int overTime = 5;
     //感应模式
-    private int actionMode = 0;
+    private int actionMode = 1;
     //灯光模式
-    private int lightMode = 0;
+    private int lightMode = 1;
+    //灯的颜色
+    private int lightColor = 1;
 
 
     public Light(int imageId)
@@ -126,6 +128,16 @@ public class Light
         this.actionMode = actionMode;
     }
 
+    public int getLightColor()
+    {
+        return lightColor;
+    }
+
+    public void setLightColor(int lightColor)
+    {
+        this.lightColor = lightColor;
+    }
+
     @Override
     public String toString()
     {
@@ -138,6 +150,7 @@ public class Light
                 ", overTime=" + overTime +
                 ", actionMode=" + actionMode +
                 ", lightMode=" + lightMode +
+                ", lightColor=" + lightColor +
                 '}';
     }
 }

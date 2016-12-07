@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/grass_green_round_stroke_no_padding_bg"
@@ -12,36 +13,40 @@
         android:layout_height="wrap_content"
         android:background="@drawable/grass_green_round_stroke_no_padding_bg"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-        <TextView
-            android:id="@+id/tv_add"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:background="@drawable/grass_green_round_stroke_no_padding_bg"
-            android:layout_margin="5dp"
-            android:gravity="center"
-            android:text="添加"
-            android:textColor="#FF333333"
-            android:textSize="25sp" />
-        <com.oucb303.training.widget.HorizontalListView
-            android:id="@+id/horizontal_listview"
-            android:layout_width="wrap_content"
-            android:layout_height="85dp"
-            >
 
-        </com.oucb303.training.widget.HorizontalListView>
+            <TextView
+                android:id="@+id/tv_add"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/grass_green_round_stroke_no_padding_bg"
+                android:gravity="center"
+                android:text="编辑"
+                android:textColor="#FF333333"
+                android:textSize="25sp"/>
+
+            <com.oucb303.training.widget.HorizontalListView
+                android:id="@+id/horizontal_listview"
+                android:layout_width="wrap_content"
+                android:layout_height="85dp">
+
+            </com.oucb303.training.widget.HorizontalListView>
         </LinearLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="#FFAAAAAA" />
+                android:background="#FFAAAAAA"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -55,9 +60,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
-                    android:text="小明"
+                    android:text=""
                     android:textColor="#FF333333"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"/>
 
                 <TextView
                     android:id="@+id/tv_org"
@@ -66,26 +71,25 @@
 
                     android:text=""
                     android:textColor="@color/green"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"/>
             </LinearLayout>
         </RelativeLayout>
 
     </LinearLayout>
 
 
-
     <LinearLayout
         android:id="@+id/ll_last"
-        android:layout_width="570dp"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:gravity="center"
         android:orientation="vertical"
         android:visibility="gone">
 
         <TextView
 
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:text="添加序列"
             android:textColor="#FF333333"
             android:textSize="35sp">

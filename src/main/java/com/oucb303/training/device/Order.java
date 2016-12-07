@@ -3,6 +3,7 @@ package com.oucb303.training.device;
 import android.util.Log;
 
 import com.oucb303.training.model.Constant;
+import com.oucb303.training.model.DeviceInfo;
 
 import java.util.Arrays;
 
@@ -58,11 +59,20 @@ public class Order
 
 
     /*获取命令*/
-    public static String getOrder(String lightIds, LightColor color, VoiceMode voiceMode, BlinkModel blinkModel,
+    public static String getOrder(char num, LightColor color, VoiceMode voiceMode, BlinkModel blinkModel,
                                   LightModel lightModel, ActionModel actionModel, EndVoice endVoice)
     {
 
-        String order = "*" + getLightIds(lightIds);
+        String order = "*";
+        for (DeviceInfo info : Device.DEVICE_LIST)
+        {
+            if (info.getDeviceNum() == num)
+            {
+                order += info.getAddress();
+                break;
+            }
+        }
+
         String str1 = orderToBinaryString(color.ordinal(), 3);
         String str2 = orderToBinaryString(voiceMode.ordinal(), 2);
         String str3 = orderToBinaryString(blinkModel.ordinal(), 2);
@@ -74,15 +84,11 @@ public class Order
         String operation1 = "0" + str1 + str2 + str3;
         String operation2 = "0" + str4 + str5 + str6;
 
-        //Log.d(Constant.LOG_TAG, "operation 1:" + operation1);
-        //Log.d(Constant.LOG_TAG, "operation 2:" + operation2);
         char c1 = binaryStringToChar(operation1);
         char c2 = binaryStringToChar(operation2);
         Log.d(Constant.LOG_TAG, "C1:" + c1 + "  C2:" + c2);
         order = order + "" + c1 + c2;
         Log.d(Constant.LOG_TAG, "order: length -" + order.length() + "-" + order);
-
-        Log.d(Constant.LOG_TAG, "turn on lights:" + lightIds);
 
         return order;
     }
@@ -130,7 +136,7 @@ public class Order
             else if (str.charAt(i) == '1')
                 value = value * 2 + 1;
         }
-        //Log.d("AAAA", "values:" + value);
+        Log.d("AAAA", "values:" + value);
         return (char) value;
     }
 
