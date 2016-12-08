@@ -189,7 +189,7 @@ public class Device
     {
         String order = Order.getOrder(lightId, color, voiceMode, blinkModel, lightModel, actionModel, endVoice);
         sendMessage(order);
-        Timer.sleep(10);
+        Timer.sleep(20);
     }
 
     public void sendMessage(String data)

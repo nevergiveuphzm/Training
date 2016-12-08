@@ -25,7 +25,8 @@ import java.util.regex.Pattern;
 /**
  * 解析返回的地址、电量、编号信息
  * <p>
- * #13J@32236a70
+ * 短地址:#09J@*32236
+ * 电量: #09A@)90
  */
 public class DataAnalyzeUtils
 {
@@ -38,27 +39,39 @@ public class DataAnalyzeUtils
         Log.d(Constant.LOG_TAG, "origin Power Data" + data);
         for (int i = 0; i < data.length(); i++)
         {
-            if (data.charAt(i) == '#' && (data.length() - i) >= 12 && data.charAt(i + 10) == 'a')
+            if (data.charAt(i) == '#' && (data.length() - i) >= 7 && (data.charAt(i + 5) == '*' || data.charAt(i + 5) == '*'))
             {
                 //设备编号
                 char num = data.charAt(i + 3);
-                String address = data.substring(i + 5, i + 10);
-
-                String temp = data.substring(i + 11);
-                String regex = "\\d*";
-                Pattern p = Pattern.compile(regex);
-                Matcher m = p.matcher(temp);
-                while (m.find())
+                String address = "";
+                int power = 0;
+                if (data.charAt(i + 5) == '*')
                 {
-                    if (!"".equals(m.group()))
+                    address = data.substring(i + 6, i + 11);
+                } else if (data.charAt(5) == ')')
+                {
+                    String temp = data.substring(i + 5);
+                    String regex = "\\d*";
+                    Pattern p = Pattern.compile(regex);
+                    Matcher m = p.matcher(temp);
+                    while (m.find())
                     {
-                        temp = m.group();
-                        break;
+                        if (!"".equals(m.group()))
+                        {
+                            temp = m.group();
+                            break;
+                        }
                     }
-                }
+                    //电量
+                    power = new Integer(temp);
 
-                //电量
-                int power = new Integer(temp);
+                    if (power >= 59)
+                        power = 10;
+                    else if (power <= 49)
+                        power = 0;
+                    else
+                        power -= 49;
+                }
 
                 boolean exist = false;
                 //检测设备是否已经添加到数组中
@@ -67,18 +80,18 @@ public class DataAnalyzeUtils
                     if (info.getDeviceNum() == num)
                     {
                         exist = true;
+                        if (data.charAt(i + 5) == '*')
+                            info.setAddress(address);
+                        else if (data.charAt(5) == ')')
+                            info.setPower(power);
                         break;
                     }
                 }
                 if (!exist)
                 {
-                    if (power >= 59)
-                        power = 59;
-                    if (power <= 49)
-                        power = 49;
                     DeviceInfo info = new DeviceInfo();
                     info.setDeviceNum(num);
-                    info.setPower(power - 49);
+                    info.setPower(power);
                     info.setAddress(address);
                     deviceInfos.add(info);
                     Log.d(Constant.LOG_TAG, info.toString());
