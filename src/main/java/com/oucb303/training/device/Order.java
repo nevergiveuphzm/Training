@@ -63,15 +63,19 @@ public class Order
                                   LightModel lightModel, ActionModel actionModel, EndVoice endVoice)
     {
 
-        String order = "*";
+        String order = "=";
+        boolean exist=false;
         for (DeviceInfo info : Device.DEVICE_LIST)
         {
             if (info.getDeviceNum() == num)
             {
                 order += info.getAddress();
+                exist =true;
                 break;
             }
         }
+        if (!exist)
+            return "";
 
         String str1 = orderToBinaryString(color.ordinal(), 3);
         String str2 = orderToBinaryString(voiceMode.ordinal(), 2);

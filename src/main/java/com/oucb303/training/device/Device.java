@@ -153,16 +153,23 @@ public class Device
     {
         Log.d(Constant.LOG_TAG, " send get All DeviceInfo Order!");
         // 获取全部设备电量指令
-        String data = "#04a";
-        if (ftDev.isOpen() == false)
-        {
-            Log.e("j2xx", "SendMessage: device not open");
-            return;
-        }
-        ftDev.setLatencyTimer((byte) 2);
+        String data = "+04a";
+        sendMessage(data);
+    }
 
-        byte[] OutData = data.getBytes();
-        ftDev.write(OutData, data.length());
+    //修改灯的PAN_ID 和 num
+    public void changeLightPANID(String PAN_ID, char num,String address)
+    {
+        String order = "+14*" + PAN_ID + num + address;
+
+        Log.d(Constant.LOG_TAG, "order:" + order);
+        sendMessage(order);
+    }
+
+    //修改协调器PANID
+    public void changeControllerPANID(String PAN_ID)
+    {
+        sendMessage("+08b" + PAN_ID);
     }
 
 
@@ -188,11 +195,13 @@ public class Device
                           Order.LightModel lightModel, Order.ActionModel actionModel, Order.EndVoice endVoice)
     {
         String order = Order.getOrder(lightId, color, voiceMode, blinkModel, lightModel, actionModel, endVoice);
+        if (order.equals(""))
+            return;
         sendMessage(order);
         Timer.sleep(20);
     }
 
-    public void sendMessage(String data)
+    private void sendMessage(String data)
     {
         Log.d(Constant.LOG_TAG, "send message:" + data);
 

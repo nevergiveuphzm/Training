@@ -25,8 +25,7 @@ import java.util.regex.Pattern;
 /**
  * 解析返回的地址、电量、编号信息
  * <p>
- * 短地址:#09J@*32236
- * 电量: #09A@)90
+ * 电量: #09A@*1234598
  */
 public class DataAnalyzeUtils
 {
@@ -39,39 +38,33 @@ public class DataAnalyzeUtils
         Log.d(Constant.LOG_TAG, "origin Power Data" + data);
         for (int i = 0; i < data.length(); i++)
         {
-            if (data.charAt(i) == '#' && (data.length() - i) >= 7 && (data.charAt(i + 5) == '*' || data.charAt(i + 5) == '*'))
+            if (data.charAt(i) == '#' && (data.length() - i) >= 7 && data.charAt(i + 5) == '*')
             {
                 //设备编号
                 char num = data.charAt(i + 3);
-                String address = "";
-                int power = 0;
-                if (data.charAt(i + 5) == '*')
-                {
-                    address = data.substring(i + 6, i + 11);
-                } else if (data.charAt(5) == ')')
-                {
-                    String temp = data.substring(i + 5);
-                    String regex = "\\d*";
-                    Pattern p = Pattern.compile(regex);
-                    Matcher m = p.matcher(temp);
-                    while (m.find())
-                    {
-                        if (!"".equals(m.group()))
-                        {
-                            temp = m.group();
-                            break;
-                        }
-                    }
-                    //电量
-                    power = new Integer(temp);
+                String address = data.substring(i + 6, i + 11);
 
-                    if (power >= 59)
-                        power = 10;
-                    else if (power <= 49)
-                        power = 0;
-                    else
-                        power -= 49;
+                String temp = data.substring(i + 11);
+                String regex = "\\d*";
+                Pattern p = Pattern.compile(regex);
+                Matcher m = p.matcher(temp);
+                while (m.find())
+                {
+                    if (!"".equals(m.group()))
+                    {
+                        temp = m.group();
+                        break;
+                    }
                 }
+                //电量
+                int power = new Integer(temp);
+
+                if (power >= 59)
+                    power = 10;
+                else if (power <= 49)
+                    power = 0;
+                else
+                    power -= 49;
 
                 boolean exist = false;
                 //检测设备是否已经添加到数组中
@@ -80,10 +73,6 @@ public class DataAnalyzeUtils
                     if (info.getDeviceNum() == num)
                     {
                         exist = true;
-                        if (data.charAt(i + 5) == '*')
-                            info.setAddress(address);
-                        else if (data.charAt(5) == ')')
-                            info.setPower(power);
                         break;
                     }
                 }
@@ -122,54 +111,59 @@ public class DataAnalyzeUtils
         return deviceInfos;
     }
 
+    /**
+     *
+     *解析返回来的时间数据
+     * #A(128
+     *
+     * */
+
     public static List<TimeInfo> analyzeTimeData(String data)
     {
         Log.d(Constant.LOG_TAG, "origin Time Data:" + data);
         List<TimeInfo> timeList = new ArrayList<>();
         for (int i = 0; i < data.length(); i++)
         {
-            if (data.charAt(i) == '#' && (data.length() - i) >= 7 && data.charAt(i + 5) == '(')
+            if (data.charAt(i) == '#' && (data.length() - i) >=4  && data.charAt(i + 2) == '(')
             {
-                String str1 = data.substring(i + 1, i + 3);
-                //数据总长度
-                int digit = new Integer(str1);
-                String str2 = data.substring(i + 3, i + 4);
 
-                String str3 = data.substring(i + 6);
-                //Log.d(Constant.LOG_TAG, str1 + "-" + str2 + "-" + str3);
                 //设备编号
-                String num = str2;
+                char num = data.charAt(i+1);
+
+                String str = data.substring(i+3);
 
                 String regex = "\\d*";
                 Pattern p = Pattern.compile(regex);
-                Matcher m = p.matcher(str3);
+                Matcher m = p.matcher(str);
                 while (m.find())
                 {
                     if (!"".equals(m.group()))
                     {
-                        str3 = m.group();
+                        str = m.group();
                         break;
                     }
                 }
 
                 //时间
-                int time = new Integer(str3);
-                //Log.d(Constant.LOG_TAG, digit + "-" + num + "-" + time);
-                TimeInfo timeInfo = new TimeInfo();
-                timeInfo.setDeviceNum(num.charAt(0));
-                timeInfo.setTime(time);
+                int time = new Integer(str);
 
                 boolean flag = false;
                 for (TimeInfo info : timeList)
                 {
-                    if (info.getDeviceNum() == timeInfo.getDeviceNum())
+                    if (info.getDeviceNum() == num)
                     {
                         flag = true;
                         break;
                     }
                 }
                 if (!flag)
+                {
+                    TimeInfo timeInfo = new TimeInfo();
+                    timeInfo.setDeviceNum(num);
+                    timeInfo.setTime(time);
                     timeList.add(timeInfo);
+                    Log.d(Constant.LOG_TAG,timeInfo.toString());
+                }
                 //break;
             }
         }

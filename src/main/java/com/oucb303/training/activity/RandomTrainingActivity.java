@@ -206,10 +206,8 @@ public class RandomTrainingActivity extends Activity
                 case TIME_RECEIVE:
                     String data = msg.obj.toString();
                     //返回数据不为空
-                    if (data != null)
+                    if (data != null && data.length() >= 4)
                     {
-                        if (!DataAnalyzeUtils.dataIsValid(data))
-                            return;
                         timeList.addAll(DataAnalyzeUtils.analyzeTimeData(data));
                         if (timeAdapter != null)
                         {

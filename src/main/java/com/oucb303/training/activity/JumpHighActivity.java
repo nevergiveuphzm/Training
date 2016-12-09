@@ -158,6 +158,8 @@ public class JumpHighActivity extends AppCompatActivity
                     break;
 
                 case TIME_RECEIVE://接收到设备返回的时间
+                    if (data.length() < 7)
+                        return;
                     analyseData(data);
                     break;
                 //更新成绩
@@ -326,7 +328,13 @@ public class JumpHighActivity extends AppCompatActivity
         //开启全部灯
         for (int i = 0; i < groupNum * groupSize; i++)
         {
-            turnOnLights(Device.DEVICE_LIST.get(i).getDeviceNum());
+            device.sendOrder(Device.DEVICE_LIST.get(i).getDeviceNum(),
+                    Order.LightColor.values()[lightColorCheckBox.getCheckId()],
+                    Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
+                    Order.BlinkModel.NONE,
+                    Order.LightModel.values()[lightModeCheckBox.getCheckId()],
+                    Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
+                    Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
         }
         //开启计时器
         timer = new Timer(handler);
@@ -346,29 +354,21 @@ public class JumpHighActivity extends AppCompatActivity
 
     private void analyseData(final String data)
     {
-        new Thread(new Runnable()
+        List<TimeInfo> infos = DataAnalyzeUtils.analyzeTimeData(data);
+        for (TimeInfo info : infos)
         {
-            @Override
-            public void run()
+            int groupId = findGroupId(info.getDeviceNum());
+            JumpHighTrainingInfo traningInfo = groupTrainingInfos.get(groupId);
+
+            if (traningInfo.deviceList.size() == 0)
             {
-                if (data.length() < 7)
-                    return;
-                List<TimeInfo> infos = DataAnalyzeUtils.analyzeTimeData(data);
-                for (TimeInfo info : infos)
-                {
-                    int groupId = findGroupId(info.getDeviceNum());
-                    JumpHighTrainingInfo traningInfo = groupTrainingInfos.get(groupId);
-
-                    if (traningInfo.deviceList.size() == 0)
-                    {
-                        traningInfo.firstReceivedTime = System.currentTimeMillis();
-                    }
-                    traningInfo.deviceList.add(info.getDeviceNum() + "");
-
-                    turnOnLights(info.getDeviceNum());
-                }
+                traningInfo.firstReceivedTime = System.currentTimeMillis();
             }
-        }).start();
+            traningInfo.deviceList.add(info.getDeviceNum() + "");
+
+            turnOnLights(info.getDeviceNum());
+            Timer.sleep(20);
+        }
     }
 
     //开启一组的全部灯

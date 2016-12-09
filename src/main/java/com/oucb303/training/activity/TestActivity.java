@@ -113,6 +113,7 @@ public class TestActivity extends AppCompatActivity
                     {
                         List<DeviceInfo> infos = DataAnalyzeUtils.analyzePowerData(data);
                         addressList.clear();
+                        Device.DEVICE_LIST.addAll(infos);
                         for (DeviceInfo info : infos)
                         {
                             addressList.add(info.getAddress());
@@ -229,8 +230,10 @@ public class TestActivity extends AppCompatActivity
             case R.id.btn_get_address:
                 ReceiveThread.stopThread();
                 addressList.clear();
+                Device.DEVICE_LIST.clear();
+                addressAdapter.notifyDataSetChanged();
                 device.sendGetDeviceInfo();
-                new ReceiveThread(handler, device.ftDev, ReceiveThread.POWER_RECEIVE_THREAD, 1).start();
+                new ReceiveThread(handler, device.ftDev, ReceiveThread.POWER_RECEIVE_THREAD, 2).start();
                 break;
 
             case R.id.btn_change:
@@ -244,7 +247,7 @@ public class TestActivity extends AppCompatActivity
                     Toast.makeText(this, "PAN_ID不能为空!", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                device.sendMessage("#08b" + id);
+                device.changeControllerPANID(id);
                 break;
         }
     }
@@ -289,11 +292,9 @@ public class TestActivity extends AppCompatActivity
             address = "0" + address;
             len++;
         }
-        String order = "#14*" +
-                etPanId.getText().toString().trim() +
-                etLightNum.getText().toString().trim() + address;
-        Log.d(Constant.LOG_TAG, "order:" + order);
-        device.sendMessage(order);
+
+        device.changeLightPANID(etPanId.getText().toString().trim(),
+                etLightNum.getText().toString().trim().charAt(0), address);
     }
 
     private void sendOrder()
@@ -337,8 +338,7 @@ public class TestActivity extends AppCompatActivity
         @Override
         public View getView(int i, View view, ViewGroup viewGroup)
         {
-            if (view == null)
-                view = LayoutInflater.from(TestActivity.this).inflate(R.layout.item_statistics_time, null);
+            view = LayoutInflater.from(TestActivity.this).inflate(R.layout.item_statistics_time, null);
             TextView id = (TextView) view.findViewById(R.id.tv_num);
             TextView time = (TextView) view.findViewById(R.id.tv_time);
             TextView lightNum = (TextView) view.findViewById(R.id.tv_note);
@@ -373,8 +373,7 @@ public class TestActivity extends AppCompatActivity
         @Override
         public View getView(int i, View view, ViewGroup viewGroup)
         {
-            if (view == null)
-                view = LayoutInflater.from(TestActivity.this).inflate(R.layout.item_statistics_time, null);
+            view = LayoutInflater.from(TestActivity.this).inflate(R.layout.item_statistics_time, null);
             TextView id = (TextView) view.findViewById(R.id.tv_num);
             TextView address = (TextView) view.findViewById(R.id.tv_time);
             TextView lightNum = (TextView) view.findViewById(R.id.tv_note);

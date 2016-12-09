@@ -44,4 +44,13 @@ public class TimeInfo
         this.valid = valid;
     }
 
+    @Override
+    public String toString()
+    {
+        return "TimeInfo{" +
+                "deviceNum=" + deviceNum +
+                ", time=" + time +
+                ", valid=" + valid +
+                '}';
+    }
 }
