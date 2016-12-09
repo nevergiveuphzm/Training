@@ -153,7 +153,7 @@ public class Device
     {
         Log.d(Constant.LOG_TAG, " send get All DeviceInfo Order!");
         // 获取全部设备电量指令
-        String data = "&04a";
+        String data = "#04a";
         if (ftDev.isOpen() == false)
         {
             Log.e("j2xx", "SendMessage: device not open");
