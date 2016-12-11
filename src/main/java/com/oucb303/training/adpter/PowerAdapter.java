@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.oucb303.training.R;
+import com.oucb303.training.device.Device;
 import com.oucb303.training.model.DeviceInfo;
 
 import java.util.List;
@@ -20,37 +21,26 @@ import java.util.List;
 
 public class PowerAdapter extends BaseAdapter
 {
-    private List<DeviceInfo> powerInfos;
     private LayoutInflater inflater = null;
 
-    public PowerAdapter(Context context, List<DeviceInfo> powerInfos)
+    public PowerAdapter(Context context)
     {
-        this.powerInfos = powerInfos;
         this.inflater = LayoutInflater.from(context);
     }
 
-    public List<DeviceInfo> getPowerInfos()
-    {
-        return powerInfos;
-    }
-
-    public void setPowerInfos(List<DeviceInfo> powerInfos)
-    {
-        this.powerInfos = powerInfos;
-    }
 
     @Override
     public int getCount()
     {
-        if (powerInfos == null)
+        if (Device.DEVICE_LIST == null)
             return 0;
-        return powerInfos.size();
+        return Device.DEVICE_LIST.size();
     }
 
     @Override
     public Object getItem(int position)
     {
-        return powerInfos.get(position);
+        return Device.DEVICE_LIST.get(position);
     }
 
     @Override
@@ -67,12 +57,14 @@ public class PowerAdapter extends BaseAdapter
         TextView tvPower = (TextView) view1.findViewById(R.id.tv_power);
         ImageView imgPower = (ImageView) view1.findViewById(R.id.img_power);
 
-        tvDeviceNum.setText("设备" + powerInfos.get(i).getDeviceNum());
-        if (powerInfos.get(i).getPower() == 0)
+        DeviceInfo info = Device.DEVICE_LIST.get(i);
+
+        tvDeviceNum.setText("设备" + info.getDeviceNum());
+        if (info.getPower() == 0)
             tvPower.setText("5%");
         else
-            tvPower.setText(powerInfos.get(i).getPower() + "0%");
-        switch (powerInfos.get(i).getPower())
+            tvPower.setText(info.getPower() + "0%");
+        switch (info.getPower())
         {
             case 0:
                 imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim8);

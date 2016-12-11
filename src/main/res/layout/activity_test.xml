@@ -201,6 +201,27 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="清空"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_turn_on_all_lights"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="开全灯"/>
+
+                <Button
+                    android:id="@+id/btn_turn_off_all_lights"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="关全灯"/>
+
             </LinearLayout>
 
         </LinearLayout>
@@ -346,28 +367,28 @@
             <include layout="@layout/layout_line_horizontal"/>
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:text="协调器PAN_ID:"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="协调器PAN_ID:"/>
 
                 <EditText
-                    android:maxLength="4"
                     android:id="@+id/et_pan_id1"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:maxLength="4"/>
 
             </LinearLayout>
 
             <Button
-                android:text="修改"
                 android:id="@+id/btn_change1"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:text="修改"/>
 
         </LinearLayout>
 

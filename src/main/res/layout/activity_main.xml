@@ -29,22 +29,24 @@
                 android:id="@+id/btn_test"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:text="测试"/>
 
-            <Button
-                android:id="@+id/btn_check"
-                style="@drawable/iv_circle"
-                android:layout_width="fill_parent"
-                android:layout_height="47dp"
-                android:layout_marginLeft="2dp"
-                android:background="@drawable/bt_orangestyle"
-                android:text="@string/btn_mainactivity_check"
-                android:textSize="16sp"/>
+            <!--<Button-->
+            <!--android:id="@+id/btn_check"-->
+            <!--style="@drawable/iv_circle"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="47dp"-->
+            <!--android:layout_marginLeft="2dp"-->
+            <!--android:background="@drawable/bt_orangestyle"-->
+            <!--android:text="@string/btn_mainactivity_check"-->
+            <!--android:textSize="16sp"/>-->
 
             <TextView
                 android:id="@+id/tv_device_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:text="共0个设备"
                 android:textColor="@color/white"
                 android:textSize="@dimen/para_level4_font_size"/>
@@ -53,7 +55,7 @@
                 android:id="@+id/layout_power_whole"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="10dp"
                 android:layout_weight="13"
                 android:orientation="vertical">
 

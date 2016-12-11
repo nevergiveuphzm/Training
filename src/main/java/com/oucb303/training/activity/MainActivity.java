@@ -52,8 +52,6 @@ public class MainActivity extends Activity
     Button btn23;
     @Bind(R.id.btn24)
     Button btn24;
-    @Bind(R.id.btn_check)
-    Button btnCheck;
     @Bind(R.id.lv_battery)
     ListView lvBattery;
     @Bind(R.id.tv_device_count)
@@ -62,6 +60,7 @@ public class MainActivity extends Activity
     private Device device;
     private final int POWER_RECEIVE = 1;
     private PowerAdapter powerAdapter;
+    private boolean powerFlag = true;
 
 
     Handler handler = new Handler()
@@ -114,9 +113,16 @@ public class MainActivity extends Activity
         filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
         filter.setPriority(500);
         this.registerReceiver(mUsbReceiver, filter);
-        btnCheck.setEnabled(false);
-        powerAdapter = new PowerAdapter(MainActivity.this, null);
+        //btnCheck.setEnabled(false);
+        powerAdapter = new PowerAdapter(MainActivity.this);
         lvBattery.setAdapter(powerAdapter);
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        this.unregisterReceiver(mUsbReceiver);
     }
 
     //初始化串口
@@ -128,11 +134,26 @@ public class MainActivity extends Activity
         {
             device.connectFunction(MainActivity.this);
             device.initConfig();
-            sendGetPowerOrder();
-            btnCheck.setEnabled(true);
+            //sendGetPowerOrder();
+            new Thread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    while (powerFlag)
+                    {
+                        // 发送获取全部设备电量指令
+                        device.sendGetDeviceInfo();
+                        //开启接收电量的线程
+                        new ReceiveThread(handler, device.ftDev, ReceiveThread.POWER_RECEIVE_THREAD,
+                                POWER_RECEIVE).start();
+
+                        Timer.sleep(10000);
+                    }
+                }
+            }).start();
         } else
         {
-            btnCheck.setEnabled(false);
             // 未检测到协调器
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle("温馨提示");
@@ -154,17 +175,19 @@ public class MainActivity extends Activity
     protected void onStart()
     {
         super.onStart();
+        powerFlag = true;
         initDevice();
     }
 
     @Override
     protected void onPause()
     {
+        powerFlag = false;
         device.disconnectFunction();
         super.onPause();
     }
 
-    @OnClick({R.id.btn_check, R.id.btn_level_one, R.id.btn_level_two, R.id.btn_level_three,
+    @OnClick({R.id.btn_level_one, R.id.btn_level_two, R.id.btn_level_three,
             R.id.btn_level_four, R.id.btn_base_training, R.id.btn_statistic, R.id.btn_test})
     public void onClick(View view)
     {
@@ -172,9 +195,6 @@ public class MainActivity extends Activity
         Intent intent;
         switch (view.getId())
         {
-            case R.id.btn_check:
-                sendGetPowerOrder();
-                break;
             case R.id.btn_level_one:
                 level = 1;
                 intent = new Intent(MainActivity.this, TrainingListActivity.class);
@@ -215,69 +235,52 @@ public class MainActivity extends Activity
     }
 
 
-    // 获得所有设备电量
-    public void sendGetPowerOrder()
-    {
-        //清空电量列表
-        powerAdapter.setPowerInfos(null);
-        powerAdapter.notifyDataSetChanged();
-        // 发送获取全部设备电量指令
-        device.sendGetDeviceInfo();
-
-        //开启接收电量的线程
-        new ReceiveThread(handler, device.ftDev, ReceiveThread.POWER_RECEIVE_THREAD,
-                POWER_RECEIVE).start();
-        //将电量检测按钮不可见
-        btnCheck.setEnabled(false);
-    }
-
     //读取电量信息
     private void readPowerData(final String data)
     {
-        //将电量检测置为可用
-        btnCheck.setEnabled(true);
-
+        //清空电量列表
+        Device.DEVICE_LIST.clear();
+        powerAdapter.notifyDataSetChanged();
+        tvDeviceCount.setText("共0个设备");
         if (data.length() >= 7)
         {
             //获取电量信息
             List<DeviceInfo> powerInfos = DataAnalyzeUtils.analyzePowerData(data);
             Collections.sort(powerInfos, new PowerInfoComparetor());
-            //将电量信息赋值到全局变量中
-            Device.DEVICE_LIST.clear();
             Device.DEVICE_LIST.addAll(powerInfos);
             if (powerInfos.size() > 0)
             {
                 //更新电量信息
-                powerAdapter.setPowerInfos(powerInfos);
                 powerAdapter.notifyDataSetChanged();
                 tvDeviceCount.setText("共" + powerInfos.size() + "个设备");
                 Log.i("AAA", powerInfos.size() + "");
             }
-        } else
-        {
-            //此时是没有可用设备，弹出对话框，可以点击取消，或是点击重新检测
-            // 将主界面上所有的电量置为不可见
-            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setTitle("提示");
-            builder.setMessage("                       未检测到任何设备，请先开启设备！\n");
-            builder.setNegativeButton("取消", new DialogInterface.OnClickListener()
-            {
-                @Override
-                public void onClick(DialogInterface dialog, int which)
-                {
-                }
-            });
-            builder.setPositiveButton("重新检测", new DialogInterface.OnClickListener()
-            {
-                @Override
-                public void onClick(DialogInterface dialog, int which)
-                {
-                    dialog.dismiss();
-                    sendGetPowerOrder();
-                }
-            });
-            AlertDialog alertdialog = builder.create();
-            alertdialog.show();
         }
+//        } else
+//        {
+//            //此时是没有可用设备，弹出对话框，可以点击取消，或是点击重新检测
+//            // 将主界面上所有的电量置为不可见
+//            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+//            builder.setTitle("提示");
+//            builder.setMessage("                       未检测到任何设备，请先开启设备！\n");
+//            builder.setNegativeButton("取消", new DialogInterface.OnClickListener()
+//            {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which)
+//                {
+//                }
+//            });
+//            builder.setPositiveButton("重新检测", new DialogInterface.OnClickListener()
+//            {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which)
+//                {
+//                    dialog.dismiss();
+//                    sendGetPowerOrder();
+//                }
+//            });
+//            AlertDialog alertdialog = builder.create();
+//            alertdialog.show();
+//        }
     }
 }

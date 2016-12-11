@@ -210,7 +210,7 @@ public class TestActivity extends AppCompatActivity
     }
 
     @OnClick({R.id.layout_cancel, R.id.btn_send_order, R.id.btn_clear, R.id.btn_get_address,
-            R.id.btn_change, R.id.btn_change1})
+            R.id.btn_change, R.id.btn_change1, R.id.btn_turn_off_all_lights, R.id.btn_turn_on_all_lights})
     public void onClick(View view)
     {
         switch (view.getId())
@@ -248,6 +248,21 @@ public class TestActivity extends AppCompatActivity
                     return;
                 }
                 device.changeControllerPANID(id);
+                break;
+            case R.id.btn_turn_off_all_lights:
+                device.turnOffAllTheLight();
+                break;
+            case R.id.btn_turn_on_all_lights:
+                for (DeviceInfo info : Device.DEVICE_LIST)
+                {
+                    device.sendOrder(info.getDeviceNum(),
+                            Order.LightColor.BLUE,
+                            Order.VoiceMode.NONE,
+                            Order.BlinkModel.NONE,
+                            Order.LightModel.OUTER,
+                            Order.ActionModel.NONE,
+                            Order.EndVoice.NONE);
+                }
                 break;
         }
     }
