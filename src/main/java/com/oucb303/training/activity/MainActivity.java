@@ -26,6 +26,7 @@ import com.oucb303.training.model.PowerInfoComparetor;
 import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.threads.Timer;
 import com.oucb303.training.utils.DataAnalyzeUtils;
+import com.oucb303.training.utils.VersionUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -48,10 +49,6 @@ public class MainActivity extends Activity
     Button btnBaseTraining;
     @Bind(R.id.btn_statistic)
     Button btnStatistic;
-    @Bind(R.id.btn23)
-    Button btn23;
-    @Bind(R.id.btn24)
-    Button btn24;
     @Bind(R.id.lv_battery)
     ListView lvBattery;
     @Bind(R.id.tv_device_count)
@@ -116,6 +113,7 @@ public class MainActivity extends Activity
         //btnCheck.setEnabled(false);
         powerAdapter = new PowerAdapter(MainActivity.this);
         lvBattery.setAdapter(powerAdapter);
+        VersionUtils.getAppVersion(this);
     }
 
     @Override
@@ -134,7 +132,6 @@ public class MainActivity extends Activity
         {
             device.connectFunction(MainActivity.this);
             device.initConfig();
-            //sendGetPowerOrder();
             new Thread(new Runnable()
             {
                 @Override
@@ -188,7 +185,8 @@ public class MainActivity extends Activity
     }
 
     @OnClick({R.id.btn_level_one, R.id.btn_level_two, R.id.btn_level_three,
-            R.id.btn_level_four, R.id.btn_base_training, R.id.btn_statistic, R.id.btn_test})
+            R.id.btn_level_four, R.id.btn_base_training, R.id.btn_statistic, R.id.btn_test,
+            R.id.btn_setting})
     public void onClick(View view)
     {
         int level = 0;
@@ -229,6 +227,11 @@ public class MainActivity extends Activity
             case R.id.btn_test:
                 intent = new Intent();
                 intent.setClass(MainActivity.this, TestActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.btn_setting:
+                intent = new Intent();
+                intent.setClass(MainActivity.this, SettingActivity.class);
                 startActivity(intent);
                 break;
         }

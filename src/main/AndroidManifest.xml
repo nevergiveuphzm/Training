@@ -56,6 +56,8 @@
         </activity>
         <activity android:name=".activity.GroupConfrontationActivity">
         </activity>
+        <activity android:name=".activity.SettingActivity">
+        </activity>
     </application>
 
 </manifest>

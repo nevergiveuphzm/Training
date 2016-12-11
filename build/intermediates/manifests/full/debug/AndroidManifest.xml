@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.oucb303.training"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.0.0" >
 
     <uses-sdk
         android:minSdkVersion="15"
@@ -64,6 +64,8 @@
         <activity android:name="com.oucb303.training.activity.JumpHighActivity" >
         </activity>
         <activity android:name="com.oucb303.training.activity.GroupConfrontationActivity" >
+        </activity>
+        <activity android:name="com.oucb303.training.activity.SettingActivity" >
         </activity>
         <activity
             android:name="io.vov.vitamio.activity.InitActivity"

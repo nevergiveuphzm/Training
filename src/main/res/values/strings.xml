@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">敏捷训练</string>
+    <string name="app_name">SafLight</string>
     <string name="btn_basetraining">基础训练</string>
     <string name="btn_randomtraining">随机训练</string>
     <string name="btn_data">数据分析</string>

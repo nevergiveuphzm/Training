@@ -5,8 +5,7 @@ package com.oucb303.training.model;
  */
 public class Constant
 {
+    public static String SERVER_IP = "http://www.saflight.com.cn";
     public static String LOG_TAG = "TRAINING_DEBUG";
-    public static double SCREEN_WIDTH8 = 0.28;//设备为8个的时候Dialog宽度占屏比
-    public static double SCREEN_WIDTH16 = 0.38;//设备为16个的时候Dialog宽度占屏比
-    public static double SCREEN_HEIGHT = 0.64;//Dialog高度占屏比
+
 }
