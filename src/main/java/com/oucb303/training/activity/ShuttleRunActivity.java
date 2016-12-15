@@ -39,7 +39,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 折返跑
+ * 折返跑 每组两个设备
  */
 
 public class ShuttleRunActivity extends AppCompatActivity

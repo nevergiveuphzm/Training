@@ -128,7 +128,7 @@
                         android:layout_height="fill_parent"
                         android:layout_weight="3"
                         android:background="@drawable/bt_orange"
-                        android:text="@string/btn_levelone"
+                        android:text="初级"
                         android:textSize="25sp"/>
 
                     <View
@@ -142,7 +142,7 @@
                         android:layout_height="fill_parent"
                         android:layout_weight="3"
                         android:background="@drawable/bt_orange"
-                        android:text="@string/btn_leveltwo"
+                        android:text="中级"
                         android:textSize="25sp"/>
 
                     <View
@@ -156,7 +156,7 @@
                         android:layout_height="fill_parent"
                         android:layout_weight="3"
                         android:background="@drawable/bt_orange"
-                        android:text="@string/btn_levelthree"
+                        android:text="高级"
 
                         android:textSize="25sp"/>
 
@@ -171,7 +171,7 @@
                         android:layout_height="fill_parent"
                         android:layout_weight="3"
                         android:background="@drawable/bt_orange"
-                        android:text="@string/btn_levelforth"
+                        android:text="竞技"
 
                         android:textSize="25sp"/>
 

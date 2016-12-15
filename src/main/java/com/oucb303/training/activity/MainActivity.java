@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.oucb303.training.R;
 import com.oucb303.training.adpter.PowerAdapter;
 import com.oucb303.training.device.Device;
+import com.oucb303.training.model.Constant;
 import com.oucb303.training.model.DeviceInfo;
 import com.oucb303.training.model.PowerInfoComparetor;
 import com.oucb303.training.threads.ReceiveThread;
@@ -35,6 +36,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 主界面
+ */
 public class MainActivity extends Activity
 {
     @Bind(R.id.btn_level_one)
@@ -57,7 +61,9 @@ public class MainActivity extends Activity
     private Device device;
     private final int POWER_RECEIVE = 1;
     private PowerAdapter powerAdapter;
-    private boolean powerFlag = true;
+    private AutoCheckPower checkPowerThread;
+
+    private boolean isLeave = false;
 
 
     Handler handler = new Handler()
@@ -132,23 +138,8 @@ public class MainActivity extends Activity
         {
             device.connectFunction(MainActivity.this);
             device.initConfig();
-            new Thread(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    while (powerFlag)
-                    {
-                        // 发送获取全部设备电量指令
-                        device.sendGetDeviceInfo();
-                        //开启接收电量的线程
-                        new ReceiveThread(handler, device.ftDev, ReceiveThread.POWER_RECEIVE_THREAD,
-                                POWER_RECEIVE).start();
-
-                        Timer.sleep(10000);
-                    }
-                }
-            }).start();
+            checkPowerThread = new AutoCheckPower();
+            checkPowerThread.start();
         } else
         {
             // 未检测到协调器
@@ -172,15 +163,17 @@ public class MainActivity extends Activity
     protected void onStart()
     {
         super.onStart();
-        powerFlag = true;
         initDevice();
+        isLeave = false;
     }
 
     @Override
     protected void onPause()
     {
-        powerFlag = false;
+        isLeave = true;
         device.disconnectFunction();
+        if (checkPowerThread != null)
+            checkPowerThread.powerFlag = false;
         super.onPause();
     }
 
@@ -241,24 +234,21 @@ public class MainActivity extends Activity
     //读取电量信息
     private void readPowerData(final String data)
     {
+        if (isLeave)
+            return;
+        List<DeviceInfo> powerInfos = DataAnalyzeUtils.analyzePowerData(data);
+        Collections.sort(powerInfos, new PowerInfoComparetor());
         //清空电量列表
+        Log.d(Constant.LOG_TAG, "清空列表");
         Device.DEVICE_LIST.clear();
+        //tvDeviceCount.setText("共0个设备");
+        //获取电量信息
+        Device.DEVICE_LIST.addAll(powerInfos);
         powerAdapter.notifyDataSetChanged();
-        tvDeviceCount.setText("共0个设备");
-        if (data.length() >= 7)
-        {
-            //获取电量信息
-            List<DeviceInfo> powerInfos = DataAnalyzeUtils.analyzePowerData(data);
-            Collections.sort(powerInfos, new PowerInfoComparetor());
-            Device.DEVICE_LIST.addAll(powerInfos);
-            if (powerInfos.size() > 0)
-            {
-                //更新电量信息
-                powerAdapter.notifyDataSetChanged();
-                tvDeviceCount.setText("共" + powerInfos.size() + "个设备");
-                Log.i("AAA", powerInfos.size() + "");
-            }
-        }
+
+        tvDeviceCount.setText("共" + powerInfos.size() + "个设备");
+        Log.i("AAA", powerInfos.size() + "");
+
 //        } else
 //        {
 //            //此时是没有可用设备，弹出对话框，可以点击取消，或是点击重新检测
@@ -285,5 +275,25 @@ public class MainActivity extends Activity
 //            AlertDialog alertdialog = builder.create();
 //            alertdialog.show();
 //        }
+    }
+
+    private class AutoCheckPower extends Thread
+    {
+        private boolean powerFlag = true;
+
+        @Override
+        public void run()
+        {
+            while (powerFlag)
+            {
+                // 发送获取全部设备电量指令
+                device.sendGetDeviceInfo();
+                //开启接收电量的线程
+                new ReceiveThread(handler, device.ftDev, ReceiveThread.POWER_RECEIVE_THREAD,
+                        POWER_RECEIVE).start();
+
+                Timer.sleep(10000);
+            }
+        }
     }
 }

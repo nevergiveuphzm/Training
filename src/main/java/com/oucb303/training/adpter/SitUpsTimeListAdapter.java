@@ -57,7 +57,7 @@ public class SitUpsTimeListAdapter extends BaseAdapter
 
         TextView tvGroupNum = (TextView) view.findViewById(R.id.tv_group_num);
         TextView tvTimes = (TextView) view.findViewById(R.id.tv_times);
-        tvGroupNum.setText("第" + i + "组");
+        tvGroupNum.setText("第" + (i + 1) + "组");
         tvTimes.setText(scores[i] + "");
         return view;
     }

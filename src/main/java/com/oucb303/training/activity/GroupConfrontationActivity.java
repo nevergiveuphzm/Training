@@ -7,6 +7,7 @@ import com.oucb303.training.R;
 
 /**
  * 分组对抗赛
+ *
  */
 
 public class GroupConfrontationActivity extends AppCompatActivity

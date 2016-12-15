@@ -194,15 +194,6 @@ public class RandomTrainingActivity extends Activity
         {
             switch (msg.what)
             {
-                //获取到电量信息
-                case POWER_RECEIVE:
-                    btnBegin.setEnabled(true);
-                    //获取电量信息
-                    List<DeviceInfo> powerInfos = DataAnalyzeUtils.analyzePowerData(msg.obj.toString());
-                    //将电量信息赋值到全局变量中
-                    Device.DEVICE_LIST.clear();
-                    Device.DEVICE_LIST.addAll(powerInfos);
-                    break;
                 case TIME_RECEIVE:
                     String data = msg.obj.toString();
                     //返回数据不为空
@@ -397,7 +388,7 @@ public class RandomTrainingActivity extends Activity
                 TIME_RECEIVE).start();
         //开启计时线程
         beginTime = System.currentTimeMillis();
-        timer = new Timer(timerHandler);
+        timer = new Timer(timerHandler, trainingTime);
         timer.setBeginTime(beginTime);
         timer.start();
     }
@@ -407,8 +398,6 @@ public class RandomTrainingActivity extends Activity
     {
         if (!trainingFlag)
             return;
-
-
         //次数随机
         if (randomMode == 0)
         {
@@ -446,11 +435,6 @@ public class RandomTrainingActivity extends Activity
         Timer.sleep(500);
         //结束接收返回灭灯时间线程
         ReceiveThread.stopThread();
-        Timer.sleep(1000);
-        // 发送获取全部设备电量指令
-        device.sendGetDeviceInfo();
-        //开启接收电量的线程
-        new ReceiveThread(handler, device.ftDev, ReceiveThread.POWER_RECEIVE_THREAD, POWER_RECEIVE).start();
     }
 
     //开灯

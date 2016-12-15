@@ -39,24 +39,16 @@
                 android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
                 android:resource="@xml/device_filter" />
         </activity>
-        <activity
-            android:name="com.oucb303.training.activity.RandomTrainingActivity"
-            android:windowSoftInputMode="stateUnchanged|adjustPan" />
-        <activity
-            android:name="com.oucb303.training.activity.BaseTrainingActivity"
-            android:windowSoftInputMode="stateUnchanged|adjustPan" />
+        <activity android:name="com.oucb303.training.activity.RandomTrainingActivity" />
+        <activity android:name="com.oucb303.training.activity.BaseTrainingActivity" />
         <activity
             android:name="com.oucb303.training.activity.SequenceTrainingActivity"
             android:windowSoftInputMode="stateUnchanged|adjustPan" />
-        <activity
-            android:name="com.oucb303.training.activity.TrainingListActivity"
-            android:windowSoftInputMode="stateUnchanged|adjustPan" />
-        <activity android:name="com.oucb303.training.activity.ShuttleRunActivity" >
-        </activity>
-        <activity android:name="com.oucb303.training.activity.VideoActivity" >
-        </activity>
-        <activity android:name="com.oucb303.training.activity.SitUpsActivity" >
-        </activity>
+        <activity android:name="com.oucb303.training.activity.TrainingListActivity" />
+        <activity android:name="com.oucb303.training.activity.ShuttleRunActivity" />
+        <activity android:name="com.oucb303.training.activity.ShuttleRunActivity1" />
+        <activity android:name="com.oucb303.training.activity.VideoActivity" />
+        <activity android:name="com.oucb303.training.activity.SitUpsActivity" />
         <activity
             android:name="com.oucb303.training.activity.TestActivity"
             android:windowSoftInputMode="stateVisible|adjustResize" >
@@ -66,6 +58,12 @@
         <activity android:name="com.oucb303.training.activity.GroupConfrontationActivity" >
         </activity>
         <activity android:name="com.oucb303.training.activity.SettingActivity" >
+        </activity>
+        <activity android:name="com.oucb303.training.activity.AboutSafLightActivity" >
+        </activity>
+        <activity android:name="com.oucb303.training.activity.SequenceRunningActivity" >
+        </activity>
+        <activity android:name="com.oucb303.training.activity.DribblingGameActivity" >
         </activity>
         <activity
             android:name="io.vov.vitamio.activity.InitActivity"

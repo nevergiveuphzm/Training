@@ -64,13 +64,13 @@ public class Order
     {
 
         String order = "=";
-        boolean exist=false;
+        boolean exist = false;
         for (DeviceInfo info : Device.DEVICE_LIST)
         {
             if (info.getDeviceNum() == num)
             {
                 order += info.getAddress();
-                exist =true;
+                exist = true;
                 break;
             }
         }
@@ -93,7 +93,7 @@ public class Order
         Log.d(Constant.LOG_TAG, "C1:" + c1 + "  C2:" + c2);
         order = order + "" + c1 + c2;
         Log.d(Constant.LOG_TAG, "order: length -" + order.length() + "-" + order);
-
+        order += num;
         return order;
     }
 

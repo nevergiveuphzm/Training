@@ -19,8 +19,8 @@
     <LinearLayout
         android:id="@+id/llayout01"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
+        android:layout_marginLeft="25dp"
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/img_power"

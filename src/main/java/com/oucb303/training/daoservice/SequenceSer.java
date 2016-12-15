@@ -66,6 +66,7 @@ public class SequenceSer
                     enLight.setLightMode(light.getLightMode());
                     enLight.setDistance(light.getDistance());
                     enLight.setOverTime(light.getOverTime());
+                    enLight.setLightColor(light.getLightColor());
                     enLight.setGroupId(groupId);
                     lightDao.insert(enLight);
                 }

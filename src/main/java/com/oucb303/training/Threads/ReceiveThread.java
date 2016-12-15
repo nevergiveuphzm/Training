@@ -20,10 +20,15 @@ public class ReceiveThread extends Thread
     private int msgFlag;
     //  设备
     private FT_Device ftDev;
-    //线程标志 电量检测和设备返回时间线程
+    //线程标志 电量检测线程
     public final static int POWER_RECEIVE_THREAD = 1;
+    // 监听设备返回时间线程
     public final static int TIME_RECEIVE_THREAD = 2;
-    //标志false 线程停止
+    // 接收返回协调器PANID 线程
+    public final static int PAN_ID_THREAD = 3;
+    //  清除串口线程
+    public final static int CLEAR_DATA_THREAD = 4;
+    //  标志false 线程停止
     public static boolean THREAD_RUNNING_FLAG = false;
 
     public ReceiveThread(Handler handler, FT_Device device, int threadFlag, int msgFlag)
@@ -43,6 +48,13 @@ public class ReceiveThread extends Thread
         {
             Timer.sleep(2000);
             readData();
+        } else if (threadFlag == PAN_ID_THREAD)
+        {
+            Timer.sleep(500);
+            readData();
+        } else if (threadFlag == CLEAR_DATA_THREAD)
+        {
+            readData();
         }
         //接收设备返回时间线程
         else if (threadFlag == TIME_RECEIVE_THREAD)
@@ -52,7 +64,7 @@ public class ReceiveThread extends Thread
                 readData();
                 try
                 {
-                    Thread.sleep(10);
+                    Thread.sleep(5);
                 } catch (InterruptedException e)
                 {
                     e.printStackTrace();
@@ -69,6 +81,7 @@ public class ReceiveThread extends Thread
             int iavailable = ftDev.getQueueStatus();
             byte[] readData;
             String result = "";
+            iavailable = iavailable - iavailable % 17;
             if (iavailable > 0)
             {
                 readData = new byte[iavailable];
@@ -76,8 +89,7 @@ public class ReceiveThread extends Thread
                 //返回的结果转String
                 result = new String(readData);
                 //Log.i("AAAA", result);
-                Log.d(Constant.LOG_TAG, "origin Data: length--" + iavailable + "data--" +
-                        result);
+                Log.d(Constant.LOG_TAG, "origin Data: length(" + iavailable + ")  data:" + result);
             }
             Message msg = Message.obtain();
             msg.what = msgFlag;

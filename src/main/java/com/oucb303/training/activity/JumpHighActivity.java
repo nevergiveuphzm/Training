@@ -41,6 +41,10 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ *纵跳摸高
+ *
+ * */
 public class JumpHighActivity extends AppCompatActivity
 {
 
@@ -100,7 +104,7 @@ public class JumpHighActivity extends AppCompatActivity
     private GroupListViewAdapter groupListViewAdapter;
     private Timer timer; //计时器
     //同一组的最小间隔
-    private int duration = 200;
+    private int duration = 500;
     private JumpHighAdapter jumpHighAdapter;
     private List<JumpHighTrainingInfo> groupTrainingInfos = new ArrayList<>();
     private List<HashMap<String, Object>> scores = new ArrayList<>();
@@ -110,6 +114,8 @@ public class JumpHighActivity extends AppCompatActivity
     private int groupSize = 1, groupNum;
     //是否正在训练标志
     private boolean trainingFlag = false;
+
+    private int colors[];
 
 
     private Handler handler = new Handler()
@@ -145,7 +151,7 @@ public class JumpHighActivity extends AppCompatActivity
                             score += s;
                             map.put("lights", lights);
                             map.put("score", score);
-
+                            turnOnLights(i);
                             jumpHighAdapter.notifyDataSetChanged();
                             trainingInfo.deviceList.clear();
                         }
@@ -276,8 +282,6 @@ public class JumpHighActivity extends AppCompatActivity
         ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
         lightColorCheckBox = new CheckBox(1, views2);
         new CheckBoxClickListener(lightColorCheckBox);
-
-
     }
 
 
@@ -328,14 +332,16 @@ public class JumpHighActivity extends AppCompatActivity
         //开启全部灯
         for (int i = 0; i < groupNum * groupSize; i++)
         {
+            int color = lightColorCheckBox.getCheckId();
             device.sendOrder(Device.DEVICE_LIST.get(i).getDeviceNum(),
-                    Order.LightColor.values()[lightColorCheckBox.getCheckId()],
+                    Order.LightColor.values()[color == 3 ? 1 : color],
                     Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
                     Order.BlinkModel.NONE,
                     Order.LightModel.values()[lightModeCheckBox.getCheckId()],
                     Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                     Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
         }
+        colors = new int[groupNum];
         //开启计时器
         timer = new Timer(handler);
         timer.setBeginTime(System.currentTimeMillis());
@@ -365,28 +371,38 @@ public class JumpHighActivity extends AppCompatActivity
                 traningInfo.firstReceivedTime = System.currentTimeMillis();
             }
             traningInfo.deviceList.add(info.getDeviceNum() + "");
-
-            turnOnLights(info.getDeviceNum());
-            Timer.sleep(20);
         }
     }
 
-    //开启一组的全部灯
-    private void turnOnLights(final char deviceNum)
+    //开灯
+    private void turnOnLights(final int groupNum)
     {
         new Thread(new Runnable()
         {
             @Override
             public void run()
             {
-                Timer.sleep(500);
-                device.sendOrder(deviceNum, Order.LightColor.values()[lightColorCheckBox.getCheckId()],
-                        Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                        Order.BlinkModel.NONE,
-                        Order.LightModel.values()[lightModeCheckBox.getCheckId()],
-                        Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                        Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
+                timer.sleep(29);
+                int color = lightColorCheckBox.getCheckId();
+                if (color == 3)
+                {
+                    color = (colors[groupNum] + 1) % 2;
+                    colors[groupNum] = color;
+                    color++;
+                }
 
+                for (int i = 0; i < groupSize; i++)
+                {
+                    char num = Device.DEVICE_LIST.get(groupNum * groupSize + i).getDeviceNum();
+                    device.sendOrder(num,
+                            Order.LightColor.values()[color],
+                            Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
+                            Order.BlinkModel.NONE,
+                            Order.LightModel.values()[lightModeCheckBox.getCheckId()],
+                            Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
+                            Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
+
+                }
             }
         }).start();
     }

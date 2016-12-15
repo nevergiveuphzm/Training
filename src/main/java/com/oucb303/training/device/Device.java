@@ -158,7 +158,7 @@ public class Device
     }
 
     //修改灯的PAN_ID 和 num
-    public void changeLightPANID(String PAN_ID, char num,String address)
+    public void changeLightPANID(String PAN_ID, char num, String address)
     {
         String order = "+14*" + PAN_ID + num + address;
 
@@ -170,6 +170,11 @@ public class Device
     public void changeControllerPANID(String PAN_ID)
     {
         sendMessage("+08b" + PAN_ID);
+    }
+
+    public void getControllerPAN_ID()
+    {
+        sendMessage("+08c");
     }
 
 
@@ -198,11 +203,11 @@ public class Device
         if (order.equals(""))
             return;
         sendMessage(order);
-        Timer.sleep(20);
     }
 
-    private void sendMessage(String data)
+    private synchronized void sendMessage(String data)
     {
+        Timer.sleep(20);
         Log.d(Constant.LOG_TAG, "send message:" + data);
 
         if (ftDev.isOpen() == false)

@@ -18,6 +18,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 水平训练列表
+ * */
 public class TrainingListActivity extends Activity
 {
     @Bind(R.id.tv_title)
@@ -65,7 +68,7 @@ public class TrainingListActivity extends Activity
                 switch (itemId)
                 {
                     case 1://折返跑
-                        intent.setClass(TrainingListActivity.this, ShuttleRunActivity.class);
+                        intent.setClass(TrainingListActivity.this, ShuttleRunActivity1.class);
                         intent.putExtra("level", level);
                         startActivity(intent);
                         break;
@@ -84,6 +87,10 @@ public class TrainingListActivity extends Activity
                         intent.putExtra("level", level);
                         startActivity(intent);
                         break;
+                    case 5://运球比赛
+                        intent.setClass(TrainingListActivity.this, DribblingGameActivity.class);
+                        intent.putExtra("level", level);
+                        startActivity(intent);
                 }
             }
         });

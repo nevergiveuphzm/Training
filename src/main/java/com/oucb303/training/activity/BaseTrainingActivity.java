@@ -15,6 +15,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
+ * 基础训练
  * Created by baichangcai on 2016/9/14.
  */
 public class BaseTrainingActivity extends Activity
@@ -62,6 +63,8 @@ public class BaseTrainingActivity extends Activity
                 startActivity(intent);
                 break;
             case R.id.btn_sequences:
+                intent = new Intent(this, SequenceRunningActivity.class);
+                startActivity(intent);
                 break;
             case R.id.layout_cancel:
                 finish();

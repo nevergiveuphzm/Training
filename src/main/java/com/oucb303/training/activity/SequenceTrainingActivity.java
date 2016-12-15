@@ -43,7 +43,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 序列编程
+ * 设定序列  序列编程
  */
 public class SequenceTrainingActivity extends Activity
 {
@@ -212,12 +212,14 @@ public class SequenceTrainingActivity extends Activity
                     {
                         String title = etTitle.getText().toString();
                         long res = sequenceSer.addSequence(list_sequence, title);
+                        Log.d(Constant.LOG_TAG, "save result:" + res);
                         if (res > 0)
                             Toast.makeText(SequenceTrainingActivity.this, "添加成功!", Toast.LENGTH_SHORT).show();
                         else if (res == -1)
                             Toast.makeText(SequenceTrainingActivity.this, "序列名称已存在,保存失败!", Toast.LENGTH_SHORT).show();
                         else
                             Toast.makeText(SequenceTrainingActivity.this, "添加失败!", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
                     }
                 });
                 btnCancel.setOnClickListener(new View.OnClickListener()
@@ -306,7 +308,7 @@ public class SequenceTrainingActivity extends Activity
                     Button btn_cancel = (Button) view.findViewById(R.id.btn_cancel);
                     List<Light> list_light = (List<Light>) list_sequence.get(position).get("list_light");
                     list_light_noCheck = new ArrayList<>();
-                    for (int i = 1; i <= 16; i++)
+                    for (int i = 1; i <= 8; i++)
                     {
                         Light light = new Light(i, false);
                         list_light_noCheck.add(light);

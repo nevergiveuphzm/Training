@@ -38,6 +38,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 测试
+ */
 public class TestActivity extends AppCompatActivity
 {
     @Bind(R.id.tv_title)

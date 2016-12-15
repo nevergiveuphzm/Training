@@ -2,6 +2,9 @@ package com.oucb303.training.threads;
 
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
+
+import com.oucb303.training.model.Constant;
 
 import java.text.DecimalFormat;
 
@@ -30,10 +33,18 @@ public class Timer extends Thread
     private Handler handler;
     private long beginTime;
     public int time;
+    //计时总时间
+    private int totalTime;
 
     public Timer(Handler handler)
     {
         this.handler = handler;
+    }
+
+    public Timer(Handler handler, int totaTime)
+    {
+        this(handler);
+        this.totalTime = totaTime;
     }
 
     @Override
@@ -43,6 +54,11 @@ public class Timer extends Thread
         while (!stopFlag)
         {
             time = (int) (System.currentTimeMillis() - beginTime);
+            if (totalTime != 0 && time >= totalTime)
+            {
+                time = totalTime;
+                stopTimer();
+            }
             int minute = time / (1000 * 60);
             int second = (time / 1000) % 60;
             int msec = time % 1000;
@@ -54,7 +70,7 @@ public class Timer extends Thread
             msg.what = TIMER_FLAG;
             msg.obj = res;
             handler.sendMessage(msg);
-            sleep(10);
+            sleep(20);
         }
     }
 

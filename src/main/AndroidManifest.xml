@@ -30,24 +30,16 @@
                 android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
                 android:resource="@xml/device_filter"/>
         </activity>
-        <activity
-            android:name=".activity.RandomTrainingActivity"
-            android:windowSoftInputMode="stateUnchanged|adjustPan"/>
-        <activity
-            android:name=".activity.BaseTrainingActivity"
-            android:windowSoftInputMode="stateUnchanged|adjustPan"/>
+        <activity android:name=".activity.RandomTrainingActivity"/>
+        <activity android:name=".activity.BaseTrainingActivity"/>
         <activity
             android:name=".activity.SequenceTrainingActivity"
             android:windowSoftInputMode="stateUnchanged|adjustPan"/>
-        <activity
-            android:name=".activity.TrainingListActivity"
-            android:windowSoftInputMode="stateUnchanged|adjustPan"/>
-        <activity android:name=".activity.ShuttleRunActivity">
-        </activity>
-        <activity android:name=".activity.VideoActivity">
-        </activity>
-        <activity android:name=".activity.SitUpsActivity">
-        </activity>
+        <activity android:name=".activity.TrainingListActivity"/>
+        <activity android:name=".activity.ShuttleRunActivity"/>
+        <activity android:name=".activity.ShuttleRunActivity1"/>
+        <activity android:name=".activity.VideoActivity"/>
+        <activity android:name=".activity.SitUpsActivity"/>
         <activity
             android:name=".activity.TestActivity"
             android:windowSoftInputMode="stateVisible|adjustResize">
@@ -57,6 +49,12 @@
         <activity android:name=".activity.GroupConfrontationActivity">
         </activity>
         <activity android:name=".activity.SettingActivity">
+        </activity>
+        <activity android:name=".activity.AboutSafLightActivity">
+        </activity>
+        <activity android:name=".activity.SequenceRunningActivity">
+        </activity>
+        <activity android:name=".activity.DribblingGameActivity">
         </activity>
     </application>
 

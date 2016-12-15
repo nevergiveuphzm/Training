@@ -12,6 +12,9 @@ import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.widget.MediaController;
 import io.vov.vitamio.widget.VideoView;
 
+/**
+ * 播放视频
+ */
 public class VideoActivity extends AppCompatActivity
 {
     private VideoView mVideoView;

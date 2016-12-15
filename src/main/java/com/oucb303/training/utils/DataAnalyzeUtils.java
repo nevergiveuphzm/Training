@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -112,11 +113,9 @@ public class DataAnalyzeUtils
     }
 
     /**
-     *
-     *解析返回来的时间数据
+     * 解析返回来的时间数据
      * #A(128
-     *
-     * */
+     */
 
     public static List<TimeInfo> analyzeTimeData(String data)
     {
@@ -124,13 +123,13 @@ public class DataAnalyzeUtils
         List<TimeInfo> timeList = new ArrayList<>();
         for (int i = 0; i < data.length(); i++)
         {
-            if (data.charAt(i) == '#' && (data.length() - i) >=4  && data.charAt(i + 2) == '(')
+            if (data.charAt(i) == '#' && (data.length() - i) >= 4 && data.charAt(i + 2) == '(')
             {
 
                 //设备编号
-                char num = data.charAt(i+1);
+                char num = data.charAt(i + 1);
 
-                String str = data.substring(i+3);
+                String str = data.substring(i + 3);
 
                 String regex = "\\d*";
                 Pattern p = Pattern.compile(regex);
@@ -162,12 +161,29 @@ public class DataAnalyzeUtils
                     timeInfo.setDeviceNum(num);
                     timeInfo.setTime(time);
                     timeList.add(timeInfo);
-                    Log.d(Constant.LOG_TAG,timeInfo.toString());
+                    Log.d(Constant.LOG_TAG, timeInfo.toString());
                 }
                 //break;
             }
         }
         return timeList;
+    }
+
+    /**
+     * 解析返回的协调器panID
+     * #)FF01
+     */
+    public static String analyzePAN_ID(String data)
+    {
+        for (int i = 0; i < data.length(); i++)
+        {
+            if (data.charAt(i) == '#' && data.length() >= 6 && data.charAt(1) == ')')
+            {
+                String panid = data.substring(i + 2, i + 6);
+                return panid;
+            }
+        }
+        return "";
     }
 
     public static List<Map<String, String>> analyzeAddressData(String data)

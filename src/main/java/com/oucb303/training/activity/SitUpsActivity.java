@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,6 +27,7 @@ import com.oucb303.training.listener.CheckBoxClickListener;
 import com.oucb303.training.listener.MySeekBarListener;
 import com.oucb303.training.listener.SpinnerItemSelectedListener;
 import com.oucb303.training.model.CheckBox;
+import com.oucb303.training.model.Constant;
 import com.oucb303.training.model.PowerInfoComparetor;
 import com.oucb303.training.model.TimeInfo;
 import com.oucb303.training.threads.ReceiveThread;
@@ -140,12 +142,12 @@ public class SitUpsActivity extends AppCompatActivity
             switch (msg.what)
             {
                 case Timer.TIMER_FLAG:
-                    if (timer.time > trainingTime)
+                    tvTotalTime.setText(msg.obj.toString());
+                    if (timer.time >= trainingTime)
                     {
                         stopTraining();
                         return;
                     }
-                    tvTotalTime.setText(msg.obj.toString());
                     break;
                 case TIME_RECEIVE:
                     String data = msg.obj.toString();
@@ -272,7 +274,7 @@ public class SitUpsActivity extends AppCompatActivity
         //开启接受时间线程
         new ReceiveThread(handler, device.ftDev, ReceiveThread.TIME_RECEIVE_THREAD, TIME_RECEIVE).start();
 
-        timer = new Timer(handler);
+        timer = new Timer(handler, trainingTime);
         timer.setBeginTime(System.currentTimeMillis());
         timer.start();
     }
@@ -283,9 +285,12 @@ public class SitUpsActivity extends AppCompatActivity
         btnBegin.setText("开始");
         //结束时间线程
         timer.stopTimer();
+        device.turnOffAllTheLight();
+        timer.sleep(200);
         //结束接收时间线程
         ReceiveThread.stopThread();
-        device.turnOffAllTheLight();
+
+
     }
 
     //解析时间
