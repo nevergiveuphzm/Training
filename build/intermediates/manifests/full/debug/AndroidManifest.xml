@@ -18,7 +18,7 @@
     <application
         android:name="com.oucb303.training.App"
         android:allowBackup="true"
-        android:icon="@mipmap/appicon"
+        android:icon="@mipmap/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
@@ -64,6 +64,8 @@
         <activity android:name="com.oucb303.training.activity.SequenceRunningActivity" >
         </activity>
         <activity android:name="com.oucb303.training.activity.DribblingGameActivity" >
+        </activity>
+        <activity android:name="com.oucb303.training.activity.HelpActivity" >
         </activity>
         <activity
             android:name="io.vov.vitamio.activity.InitActivity"

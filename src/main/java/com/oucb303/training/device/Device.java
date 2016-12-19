@@ -65,7 +65,7 @@ public class Device
     }
 
     // 关闭activity时调用该方法
-    public void disconnectFunction()
+    public void disconnect()
     {
         devCount = -1;
         //currentIndex = -1;

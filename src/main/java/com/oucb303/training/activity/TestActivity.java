@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +23,6 @@ import com.oucb303.training.R;
 import com.oucb303.training.device.Device;
 import com.oucb303.training.device.Order;
 import com.oucb303.training.listener.SpinnerItemSelectedListener;
-import com.oucb303.training.model.Constant;
 import com.oucb303.training.model.DeviceInfo;
 import com.oucb303.training.model.TimeInfo;
 import com.oucb303.training.threads.ReceiveThread;
@@ -32,7 +30,6 @@ import com.oucb303.training.utils.DataAnalyzeUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -208,7 +205,7 @@ public class TestActivity extends AppCompatActivity
     protected void onPause()
     {
         super.onPause();
-        device.disconnectFunction();
+        device.disconnect();
         ReceiveThread.stopThread();
     }
 

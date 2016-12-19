@@ -98,7 +98,7 @@ public class MainActivity extends Activity
     //拔出USB接口
     public void notifyUSBDeviceDetach()
     {
-        device.disconnectFunction();
+        device.disconnect();
     }
 
     @Override
@@ -171,7 +171,7 @@ public class MainActivity extends Activity
     protected void onPause()
     {
         isLeave = true;
-        device.disconnectFunction();
+        device.disconnect();
         if (checkPowerThread != null)
             checkPowerThread.powerFlag = false;
         super.onPause();

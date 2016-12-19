@@ -113,6 +113,8 @@ public class ShuttleRunActivity extends AppCompatActivity
     //训练开始时间
     private long startTime;
 
+    private int level;
+
 
     private Handler handler = new Handler()
     {
@@ -149,6 +151,7 @@ public class ShuttleRunActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shuttle_run);
         ButterKnife.bind(this);
+        level = getIntent().getIntExtra("level", 1);
         device = new Device(this);
         device.createDeviceList(this);
         // 判断是否插入协调器，
@@ -164,7 +167,7 @@ public class ShuttleRunActivity extends AppCompatActivity
     protected void onDestroy()
     {
         super.onDestroy();
-        device.disconnectFunction();
+        device.disconnect();
 
     }
 
@@ -185,6 +188,19 @@ public class ShuttleRunActivity extends AppCompatActivity
         Device.DEVICE_LIST.add(new DeviceInfo('F'));*/
         //设备排序
         Collections.sort(Device.DEVICE_LIST, new PowerInfoComparetor());
+
+        switch (level)
+        {
+            case 1:
+                level = 0;
+                break;
+            case 2:
+                level = 3;
+                break;
+            case 3:
+                level = 7;
+                break;
+        }
 
         //初始化分组下拉框
         maxGroupNum = Device.DEVICE_LIST.size() / 2;

@@ -19,7 +19,7 @@
     <LinearLayout
         android:id="@+id/llayout01"
         android:layout_width="wrap_content"
-        android:layout_marginLeft="25dp"
+        android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content">
 
         <ImageView
@@ -30,6 +30,7 @@
             android:background="@drawable/stat_sys_battery_charge_anim100"/>
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/tv_power"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

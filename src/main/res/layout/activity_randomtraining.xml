@@ -24,6 +24,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
@@ -144,7 +145,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_marginLeft="10dip"
-                                android:text="250"
+                                android:text="100"
                                 android:textSize="@dimen/param_level1_font_size"/>
 
                             <TextView
@@ -185,7 +186,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:max="500"
-                                android:progress="250"/>
+                                android:progress="100"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -266,6 +267,13 @@
                                 android:text="0"
                                 android:textSize="20dp"/>
 
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="10"
+                                android:textSize="20dp"/>
+
                             <SeekBar
                                 android:id="@+id/bar_delay_time"
                                 android:layout_width="wrap_content"
@@ -273,13 +281,6 @@
                                 android:layout_weight="1"
                                 android:max="200"
                                 android:progress="0"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:text="10"
-                                android:textSize="20dp"/>
 
                             <ImageView
                                 android:id="@+id/img_delay_time_add"
@@ -380,6 +381,60 @@
 
                     </LinearLayout>
 
+
+                </LinearLayout>
+
+                <include layout="@layout/layout_line_horizontal"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="20dp"
+                    android:paddingLeft="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="设备个数"
+                            android:textSize="25sp"/>
+
+                        <Spinner
+                            android:id="@+id/sp_dev_num"
+                            android:layout_width="200dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:background="@drawable/spinner">
+                        </Spinner>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="设备编号: "
+                            android:textSize="@dimen/param_level1_font_size"/>
+
+                        <TextView
+                            android:id="@+id/tv_device_list"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="A B C D"
+                            android:textSize="@dimen/param_level1_font_size"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

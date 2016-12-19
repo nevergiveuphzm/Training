@@ -1,5 +1,6 @@
 package com.oucb303.training.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,6 +15,7 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.oucb303.training.R;
 import com.oucb303.training.adpter.GroupListViewAdapter;
@@ -116,6 +118,8 @@ public class ShuttleRunActivity1 extends AppCompatActivity
     private final int UPDATE_TIMES = 3;
     private final int STOP_TRAINING = 4;
 
+    private int level;
+
 
     private Handler handler = new Handler()
     {
@@ -152,8 +156,9 @@ public class ShuttleRunActivity1 extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shuttle_run);
+        setContentView(R.layout.activity_shuttle_run1);
         ButterKnife.bind(this);
+        level = getIntent().getIntExtra("level", 1);
         device = new Device(this);
         //更新连接设备列表
         device.createDeviceList(this);
@@ -171,13 +176,13 @@ public class ShuttleRunActivity1 extends AppCompatActivity
     protected void onDestroy()
     {
         super.onDestroy();
-        device.disconnectFunction();
+        device.disconnect();
 
     }
 
     public void initView()
     {
-        tvTitle.setText("折返跑训练1");
+        tvTitle.setText("折返跑训练");
         imgHelp.setVisibility(View.VISIBLE);
         //设备排序
         Collections.sort(Device.DEVICE_LIST, new PowerInfoComparetor());
@@ -200,6 +205,7 @@ public class ShuttleRunActivity1 extends AppCompatActivity
                 groupListViewAdapter.notifyDataSetChanged();
             }
         });
+
         //初始化训练强度下拉框
         final String[] trainingOptions = new String[10];
         for (int i = 1; i <= 10; i++)
@@ -216,6 +222,19 @@ public class ShuttleRunActivity1 extends AppCompatActivity
                 totalTrainingTimes = (i + 1) * 2;
             }
         });
+        switch (level)
+        {
+            case 1:
+                level = 0;
+                break;
+            case 2:
+                level = 3;
+                break;
+            case 3:
+                level = 7;
+                break;
+        }
+        spTrainingTimes.setSelection(level);
 
         //初始化分组listview
         groupListViewAdapter = new GroupListViewAdapter(ShuttleRunActivity1.this, groupSize);
@@ -265,10 +284,18 @@ public class ShuttleRunActivity1 extends AppCompatActivity
                 this.finish();
                 break;
             case R.id.img_help:
+                Intent intent = new Intent(this, HelpActivity.class);
+                intent.putExtra("flag", 1);
+                startActivity(intent);
                 break;
             case R.id.btn_begin:
                 if (!device.checkDevice(ShuttleRunActivity1.this))
                     return;
+                if (groupNum == 0)
+                {
+                    Toast.makeText(this, "请选择训练分组!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (trainingBeginFlag)
                     stopTraining();
                 else
@@ -294,6 +321,12 @@ public class ShuttleRunActivity1 extends AppCompatActivity
 
         shuttleRunAdapter.notifyDataSetChanged();
         btnBegin.setText("停止");
+        //清除串口数据
+        new ReceiveThread(handler, device.ftDev, ReceiveThread.CLEAR_DATA_THREAD, 0).start();
+
+        //开启接收设备返回时间的监听线程
+        new ReceiveThread(handler, device.ftDev, ReceiveThread.TIME_RECEIVE_THREAD, TIME_RECEIVE).start();
+
         //开全灯
         for (int i = 0; i < groupNum; i++)
         {
@@ -306,8 +339,6 @@ public class ShuttleRunActivity1 extends AppCompatActivity
                     Order.EndVoice.NONE);
         }
 
-        //开启接收设备返回时间的监听线程
-        new ReceiveThread(handler, device.ftDev, ReceiveThread.TIME_RECEIVE_THREAD, TIME_RECEIVE).start();
         //获得当前的系统时间
         startTime = System.currentTimeMillis();
         timer = new Timer(handler);
@@ -334,7 +365,7 @@ public class ShuttleRunActivity1 extends AppCompatActivity
             @Override
             public void run()
             {
-                Timer.sleep(2000);
+                Timer.sleep(5000);
                 device.sendOrder(deviceNum,
                         Order.LightColor.values()[lightColorCheckBox.getCheckId()],
                         Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],

@@ -42,9 +42,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- *纵跳摸高
- *
- * */
+ * 纵跳摸高
+ */
 public class JumpHighActivity extends AppCompatActivity
 {
 
@@ -116,6 +115,7 @@ public class JumpHighActivity extends AppCompatActivity
     private boolean trainingFlag = false;
 
     private int colors[];
+    private int level;
 
 
     private Handler handler = new Handler()
@@ -183,6 +183,7 @@ public class JumpHighActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jump_high);
         ButterKnife.bind(this);
+        level = getIntent().getIntExtra("level", 1);
         initView();
         device = new Device(this);
         device.createDeviceList(this);
@@ -199,7 +200,7 @@ public class JumpHighActivity extends AppCompatActivity
     {
         super.onDestroy();
         if (device.devCount > 0)
-            device.disconnectFunction();
+            device.disconnect();
     }
 
 
@@ -229,9 +230,24 @@ public class JumpHighActivity extends AppCompatActivity
         });
 
         //初始化训练时间拖动条
-        barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 20));
+        barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 10));
         imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
         imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
+
+        switch (level)
+        {
+            case 1:
+                level = 2;
+                break;
+            case 2:
+                level = 4;
+                break;
+            case 3:
+                level = 10;
+                break;
+        }
+
+        barTrainingTime.setProgress(level);
 
         spDevNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(this, spDevNum, new String[]{"一个", "两个", "三个", "四个"})
         {
@@ -326,6 +342,9 @@ public class JumpHighActivity extends AppCompatActivity
         }
         jumpHighAdapter.notifyDataSetChanged();
 
+        //清除串口数据
+        new ReceiveThread(handler, device.ftDev, ReceiveThread.CLEAR_DATA_THREAD, 0).start();
+
         //开启接收时间线程
         new ReceiveThread(handler, device.ftDev, ReceiveThread.TIME_RECEIVE_THREAD, TIME_RECEIVE).start();
 
@@ -343,7 +362,7 @@ public class JumpHighActivity extends AppCompatActivity
         }
         colors = new int[groupNum];
         //开启计时器
-        timer = new Timer(handler);
+        timer = new Timer(handler, trainingTime);
         timer.setBeginTime(System.currentTimeMillis());
         timer.start();
     }

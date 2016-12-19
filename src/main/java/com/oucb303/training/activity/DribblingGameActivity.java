@@ -1,11 +1,10 @@
 package com.oucb303.training.activity;
 
 import android.os.Bundle;
-import android.os.Message;
 import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,7 +28,6 @@ import com.oucb303.training.listener.CheckBoxClickListener;
 import com.oucb303.training.listener.MySeekBarListener;
 import com.oucb303.training.listener.SpinnerItemSelectedListener;
 import com.oucb303.training.model.CheckBox;
-import com.oucb303.training.model.Constant;
 import com.oucb303.training.model.PowerInfoComparetor;
 import com.oucb303.training.model.TimeInfo;
 import com.oucb303.training.threads.ReceiveThread;
@@ -105,13 +103,15 @@ public class DribblingGameActivity extends AppCompatActivity
     private final int TIME_RECEIVE = 1;
     private final int UPDATE_SCORES = 2;
     private final int STOP_TRAINING = 4;
+    @Bind(R.id.tv_device_list)
+    TextView tvDeviceList;
     private Device device;
     //所选设备个数，分组数
     private int totalNum, groupNum;
     private DGroupListViewAdapter dGroupListViewAdapter;
     private DribblingGameAdapter dribblingGameAdapter;
     //感应模式和灯光模式集合
-    private CheckBox actionModeCheckBox, lightModeCheckBox, lightColorCheckBox;
+    private CheckBox actionModeCheckBox, lightModeCheckBox;
     //是否训练标志
     private boolean trainningFlag = false;
     //计时器
@@ -124,8 +124,9 @@ public class DribblingGameActivity extends AppCompatActivity
     private char[] deviceNums;
     //训练开始时间
     private long startTime;
-
     private ArrayList<Integer> listRand = new ArrayList<>();
+
+    private int level;
 
     private Handler handler = new Handler()
     {
@@ -173,6 +174,7 @@ public class DribblingGameActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dribbling_game);
         ButterKnife.bind(this);
+        level = getIntent().getIntExtra("level", 0);
         device = new Device(this);
         //更新设备连接列表
         device.createDeviceList(this);
@@ -192,7 +194,7 @@ public class DribblingGameActivity extends AppCompatActivity
     {
         super.onDestroy();
         if (device.devCount > 0)
-            device.disconnectFunction();
+            device.disconnect();
     }
 
     public void initView()
@@ -203,15 +205,29 @@ public class DribblingGameActivity extends AppCompatActivity
         dribblingGameAdapter = new DribblingGameAdapter(this);
         lvScores.setAdapter(dribblingGameAdapter);
 
-        //设备排序
-        Collections.sort(Device.DEVICE_LIST, new PowerInfoComparetor());
-
         //初始化训练时间拖动条
         //拖动进度条的事件监听  第一个：显示时间tectview，第二个：最大值
-        barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 20));
+        barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 10));
         //直接在触摸屏进行按住和松开事件的操作
         imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
         imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
+        if (level != 0)
+        {
+            switch (level)
+            {
+                case 1:
+                    level = 2;
+                    break;
+                case 2:
+                    level = 4;
+                    break;
+                case 3:
+                    level = 10;
+                    break;
+            }
+            barTrainingTime.setProgress(level);
+        }
+        barTrainingTime.setProgress(level);
 
         //初始化分组listview
         dGroupListViewAdapter = new DGroupListViewAdapter(DribblingGameActivity.this);
@@ -237,7 +253,11 @@ public class DribblingGameActivity extends AppCompatActivity
         lvScores.setAdapter(dribblingGameAdapter);
 
         //选择设备个数spinner
-        String[] num = new String[]{"一个", "两个", "三个", "四个", "五个", "六个", "七个", "八个", "九个", "十个"};
+        String[] num = new String[Device.DEVICE_LIST.size()];
+        for (int i = 0; i < num.length; i++)
+        {
+            num[i] = (i + 1) + "个";
+        }
         spDevNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(this, spDevNum, num)
         {
             @Override
@@ -245,7 +265,12 @@ public class DribblingGameActivity extends AppCompatActivity
             {
                 super.onItemSelected(adapterView, view, i, l);
                 totalNum = i + 1;
-                Toast.makeText(DribblingGameActivity.this, "所选择的设备个数是" + totalNum + "个", Toast.LENGTH_SHORT).show();
+
+                String str = "";
+                for (int j = 0; j < totalNum; j++)
+                    str += Device.DEVICE_LIST.get(j).getDeviceNum() + "  ";
+                tvDeviceList.setText(str);
+                //Toast.makeText(DribblingGameActivity.this, "所选择的设备个数是" + totalNum + "个", Toast.LENGTH_SHORT).show();
             }
         });
 

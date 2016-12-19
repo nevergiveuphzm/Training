@@ -7,11 +7,13 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,9 +24,9 @@ import com.oucb303.training.device.Order;
 import com.oucb303.training.listener.AddOrSubBtnClickListener;
 import com.oucb303.training.listener.CheckBoxClickListener;
 import com.oucb303.training.listener.MySeekBarListener;
+import com.oucb303.training.listener.SpinnerItemSelectedListener;
 import com.oucb303.training.model.CheckBox;
 import com.oucb303.training.model.Constant;
-import com.oucb303.training.model.DeviceInfo;
 import com.oucb303.training.model.TimeInfo;
 import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.threads.Timer;
@@ -33,7 +35,6 @@ import com.oucb303.training.utils.RandomUtils;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.TimerTask;
 
 import butterknife.Bind;
@@ -127,6 +128,10 @@ public class RandomTrainingActivity extends Activity
     android.widget.CheckBox cbEndVoice;
     @Bind(R.id.cb_over_time_voice)
     android.widget.CheckBox cbOverTimeVoice;
+    @Bind(R.id.sp_dev_num)
+    Spinner spDevNum;
+    @Bind(R.id.tv_device_list)
+    TextView tvDeviceList;
 
 
     //感应模式和灯光模式集合
@@ -164,8 +169,11 @@ public class RandomTrainingActivity extends Activity
     //时间列表
     private ArrayList<TimeInfo> timeList = new ArrayList<>();
     private RandomTimeAdapter timeAdapter;
-
     private Timer timer;
+    //选用的设备个数
+    private int totalNum;
+
+    private int level;
 
 
     private Handler timerHandler = new Handler()
@@ -228,6 +236,7 @@ public class RandomTrainingActivity extends Activity
         setContentView(R.layout.activity_randomtraining);
         ButterKnife.bind(this);
         randomMode = getIntent().getIntExtra("randomMode", 0);
+        level = getIntent().getIntExtra("level", 0);
         initView();
         device = new Device(RandomTrainingActivity.this);
 
@@ -251,7 +260,7 @@ public class RandomTrainingActivity extends Activity
     {
         if (trainingFlag)
             stopTraining();
-        device.disconnectFunction();
+        device.disconnect();
         super.onDestroy();
     }
 
@@ -296,6 +305,23 @@ public class RandomTrainingActivity extends Activity
             imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener
                     (barTrainingTime, 1));
         }
+        if (level != 0)
+        {
+            tvTitle.setText("换物跑");
+            switch (level)
+            {
+                case 1:
+                    level = 20;
+                    break;
+                case 2:
+                    level = 50;
+                    break;
+                case 3:
+                    level = 100;
+                    break;
+            }
+            barTrainingTimes.setProgress(level);
+        }
         //设置seekbar 拖动事件的监听器
         barDelayTime.setOnSeekBarChangeListener(new MySeekBarListener(tvDelayTime, 10));
         barOverTime.setOnSeekBarChangeListener(new MySeekBarListener(tvOverTime, 30));
@@ -308,6 +334,32 @@ public class RandomTrainingActivity extends Activity
                 (barOverTime, 0));
         imgOverTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener
                 (barOverTime, 1));
+
+        //选择设备个数spinner
+        String[] num = new String[Device.DEVICE_LIST.size()];
+        for (int i = 0; i < num.length; i++)
+        {
+            num[i] = (i + 1) + "个";
+        }
+        spDevNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(this, spDevNum, num)
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
+            {
+                super.onItemSelected(adapterView, view, i, l);
+                totalNum = i + 1;
+                String str = "";
+                for (int j = 0; j < totalNum; j++)
+                    str += Device.DEVICE_LIST.get(j).getDeviceNum() + "  ";
+                tvDeviceList.setText(str);
+
+                //Toast.makeText(DribblingGameActivity.this, "所选择的设备个数是" + totalNum + "个", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        spDevNum.setSelection(num.length - 1);
+
+
         //设定感应模式checkBox组合的点击事件
         ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
         actionModeCheckBox = new CheckBox(1, views);
@@ -350,7 +402,7 @@ public class RandomTrainingActivity extends Activity
     //获取设备灯编号
     private char getLightNum()
     {
-        int position = RandomUtils.getRandomNum(100) % Device.DEVICE_LIST.size();
+        int position = RandomUtils.getRandomNum(100) % totalNum;
         currentLight = Device.DEVICE_LIST.get(position).getDeviceNum();
         Log.d(Constant.LOG_TAG, "turn on :" + currentLight + "-" + currentTimes);
         return currentLight;
@@ -377,9 +429,11 @@ public class RandomTrainingActivity extends Activity
         tvAverageTime.setText("---");
         tvLostTimes.setText("---");
         timeAdapter.notifyDataSetChanged();
+        //清除串口数据
+        new ReceiveThread(handler, device.ftDev, ReceiveThread.CLEAR_DATA_THREAD, 0).start();
+
         //发送开灯命令
         turnOnLight();
-
         //开启超时线程
         overTimeThread = new OverTimeThread();
         overTimeThread.start();
@@ -435,6 +489,7 @@ public class RandomTrainingActivity extends Activity
         Timer.sleep(500);
         //结束接收返回灭灯时间线程
         ReceiveThread.stopThread();
+        btnBegin.setEnabled(true);
     }
 
     //开灯

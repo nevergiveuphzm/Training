@@ -60,10 +60,10 @@ public class PowerAdapter extends BaseAdapter
         DeviceInfo info = Device.DEVICE_LIST.get(i);
 
         tvDeviceNum.setText("设备" + info.getDeviceNum());
-        if (info.getPower() == 0)
-            tvPower.setText("5%");
-        else
-            tvPower.setText(info.getPower() + "0%");
+//        if (info.getPower() == 0)
+//            tvPower.setText("5%");
+//        else
+//            tvPower.setText(info.getPower() + "0%");
         switch (info.getPower())
         {
             case 0:

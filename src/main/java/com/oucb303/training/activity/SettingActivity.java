@@ -11,8 +11,9 @@ import android.widget.TextView;
 
 import com.oucb303.training.R;
 import com.oucb303.training.device.Device;
+import com.oucb303.training.device.Order;
+import com.oucb303.training.model.DeviceInfo;
 import com.oucb303.training.threads.ReceiveThread;
-import com.oucb303.training.threads.Timer;
 import com.oucb303.training.utils.DataAnalyzeUtils;
 import com.oucb303.training.utils.VersionUtils;
 
@@ -22,7 +23,7 @@ import butterknife.OnClick;
 
 /**
  * 设置
- * */
+ */
 public class SettingActivity extends AppCompatActivity
 {
 
@@ -86,19 +87,35 @@ public class SettingActivity extends AppCompatActivity
         tvVersion.setText("当前版本:" + packageInfo.versionName);
     }
 
-    @OnClick({R.id.layout_cancel, R.id.ll_about})
+    @OnClick({R.id.layout_cancel, R.id.ll_about, R.id.btn_turn_on_all_lights, R.id.btn_turn_off_all_lights})
     public void onClick(View view)
     {
         switch (view.getId())
         {
             case R.id.layout_cancel:
-                device.disconnectFunction();
+                device.disconnect();
                 this.finish();
                 break;
             case R.id.ll_about:
                 Intent intent = new Intent(this, AboutSafLightActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.btn_turn_on_all_lights:
+                for (DeviceInfo info : Device.DEVICE_LIST)
+                {
+                    device.sendOrder(info.getDeviceNum(),
+                            Order.LightColor.BLUE,
+                            Order.VoiceMode.NONE,
+                            Order.BlinkModel.NONE,
+                            Order.LightModel.OUTER,
+                            Order.ActionModel.NONE,
+                            Order.EndVoice.NONE);
+                }
+                break;
+            case R.id.btn_turn_off_all_lights:
+                device.turnOffAllTheLight();
+                break;
         }
     }
+
 }

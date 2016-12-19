@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.oucb303.training.R;
+import com.oucb303.training.http.DownLoader;
 import com.oucb303.training.utils.VersionUtils;
 
 import butterknife.Bind;
@@ -52,9 +53,14 @@ public class AboutSafLightActivity extends AppCompatActivity
                 this.finish();
                 break;
             case R.id.tv_check_update:
-
+                downLoadAPK();
                 break;
         }
+    }
 
+    private void downLoadAPK()
+    {
+        DownLoader downLoader = new DownLoader();
+        downLoader.downLoadFile("sd");
     }
 }

@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -16,6 +15,7 @@ import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.oucb303.training.R;
 import com.oucb303.training.adpter.GroupListViewAdapter;
@@ -34,7 +34,6 @@ import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.threads.Timer;
 import com.oucb303.training.utils.DataAnalyzeUtils;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -108,6 +107,8 @@ public class SitUpsActivity extends AppCompatActivity
     //训练成绩
     private int[] scores;
 
+    private int level;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -115,6 +116,7 @@ public class SitUpsActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sit_ups);
         ButterKnife.bind(this);
+        level = getIntent().getIntExtra("level", 1);
         initView();
         device = new Device(this);
         device.createDeviceList(this);
@@ -130,7 +132,7 @@ public class SitUpsActivity extends AppCompatActivity
     protected void onDestroy()
     {
         super.onDestroy();
-        device.disconnectFunction();
+        device.disconnect();
 
     }
 
@@ -183,16 +185,6 @@ public class SitUpsActivity extends AppCompatActivity
             }
         });
 
-        //初始化设备列表
-        /*Device.DEVICE_LIST.clear();
-        for (int i = 0; i < 10; i++)
-        {
-            DeviceInfo info = new DeviceInfo();
-            info.setDeviceNum((char) ('A' + i * 2));
-            Device.DEVICE_LIST.add(info);
-        }
-        Device.DEVICE_LIST.add(new DeviceInfo('B'));
-        Device.DEVICE_LIST.add(new DeviceInfo('F'));*/
         //设备排序
         Collections.sort(Device.DEVICE_LIST, new PowerInfoComparetor());
 
@@ -216,9 +208,23 @@ public class SitUpsActivity extends AppCompatActivity
 
 
         //训练时间拖动条初始化
-        barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 5));
+        barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 10));
         imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
         imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
+        switch (level)
+        {
+            case 1:
+                level = 2;
+                break;
+            case 2:
+                level = 4;
+                break;
+            case 3:
+                level = 10;
+                break;
+        }
+        Log.d(Constant.LOG_TAG, level + "ddd");
+        barTrainingTime.setProgress(level);
 
         //设定感应模式checkBox组合的点击事件
         ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
@@ -246,6 +252,13 @@ public class SitUpsActivity extends AppCompatActivity
                 this.finish();
                 break;
             case R.id.btn_begin:
+                if (!device.checkDevice(this))
+                    return;
+                if (groupNum == 0)
+                {
+                    Toast.makeText(this, "请选择训练分组!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (isTraining)
                     stopTraining();
                 else
@@ -264,16 +277,17 @@ public class SitUpsActivity extends AppCompatActivity
         //训练时间
         trainingTime = (int) (new Double(tvTrainingTime.getText().toString()) * 60 * 1000);
 
+        //清除串口数据
+        new ReceiveThread(handler, device.ftDev, ReceiveThread.CLEAR_DATA_THREAD, 0).start();
+
+        //开启接受时间线程
+        new ReceiveThread(handler, device.ftDev, ReceiveThread.TIME_RECEIVE_THREAD, TIME_RECEIVE).start();
+
         //亮每组设备的第一个灯
         for (int i = 0; i < groupNum; i++)
         {
             sendOrder(Device.DEVICE_LIST.get(i * 2).getDeviceNum());
         }
-
-
-        //开启接受时间线程
-        new ReceiveThread(handler, device.ftDev, ReceiveThread.TIME_RECEIVE_THREAD, TIME_RECEIVE).start();
-
         timer = new Timer(handler, trainingTime);
         timer.setBeginTime(System.currentTimeMillis());
         timer.start();

@@ -57,11 +57,13 @@
             android:textSize="27sp" />
 
         <View
+            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1" />
 
         <Button
+            android:visibility="gone"
             android:id="@+id/btn_sequence_training"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
@@ -71,10 +73,12 @@
             android:textSize="27sp" />
 
         <View
+            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1" />
         <Button
+            android:visibility="gone"
             android:id="@+id/btn_sequences"
             android:layout_width="0dp"
             android:layout_height="fill_parent"

@@ -54,7 +54,7 @@ public class ShuttleRunAdapter1 extends BaseAdapter
     {
 
         if (view == null)
-            view = LayoutInflater.from(context).inflate(R.layout.item_shuttle_run_group_time, null);
+            view = LayoutInflater.from(context).inflate(R.layout.item_shuttle_run_group_time1, null);
         TextView tvGroupId = (TextView) view.findViewById(R.id.tv_group_id);
         TextView tvFinishTimes = (TextView) view.findViewById(R.id.tv_group_finish_times);
 

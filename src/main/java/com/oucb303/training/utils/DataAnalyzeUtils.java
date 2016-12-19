@@ -60,6 +60,7 @@ public class DataAnalyzeUtils
                 //电量
                 int power = new Integer(temp);
 
+                power++;
                 if (power >= 59)
                     power = 10;
                 else if (power <= 49)

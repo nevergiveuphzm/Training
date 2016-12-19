@@ -20,7 +20,7 @@ import butterknife.OnClick;
 
 /**
  * 水平训练列表
- * */
+ */
 public class TrainingListActivity extends Activity
 {
     @Bind(R.id.tv_title)
@@ -30,16 +30,18 @@ public class TrainingListActivity extends Activity
 
     //水平级别
     private int level;
-    private String[] levelName = {"一", "二", "三", "四"};
+    private String[] levelName = {"初级", "中级", "高级", "竞技"};
     private TrainingListAdapter adapter;
 
     private Object[][] items = {
             //项目名称、项目描述、项目图标、项目id、项目所属水平等级
-            {"折返跑", "描述1", R.drawable.run, 1, "1 2"},
-            {"纵跳摸高", "描述1", R.drawable.jump, 2, "1 2 3 4"},
+            {"折返跑", "描述1", R.drawable.run, 1, "1 2 3 "},
+            {"纵跳摸高", "描述1", R.drawable.jump, 2, "1 2 3 "},
             {"仰卧起坐", "描述1", R.drawable.ywqz, 3, "1 2 3"},
-            {"换物跑", "描述1", R.drawable.bwp, 4, "1 3 4"},
-            {"运球比赛", "描述1", R.drawable.ball, 5, "1 2 3"}
+            {"换物跑", "描述1", R.drawable.bwp, 4, "1 2 3"},
+            {"运球比赛", "描述1", R.drawable.ball, 5, "1 2 3"},
+            {"多人混战", "描述1", R.drawable.ball, 6, "4"},
+            {"双人对抗", "描述1", R.drawable.srdk, 7, "4"}
     };
 
     @Override
@@ -57,7 +59,7 @@ public class TrainingListActivity extends Activity
 
         adapter = new TrainingListAdapter(TrainingListActivity.this, initItems(items));
         gvTrainingList.setAdapter(adapter);
-        tvTitle.setText("水平" + levelName[level - 1] + "训练项目");
+        tvTitle.setText(levelName[level - 1] + "项目");
         gvTrainingList.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
@@ -73,8 +75,8 @@ public class TrainingListActivity extends Activity
                         startActivity(intent);
                         break;
                     case 2://纵跳摸高
-                        intent.setClass(TrainingListActivity.this,JumpHighActivity.class);
-                        intent.putExtra("level",level);
+                        intent.setClass(TrainingListActivity.this, JumpHighActivity.class);
+                        intent.putExtra("level", level);
                         startActivity(intent);
                         break;
                     case 3://仰卧起坐
@@ -91,6 +93,17 @@ public class TrainingListActivity extends Activity
                         intent.setClass(TrainingListActivity.this, DribblingGameActivity.class);
                         intent.putExtra("level", level);
                         startActivity(intent);
+                        break;
+                    case 6:
+                        intent.setClass(TrainingListActivity.this, DribblingGameActivity.class);
+                        intent.putExtra("level", level);
+                        startActivity(intent);
+                        break;
+                    case 7:
+                        intent.setClass(TrainingListActivity.this, GroupConfrontationActivity.class);
+                        intent.putExtra("level", level);
+                        startActivity(intent);
+                        break;
                 }
             }
         });
