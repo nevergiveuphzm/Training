@@ -6,7 +6,7 @@ import android.widget.ImageView;
 
 import com.oucb303.training.R;
 import com.oucb303.training.model.CheckBox;
-import com.oucb303.training.model.Constant;
+import com.oucb303.training.utils.Constant;
 
 /**
  * Created by huzhiming on 16/9/24.

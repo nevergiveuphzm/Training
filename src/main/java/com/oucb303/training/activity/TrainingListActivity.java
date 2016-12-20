@@ -34,7 +34,7 @@ public class TrainingListActivity extends Activity
     private TrainingListAdapter adapter;
 
     private Object[][] items = {
-            //项目名称、项目描述、项目图标、项目id、项目所属水平等级
+            //项目名称、项目描述、项目图标、项目id、项目所属分类 1-初级 2-中级 3-高级  4-竞技
             {"折返跑", "描述1", R.drawable.run, 1, "1 2 3 "},
             {"纵跳摸高", "描述1", R.drawable.jump, 2, "1 2 3 "},
             {"仰卧起坐", "描述1", R.drawable.ywqz, 3, "1 2 3"},

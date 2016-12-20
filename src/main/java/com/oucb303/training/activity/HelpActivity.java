@@ -3,6 +3,7 @@ package com.oucb303.training.activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.oucb303.training.R;
 
@@ -13,6 +14,10 @@ import butterknife.OnClick;
 public class HelpActivity extends AppCompatActivity
 {
 
+    @Bind(R.id.img_help_content)
+    ImageView imgHelpContent;
+    @Bind(R.id.tv_title)
+    TextView tvTitle;
     private int flag;
 
     @Override
@@ -28,14 +33,41 @@ public class HelpActivity extends AppCompatActivity
 
     private void initView()
     {
+        tvTitle.setText("帮助");
         switch (flag)
         {
             //折返跑
             case 1:
-                //imgHelpContent.setImageResource(R.drawable.help_shuttle_run);
+                imgHelpContent.setImageResource(R.drawable.help_shuttle_run);
+                break;
+            //总跳莫高
+            case 2:
+                imgHelpContent.setImageResource(R.drawable.help_jump_high);
+                break;
+            //仰卧起坐
+            case 3:
+                imgHelpContent.setImageResource(R.drawable.help_setups);
+                break;
+            //总跳莫高
+            case 4:
+                break;
+            //运球比赛
+            case 5:
+                imgHelpContent.setImageResource(R.drawable.help_dribbling_game);
+                break;
+            //多人混战
+            case 6:
+                imgHelpContent.setImageResource(R.drawable.help_multi_match);
+                break;
+            //双人对抗
+            case 7:
+                imgHelpContent.setImageResource(R.drawable.help_group_confrontation);
+                break;
+            //随机
+            case 8:
+                imgHelpContent.setImageResource(R.drawable.help_romdom);
                 break;
         }
-
     }
 
 

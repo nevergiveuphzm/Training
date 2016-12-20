@@ -5,7 +5,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.ftdi.j2xx.FT_Device;
-import com.oucb303.training.model.Constant;
+import com.oucb303.training.utils.Constant;
 
 /**
  * Created by huzhiming on 16/9/7.

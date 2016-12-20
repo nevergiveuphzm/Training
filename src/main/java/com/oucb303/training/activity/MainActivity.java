@@ -21,7 +21,7 @@ import android.widget.TextView;
 import com.oucb303.training.R;
 import com.oucb303.training.adpter.PowerAdapter;
 import com.oucb303.training.device.Device;
-import com.oucb303.training.model.Constant;
+import com.oucb303.training.utils.Constant;
 import com.oucb303.training.model.DeviceInfo;
 import com.oucb303.training.model.PowerInfoComparetor;
 import com.oucb303.training.threads.ReceiveThread;

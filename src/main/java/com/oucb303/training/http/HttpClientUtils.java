@@ -40,7 +40,7 @@ public class HttpClientUtils
     //下载
     public static void get(String url, BinaryHttpResponseHandler handler)
     {
-        getInstance().post(url, handler);
+        getInstance().get(url, handler);
     }
 
     //不带参数的post请求

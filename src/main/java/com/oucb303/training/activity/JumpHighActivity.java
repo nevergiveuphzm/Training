@@ -1,5 +1,6 @@
 package com.oucb303.training.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -210,6 +211,7 @@ public class JumpHighActivity extends AppCompatActivity
         imgHelp.setVisibility(View.VISIBLE);
         jumpHighAdapter = new JumpHighAdapter(this, scores);
         lvScores.setAdapter(jumpHighAdapter);
+        imgHelp.setVisibility(View.VISIBLE);
 
         ///初始化分组listView
         groupListViewAdapter = new GroupListViewAdapter(JumpHighActivity.this, groupSize);
@@ -301,7 +303,7 @@ public class JumpHighActivity extends AppCompatActivity
     }
 
 
-    @OnClick({R.id.layout_cancel, R.id.btn_begin})
+    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help})
     public void onClick(View view)
     {
         switch (view.getId())
@@ -321,6 +323,11 @@ public class JumpHighActivity extends AppCompatActivity
                     stopTraining();
                 else
                     startTraining();
+                break;
+            case R.id.img_help:
+                Intent intent = new Intent(this, HelpActivity.class);
+                intent.putExtra("flag", 2);
+                startActivity(intent);
                 break;
         }
     }

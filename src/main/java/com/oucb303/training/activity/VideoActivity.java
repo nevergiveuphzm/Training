@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.oucb303.training.R;
-import com.oucb303.training.model.Constant;
+import com.oucb303.training.utils.Constant;
 
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.widget.MediaController;

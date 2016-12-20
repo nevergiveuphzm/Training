@@ -2,7 +2,7 @@ package com.oucb303.training.device;
 
 import android.util.Log;
 
-import com.oucb303.training.model.Constant;
+import com.oucb303.training.utils.Constant;
 import com.oucb303.training.model.DeviceInfo;
 
 import java.util.Arrays;

@@ -26,7 +26,7 @@ import com.oucb303.training.listener.CheckBoxClickListener;
 import com.oucb303.training.listener.MySeekBarListener;
 import com.oucb303.training.listener.SpinnerItemSelectedListener;
 import com.oucb303.training.model.CheckBox;
-import com.oucb303.training.model.Constant;
+import com.oucb303.training.utils.Constant;
 import com.oucb303.training.model.TimeInfo;
 import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.threads.Timer;
@@ -393,7 +393,8 @@ public class RandomTrainingActivity extends Activity
                 finish();
                 break;
             case R.id.img_help:
-                Intent intent = new Intent(this, VideoActivity.class);
+                Intent intent = new Intent(this, HelpActivity.class);
+                intent.putExtra("flag", 8);
                 startActivity(intent);
                 break;
         }
@@ -414,8 +415,8 @@ public class RandomTrainingActivity extends Activity
         //训练开始
         trainingFlag = true;
         btnBegin.setText("停止");
-        //totalTimes = new Integer(tvTrainingTimes.getText().toString().trim());
-        totalTimes = 10000;
+        totalTimes = new Integer(tvTrainingTimes.getText().toString().trim());
+        //totalTimes = 10000;
         delayTime = (int) ((new Double(tvDelayTime.getText().toString().trim())) * 1000);
         overTime = new Integer(tvOverTime.getText().toString().trim()) * 1000;
         trainingTime = (int) ((new Double(tvTrainingTime.getText().toString().trim())) * 60 * 1000);

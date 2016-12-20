@@ -6,7 +6,7 @@ import android.widget.Toast;
 
 import com.ftdi.j2xx.D2xxManager;
 import com.ftdi.j2xx.FT_Device;
-import com.oucb303.training.model.Constant;
+import com.oucb303.training.utils.Constant;
 import com.oucb303.training.model.DeviceInfo;
 import com.oucb303.training.threads.Timer;
 

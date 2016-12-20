@@ -1,5 +1,6 @@
 package com.oucb303.training.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -28,14 +29,12 @@ import com.oucb303.training.listener.CheckBoxClickListener;
 import com.oucb303.training.listener.MySeekBarListener;
 import com.oucb303.training.listener.SpinnerItemSelectedListener;
 import com.oucb303.training.model.CheckBox;
-import com.oucb303.training.model.PowerInfoComparetor;
 import com.oucb303.training.model.TimeInfo;
 import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.threads.Timer;
 import com.oucb303.training.utils.DataAnalyzeUtils;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -57,8 +56,6 @@ public class DribblingGameActivity extends AppCompatActivity
     LinearLayout layoutCancel;
     @Bind(R.id.tv_title)
     TextView tvTitle;
-    @Bind(R.id.img_help)
-    ImageView imgHelp;
     @Bind(R.id.tv_training_time)
     TextView tvTrainingTime;
     @Bind(R.id.img_training_time_sub)
@@ -105,6 +102,8 @@ public class DribblingGameActivity extends AppCompatActivity
     private final int STOP_TRAINING = 4;
     @Bind(R.id.tv_device_list)
     TextView tvDeviceList;
+    @Bind(R.id.img_help)
+    ImageView imgHelp;
     private Device device;
     //所选设备个数，分组数
     private int totalNum, groupNum;
@@ -199,7 +198,10 @@ public class DribblingGameActivity extends AppCompatActivity
 
     public void initView()
     {
-        tvTitle.setText("运球比赛");
+        if (level == 4)
+            tvTitle.setText("多人混战");
+        else
+            tvTitle.setText("运球比赛");
         imgHelp.setVisibility(View.VISIBLE);
 
         dribblingGameAdapter = new DribblingGameAdapter(this);
@@ -304,7 +306,7 @@ public class DribblingGameActivity extends AppCompatActivity
         new CheckBoxClickListener(lightModeCheckBox);
     }
 
-    @OnClick({R.id.layout_cancel, R.id.btn_begin})
+    @OnClick({R.id.layout_cancel, R.id.btn_begin,R.id.img_help})
     public void onClick(View view)
     {
         switch (view.getId())
@@ -325,6 +327,14 @@ public class DribblingGameActivity extends AppCompatActivity
                     stopTraining();
                 else
                     startTraining();
+                break;
+            case R.id.img_help:
+                Intent intent = new Intent(this, HelpActivity.class);
+                if (level == 4)
+                    intent.putExtra("flag", 6);
+                else
+                    intent.putExtra("flag", 5);
+                startActivity(intent);
                 break;
         }
     }

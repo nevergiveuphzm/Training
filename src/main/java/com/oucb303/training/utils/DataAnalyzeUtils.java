@@ -1,11 +1,7 @@
 package com.oucb303.training.utils;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.util.Log;
 
-import com.oucb303.training.model.Constant;
 import com.oucb303.training.model.DeviceInfo;
 import com.oucb303.training.model.TimeInfo;
 
@@ -13,7 +9,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

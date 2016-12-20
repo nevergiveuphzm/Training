@@ -23,7 +23,7 @@ import com.oucb303.training.device.Order;
 import com.oucb303.training.listener.CheckBoxClickListener;
 import com.oucb303.training.listener.SpinnerItemSelectedListener;
 import com.oucb303.training.model.CheckBox;
-import com.oucb303.training.model.Constant;
+import com.oucb303.training.utils.Constant;
 import com.oucb303.training.model.PowerInfoComparetor;
 import com.oucb303.training.model.TimeInfo;
 import com.oucb303.training.threads.ReceiveThread;

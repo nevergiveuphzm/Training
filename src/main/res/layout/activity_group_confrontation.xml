@@ -358,72 +358,55 @@
             android:background="@color/white"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="100dp"
-                    android:text="总时间:"
-                    android:textSize="@dimen/param_level2_font_size"/>
-
-                <TextView
-                    android:id="@+id/tv_total_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="---"
-                    android:textSize="@dimen/param_level2_font_size"/>
-
-
-            </LinearLayout>
-
             <include layout="@layout/layout_line_horizontal"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:text="组号"
-                    android:textSize="18sp"/>
+                    android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:text="已完成次数"
-                    android:textSize="18sp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="第一组"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
+                    <com.oucb303.training.widget.HorizontalListView
+                        android:id="@+id/hlv_group1"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp">
+
+                    </com.oucb303.training.widget.HorizontalListView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:text="总时间"
-                    android:textSize="18sp"/>
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="第二组"/>
+
+                    <com.oucb303.training.widget.HorizontalListView
+                        android:id="@+id/hlv_group2"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp">
+
+                    </com.oucb303.training.widget.HorizontalListView>
+
+                </LinearLayout>
+
             </LinearLayout>
-
-            <ListView
-                android:id="@+id/lv_times"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-            </ListView>
 
             <Button
                 android:id="@+id/btn_begin"

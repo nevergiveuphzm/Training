@@ -2,9 +2,6 @@ package com.oucb303.training.threads;
 
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
-
-import com.oucb303.training.model.Constant;
 
 import java.text.DecimalFormat;
 

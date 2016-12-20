@@ -1,5 +1,6 @@
 package com.oucb303.training.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,18 +16,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.oucb303.training.R;
+import com.oucb303.training.adpter.ConfrontationAdapter;
 import com.oucb303.training.adpter.GroupListViewAdapter;
 import com.oucb303.training.device.Device;
 import com.oucb303.training.device.Order;
 import com.oucb303.training.listener.CheckBoxClickListener;
 import com.oucb303.training.listener.SpinnerItemSelectedListener;
 import com.oucb303.training.model.CheckBox;
-import com.oucb303.training.model.Constant;
 import com.oucb303.training.model.DeviceInfo;
 import com.oucb303.training.model.TimeInfo;
 import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.threads.Timer;
+import com.oucb303.training.utils.Constant;
 import com.oucb303.training.utils.DataAnalyzeUtils;
+import com.oucb303.training.widget.HorizontalListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +70,12 @@ public class GroupConfrontationActivity extends AppCompatActivity
     android.widget.CheckBox cbVoice;
     @Bind(R.id.btn_begin)
     Button btnBegin;
+    @Bind(R.id.hlv_group1)
+    HorizontalListView hlvGroup1;
+    @Bind(R.id.hlv_group2)
+    HorizontalListView hlvGroup2;
+    @Bind(R.id.img_help)
+    ImageView imgHelp;
 
 
     private Device device;
@@ -81,6 +90,7 @@ public class GroupConfrontationActivity extends AppCompatActivity
 
     // 0:表示该设备还未亮  1:表示该设备亮正常颜色  2:表示该设备是对方将我方设备亮起品红色
     private ArrayList<GroupLightInfo>[] lightInfos = new ArrayList[2];
+    private ConfrontationAdapter groupOneAdapter, groupTwoAdapter;
 
     private Handler handler = new Handler()
     {
@@ -117,6 +127,7 @@ public class GroupConfrontationActivity extends AppCompatActivity
             //设备初始化
             device.initConfig();
         }
+
     }
 
     @Override
@@ -130,6 +141,8 @@ public class GroupConfrontationActivity extends AppCompatActivity
     private void initView()
     {
         tvTitle.setText("双人对抗");
+
+        imgHelp.setVisibility(View.VISIBLE);
 
         //初始化分组listview
         groupListViewAdapter = new GroupListViewAdapter(this, 0);
@@ -177,8 +190,6 @@ public class GroupConfrontationActivity extends AppCompatActivity
             case R.id.layout_cancel:
                 this.finish();
                 break;
-            case R.id.img_help:
-                break;
             case R.id.btn_begin:
                 //检测设备
                 if (!device.checkDevice(this))
@@ -192,6 +203,11 @@ public class GroupConfrontationActivity extends AppCompatActivity
                     stopTraining();
                 else
                     startTraining();
+                break;
+            case R.id.img_help:
+                Intent intent = new Intent(this, HelpActivity.class);
+                intent.putExtra("flag", 7);
+                startActivity(intent);
                 break;
         }
     }
@@ -214,6 +230,12 @@ public class GroupConfrontationActivity extends AppCompatActivity
             }
         }
 
+        groupOneAdapter = new ConfrontationAdapter(this, 0, lightInfos[0]);
+        hlvGroup1.setAdapter(groupOneAdapter);
+
+        groupTwoAdapter = new ConfrontationAdapter(this, 1, lightInfos[1]);
+        hlvGroup2.setAdapter(groupTwoAdapter);
+
         //清除串口数据
         new ReceiveThread(handler, device.ftDev, ReceiveThread.CLEAR_DATA_THREAD, 0).start();
 
@@ -229,6 +251,9 @@ public class GroupConfrontationActivity extends AppCompatActivity
         temp = lightInfos[1].get(position2);
         temp.lightFlag = 1;
         turnOnLight(position2, 1, 1);
+
+        groupOneAdapter.notifyDataSetChanged();
+        groupOneAdapter.notifyDataSetChanged();
     }
 
     private void stopTraining()
@@ -310,6 +335,8 @@ public class GroupConfrontationActivity extends AppCompatActivity
                     }
 
                 }
+                groupOneAdapter.notifyDataSetChanged();
+                groupTwoAdapter.notifyDataSetChanged();
 
             }
 
@@ -367,10 +394,10 @@ public class GroupConfrontationActivity extends AppCompatActivity
 
     }
 
-    private class GroupLightInfo
+    public class GroupLightInfo
     {
-        int lightFlag;
-        DeviceInfo deviceInfo;
+        public int lightFlag;
+        public DeviceInfo deviceInfo;
     }
 
 }

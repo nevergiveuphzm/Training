@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.oucb303.training.App;
 import com.oucb303.training.R;
 import com.oucb303.training.daoservice.SequenceSer;
 
@@ -29,16 +28,12 @@ public class BaseTrainingActivity extends Activity
     @Bind(R.id.btn_sequences)
     Button btnSequences;
 
-
-    private SequenceSer sequenceSer;
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basetraining);
         ButterKnife.bind(this);
-        sequenceSer = new SequenceSer(((App) getApplication()).getDaoSession());
     }
 
     @OnClick({R.id.btn_times_random, R.id.btn_time_random, R.id.btn_sequence_training, R

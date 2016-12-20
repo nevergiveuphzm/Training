@@ -5,8 +5,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.util.Log;
 
-import com.oucb303.training.model.Constant;
-
 /**
  * Created by huzhiming on 2016/12/11.
  */

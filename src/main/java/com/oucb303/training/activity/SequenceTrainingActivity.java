@@ -28,8 +28,8 @@ import com.oucb303.training.listener.AddOrSubBtnClickListener;
 import com.oucb303.training.listener.CheckBoxClickListener;
 import com.oucb303.training.listener.MySeekBarListener;
 import com.oucb303.training.model.CheckBox;
-import com.oucb303.training.model.Constant;
 import com.oucb303.training.model.Light;
+import com.oucb303.training.utils.Constant;
 import com.oucb303.training.utils.OperateUtils;
 import com.oucb303.training.widget.SequenceSetListview;
 
