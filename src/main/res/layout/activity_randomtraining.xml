@@ -267,12 +267,6 @@
                                 android:text="0"
                                 android:textSize="20dp"/>
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:text="10"
-                                android:textSize="20dp"/>
 
                             <SeekBar
                                 android:id="@+id/bar_delay_time"
@@ -281,6 +275,13 @@
                                 android:layout_weight="1"
                                 android:max="200"
                                 android:progress="0"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="10"
+                                android:textSize="20dp"/>
 
                             <ImageView
                                 android:id="@+id/img_delay_time_add"

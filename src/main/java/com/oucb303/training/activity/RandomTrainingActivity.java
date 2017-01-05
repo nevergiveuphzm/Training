@@ -144,7 +144,7 @@ public class RandomTrainingActivity extends Activity
     private final int STOP_TRAINING = 3;
     //更新时间运行次数等信息
     private final int LOST_TIME = 4;
-    private final int IS_TRAINING_OVER = 5;
+    private final int UPDATE_TIMES = 5;
 
     //随机模式 0:次数随机  1:时间随机
     private int randomMode;
@@ -224,6 +224,9 @@ public class RandomTrainingActivity extends Activity
                 case LOST_TIME:
                     tvLostTimes.setText(lostTimes + "");
                     isTrainingOver();
+                    break;
+                case UPDATE_TIMES:
+                    timeAdapter.notifyDataSetChanged();
                     break;
             }
         }
@@ -326,14 +329,10 @@ public class RandomTrainingActivity extends Activity
         barDelayTime.setOnSeekBarChangeListener(new MySeekBarListener(tvDelayTime, 10));
         barOverTime.setOnSeekBarChangeListener(new MySeekBarListener(tvOverTime, 30));
         //设置加减按钮的监听事件
-        imgDelayTimeSub.setOnTouchListener(new AddOrSubBtnClickListener
-                (barDelayTime, 0));
-        imgDelayTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener
-                (barDelayTime, 1));
-        imgOverTimeSub.setOnTouchListener(new AddOrSubBtnClickListener
-                (barOverTime, 0));
-        imgOverTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener
-                (barOverTime, 1));
+        imgDelayTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 0));
+        imgDelayTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 1));
+        imgOverTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barOverTime, 0));
+        imgOverTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barOverTime, 1));
 
         //选择设备个数spinner
         String[] num = new String[Device.DEVICE_LIST.size()];
@@ -352,18 +351,32 @@ public class RandomTrainingActivity extends Activity
                 for (int j = 0; j < totalNum; j++)
                     str += Device.DEVICE_LIST.get(j).getDeviceNum() + "  ";
                 tvDeviceList.setText(str);
-
-                //Toast.makeText(DribblingGameActivity.this, "所选择的设备个数是" + totalNum + "个", Toast.LENGTH_SHORT).show();
             }
         });
 
         spDevNum.setSelection(num.length - 1);
 
-
         //设定感应模式checkBox组合的点击事件
         ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
         actionModeCheckBox = new CheckBox(1, views);
-        new CheckBoxClickListener(actionModeCheckBox);
+        new CheckBoxClickListener(actionModeCheckBox)
+        {
+            @Override
+            public void doOtherThings(int checkedId)
+            {
+                super.doOtherThings(checkedId);
+                //触碰或全部
+                if (checkedId == 2 || checkedId == 3)
+                {
+                    if (barDelayTime.getProgress() < 2)
+                        barDelayTime.setProgress(2);
+                    imgDelayTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 0, 2));
+                } else
+                {
+                    imgDelayTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 0));
+                }
+            }
+        };
         //设定灯光模式checkBox组合的点击事件
         ImageView[] views1 = new ImageView[]{imgLightModeBeside, imgLightModeCenter, imgLightModeAll};
         lightModeCheckBox = new CheckBox(1, views1);
@@ -380,7 +393,6 @@ public class RandomTrainingActivity extends Activity
         switch (view.getId())
         {
             case R.id.btn_begin:
-                Toast.makeText(getApplicationContext(), "测试", Toast.LENGTH_SHORT).show();
                 if (!device.checkDevice(RandomTrainingActivity.this))
                     return;
                 if (!trainingFlag)
@@ -531,6 +543,10 @@ public class RandomTrainingActivity extends Activity
         TimeInfo info = new TimeInfo();
         info.setDeviceNum(currentLight);
         timeList.add(info);
+        Message msg = handler.obtainMessage();
+        msg.what = UPDATE_TIMES;
+        msg.obj = "";
+        handler.sendMessage(msg);
     }
 
 

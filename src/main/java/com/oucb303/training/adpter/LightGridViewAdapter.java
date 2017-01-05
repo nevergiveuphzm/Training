@@ -75,7 +75,7 @@ public class LightGridViewAdapter extends BaseAdapter
         if (list_light.get(position).getNum() <= 26)
             num = (char) (list_light.get(position).getNum() + 'A' - 1);
         else
-            num = (char) (list_light.get(position).getNum() + 'a' - 1);
+            num = (char) (list_light.get(position).getNum() + 'a' - 27);
         holder.tv_num.setText(num + "");
         holder.ll_image.setOnClickListener(mListener);
         holder.ll_image.setTag(position);

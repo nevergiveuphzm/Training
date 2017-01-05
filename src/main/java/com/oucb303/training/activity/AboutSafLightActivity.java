@@ -3,27 +3,33 @@ package com.oucb303.training.activity;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.loopj.android.http.BinaryHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.oucb303.training.R;
 import com.oucb303.training.http.DownLoader;
+import com.oucb303.training.http.HttpClientUtils;
 import com.oucb303.training.utils.Constant;
 import com.oucb303.training.utils.FileUtils;
 import com.oucb303.training.utils.VersionUtils;
 
 import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 
@@ -45,6 +51,7 @@ public class AboutSafLightActivity extends AppCompatActivity
     private final static int UPDATE_PROGRESS = 1;
     private PackageInfo packageInfo;
     ProgressDialog dialog;
+    private String panId;
 
 
     @Override
@@ -57,6 +64,7 @@ public class AboutSafLightActivity extends AppCompatActivity
         packageInfo = VersionUtils.getAppVersion(this);
         IntentFilter filter = new IntentFilter("DownLoad Complete!");
         registerReceiver(downLoadReceiver, filter);
+        panId = getIntent().getStringExtra("panId");
         initView();
     }
 
@@ -83,14 +91,86 @@ public class AboutSafLightActivity extends AppCompatActivity
                 this.finish();
                 break;
             case R.id.ll_check_update:
-                downLoadAPK();
+                if (panId == null || panId.equals(""))
+                {
+                    Toast.makeText(this, "当前为插入协调器!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (!isNetworkAvailable())
+                    return;
+                checkUpdate();
                 break;
         }
     }
 
+    private boolean isNetworkAvailable()
+    {
+        if (!HttpClientUtils.isNetworkAvailable(this))
+        {
+            Log.d(Constant.LOG_TAG, "当前网络不可用!");
+            Toast.makeText(this, "当前网络不可用", Toast.LENGTH_SHORT).show();
+            return false;
+        } else
+            Log.d(Constant.LOG_TAG, "网络可用!");
+        return true;
+    }
+
     private void checkUpdate()
     {
+        RequestParams params = new RequestParams();
+        params.put("panId", "FF01");
+        params.put("versionCode", packageInfo.versionCode);
+        HttpClientUtils.post(Constant.SERVER_IP + "/user/json", params, new JsonHttpResponseHandler()
+        {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response)
+            {
+                try
+                {
+                    int state = response.getInt("status");
+                    //有新版本
+                    if (state == 200)
+                    {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(AboutSafLightActivity.this);
+                        builder.setTitle("提示");
+                        builder.setMessage("检测到新版本,是否更新?");
+                        builder.setNegativeButton("取消", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                            }
+                        });
+                        builder.setPositiveButton("确定", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                dialog.dismiss();
+                                downLoadAPK();
+                            }
+                        });
+                        AlertDialog alertdialog = builder.create();
+                        alertdialog.show();
 
+                    } else if (state == 400)
+                    {
+                        Toast.makeText(AboutSafLightActivity.this, "当前已经是最新版本!", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse)
+            {
+                Log.d(Constant.LOG_TAG, "  " + statusCode + "  " + throwable.getMessage());
+                Toast.makeText(AboutSafLightActivity.this, "服务器连接失败!", Toast.LENGTH_SHORT).show();
+            }
+
+        });
     }
 
     private void downLoadAPK()
@@ -101,7 +181,7 @@ public class AboutSafLightActivity extends AppCompatActivity
         String[] allowedContentTypes = {"application/vnd.android.package-archive"};
 
         downLoader.downLoadFile(
-                "http://192.168.1.108:8080/springmvc/user/download",
+                Constant.SERVER_IP + "/user/download",
                 new BinaryHttpResponseHandler(allowedContentTypes)
                 {
                     @Override
@@ -115,7 +195,7 @@ public class AboutSafLightActivity extends AppCompatActivity
                     @Override
                     public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable)
                     {
-                        Log.d(Constant.LOG_TAG, throwable.getMessage());
+                        Log.d(Constant.LOG_TAG, "fail:" + i + " " + throwable.getMessage());
                     }
 
                     @Override

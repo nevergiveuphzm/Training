@@ -34,10 +34,16 @@ public class CheckBoxClickListener implements View.OnClickListener
             if (checkBox.getViews()[i].getId() == view.getId())
             {
                 checkBox.setCheckId(i + 1);
+                doOtherThings(i + 1);
             }
         }
         Log.d(Constant.LOG_TAG, "checked id: " + checkBox.getCheckId());
         changeState();
+    }
+
+    public void doOtherThings(int checkedId)
+    {
+
     }
 
     public void changeState()

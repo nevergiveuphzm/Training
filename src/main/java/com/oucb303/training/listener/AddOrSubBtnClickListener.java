@@ -5,6 +5,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.SeekBar;
 
+import com.oucb303.training.threads.Timer;
+
 /**
  * Created by huzhiming on 16/9/24.
  * Description：
@@ -17,6 +19,8 @@ public class AddOrSubBtnClickListener implements View.OnTouchListener
     private int type;
     //单位
     private String suffix;
+    //最小值
+    private int minValue = 0;
     //线程停止标志
     private boolean threadStopFlag = false;
 
@@ -24,6 +28,12 @@ public class AddOrSubBtnClickListener implements View.OnTouchListener
     {
         this.seekBar = seekBar;
         this.type = type;
+    }
+
+    public AddOrSubBtnClickListener(SeekBar seekBar, int type, int minValue)
+    {
+        this(seekBar, type);
+        this.minValue = minValue;
     }
 
     @Override
@@ -58,14 +68,13 @@ public class AddOrSubBtnClickListener implements View.OnTouchListener
                 //减
                 if (type == 0)
                 {
-                    if (progress != 0)
+                    if (progress > minValue)
                     {
                         progress--;
                         seekBar.setProgress(progress);
                         Log.i("AAAA", progress + "");
                     }
-                }
-                else
+                } else
                 {
                     if (progress != max)
                     {
@@ -73,13 +82,7 @@ public class AddOrSubBtnClickListener implements View.OnTouchListener
                         seekBar.setProgress(progress);
                     }
                 }
-                try
-                {
-                    Thread.sleep(100);
-                } catch (InterruptedException e)
-                {
-                    e.printStackTrace();
-                }
+                Timer.sleep(100);
             }
         }
     }

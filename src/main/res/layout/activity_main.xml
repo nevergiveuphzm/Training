@@ -49,7 +49,7 @@
                 android:layout_gravity="center_horizontal"
                 android:text="共0个设备"
                 android:textColor="@color/white"
-                android:textSize="@dimen/para_level4_font_size"/>
+                android:textSize="@dimen/param_level4_font_size"/>
 
             <LinearLayout
                 android:id="@+id/layout_power_whole"

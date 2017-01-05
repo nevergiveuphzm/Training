@@ -20,6 +20,51 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="设备个数"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="整套设备个数:"/>
+
+                    <TextView
+                        android:id="@+id/tv_default_device_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""/>
+
+                    <TextView
+                        android:id="@+id/tv_edit_device_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:text="编辑"
+                        android:textColor="@color/blue"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -46,6 +91,7 @@
                     android:text="PAN_ID:"/>
             </LinearLayout>
 
+
             <LinearLayout
                 android:id="@+id/ll_about"
                 android:layout_width="match_parent"
@@ -71,6 +117,7 @@
                     android:layout_marginTop="10dp"
                     android:text="版本:"/>
             </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"

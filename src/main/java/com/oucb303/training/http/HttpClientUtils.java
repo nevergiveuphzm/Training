@@ -1,8 +1,13 @@
 package com.oucb303.training.http;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.BinaryHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 /**
@@ -14,7 +19,7 @@ public class HttpClientUtils
 
     private static AsyncHttpClient client;
 
-    public static AsyncHttpClient getInstance()
+    public synchronized static AsyncHttpClient getInstance()
     {
         if (client == null)
         {
@@ -32,7 +37,7 @@ public class HttpClientUtils
     }
 
     //带参数的get请求
-    public static void get(String url, AsyncHttpResponseHandler handler, RequestParams params)
+    public static void get(String url, RequestParams params, AsyncHttpResponseHandler handler)
     {
         getInstance().get(url, params, handler);
     }
@@ -50,12 +55,34 @@ public class HttpClientUtils
     }
 
     //带参数的post请求
-    public static void post(String url, AsyncHttpResponseHandler handler, RequestParams params)
+    public static void post(String url, RequestParams params, AsyncHttpResponseHandler handler)
     {
         getInstance().post(url, params, handler);
     }
 
+    public static void post(String url, RequestParams params, JsonHttpResponseHandler handler)
+    {
+        getInstance().post(url, params, handler);
+    }
 
-
-
+    //检测网络是否可用
+    public static boolean isNetworkAvailable(Context context)
+    {
+        ConnectivityManager connectivity = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivity != null)
+        {
+            NetworkInfo info = connectivity.getActiveNetworkInfo();
+            if (info != null && info.isConnected())
+            {
+                // 当前网络是连接的
+                if (info.getState() == NetworkInfo.State.CONNECTED)
+                {
+                    // 当前所连接的网络可用
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

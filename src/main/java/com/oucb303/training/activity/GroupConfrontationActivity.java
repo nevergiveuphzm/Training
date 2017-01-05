@@ -88,9 +88,11 @@ public class GroupConfrontationActivity extends AppCompatActivity
     // 训练是否正在进行的标志
     private boolean trainingFlag = false;
 
-    // 0:表示该设备还未亮  1:表示该设备亮正常颜色  2:表示该设备是对方将我方设备亮起品红色
+    // 0:表示该设备还未亮  1:表示该设备亮正常颜色  2:表示该设备是对方将我方设备亮起品红色 3:表示不能挥灭
     private ArrayList<GroupLightInfo>[] lightInfos = new ArrayList[2];
     private ConfrontationAdapter groupOneAdapter, groupTwoAdapter;
+    private Timer timer;
+    private int delay = 1000;
 
     private Handler handler = new Handler()
     {
@@ -103,6 +105,29 @@ public class GroupConfrontationActivity extends AppCompatActivity
                 case TIME_RECEIVE:
                     if (data != null && data.length() > 0)
                         analyzeData(data);
+                    break;
+                case Timer.TIMER_FLAG:
+                    for (int i = 0; i < 2; i++)
+                    {
+                        for (int j = 0; j < groupSize; j++)
+                        {
+                            GroupLightInfo info = lightInfos[i].get(j);
+                            if (info.lightFlag == 2 && timer.time - info.time > delay)
+                            {
+                                //把原来的感应和灯关了
+                                device.sendOrder(Device.DEVICE_LIST.get(i * groupSize + j).getDeviceNum(),
+                                        Order.LightColor.NONE,
+                                        Order.VoiceMode.NONE,
+                                        Order.BlinkModel.NONE,
+                                        Order.LightModel.TURN_OFF,
+                                        Order.ActionModel.TURN_OFF,
+                                        Order.EndVoice.NONE);
+                                Timer.sleep(20);
+                                info.lightFlag = 3;
+                                turnOnLight(j, i, 3);
+                            }
+                        }
+                    }
                     break;
             }
         }
@@ -252,6 +277,10 @@ public class GroupConfrontationActivity extends AppCompatActivity
         temp.lightFlag = 1;
         turnOnLight(position2, 1, 1);
 
+        timer = new Timer(handler);
+        timer.setBeginTime(System.currentTimeMillis());
+        timer.start();
+
         groupOneAdapter.notifyDataSetChanged();
         groupOneAdapter.notifyDataSetChanged();
     }
@@ -262,6 +291,7 @@ public class GroupConfrontationActivity extends AppCompatActivity
         trainingFlag = false;
         ReceiveThread.stopThread();
         device.turnOffAllTheLight();
+        timer.stopTimer();
     }
 
     //从每组中还未亮起灯的设备中随机抽取一个
@@ -280,20 +310,39 @@ public class GroupConfrontationActivity extends AppCompatActivity
 
     private void turnOnLight(int position, int groupId, int lightFlag)
     {
+
         position = groupId * groupSize + position;
         int color = 0;
         if (lightFlag == 2)
             color = 3; //品红
-        else    //第一组亮蓝色  第二组亮红色
+        else if (lightFlag == 3)
+        {
+            //不能挥灭的灯
+            if (groupId == 0)
+                color = 2;
+            else
+                color = 1;
+
+        } else    //第一组亮蓝色  第二组亮红色
             color = groupId + 1;
 
-        device.sendOrder(Device.DEVICE_LIST.get(position).getDeviceNum(),
-                Order.LightColor.values()[color],
-                Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                Order.BlinkModel.NONE,
-                Order.LightModel.values()[lightModeCheckBox.getCheckId()],
-                Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                Order.EndVoice.NONE);
+
+        if (lightFlag == 3)
+            device.sendOrder(Device.DEVICE_LIST.get(position).getDeviceNum(),
+                    Order.LightColor.values()[color],
+                    Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
+                    Order.BlinkModel.NONE,
+                    Order.LightModel.values()[lightModeCheckBox.getCheckId()],
+                    Order.ActionModel.TURN_OFF,
+                    Order.EndVoice.NONE);
+        else
+            device.sendOrder(Device.DEVICE_LIST.get(position).getDeviceNum(),
+                    Order.LightColor.values()[color],
+                    Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
+                    Order.BlinkModel.NONE,
+                    Order.LightModel.values()[lightModeCheckBox.getCheckId()],
+                    Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
+                    Order.EndVoice.NONE);
     }
 
     private void analyzeData(String data)
@@ -331,9 +380,9 @@ public class GroupConfrontationActivity extends AppCompatActivity
                         int groupId2 = (groupId + 1) % 2;
                         int rand2 = createRandomNum(groupId2);
                         lightInfos[groupId2].get(rand2).lightFlag = 2;
+                        lightInfos[groupId2].get(rand2).time = timer.time;
                         turnOnLight(rand2, groupId2, 2);
                     }
-
                 }
                 groupOneAdapter.notifyDataSetChanged();
                 groupTwoAdapter.notifyDataSetChanged();
@@ -391,13 +440,14 @@ public class GroupConfrontationActivity extends AppCompatActivity
             Timer.sleep(100);
             temp++;
         }
-
     }
 
     public class GroupLightInfo
     {
         public int lightFlag;
+        public int time;
         public DeviceInfo deviceInfo;
+
     }
 
 }

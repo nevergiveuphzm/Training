@@ -42,7 +42,6 @@ public class SequenceSetListview extends ListView {
 			}
 			return false;
 		}
-
 	}
 
 }

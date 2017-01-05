@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:text="设备灯调试"
-                android:textSize="@dimen/para_level3_font_size"/>
+                android:textSize="@dimen/param_level3_font_size"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -245,7 +245,7 @@
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
                     android:text="序号"
-                    android:textSize="@dimen/para_level3_font_size"/>
+                    android:textSize="@dimen/param_level3_font_size"/>
 
                 <TextView
                     android:layout_width="0dp"
@@ -253,7 +253,7 @@
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
                     android:text="时间"
-                    android:textSize="@dimen/para_level3_font_size"/>
+                    android:textSize="@dimen/param_level3_font_size"/>
 
                 <TextView
                     android:layout_width="0dp"
@@ -261,7 +261,7 @@
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
                     android:text="灯编号"
-                    android:textSize="@dimen/para_level3_font_size"/>
+                    android:textSize="@dimen/param_level3_font_size"/>
             </LinearLayout>
 
             <ListView
@@ -287,7 +287,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:text="设备初始化"
-                android:textSize="@dimen/para_level3_font_size"/>
+                android:textSize="@dimen/param_level3_font_size"/>
 
 
             <Button
@@ -411,7 +411,7 @@
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
                     android:text="编号"
-                    android:textSize="@dimen/para_level3_font_size"/>
+                    android:textSize="@dimen/param_level3_font_size"/>
 
                 <TextView
                     android:layout_width="0dp"
@@ -419,7 +419,7 @@
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
                     android:text="短地址"
-                    android:textSize="@dimen/para_level3_font_size"/>
+                    android:textSize="@dimen/param_level3_font_size"/>
 
                 <TextView
                     android:layout_width="0dp"
@@ -427,7 +427,7 @@
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
                     android:text="编号"
-                    android:textSize="@dimen/para_level3_font_size"/>
+                    android:textSize="@dimen/param_level3_font_size"/>
             </LinearLayout>
 
             <ListView

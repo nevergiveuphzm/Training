@@ -75,8 +75,27 @@ public class SequenceSer
         return seqId;
     }
 
+    //加载所有序列
     public List<Sequence> loadSequences()
     {
-        return sequenceDao.loadAll();
+        QueryBuilder<Sequence> builder = sequenceDao.queryBuilder();
+        List<Sequence> list = builder.orderDesc(SequenceDao.Properties.CreateTime).list();
+        return list;
     }
+
+    //删除序列
+    public boolean delSequence(long sequenceId)
+    {
+        sequenceDao.deleteByKey(sequenceId);
+        return false;
+    }
+
+    //加载某一序列的全部序列
+    public List<SequenceGroup> loadSequenceGroups(long sequenceId)
+    {
+        QueryBuilder<SequenceGroup> builder = sequenceGroupDao.queryBuilder();
+        builder = builder.where(SequenceGroupDao.Properties.SeqId.eq(sequenceId)).orderAsc(SequenceGroupDao.Properties.Step);
+        return builder.list();
+    }
+
 }

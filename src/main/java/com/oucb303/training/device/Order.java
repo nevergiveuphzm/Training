@@ -33,7 +33,7 @@ public class Order
     public static enum LightModel
     {
         /*无、外圈、里圈、全部、关灯*/
-        None, OUTER, CENTER, ALL, TURN_OFF
+        NONE, OUTER, CENTER, ALL, TURN_OFF
     }
 
     /*感应模式*/

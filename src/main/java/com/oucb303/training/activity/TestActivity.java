@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,7 +84,7 @@ public class TestActivity extends AppCompatActivity
     private Order.LightColor color = Order.LightColor.NONE;
     private Order.VoiceMode voice = Order.VoiceMode.NONE;
     private Order.BlinkModel blinkModel = Order.BlinkModel.NONE;
-    private Order.LightModel lightModel = Order.LightModel.None;
+    private Order.LightModel lightModel = Order.LightModel.NONE;
     private Order.ActionModel actionModel = Order.ActionModel.NONE;
 
     private List<TimeInfo> timeInfos = new ArrayList<>();

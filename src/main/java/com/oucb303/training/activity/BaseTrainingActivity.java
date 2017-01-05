@@ -58,7 +58,7 @@ public class BaseTrainingActivity extends Activity
                 startActivity(intent);
                 break;
             case R.id.btn_sequences:
-                intent = new Intent(this, SequenceRunningActivity.class);
+                intent = new Intent(this, SequenceChooseActivity.class);
                 startActivity(intent);
                 break;
             case R.id.layout_cancel:

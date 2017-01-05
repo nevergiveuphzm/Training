@@ -42,7 +42,6 @@ public class ReceiveThread extends Thread
     @Override
     public void run()
     {
-        THREAD_RUNNING_FLAG = true;
         //检测电量线程
         if (threadFlag == POWER_RECEIVE_THREAD)
         {
@@ -59,6 +58,8 @@ public class ReceiveThread extends Thread
         //接收设备返回时间线程
         else if (threadFlag == TIME_RECEIVE_THREAD)
         {
+            THREAD_RUNNING_FLAG = true;
+
             while (THREAD_RUNNING_FLAG)
             {
                 readData();

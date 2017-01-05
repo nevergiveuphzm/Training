@@ -8,7 +8,8 @@ import android.os.Environment;
 public class Constant
 {
     //服务器域名,IP
-    public final static String SERVER_IP = "http://www.saflight.com.cn";
+    //public final static String SERVER_IP = "http://www.saflight.com.cn";
+    public final static String SERVER_IP = "http://www.saflight.com.cn/saflight";
 
     public final static String LOG_TAG = "TRAINING_DEBUG";
 
