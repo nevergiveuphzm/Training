@@ -6,10 +6,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-import com.oucb303.training.activity.ShuttleRunActivity;
-
-import java.util.List;
-
 /**
  * Created by huzhiming on 2016/11/18.
  */

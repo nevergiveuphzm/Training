@@ -54,19 +54,34 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:layout_weight="2"
+            android:layout_weight="2.5"
+            android:orientation="horizontal"
             android:gravity="right">
 
             <ImageView
                 android:id="@+id/img_help"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:layout_marginRight="20dp"
                 android:background="@drawable/button_color_grey"
                 android:gravity="center_vertical"
                 android:scaleType="center"
                 android:src="@drawable/help"
-                android:visibility="gone"/>
+                android:visibility="gone"
+               />
+            <ImageView
+                android:id="@+id/img_save"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/button_color_grey"
+                android:gravity="center_vertical"
+                android:scaleType="center"
+                android:src="@drawable/save"
+                android:visibility="gone"
+                />
         </LinearLayout>
     </LinearLayout>
 

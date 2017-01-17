@@ -6,14 +6,22 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+<<<<<<< HEAD
 import android.support.v7.app.AlertDialog;
+=======
+import android.os.Handler;
+import android.os.Message;
+import android.os.SystemClock;
+>>>>>>> baichangcai-pc
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +34,7 @@ import com.oucb303.training.http.HttpClientUtils;
 import com.oucb303.training.utils.Constant;
 import com.oucb303.training.utils.FileUtils;
 import com.oucb303.training.utils.VersionUtils;
+import com.oucb303.training.widget.ToastUtils;
 
 import org.apache.http.Header;
 import org.json.JSONException;
@@ -36,6 +45,7 @@ import java.io.File;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 
 /**
  * 关于SafLight
@@ -74,6 +84,7 @@ public class AboutSafLightActivity extends AppCompatActivity
         tvTitle.setText("关于SafLight");
 
 
+
         dialog = new ProgressDialog(this);
         dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);// 设置水平进度条
         dialog.setCancelable(true);// 设置是否可以通过点击Back键取消
@@ -82,7 +93,9 @@ public class AboutSafLightActivity extends AppCompatActivity
         dialog.setMax(100);
     }
 
-    @OnClick({R.id.layout_cancel, R.id.ll_check_update})
+    private long clickTime = 0;
+    private int clickTimes = 0;
+    @OnClick({R.id.layout_cancel, R.id.ll_check_update,R.id.iv_app_image})
     public void onClick(View view)
     {
         switch (view.getId())
@@ -100,10 +113,40 @@ public class AboutSafLightActivity extends AppCompatActivity
                     return;
                 checkUpdate();
                 break;
+            case R.id.iv_app_image:
+                //点击图标屏蔽或放开测试按钮
+                if((System.currentTimeMillis() - clickTime)>1000){
+                    clickTime = System.currentTimeMillis();
+                    clickTimes = 0;
+                }else {
+                    clickTime = System.currentTimeMillis();
+                    clickTimes ++;
+                }
+                if( clickTimes>=2){
+                    SharedPreferences sp = getSharedPreferences("Training",MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sp.edit();
+                    if(sp.getBoolean("flag_btnTest_visible",false)){
+                        editor.putBoolean("flag_btnTest_visible",false);
+                        Toast.makeText(this,"离开调试模式",Toast.LENGTH_SHORT).show();
+                    }else {
+                        editor.putBoolean("flag_btnTest_visible", true);
+                        Toast.makeText(this,"进入调试模式",Toast.LENGTH_SHORT).show();
+                    }
+                    editor.commit();
+                    clickTimes=0;
+                }
+                break;
         }
     }
 
+<<<<<<< HEAD
     private boolean isNetworkAvailable()
+=======
+
+
+
+    private void checkUpdate()
+>>>>>>> baichangcai-pc
     {
         if (!HttpClientUtils.isNetworkAvailable(this))
         {

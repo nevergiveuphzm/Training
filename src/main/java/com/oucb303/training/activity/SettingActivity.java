@@ -1,6 +1,11 @@
 package com.oucb303.training.activity;
 
+<<<<<<< HEAD
 import android.app.AlertDialog;
+=======
+import android.app.Dialog;
+import android.content.Context;
+>>>>>>> baichangcai-pc
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
@@ -21,7 +26,11 @@ import com.oucb303.training.model.DeviceInfo;
 import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.utils.ConfigParamUtils;
 import com.oucb303.training.utils.DataAnalyzeUtils;
+import com.oucb303.training.utils.DialogUtils;
+import com.oucb303.training.utils.NetworkUtils;
+import com.oucb303.training.utils.OperateUtils;
 import com.oucb303.training.utils.VersionUtils;
+import com.oucb303.training.widget.ToastUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -44,7 +53,12 @@ public class SettingActivity extends AppCompatActivity
 
     private PackageInfo packageInfo;
     private Device device;
+<<<<<<< HEAD
     private String panId;
+=======
+    private Dialog mDialog;
+    private Context mContext;
+>>>>>>> baichangcai-pc
 
     private Handler handler = new Handler()
     {
@@ -67,6 +81,7 @@ public class SettingActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         ButterKnife.bind(this);
+        mContext = this.getApplicationContext();
         device = new Device(this);
         device.createDeviceList(this);
         // 判断是否插入协调器，
@@ -99,8 +114,12 @@ public class SettingActivity extends AppCompatActivity
         tvDefaultDeviceNum.setText("" + ConfigParamUtils.getDefaultDeviceNum(this));
     }
 
+<<<<<<< HEAD
     @OnClick({R.id.layout_cancel, R.id.ll_about, R.id.btn_turn_on_all_lights, R.id.btn_turn_off_all_lights,
             R.id.tv_edit_device_num})
+=======
+    @OnClick({R.id.layout_cancel, R.id.ll_about, R.id.btn_turn_on_all_lights, R.id.btn_turn_off_all_lights,R.id.ll_upload})
+>>>>>>> baichangcai-pc
     public void onClick(View view)
     {
         switch (view.getId())
@@ -128,8 +147,19 @@ public class SettingActivity extends AppCompatActivity
             case R.id.btn_turn_off_all_lights:
                 device.turnOffAllTheLight();
                 break;
+<<<<<<< HEAD
             case R.id.tv_edit_device_num:
                 changeDeviceNum();
+=======
+            case R.id.ll_upload:
+                if(!NetworkUtils.isNetworkAvailable(this)){
+                    Toast.makeText(this,"网络不可用！",Toast.LENGTH_SHORT).show();
+                }else {
+                    mDialog = DialogUtils.createLoadingDialog(SettingActivity.this,"正在上传数据，请稍候...",true);
+                    mDialog.show();
+                }
+
+>>>>>>> baichangcai-pc
                 break;
         }
     }

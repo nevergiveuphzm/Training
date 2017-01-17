@@ -2,11 +2,13 @@ package com.oucb303.training.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.hardware.usb.UsbManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,8 +17,13 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.oucb303.training.R;
 import com.oucb303.training.adpter.PowerAdapter;
@@ -28,6 +35,7 @@ import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.threads.Timer;
 import com.oucb303.training.utils.DataAnalyzeUtils;
 import com.oucb303.training.utils.VersionUtils;
+import com.oucb303.training.widget.BraceletManager;
 
 import java.util.Collections;
 import java.util.List;
@@ -53,18 +61,26 @@ public class MainActivity extends Activity
     Button btnBaseTraining;
     @Bind(R.id.btn_statistic)
     Button btnStatistic;
+    @Bind(R.id.btn_test)
+    Button btnTest;
     @Bind(R.id.lv_battery)
     ListView lvBattery;
     @Bind(R.id.tv_device_count)
     TextView tvDeviceCount;
+    @Bind(R.id.sw_bracelet)
+    Switch swBracelet;
+    @Bind(R.id.pb_bar)
+    ProgressBar pbBar;
+    @Bind(R.id.iv_bracelet)
+    ImageView imgBracelet;
 
     private Device device;
     private final int POWER_RECEIVE = 1;
+    private final int FIND_BRACELET = 2;//是否扫描到手环
     private PowerAdapter powerAdapter;
     private AutoCheckPower checkPowerThread;
-
     private boolean isLeave = false;
-
+    private BraceletManager braceletManager;
 
     Handler handler = new Handler()
     {
@@ -77,6 +93,14 @@ public class MainActivity extends Activity
                     String data = msg.obj.toString();
                     readPowerData(data);
                     break;
+                case FIND_BRACELET:
+                    pbBar.setVisibility(View.GONE);
+                    imgBracelet.setVisibility(View.VISIBLE);
+                    braceletManager.stopScan();
+                    break;
+                default:
+                    break;
+
             }
         }
     };
@@ -165,6 +189,60 @@ public class MainActivity extends Activity
         super.onStart();
         initDevice();
         isLeave = false;
+        initView();
+    }
+    /**
+     * 初始化控件
+     */
+    private void initView(){
+        //屏蔽或放开测试按钮
+        SharedPreferences sp = getSharedPreferences("Training",MODE_PRIVATE);
+        if(sp.getBoolean("flag_btnTest_visible",false))
+            btnTest.setVisibility(View.VISIBLE);
+        else
+            btnTest.setVisibility(View.GONE);
+        //Switch控件
+        swBracelet.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    pbBar.setVisibility(View.VISIBLE);
+                    imgBracelet.setVisibility(View.GONE);
+                    openBraceLet();
+                }else {
+                    pbBar.setVisibility(View.GONE);
+                    imgBracelet.setVisibility(View.GONE);
+                    braceletManager.stopScan();
+                }
+            }
+        });
+    }
+    /**
+     * 开启手环
+     */
+    private void openBraceLet() {
+        braceletManager = new BraceletManager(this.getApplicationContext(),this);
+        if(braceletManager.isBluetoothOpen()){
+            Log.i("Bluetooth","蓝牙开启");
+        }else if (!braceletManager.getAdapter().enable()) {
+                Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(intent, 1001);
+        }
+        //扫描
+        braceletManager.scanBracelet();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (braceletManager.isScaning()){
+                    Timer.sleep(100);
+                    if(braceletManager.isExist()){
+                        Message msg = Message.obtain();
+                        msg.what = FIND_BRACELET;
+                        handler.sendMessage(msg);
+                    }
+                }
+            }
+        }).start();
     }
 
     @Override
@@ -296,4 +374,25 @@ public class MainActivity extends Activity
             }
         }
     }
+    /***
+     * 接收意图的结果
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // TODO Auto-generated method stub
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case 1001:
+                if (resultCode == RESULT_OK) {
+                    // 刚打开蓝牙实际还不能立马就能用
+                } else {
+                    Toast.makeText(this, "请打开蓝牙", Toast.LENGTH_SHORT).show();
+                }
+
+                break;
+            default:
+                break;
+        }
+    }
+
 }

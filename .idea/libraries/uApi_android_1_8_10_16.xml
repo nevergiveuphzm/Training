@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="uApi-android-1.8.10.16">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/uApi-android-1.8.10.16.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

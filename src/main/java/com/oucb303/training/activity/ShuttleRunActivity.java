@@ -51,6 +51,8 @@ public class ShuttleRunActivity extends AppCompatActivity
     Spinner spGroupNum;
     @Bind(R.id.img_help)
     ImageView imgHelp;
+    @Bind(R.id.img_save)
+    ImageView imgSave;
     @Bind(R.id.sv_container)
     ScrollView svContainer;
     @Bind(R.id.img_action_mode_touch)
@@ -175,6 +177,7 @@ public class ShuttleRunActivity extends AppCompatActivity
     {
         tvTitle.setText("折返跑训练");
         imgHelp.setVisibility(View.VISIBLE);
+        imgSave.setVisibility(View.VISIBLE);
         //初始化设备列表
 
         /*Device.DEVICE_LIST.clear();

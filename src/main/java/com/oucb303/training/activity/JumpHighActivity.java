@@ -96,6 +96,8 @@ public class JumpHighActivity extends AppCompatActivity
     android.widget.CheckBox cbEndVoice;
     @Bind(R.id.lv_scores)
     ListView lvScores;
+    @Bind(R.id.img_save)
+    ImageView imgSave;
 
     private final int TIME_RECEIVE = 1, UPDATE_SCORES = 2;
 
@@ -195,7 +197,11 @@ public class JumpHighActivity extends AppCompatActivity
             device.initConfig();
         }
     }
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        imgSave.setEnabled(false);
+    }
     @Override
     protected void onDestroy()
     {
@@ -209,6 +215,7 @@ public class JumpHighActivity extends AppCompatActivity
     {
         tvTitle.setText("纵跳摸高");
         imgHelp.setVisibility(View.VISIBLE);
+        imgSave.setVisibility(View.VISIBLE);
         jumpHighAdapter = new JumpHighAdapter(this, scores);
         lvScores.setAdapter(jumpHighAdapter);
         imgHelp.setVisibility(View.VISIBLE);
@@ -303,7 +310,7 @@ public class JumpHighActivity extends AppCompatActivity
     }
 
 
-    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help})
+    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help,R.id.img_save})
     public void onClick(View view)
     {
         switch (view.getId())
@@ -328,6 +335,22 @@ public class JumpHighActivity extends AppCompatActivity
                 Intent intent = new Intent(this, HelpActivity.class);
                 intent.putExtra("flag", 2);
                 startActivity(intent);
+                break;
+            case R.id.img_save:
+                Intent it = new Intent(this,SaveActivity.class);
+                Bundle bundle = new Bundle();
+                //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 ...
+                bundle.putString("trainingCategory","2");
+                //训练总时间
+                bundle.putInt("trainingTime",trainingTime);
+                //每组设备个数
+                bundle.putInt("groupDeviceNum",groupSize);
+                //每组得分
+                ArrayList scoresList = new ArrayList<>();
+                scoresList.add(scores);
+                bundle.putParcelableArrayList("scores",scoresList);
+                it.putExtras(bundle);
+                startActivity(it);
                 break;
         }
     }
@@ -379,6 +402,7 @@ public class JumpHighActivity extends AppCompatActivity
     {
         timer.stopTimer();
         btnBegin.setText("开始");
+        imgSave.setEnabled(true);
         trainingFlag = false;
         ReceiveThread.stopThread();
         device.turnOffAllTheLight();

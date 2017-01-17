@@ -14,6 +14,12 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+<<<<<<< HEAD
+=======
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+>>>>>>> baichangcai-pc
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
@@ -68,6 +74,10 @@
         <activity android:name="com.oucb303.training.activity.HelpActivity" >
         </activity>
         <activity android:name="com.oucb303.training.activity.SequenceChooseActivity" >
+        </activity>
+        <activity
+            android:name="com.oucb303.training.activity.SaveActivity"
+            android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name="io.vov.vitamio.activity.InitActivity"
