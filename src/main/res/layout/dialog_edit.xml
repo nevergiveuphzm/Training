@@ -16,6 +16,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_edit_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -28,7 +29,7 @@
         </LinearLayout>
 
         <EditText
-            android:id="@+id/et_device_num"
+            android:id="@+id/et_edit_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -48,23 +49,24 @@
                 android:layout_weight="1"/>
 
             <Button
-                android:id="@+id/btn_save"
+                android:id="@+id/btn_cancel"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:text="修改"/>
+                android:text="取消"/>
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"/>
 
+
             <Button
-                android:id="@+id/btn_cancel"
+                android:id="@+id/btn_save"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:text="取消"/>
+                android:text="确定"/>
 
             <View
                 android:layout_width="0dp"

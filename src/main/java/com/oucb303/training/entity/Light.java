@@ -15,11 +15,9 @@ public class Light
     @Id(autoincrement = true)
     private Long id;
     private Long groupId;
-    //实际编号
-    private String realNum;
     //设备编号
     private int num;
-
+    private int deviceNum;
     //感应距离
     private int distance = 40;
     //超时时间 单位秒
@@ -37,7 +35,6 @@ public class Light
         return "Light{" +
                 "id=" + id +
                 ", groupId=" + groupId +
-                ", realNum='" + realNum + '\'' +
                 ", num=" + num +
                 ", distance=" + distance +
                 ", overTime=" + overTime +
@@ -46,13 +43,13 @@ public class Light
                 '}';
     }
 
-    @Generated(hash = 1493519198)
-    public Light(Long id, Long groupId, String realNum, int num, int distance,
+    @Generated(hash = 1635982966)
+    public Light(Long id, Long groupId, int num, int deviceNum, int distance,
             int overTime, int actionMode, int lightMode, int lightColor) {
         this.id = id;
         this.groupId = groupId;
-        this.realNum = realNum;
         this.num = num;
+        this.deviceNum = deviceNum;
         this.distance = distance;
         this.overTime = overTime;
         this.actionMode = actionMode;
@@ -83,16 +80,6 @@ public class Light
     public void setGroupId(Long groupId)
     {
         this.groupId = groupId;
-    }
-
-    public String getRealNum()
-    {
-        return this.realNum;
-    }
-
-    public void setRealNum(String realNum)
-    {
-        this.realNum = realNum;
     }
 
     public int getNum()
@@ -145,12 +132,22 @@ public class Light
         this.lightMode = lightMode;
     }
 
-    public int getLightColor() {
+    public int getLightColor()
+    {
         return this.lightColor;
     }
 
-    public void setLightColor(int lightColor) {
+    public void setLightColor(int lightColor)
+    {
         this.lightColor = lightColor;
+    }
+
+    public int getDeviceNum() {
+        return this.deviceNum;
+    }
+
+    public void setDeviceNum(int deviceNum) {
+        this.deviceNum = deviceNum;
     }
 
 

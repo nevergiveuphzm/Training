@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +20,6 @@ import com.oucb303.training.device.Order;
 import com.oucb303.training.model.DeviceInfo;
 import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.utils.ConfigParamUtils;
-import com.oucb303.training.utils.Constant;
 import com.oucb303.training.utils.DataAnalyzeUtils;
 import com.oucb303.training.utils.VersionUtils;
 
@@ -74,7 +72,7 @@ public class SettingActivity extends AppCompatActivity
         // 判断是否插入协调器，
         if (device.devCount > 0)
         {
-            device.connectFunction(this);
+            device.connect(this);
             device.initConfig();
             device.getControllerPAN_ID();
             //开启接收panid
@@ -139,11 +137,11 @@ public class SettingActivity extends AppCompatActivity
     private void changeDeviceNum()
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View v = LayoutInflater.from(this).inflate(R.layout.dialog_change_default_device_num, null);
+        View v = LayoutInflater.from(this).inflate(R.layout.dialog_edit, null);
         builder.setView(v);
         Button btnSave = (Button) v.findViewById(R.id.btn_save);
         Button btnCancel = (Button) v.findViewById(R.id.btn_cancel);
-        final EditText etDeviceNum = (EditText) v.findViewById(R.id.et_device_num);
+        final EditText etDeviceNum = (EditText) v.findViewById(R.id.et_edit_value);
         final AlertDialog dialog = builder.create();
         btnSave.setOnClickListener(new View.OnClickListener()
         {

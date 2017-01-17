@@ -140,7 +140,7 @@ public class Order
             else if (str.charAt(i) == '1')
                 value = value * 2 + 1;
         }
-        Log.d("AAAA", "values:" + value);
+        //Log.d("AAAA", "values:" + value);
         return (char) value;
     }
 

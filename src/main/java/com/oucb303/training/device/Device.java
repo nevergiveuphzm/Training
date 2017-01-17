@@ -109,7 +109,7 @@ public class Device
     }
 
     //连接
-    public void connectFunction(Context context)
+    public void connect(Context context)
     {
         index = 0;
         if (null == ftDev)

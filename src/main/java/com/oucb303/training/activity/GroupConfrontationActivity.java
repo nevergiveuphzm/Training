@@ -148,7 +148,7 @@ public class GroupConfrontationActivity extends AppCompatActivity
         if (device.devCount > 0)
         {
             //连接
-            device.connectFunction(this);
+            device.connect(this);
             //设备初始化
             device.initConfig();
         }

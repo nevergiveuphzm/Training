@@ -3,6 +3,7 @@ package com.oucb303.training.activity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,9 +36,11 @@ import com.oucb303.training.utils.Constant;
 import com.oucb303.training.widget.SequenceSetListview;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -207,7 +210,7 @@ public class SequenceTrainingActivity extends Activity
         defaultDeviceNum = ConfigParamUtils.getDefaultDeviceNum(this);
     }
 
-    @OnClick({R.id.layout_cancel, R.id.btn_save})
+    @OnClick({R.id.layout_cancel, R.id.btn_save, R.id.btn_random})
     public void onClick(View view)
     {
         switch (view.getId())
@@ -253,7 +256,82 @@ public class SequenceTrainingActivity extends Activity
                 });
                 dialog.show();
                 break;
+            //随机生成序列
+            case R.id.btn_random:
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+                View v1 = LayoutInflater.from(this).inflate(R.layout.dialog_edit, null);
+                builder1.setView(v1);
+                Button btnSave1 = (Button) v1.findViewById(R.id.btn_save);
+                Button btnCancel1 = (Button) v1.findViewById(R.id.btn_cancel);
+                TextView tvTitle = (TextView) v1.findViewById(R.id.tv_edit_title);
+                tvTitle.setText("随机生成序列个数");
+                final EditText etDeviceNum = (EditText) v1.findViewById(R.id.et_edit_value);
+                final AlertDialog dialog1 = builder1.create();
+                btnSave1.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View view)
+                    {
+                        String temp = etDeviceNum.getText().toString();
+                        if (!temp.matches("[1-9][0-9]*"))
+                        {
+                            Toast.makeText(SequenceTrainingActivity.this, "输入不合法!(格式:1、2、3)", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        int num = new Integer(temp);
+                        createSequence(num);
+                        dialog1.dismiss();
+                    }
+                });
+
+                btnCancel1.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View view)
+                    {
+                        dialog1.dismiss();
+                    }
+                });
+                dialog1.show();
+                break;
         }
+    }
+
+    //生成随机序列
+    private void createSequence(int num)
+    {
+        ArrayList<Integer> numList = new ArrayList<>();
+        Random random = new Random();
+        for (int i = 0; i < num; i++)
+        {
+            numList.clear();
+            ArrayList<Light> lights = new ArrayList<>();
+            int n = random.nextInt(100);
+            n = n % 8 + 1;
+            while (numList.size() < n)
+            {
+                int temp = random.nextInt(1000) % defaultDeviceNum + 1;
+                if (!numList.contains(temp))
+                {
+                    numList.add(temp);
+                }
+            }
+            Collections.sort(numList);
+            for (int j = 0; j < numList.size(); j++)
+            {
+                lights.add(new Light(numList.get(j), true));
+            }
+
+            Map<String, Object> map = new HashMap<>();
+            map.put("list_light", lights);
+            map.put("delay_time", 0.00);
+            list_sequence.add(list_sequence.size() - 1, map);
+
+            HorizonListViewAdapter horizonListViewAdapter = new HorizonListViewAdapter(mcontext, lights);
+            list_adepter.add(list_adepter.size() - 1, horizonListViewAdapter);
+        }
+        sequenceSetListViewAdapter.notifyDataSetChanged();
+        sequenceSetListview.setSelection(list_sequence.size() - 1);
     }
 
 

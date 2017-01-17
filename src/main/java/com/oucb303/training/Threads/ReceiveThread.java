@@ -82,7 +82,7 @@ public class ReceiveThread extends Thread
             int iavailable = ftDev.getQueueStatus();
             byte[] readData;
             String result = "";
-            iavailable = iavailable - iavailable % 17;
+            //iavailable = iavailable - iavailable % 17;
             if (iavailable > 0)
             {
                 readData = new byte[iavailable];

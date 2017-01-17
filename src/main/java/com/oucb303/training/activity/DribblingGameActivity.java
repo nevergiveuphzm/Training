@@ -181,7 +181,7 @@ public class DribblingGameActivity extends AppCompatActivity
         if (device.devCount > 0)
         {
             //连接
-            device.connectFunction(this);
+            device.connect(this);
             //设备初始化
             device.initConfig();
         }
@@ -306,7 +306,7 @@ public class DribblingGameActivity extends AppCompatActivity
         new CheckBoxClickListener(lightModeCheckBox);
     }
 
-    @OnClick({R.id.layout_cancel, R.id.btn_begin,R.id.img_help})
+    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help})
     public void onClick(View view)
     {
         switch (view.getId())
@@ -395,7 +395,7 @@ public class DribblingGameActivity extends AppCompatActivity
         ReceiveThread.stopThread();
         Timer.sleep(100);
         endingMovie();
-        Timer.sleep(1000);
+        //Timer.sleep(1000);
         btnBegin.setEnabled(true);
 
     }
@@ -417,6 +417,7 @@ public class DribblingGameActivity extends AppCompatActivity
                         if (info.getDeviceNum() == deviceNums[i])
                         {
                             scores[i]++;
+                            Timer.sleep(20);
                             turnOnLight(i);
                         }
                     }

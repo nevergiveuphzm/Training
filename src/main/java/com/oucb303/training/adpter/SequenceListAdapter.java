@@ -84,6 +84,7 @@ public class SequenceListAdapter extends BaseAdapter
             @Override
             public void onClick(View view)
             {
+                sequenceSer.delSequence(sequenceList.get(i).getId());
                 sequenceList.remove(i);
                 SequenceListAdapter.this.notifyDataSetChanged();
             }

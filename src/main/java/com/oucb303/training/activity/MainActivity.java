@@ -136,7 +136,7 @@ public class MainActivity extends Activity
         // 判断是否插入协调器，
         if (device.devCount > 0)
         {
-            device.connectFunction(MainActivity.this);
+            device.connect(MainActivity.this);
             device.initConfig();
             checkPowerThread = new AutoCheckPower();
             checkPowerThread.start();

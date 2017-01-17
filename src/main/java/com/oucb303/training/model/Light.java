@@ -7,8 +7,6 @@ package com.oucb303.training.model;
 
 public class Light
 {
-    //设备灯的实际编号
-    private char realNo;
     //人为编号
     private int num;
     //是否被选中
@@ -66,16 +64,6 @@ public class Light
     public void setChecked(boolean checked)
     {
         this.checked = checked;
-    }
-
-    public char getRealNo()
-    {
-        return realNo;
-    }
-
-    public void setRealNo(char realNo)
-    {
-        this.realNo = realNo;
     }
 
     public int getNum()
@@ -142,7 +130,6 @@ public class Light
     public String toString()
     {
         return "Light{" +
-                "realNo=" + realNo +
                 ", num=" + num +
                 ", checked=" + checked +
                 ", imageId=" + imageId +

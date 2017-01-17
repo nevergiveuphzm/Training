@@ -79,7 +79,6 @@ public class SequenceSettingListViewAdapter extends BaseAdapter
             ll_last.setVisibility(View.VISIBLE);
         } else
         {
-            list_sequence.get(position).put("step_name", (position + 1));
             step.setText("步骤:" + (position + 1) + "  " +
                     "延迟时间:" + list_sequence.get(position).get("delay_time") + "秒");
             //添加按钮的点击事件

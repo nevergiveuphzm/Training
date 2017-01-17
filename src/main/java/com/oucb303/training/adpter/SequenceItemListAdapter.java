@@ -77,13 +77,7 @@ public class SequenceItemListAdapter extends BaseAdapter
                 TextView tvNum = (TextView) lightView.findViewById(R.id.tv_light_num);
 
 
-                char c = 'A';
-                if (light.getNum() <= 26)
-                    c = (char) (light.getNum() + 'A' - 1);
-                else
-                    c = (char) (light.getNum() + 'a' - 27);
-
-                tvNum.setText(c + "");
+                tvNum.setText((char) light.getDeviceNum() + "");
                 linearLayout.addView(lightView);
             }
             llItemList.addView(linearLayout);

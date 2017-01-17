@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -142,7 +141,7 @@ public class TestActivity extends AppCompatActivity
         // 判断是否插入协调器，
         if (device.devCount > 0)
         {
-            device.connectFunction(TestActivity.this);
+            device.connect(TestActivity.this);
             device.initConfig();
         }
 

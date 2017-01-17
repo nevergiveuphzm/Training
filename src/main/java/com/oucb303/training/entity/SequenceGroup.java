@@ -19,7 +19,7 @@ public class SequenceGroup
     @Id(autoincrement = true)
     private Long id;
     private Long seqId;
-    //延迟时间
+    //延迟时间 毫秒
     private int delayTime;
     //第几步
     private int step;

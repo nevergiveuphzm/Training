@@ -157,7 +157,7 @@ public class ShuttleRunActivity extends AppCompatActivity
         // 判断是否插入协调器，
         if (device.devCount > 0)
         {
-            device.connectFunction(this);
+            device.connect(this);
             device.initConfig();
         }
         initView();

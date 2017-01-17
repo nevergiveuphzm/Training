@@ -247,7 +247,7 @@ public class RandomTrainingActivity extends Activity
         // 判断是否插入协调器，
         if (device.devCount > 0)
         {
-            device.connectFunction(RandomTrainingActivity.this);
+            device.connect(RandomTrainingActivity.this);
             device.initConfig();
         }
     }
