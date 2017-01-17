@@ -1,11 +1,8 @@
 package com.oucb303.training.activity;
 
-<<<<<<< HEAD
 import android.app.AlertDialog;
-=======
 import android.app.Dialog;
 import android.content.Context;
->>>>>>> baichangcai-pc
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
@@ -53,12 +50,9 @@ public class SettingActivity extends AppCompatActivity
 
     private PackageInfo packageInfo;
     private Device device;
-<<<<<<< HEAD
     private String panId;
-=======
     private Dialog mDialog;
     private Context mContext;
->>>>>>> baichangcai-pc
 
     private Handler handler = new Handler()
     {
@@ -114,12 +108,8 @@ public class SettingActivity extends AppCompatActivity
         tvDefaultDeviceNum.setText("" + ConfigParamUtils.getDefaultDeviceNum(this));
     }
 
-<<<<<<< HEAD
-    @OnClick({R.id.layout_cancel, R.id.ll_about, R.id.btn_turn_on_all_lights, R.id.btn_turn_off_all_lights,
-            R.id.tv_edit_device_num})
-=======
-    @OnClick({R.id.layout_cancel, R.id.ll_about, R.id.btn_turn_on_all_lights, R.id.btn_turn_off_all_lights,R.id.ll_upload})
->>>>>>> baichangcai-pc
+
+    @OnClick({R.id.layout_cancel, R.id.ll_about, R.id.btn_turn_on_all_lights, R.id.btn_turn_off_all_lights,R.id.ll_upload,R.id.tv_edit_device_num})
     public void onClick(View view)
     {
         switch (view.getId())
@@ -147,10 +137,8 @@ public class SettingActivity extends AppCompatActivity
             case R.id.btn_turn_off_all_lights:
                 device.turnOffAllTheLight();
                 break;
-<<<<<<< HEAD
             case R.id.tv_edit_device_num:
                 changeDeviceNum();
-=======
             case R.id.ll_upload:
                 if(!NetworkUtils.isNetworkAvailable(this)){
                     Toast.makeText(this,"网络不可用！",Toast.LENGTH_SHORT).show();
@@ -159,7 +147,6 @@ public class SettingActivity extends AppCompatActivity
                     mDialog.show();
                 }
 
->>>>>>> baichangcai-pc
                 break;
         }
     }

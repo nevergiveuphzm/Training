@@ -8,13 +8,13 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-<<<<<<< HEAD
-=======
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
->>>>>>> baichangcai-pc
+
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+
 
     <application
         android:name=".App"
@@ -67,12 +67,13 @@
         </activity>
         <activity android:name=".activity.HelpActivity">
         </activity>
-<<<<<<< HEAD
-        <activity android:name=".activity.SequenceChooseActivity">
-=======
-        <activity android:name=".activity.SaveActivity"
+
+        <activity android:name=".activity.SequenceChooseActivity"/>
+
+        <activity
+            android:name=".activity.SaveActivity"
             android:windowSoftInputMode="adjustPan">
->>>>>>> baichangcai-pc
+
         </activity>
     </application>
 
