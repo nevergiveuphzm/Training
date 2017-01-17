@@ -7,6 +7,10 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
 
     <application
@@ -59,6 +63,9 @@
         <activity android:name=".activity.DribblingGameActivity">
         </activity>
         <activity android:name=".activity.HelpActivity">
+        </activity>
+        <activity android:name=".activity.SaveActivity"
+            android:windowSoftInputMode="adjustPan">
         </activity>
     </application>
 

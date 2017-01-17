@@ -31,6 +31,7 @@ import com.oucb303.training.model.TimeInfo;
 import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.threads.Timer;
 import com.oucb303.training.utils.DataAnalyzeUtils;
+import com.oucb303.training.widget.ToastUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -52,6 +53,8 @@ public class ShuttleRunActivity1 extends AppCompatActivity
     TextView tvTitle;
     @Bind(R.id.img_help)
     ImageView imgHelp;
+    @Bind(R.id.img_save)
+    ImageView imgSave;
     @Bind(R.id.sp_group_num)
     Spinner spGroupNum;
     @Bind(R.id.lv_group)
@@ -173,6 +176,12 @@ public class ShuttleRunActivity1 extends AppCompatActivity
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        imgSave.setEnabled(false);
+    }
+
+    @Override
     protected void onDestroy()
     {
         super.onDestroy();
@@ -184,6 +193,8 @@ public class ShuttleRunActivity1 extends AppCompatActivity
     {
         tvTitle.setText("折返跑训练");
         imgHelp.setVisibility(View.VISIBLE);
+        imgSave.setVisibility(View.VISIBLE);
+
         //设备排序
         Collections.sort(Device.DEVICE_LIST, new PowerInfoComparetor());
 
@@ -201,6 +212,7 @@ public class ShuttleRunActivity1 extends AppCompatActivity
             {
                 super.onItemSelected(adapterView, view, i, l);
                 groupNum = i;
+                finishTimes = new int[groupNum];
                 groupListViewAdapter.setGroupNum(i);
                 groupListViewAdapter.notifyDataSetChanged();
             }
@@ -275,7 +287,7 @@ public class ShuttleRunActivity1 extends AppCompatActivity
     }
 
 
-    @OnClick({R.id.layout_cancel, R.id.img_help, R.id.btn_begin})
+    @OnClick({R.id.layout_cancel, R.id.img_help, R.id.btn_begin,R.id.img_save})
     public void onClick(View view)
     {
         switch (view.getId())
@@ -287,6 +299,21 @@ public class ShuttleRunActivity1 extends AppCompatActivity
                 Intent intent = new Intent(this, HelpActivity.class);
                 intent.putExtra("flag", 1);
                 startActivity(intent);
+                break;
+            case R.id.img_save:
+
+                    Intent it = new Intent(this,SaveActivity.class);
+                    Bundle bundle = new Bundle();
+                    //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 ...
+                    bundle.putString("trainingCategory","1");
+                    //每组所用时间
+                    bundle.putIntArray("finishTimes",finishTimes);
+                    //总次数（强度）
+                    bundle.putInt("totalTrainingTimes",totalTrainingTimes);
+                    it.putExtras(bundle);
+                    startActivity(it);
+//                }
+
                 break;
             case R.id.btn_begin:
                 if (!device.checkDevice(ShuttleRunActivity1.this))
@@ -351,6 +378,7 @@ public class ShuttleRunActivity1 extends AppCompatActivity
     {
         trainingBeginFlag = false;
         btnBegin.setText("开始");
+        imgSave.setEnabled(true);
         //停止接收线程
         ReceiveThread.stopThread();
         device.turnOffAllTheLight();

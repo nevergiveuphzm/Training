@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:id="@+id/tv_groupNum"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:text="第一组"/>
+        <EditText
+            android:id="@+id/et_studentNum"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:inputType="number"
+            android:maxLength="11"
+            android:layout_weight="1"
+            android:textSize="25sp"
+            android:hint="请输入学生编号"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>
