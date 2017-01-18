@@ -97,7 +97,7 @@ public class SequenceRunningActivity extends AppCompatActivity
     private List<IsOnLightInfo> lightInfoList = new ArrayList<>();
     private List<TimeInfo> timeInfoList = new ArrayList<>();
     private RandomTimeAdapter timeListAdapter;
-    private MyThread checkingThread = new MyThread();
+    private MyThread checkingThread;
 
     private Handler handler = new Handler()
     {
@@ -214,7 +214,7 @@ public class SequenceRunningActivity extends AppCompatActivity
         //开启接收时间线程
         new ReceiveThread(handler, device.ftDev, ReceiveThread.TIME_RECEIVE_THREAD, TIME_RECEIVE).start();
 
-        checkingThread.startThread();
+        checkingThread = new MyThread();
         checkingThread.start();
         //计时器
         timer = new Timer(handler);
@@ -341,12 +341,6 @@ public class SequenceRunningActivity extends AppCompatActivity
             flag = false;
         }
 
-        public void startThread()
-        {
-            flag = true;
-        }
-
-
         @Override
         public void run()
         {
@@ -375,6 +369,7 @@ public class SequenceRunningActivity extends AppCompatActivity
                 }
                 Timer.sleep(20);
             }
+            Log.d("AAAA", "stop thread");
         }
     }
 

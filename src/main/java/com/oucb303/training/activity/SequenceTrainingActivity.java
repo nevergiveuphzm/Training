@@ -346,13 +346,19 @@ public class SequenceTrainingActivity extends Activity
 
         public void lightItemClick(int xPosition, int yPosition)
         {
+            Log.d("AAAA","x:"+xPosition+"  y:"+yPosition);
+            List<Light> lights = (List<Light>) list_sequence.get(choseLight.x).get("list_light");
+            Light light = lights.get(choseLight.y);
+            light.setChoosed(false);
+            list_adepter.get(choseLight.x).notifyDataSetChanged();
+
             choseLight.set(xPosition, yPosition);
 
-            List<Light> lights = (List<Light>) list_sequence.get(xPosition).get("list_light");
+            lights = (List<Light>) list_sequence.get(xPosition).get("list_light");
             double delayTime = new Double(list_sequence.get(xPosition).get("delay_time").toString());
-            Light light = lights.get(yPosition);
-
-            if (BuildConfig.DEBUG) Log.d(Constant.LOG_TAG, light.toString());
+            light = lights.get(yPosition);
+            light.setChoosed(true);
+            list_adepter.get(xPosition).notifyDataSetChanged();
 
             barDelayTime.setProgress((int) (delayTime * 200 / 10));
             int overTime = light.getOverTime() * 30 / 30;
@@ -363,6 +369,7 @@ public class SequenceTrainingActivity extends Activity
             lightModeCheckBox.getViews()[light.getLightMode() - 1].performClick();
             lightColorCheckBox.getViews()[light.getLightColor() - 1].performClick();
             changeWidgetState(true);
+
         }
     };
 

@@ -176,7 +176,8 @@ public class ShuttleRunActivity1 extends AppCompatActivity
     }
 
     @Override
-    protected void onStart() {
+    protected void onStart()
+    {
         super.onStart();
         imgSave.setEnabled(false);
     }
@@ -273,11 +274,11 @@ public class ShuttleRunActivity1 extends AppCompatActivity
         lvTimes.setAdapter(shuttleRunAdapter);
 
         //设定checkbox组合的点击事件
-        ImageView[] views = new ImageView[]{imgActionModeTouch, imgActionModeLight, imgActionModeTogether};
+        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
         actionModeCheckBox = new CheckBox(1, views);
         new CheckBoxClickListener(actionModeCheckBox);
         //设定灯光模式checkBox组合的点击事件
-        ImageView[] views1 = new ImageView[]{imgLightModeAll, imgLightModeBeside, imgLightModeCenter};
+        ImageView[] views1 = new ImageView[]{imgLightModeBeside, imgLightModeCenter, imgLightModeAll};
         lightModeCheckBox = new CheckBox(1, views1);
         new CheckBoxClickListener(lightModeCheckBox);
         //设定灯光颜色checkBox组合的点击事件
@@ -287,7 +288,7 @@ public class ShuttleRunActivity1 extends AppCompatActivity
     }
 
 
-    @OnClick({R.id.layout_cancel, R.id.img_help, R.id.btn_begin,R.id.img_save})
+    @OnClick({R.id.layout_cancel, R.id.img_help, R.id.btn_begin, R.id.img_save})
     public void onClick(View view)
     {
         switch (view.getId())
@@ -302,16 +303,16 @@ public class ShuttleRunActivity1 extends AppCompatActivity
                 break;
             case R.id.img_save:
 
-                    Intent it = new Intent(this,SaveActivity.class);
-                    Bundle bundle = new Bundle();
-                    //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 ...
-                    bundle.putString("trainingCategory","1");
-                    //每组所用时间
-                    bundle.putIntArray("finishTimes",finishTimes);
-                    //总次数（强度）
-                    bundle.putInt("totalTrainingTimes",totalTrainingTimes);
-                    it.putExtras(bundle);
-                    startActivity(it);
+                Intent it = new Intent(this, SaveActivity.class);
+                Bundle bundle = new Bundle();
+                //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 ...
+                bundle.putString("trainingCategory", "1");
+                //每组所用时间
+                bundle.putIntArray("finishTimes", finishTimes);
+                //总次数（强度）
+                bundle.putInt("totalTrainingTimes", totalTrainingTimes);
+                it.putExtras(bundle);
+                startActivity(it);
 //                }
 
                 break;

@@ -417,7 +417,7 @@ public class DribblingGameActivity extends AppCompatActivity
                         if (info.getDeviceNum() == deviceNums[i])
                         {
                             scores[i]++;
-                            Timer.sleep(20);
+                            Timer.sleep(500);
                             turnOnLight(i);
                         }
                     }

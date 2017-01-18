@@ -9,8 +9,10 @@ public class Light
 {
     //人为编号
     private int num;
-    //是否被选中
+    //是否勾选
     private boolean checked;
+    //是否点中
+    private boolean isChoosed;
     //灯的图片
     private int imageId;
 
@@ -124,6 +126,16 @@ public class Light
     public void setLightColor(int lightColor)
     {
         this.lightColor = lightColor;
+    }
+
+    public boolean isChoosed()
+    {
+        return isChoosed;
+    }
+
+    public void setChoosed(boolean choosed)
+    {
+        isChoosed = choosed;
     }
 
     @Override

@@ -177,7 +177,6 @@ public class Device
         sendMessage("+08c");
     }
 
-
     public void turnOffAllTheLight()
     {
         //关闭全部灯

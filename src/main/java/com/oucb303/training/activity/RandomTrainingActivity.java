@@ -26,16 +26,15 @@ import com.oucb303.training.listener.CheckBoxClickListener;
 import com.oucb303.training.listener.MySeekBarListener;
 import com.oucb303.training.listener.SpinnerItemSelectedListener;
 import com.oucb303.training.model.CheckBox;
-import com.oucb303.training.utils.Constant;
 import com.oucb303.training.model.TimeInfo;
 import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.threads.Timer;
+import com.oucb303.training.utils.Constant;
 import com.oucb303.training.utils.DataAnalyzeUtils;
 import com.oucb303.training.utils.RandomUtils;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.TimerTask;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -172,9 +171,9 @@ public class RandomTrainingActivity extends Activity
     private Timer timer;
     //选用的设备个数
     private int totalNum;
+    private char lastTurnOnLight;
 
     private int level;
-
 
     private Handler timerHandler = new Handler()
     {
@@ -508,13 +507,15 @@ public class RandomTrainingActivity extends Activity
     //开灯
     private void turnOnLight()
     {
-        java.util.Timer timer1 = new java.util.Timer();
-        TimerTask timerTask = new TimerTask()
+        new Thread(new Runnable()
         {
             @Override
             public void run()
             {
-                device.sendOrder(getLightNum(),
+                if (delayTime > 0)
+                    Timer.sleep(delayTime);
+                lastTurnOnLight = getLightNum();
+                device.sendOrder(lastTurnOnLight,
                         Order.LightColor.values()[lightColorCheckBox.getCheckId()],
                         Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
                         Order.BlinkModel.NONE,
@@ -524,9 +525,7 @@ public class RandomTrainingActivity extends Activity
                 currentTimes++;
                 durationTime = 0;
             }
-        };
-        timer1.schedule(timerTask, delayTime);
-
+        }).start();
     }
 
     //关灯

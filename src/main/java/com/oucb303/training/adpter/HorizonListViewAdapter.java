@@ -73,10 +73,10 @@ public class HorizonListViewAdapter extends BaseAdapter
             holder = (ViewHolder) convertView.getTag();
         }
 
-        if (list_light.get(position).isChecked())
-            holder.ll_image.setBackgroundResource(R.drawable.light_blue);
+        if (list_light.get(position).isChoosed())
+            holder.ll_image.setBackgroundResource(R.drawable.light_red);
         else
-            holder.ll_image.setBackgroundResource(R.drawable.iv_circle);
+            holder.ll_image.setBackgroundResource(R.drawable.light_blue);
 
         char num = 'A';
         if (list_light.get(position).getNum() <= 26)

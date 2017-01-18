@@ -189,27 +189,34 @@ public class MainActivity extends Activity
         super.onStart();
         initDevice();
         isLeave = false;
+        //device.controllerReset();
         initView();
     }
+
     /**
      * 初始化控件
      */
-    private void initView(){
+    private void initView()
+    {
         //屏蔽或放开测试按钮
-        SharedPreferences sp = getSharedPreferences("Training",MODE_PRIVATE);
-        if(sp.getBoolean("flag_btnTest_visible",false))
+        SharedPreferences sp = getSharedPreferences("Training", MODE_PRIVATE);
+        if (sp.getBoolean("flag_btnTest_visible", false))
             btnTest.setVisibility(View.VISIBLE);
         else
             btnTest.setVisibility(View.GONE);
         //Switch控件
-        swBracelet.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        swBracelet.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+            {
+                if (isChecked)
+                {
                     pbBar.setVisibility(View.VISIBLE);
                     imgBracelet.setVisibility(View.GONE);
                     openBraceLet();
-                }else {
+                } else
+                {
                     pbBar.setVisibility(View.GONE);
                     imgBracelet.setVisibility(View.GONE);
                     braceletManager.stopScan();
@@ -217,25 +224,33 @@ public class MainActivity extends Activity
             }
         });
     }
+
     /**
      * 开启手环
      */
-    private void openBraceLet() {
-        braceletManager = new BraceletManager(this.getApplicationContext(),this);
-        if(braceletManager.isBluetoothOpen()){
-            Log.i("Bluetooth","蓝牙开启");
-        }else if (!braceletManager.getAdapter().enable()) {
-                Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                startActivityForResult(intent, 1001);
+    private void openBraceLet()
+    {
+        braceletManager = new BraceletManager(this.getApplicationContext(), this);
+        if (braceletManager.isBluetoothOpen())
+        {
+            Log.i("Bluetooth", "蓝牙开启");
+        } else if (!braceletManager.getAdapter().enable())
+        {
+            Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(intent, 1001);
         }
         //扫描
         braceletManager.scanBracelet();
-        new Thread(new Runnable() {
+        new Thread(new Runnable()
+        {
             @Override
-            public void run() {
-                while (braceletManager.isScaning()){
+            public void run()
+            {
+                while (braceletManager.isScaning())
+                {
                     Timer.sleep(100);
-                    if(braceletManager.isExist()){
+                    if (braceletManager.isExist())
+                    {
                         Message msg = Message.obtain();
                         msg.what = FIND_BRACELET;
                         handler.sendMessage(msg);
@@ -374,18 +389,23 @@ public class MainActivity extends Activity
             }
         }
     }
+
     /***
      * 接收意图的结果
      */
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
         // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
+        switch (requestCode)
+        {
             case 1001:
-                if (resultCode == RESULT_OK) {
+                if (resultCode == RESULT_OK)
+                {
                     // 刚打开蓝牙实际还不能立马就能用
-                } else {
+                } else
+                {
                     Toast.makeText(this, "请打开蓝牙", Toast.LENGTH_SHORT).show();
                 }
 
