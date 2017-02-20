@@ -109,7 +109,7 @@ public class SettingActivity extends AppCompatActivity
     }
 
 
-    @OnClick({R.id.layout_cancel, R.id.ll_about, R.id.btn_turn_on_all_lights, R.id.btn_turn_off_all_lights,R.id.ll_upload,R.id.tv_edit_device_num})
+    @OnClick({R.id.layout_cancel, R.id.ll_about, R.id.btn_turn_on_all_lights, R.id.btn_turn_off_all_lights, R.id.ll_upload, R.id.tv_edit_device_num})
     public void onClick(View view)
     {
         switch (view.getId())
@@ -139,11 +139,14 @@ public class SettingActivity extends AppCompatActivity
                 break;
             case R.id.tv_edit_device_num:
                 changeDeviceNum();
+                break;
             case R.id.ll_upload:
-                if(!NetworkUtils.isNetworkAvailable(this)){
-                    Toast.makeText(this,"网络不可用！",Toast.LENGTH_SHORT).show();
-                }else {
-                    mDialog = DialogUtils.createLoadingDialog(SettingActivity.this,"正在上传数据，请稍候...",true);
+                if (!NetworkUtils.isNetworkAvailable(this))
+                {
+                    Toast.makeText(this, "网络不可用！", Toast.LENGTH_SHORT).show();
+                } else
+                {
+                    mDialog = DialogUtils.createLoadingDialog(SettingActivity.this, "正在上传数据，请稍候...", true);
                     mDialog.show();
                 }
 
