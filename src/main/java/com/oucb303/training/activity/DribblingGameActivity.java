@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -97,6 +98,7 @@ public class DribblingGameActivity extends AppCompatActivity
     @Bind(R.id.sp_dev_num)
     Spinner spDevNum;
 
+
     private final int TIME_RECEIVE = 1;
     private final int UPDATE_SCORES = 2;
     private final int STOP_TRAINING = 4;
@@ -104,6 +106,22 @@ public class DribblingGameActivity extends AppCompatActivity
     TextView tvDeviceList;
     @Bind(R.id.img_help)
     ImageView imgHelp;
+    @Bind(R.id.tv_delay_time)
+    TextView tvDelayTime;
+    @Bind(R.id.img_delay_time_sub)
+    ImageView imgDelayTimeSub;
+    @Bind(R.id.bar_delay_time)
+    SeekBar barDelayTime;
+    @Bind(R.id.img_delay_time_add)
+    ImageView imgDelayTimeAdd;
+    @Bind(R.id.tv_over_time)
+    TextView tvOverTime;
+    @Bind(R.id.img_over_time_sub)
+    ImageView imgOverTimeSub;
+    @Bind(R.id.bar_over_time)
+    SeekBar barOverTime;
+    @Bind(R.id.img_over_time_add)
+    ImageView imgOverTimeAdd;
     private Device device;
     //所选设备个数，分组数
     private int totalNum, groupNum;
@@ -115,12 +133,14 @@ public class DribblingGameActivity extends AppCompatActivity
     private boolean trainningFlag = false;
     //计时器
     private Timer timer;
-    //训练总时间
-    private int trainingTime;
+    //训练总时间,延迟时间,超时时间  单位是毫秒
+    private int trainingTime, delayTime, overTime;
     //成绩统计
     private int[] scores;
     //每次开的三个灯组号和设备编号
     private char[] deviceNums;
+    //每组设备灯亮起的时间
+    private long[] duration;
     //训练开始时间
     private long startTime;
     private ArrayList<Integer> listRand = new ArrayList<>();
@@ -155,6 +175,16 @@ public class DribblingGameActivity extends AppCompatActivity
                 case TIME_RECEIVE:
                     if (data != null && data.length() > 7)
                         analyseData(data);
+                    for (int i = 0; i < groupNum; i++)
+                    {
+                        if (duration[i] != 0 && System.currentTimeMillis() - duration[i] > overTime)
+                        {
+                            char deviceNum = Device.DEVICE_LIST.get(listRand.get(i)).getDeviceNum();
+                            duration[i] = 0;
+                            turnOffLight(deviceNum);
+                            turnOnLight(i);
+                        }
+                    }
                     break;
                 //更新成绩
                 case UPDATE_SCORES:
@@ -207,12 +237,7 @@ public class DribblingGameActivity extends AppCompatActivity
         dribblingGameAdapter = new DribblingGameAdapter(this);
         lvScores.setAdapter(dribblingGameAdapter);
 
-        //初始化训练时间拖动条
-        //拖动进度条的事件监听  第一个：显示时间tectview，第二个：最大值
-        barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 10));
-        //直接在触摸屏进行按住和松开事件的操作
-        imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
-        imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
+
         if (level != 0)
         {
             switch (level)
@@ -296,6 +321,21 @@ public class DribblingGameActivity extends AppCompatActivity
             }
         });
 
+        //初始化训练时间拖动条
+        //拖动进度条的事件监听  第一个：显示时间tectview，第二个：最大值
+        barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 10));
+        //直接在触摸屏进行按住和松开事件的操作
+        imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
+        imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
+        //初始化延迟时间拖动条
+        barDelayTime.setOnSeekBarChangeListener(new MySeekBarListener(tvDelayTime, 10));
+        imgDelayTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 1));
+        imgDelayTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 0));
+        //初始化超时时间拖动条
+        barOverTime.setOnSeekBarChangeListener(new MySeekBarListener(tvOverTime, 28, 2));
+        imgOverTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barOverTime, 1));
+        imgOverTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barOverTime, 0));
+
         //设定感应模式checkBox组合的点击事件
         ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
         actionModeCheckBox = new CheckBox(1, views);
@@ -346,8 +386,11 @@ public class DribblingGameActivity extends AppCompatActivity
         trainningFlag = true;
         //trainingTime是总时间
         trainingTime = (int) (new Double(tvTrainingTime.getText().toString()) * 60 * 1000);
+        delayTime = new Integer(tvDelayTime.getText().toString()) * 1000;
+        overTime = new Integer(tvOverTime.getText().toString()) * 1000;
 
         deviceNums = new char[groupNum];
+        duration = new long[groupNum];
         scores = new int[groupNum];
         listRand.clear();
         //初始化
@@ -370,6 +413,7 @@ public class DribblingGameActivity extends AppCompatActivity
                     Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                     Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
             deviceNums[i] = Device.DEVICE_LIST.get(listRand.get(i)).getDeviceNum();
+            duration[i] = System.currentTimeMillis();
         }
         //清除串口数据
         new ReceiveThread(handler, device.ftDev, ReceiveThread.CLEAR_DATA_THREAD, 0).start();
@@ -391,7 +435,9 @@ public class DribblingGameActivity extends AppCompatActivity
         btnBegin.setText("开始");
         btnBegin.setEnabled(false);
         trainningFlag = false;
-        device.turnOffAllTheLight();
+        for (int i = 0; i < groupNum; i++)
+            turnOffLight(Device.DEVICE_LIST.get(listRand.get(i)).getDeviceNum());
+
         ReceiveThread.stopThread();
         Timer.sleep(100);
         endingMovie();
@@ -403,31 +449,24 @@ public class DribblingGameActivity extends AppCompatActivity
     //解析数据
     public void analyseData(final String data)
     {
-        new Thread(new Runnable()
+        //infos里有设备编号和返回时间
+        List<TimeInfo> infos = DataAnalyzeUtils.analyzeTimeData(data);
+        for (TimeInfo info : infos)
         {
-            @Override
-            public void run()
+            char deviceNum = info.getDeviceNum();
+            for (int i = 0; i < groupNum; i++)
             {
-                //infos里有设备编号和返回时间
-                List<TimeInfo> infos = DataAnalyzeUtils.analyzeTimeData(data);
-                for (TimeInfo info : infos)
+                if (deviceNum == deviceNums[i])
                 {
-                    for (int i = 0; i < groupNum; i++)
-                    {
-                        if (info.getDeviceNum() == deviceNums[i])
-                        {
-                            scores[i]++;
-                            Timer.sleep(500);
-                            turnOnLight(i);
-                        }
-                    }
+                    scores[i]++;
+                    turnOnLight(i);
                 }
-                Message msg = Message.obtain();
-                msg.what = UPDATE_SCORES;
-                msg.obj = "";
-                handler.sendMessage(msg);
             }
-        }).start();
+        }
+        Message msg = Message.obtain();
+        msg.what = UPDATE_SCORES;
+        msg.obj = "";
+        handler.sendMessage(msg);
     }
 
     //开灯
@@ -439,17 +478,49 @@ public class DribblingGameActivity extends AppCompatActivity
         {
             int rand = random.nextInt(totalNum);
             if (!listRand.contains(rand))
+            {
                 listRand.add(groupId, rand);
+                deviceNums[groupId] = Device.DEVICE_LIST.get(rand).getDeviceNum();
+            }
         }
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                Timer.sleep(200 + delayTime);
+                //若训练结束则返回
+                if (!trainningFlag)
+                    return;
+                device.sendOrder(Device.DEVICE_LIST.get(listRand.get(groupId)).getDeviceNum(),
+                        Order.LightColor.values()[groupId + 1],
+                        Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
+                        Order.BlinkModel.NONE,
+                        Order.LightModel.values()[lightModeCheckBox.getCheckId()],
+                        Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
+                        Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
+                duration[groupId] = System.currentTimeMillis();
+            }
+        }).start();
+    }
 
-        device.sendOrder(Device.DEVICE_LIST.get(listRand.get(groupId)).getDeviceNum(),
-                Order.LightColor.values()[groupId + 1],
-                Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                Order.BlinkModel.NONE,
-                Order.LightModel.values()[lightModeCheckBox.getCheckId()],
-                Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
-        deviceNums[groupId] = Device.DEVICE_LIST.get(listRand.get(groupId)).getDeviceNum();
+    //关灯
+    private void turnOffLight(final char deviceNum)
+    {
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                device.sendOrder(deviceNum,
+                        Order.LightColor.NONE,
+                        Order.VoiceMode.NONE,
+                        Order.BlinkModel.NONE,
+                        Order.LightModel.TURN_OFF,
+                        Order.ActionModel.TURN_OFF,
+                        Order.EndVoice.NONE);
+            }
+        }).start();
     }
 
     //生成随机数

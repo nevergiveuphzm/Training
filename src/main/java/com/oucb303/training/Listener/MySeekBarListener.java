@@ -14,12 +14,22 @@ public class MySeekBarListener implements SeekBar.OnSeekBarChangeListener
     private TextView textView;
     //显示的最大值
     private int maxValue;
+    //显示的最小值
+    private int minValue;
 
     public MySeekBarListener(TextView textView, int maxValue)
     {
         this.textView = textView;
         this.maxValue = maxValue;
     }
+
+    public MySeekBarListener(TextView textView, int maxValue,int minValue)
+    {
+        this(textView,maxValue);
+        this.minValue = minValue;
+    }
+
+
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int i, boolean b)
@@ -28,11 +38,13 @@ public class MySeekBarListener implements SeekBar.OnSeekBarChangeListener
         if ((progress * maxValue) % seekBar.getMax() != 0)
         {
             double value = 1.0 * (progress * maxValue) / seekBar.getMax();
+            value+=minValue;
             textView.setText(value + "");
         }
         else
         {
             int value = (progress * maxValue) / seekBar.getMax();
+            value+=minValue;
             textView.setText(value + "");
         }
     }

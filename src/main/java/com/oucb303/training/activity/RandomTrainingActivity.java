@@ -326,7 +326,7 @@ public class RandomTrainingActivity extends Activity
         }
         //设置seekbar 拖动事件的监听器
         barDelayTime.setOnSeekBarChangeListener(new MySeekBarListener(tvDelayTime, 10));
-        barOverTime.setOnSeekBarChangeListener(new MySeekBarListener(tvOverTime, 30));
+        barOverTime.setOnSeekBarChangeListener(new MySeekBarListener(tvOverTime, 28,2));
         //设置加减按钮的监听事件
         imgDelayTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 0));
         imgDelayTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 1));

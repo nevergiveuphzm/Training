@@ -92,8 +92,7 @@ public class Order
         char c2 = binaryStringToChar(operation2);
         Log.d(Constant.LOG_TAG, "C1:" + c1 + "  C2:" + c2);
         order = order + "" + c1 + c2;
-        Log.d(Constant.LOG_TAG, "order: length -" + order.length() + "-" + order);
-        order += num;
+        Log.d(Constant.LOG_TAG, "order: deviceNum(" + num + ") length(" + order.length() + ")  content(" + order + ")");
         return order;
     }
 
