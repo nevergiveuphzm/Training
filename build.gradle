@@ -21,16 +21,16 @@ android {
 
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile files('libs/achartengine-1.1.0.jar')
-    compile files('libs/butterknife-7.0.1.jar')
     compile files('libs/d2xx.jar')
     // compile project(':vitamio')
     compile files('libs/android-async-http-1.4.8.jar')
     compile 'org.apache.httpcomponents:httpcore:4.4.2'
     compile project(':vitamio')
     compile files('libs/hellocharts-library-1.5.8.jar')
+    compile files('libs/butterknife-7.0.1.jar')
 }
 
 /*greenDAO配置*/

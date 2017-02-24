@@ -40,7 +40,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 关于SafLight
+ * 关于SafLight   egreg
  */
 public class AboutSafLightActivity extends AppCompatActivity
 {
