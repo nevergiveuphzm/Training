@@ -100,7 +100,6 @@ public class MainActivity extends Activity
                     break;
                 default:
                     break;
-
             }
         }
     };
@@ -189,7 +188,6 @@ public class MainActivity extends Activity
         super.onStart();
         initDevice();
         isLeave = false;
-        //device.controllerReset();
         initView();
     }
 
@@ -341,33 +339,6 @@ public class MainActivity extends Activity
 
         tvDeviceCount.setText("共" + powerInfos.size() + "个设备");
         Log.i("AAA", powerInfos.size() + "");
-
-//        } else
-//        {
-//            //此时是没有可用设备，弹出对话框，可以点击取消，或是点击重新检测
-//            // 将主界面上所有的电量置为不可见
-//            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-//            builder.setTitle("提示");
-//            builder.setMessage("                       未检测到任何设备，请先开启设备！\n");
-//            builder.setNegativeButton("取消", new DialogInterface.OnClickListener()
-//            {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which)
-//                {
-//                }
-//            });
-//            builder.setPositiveButton("重新检测", new DialogInterface.OnClickListener()
-//            {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which)
-//                {
-//                    dialog.dismiss();
-//                    sendGetPowerOrder();
-//                }
-//            });
-//            AlertDialog alertdialog = builder.create();
-//            alertdialog.show();
-//        }
     }
 
     private class AutoCheckPower extends Thread
@@ -384,7 +355,6 @@ public class MainActivity extends Activity
                 //开启接收电量的线程
                 new ReceiveThread(handler, device.ftDev, ReceiveThread.POWER_RECEIVE_THREAD,
                         POWER_RECEIVE).start();
-
                 Timer.sleep(10000);
             }
         }
@@ -408,7 +378,6 @@ public class MainActivity extends Activity
                 {
                     Toast.makeText(this, "请打开蓝牙", Toast.LENGTH_SHORT).show();
                 }
-
                 break;
             default:
                 break;
