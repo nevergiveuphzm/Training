@@ -351,7 +351,7 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
                     Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
                     Order.BlinkModel.NONE,
                     Order.LightModel.values()[lightModeCheckBox.getCheckId()],
-                    Order.ActionModel.LIGHT,
+                    Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                     Order.EndVoice.NONE);
         }
 
@@ -384,7 +384,7 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
                         Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
                         Order.BlinkModel.NONE,
                         Order.LightModel.values()[lightModeCheckBox.getCheckId()],
-                        Order.ActionModel.LIGHT,
+                        Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                         Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
             }
         }).start();

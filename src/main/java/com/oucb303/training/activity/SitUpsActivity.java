@@ -340,7 +340,7 @@ public class SitUpsActivity extends AppCompatActivity {
                 Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
                 Order.BlinkModel.NONE,
                 Order.LightModel.values()[lightModeCheckBox.getCheckId()],
-                Order.ActionModel.LIGHT,
+                Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                 Order.EndVoice.NONE);
     }
 
