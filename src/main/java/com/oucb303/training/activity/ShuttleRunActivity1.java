@@ -25,13 +25,12 @@ import com.oucb303.training.device.Order;
 import com.oucb303.training.listener.CheckBoxClickListener;
 import com.oucb303.training.listener.SpinnerItemSelectedListener;
 import com.oucb303.training.model.CheckBox;
-import com.oucb303.training.utils.Constant;
 import com.oucb303.training.model.PowerInfoComparetor;
 import com.oucb303.training.model.TimeInfo;
 import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.threads.Timer;
+import com.oucb303.training.utils.Constant;
 import com.oucb303.training.utils.DataAnalyzeUtils;
-import com.oucb303.training.widget.ToastUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -43,8 +42,7 @@ import butterknife.OnClick;
 /**
  * 折返跑 每组一个设备
  */
-public class ShuttleRunActivity1 extends AppCompatActivity
-{
+public class ShuttleRunActivity1 extends AppCompatActivity {
 
 
     @Bind(R.id.sp_training_times)
@@ -89,6 +87,10 @@ public class ShuttleRunActivity1 extends AppCompatActivity
     ImageView imgLightColorRed;
     @Bind(R.id.img_light_color_blue_red)
     ImageView imgLightColorBlueRed;
+    @Bind(R.id.btn_on)
+    Button btnOn;
+    @Bind(R.id.btn_off)
+    Button btnOff;
 
     private Device device;
     //做多分组数目
@@ -124,14 +126,11 @@ public class ShuttleRunActivity1 extends AppCompatActivity
     private int level;
 
 
-    private Handler handler = new Handler()
-    {
+    private Handler handler = new Handler() {
         //处理接收过来的数据的方法
         @Override
-        public void handleMessage(Message msg)
-        {
-            switch (msg.what)
-            {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
                 case Timer.TIMER_FLAG:
                     String time = msg.obj.toString();
                     tvTotalTime.setText(time);
@@ -139,8 +138,7 @@ public class ShuttleRunActivity1 extends AppCompatActivity
                 //接收到返回的时间
                 case TIME_RECEIVE:
                     String data = msg.obj.toString();
-                    if (data.length() > 7)
-                    {
+                    if (data.length() > 7) {
                         //解析数据
                         analyzeTimeData(data);
                     }
@@ -156,8 +154,7 @@ public class ShuttleRunActivity1 extends AppCompatActivity
     };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shuttle_run1);
         ButterKnife.bind(this);
@@ -166,8 +163,7 @@ public class ShuttleRunActivity1 extends AppCompatActivity
         //更新连接设备列表
         device.createDeviceList(this);
         //判断是否插入协调器
-        if (device.devCount > 0)
-        {
+        if (device.devCount > 0) {
             device.connect(this);
             device.initConfig();
         }
@@ -176,22 +172,19 @@ public class ShuttleRunActivity1 extends AppCompatActivity
     }
 
     @Override
-    protected void onStart()
-    {
+    protected void onStart() {
         super.onStart();
         imgSave.setEnabled(false);
     }
 
     @Override
-    protected void onDestroy()
-    {
+    protected void onDestroy() {
         super.onDestroy();
         device.disconnect();
 
     }
 
-    public void initView()
-    {
+    public void initView() {
         tvTitle.setText("折返跑训练");
         imgHelp.setVisibility(View.VISIBLE);
         imgSave.setVisibility(View.VISIBLE);
@@ -201,16 +194,16 @@ public class ShuttleRunActivity1 extends AppCompatActivity
 
         //初始化分组下拉框
         maxGroupNum = Device.DEVICE_LIST.size();
+        if (maxGroupNum > 8)
+            maxGroupNum = 8;
         String[] groupNumChoose = new String[maxGroupNum + 1];
         groupNumChoose[0] = "";
         for (int i = 1; i <= maxGroupNum; i++)
             groupNumChoose[i] = (i + " 组");
 
-        spGroupNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(ShuttleRunActivity1.this, spGroupNum, groupNumChoose)
-        {
+        spGroupNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(ShuttleRunActivity1.this, spGroupNum, groupNumChoose) {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
-            {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 super.onItemSelected(adapterView, view, i, l);
                 groupNum = i;
                 finishTimes = new int[groupNum];
@@ -221,22 +214,18 @@ public class ShuttleRunActivity1 extends AppCompatActivity
 
         //初始化训练强度下拉框
         final String[] trainingOptions = new String[10];
-        for (int i = 1; i <= 10; i++)
-        {
+        for (int i = 1; i <= 10; i++) {
             trainingOptions[i - 1] = "50米 * " + i * 2;
         }
 
-        spTrainingTimes.setOnItemSelectedListener(new SpinnerItemSelectedListener(ShuttleRunActivity1.this, spTrainingTimes, trainingOptions)
-        {
+        spTrainingTimes.setOnItemSelectedListener(new SpinnerItemSelectedListener(ShuttleRunActivity1.this, spTrainingTimes, trainingOptions) {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
-            {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 //总的训练次数
                 totalTrainingTimes = (i + 1) * 2;
             }
         });
-        switch (level)
-        {
+        switch (level) {
             case 1:
                 level = 0;
                 break;
@@ -254,11 +243,9 @@ public class ShuttleRunActivity1 extends AppCompatActivity
         lvGroup.setAdapter(groupListViewAdapter);
 
         //解决listView 与scrollView的滑动冲突
-        lvGroup.setOnTouchListener(new View.OnTouchListener()
-        {
+        lvGroup.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent motionEvent)
-            {
+            public boolean onTouch(View v, MotionEvent motionEvent) {
                 //从listView 抬起时将控制权还给scrollview
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP)
                     svContainer.requestDisallowInterceptTouchEvent(false);
@@ -272,6 +259,7 @@ public class ShuttleRunActivity1 extends AppCompatActivity
         //初始化时间listview
         shuttleRunAdapter = new ShuttleRunAdapter1(this);
         lvTimes.setAdapter(shuttleRunAdapter);
+
 
         //设定checkbox组合的点击事件
         ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
@@ -288,11 +276,9 @@ public class ShuttleRunActivity1 extends AppCompatActivity
     }
 
 
-    @OnClick({R.id.layout_cancel, R.id.img_help, R.id.btn_begin, R.id.img_save})
-    public void onClick(View view)
-    {
-        switch (view.getId())
-        {
+    @OnClick({R.id.layout_cancel, R.id.img_help, R.id.btn_begin, R.id.img_save,R.id.btn_off,R.id.btn_on})
+    public void onClick(View view) {
+        switch (view.getId()) {
             case R.id.layout_cancel:
                 this.finish();
                 break;
@@ -319,8 +305,7 @@ public class ShuttleRunActivity1 extends AppCompatActivity
             case R.id.btn_begin:
                 if (!device.checkDevice(ShuttleRunActivity1.this))
                     return;
-                if (groupNum == 0)
-                {
+                if (groupNum == 0) {
                     Toast.makeText(this, "请选择训练分组!", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -329,25 +314,29 @@ public class ShuttleRunActivity1 extends AppCompatActivity
                 else
                     startTraining();
                 break;
+            case R.id.btn_on:
+                //goupNum组数，1：每组设备个数，0：类型
+                device.turnOnButton(groupNum,1,0);
+                break;
+            case R.id.btn_off:
+                device.turnOffAllTheLight();
         }
     }
 
     //开始训练
-    public void startTraining()
-    {
+    public void startTraining() {
         trainingBeginFlag = true;
 
         completedTimes = new int[groupNum];
-        for (int i = 0; i < groupNum; i++)
-        {
+        for (int i = 0; i < groupNum; i++) {
             completedTimes[i] = -1;
         }
 
         finishTimes = new int[groupNum];
         shuttleRunAdapter.setCompletedTimes(completedTimes);
         shuttleRunAdapter.setFinishTime(finishTimes);
-
         shuttleRunAdapter.notifyDataSetChanged();
+
         btnBegin.setText("停止");
         //清除串口数据
         new ReceiveThread(handler, device.ftDev, ReceiveThread.CLEAR_DATA_THREAD, 0).start();
@@ -356,8 +345,7 @@ public class ShuttleRunActivity1 extends AppCompatActivity
         new ReceiveThread(handler, device.ftDev, ReceiveThread.TIME_RECEIVE_THREAD, TIME_RECEIVE).start();
 
         //开全灯
-        for (int i = 0; i < groupNum; i++)
-        {
+        for (int i = 0; i < groupNum; i++) {
             device.sendOrder(Device.DEVICE_LIST.get(i).getDeviceNum(),
                     Order.LightColor.values()[lightColorCheckBox.getCheckId()],
                     Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
@@ -375,8 +363,7 @@ public class ShuttleRunActivity1 extends AppCompatActivity
     }
 
     //结束训练
-    public void stopTraining()
-    {
+    public void stopTraining() {
         trainingBeginFlag = false;
         btnBegin.setText("开始");
         imgSave.setEnabled(true);
@@ -386,14 +373,11 @@ public class ShuttleRunActivity1 extends AppCompatActivity
         timer.stopTimer();
     }
 
-    public void turnOnLight(final char deviceNum)
-    {
+    public void turnOnLight(final char deviceNum) {
         //实现Runnable接口
-        new Thread(new Runnable()
-        {
+        new Thread(new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
                 Timer.sleep(5000);
                 device.sendOrder(deviceNum,
                         Order.LightColor.values()[lightColorCheckBox.getCheckId()],
@@ -407,16 +391,12 @@ public class ShuttleRunActivity1 extends AppCompatActivity
     }
 
     //解析返回来的数据
-    public void analyzeTimeData(final String data)
-    {
-        new Thread(new Runnable()
-        {
+    public void analyzeTimeData(final String data) {
+        new Thread(new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
                 List<TimeInfo> infos = DataAnalyzeUtils.analyzeTimeData(data);
-                for (TimeInfo info : infos)
-                {
+                for (TimeInfo info : infos) {
                     int groupId = findDeviceGroupId(info.getDeviceNum());
                     //如果设备组号大于分组数肯定是错误的
                     if (groupId > groupNum)
@@ -434,8 +414,7 @@ public class ShuttleRunActivity1 extends AppCompatActivity
                 msg.what = UPDATE_TIMES;
                 msg.obj = "";
                 handler.sendMessage(msg);
-                if (isTrainingOver())
-                {
+                if (isTrainingOver()) {
                     Message msg1 = Message.obtain();
                     msg1.what = STOP_TRAINING;
                     msg1.obj = "";
@@ -446,13 +425,10 @@ public class ShuttleRunActivity1 extends AppCompatActivity
     }
 
     //查找设备属于第几组
-    public int findDeviceGroupId(char deviceNum)
-    {
+    public int findDeviceGroupId(char deviceNum) {
         int position = 0;
-        for (int i = 0; i < Device.DEVICE_LIST.size(); i++)
-        {
-            if (Device.DEVICE_LIST.get(i).getDeviceNum() == deviceNum)
-            {
+        for (int i = 0; i < Device.DEVICE_LIST.size(); i++) {
+            if (Device.DEVICE_LIST.get(i).getDeviceNum() == deviceNum) {
                 position = i;
                 break;
             }
@@ -461,8 +437,7 @@ public class ShuttleRunActivity1 extends AppCompatActivity
     }
 
     //判断训练是否结束
-    public boolean isTrainingOver()
-    {
+    public boolean isTrainingOver() {
         for (int i = 0; i < groupNum; i++)
             //只要有一组训练没完成，就没有结束
             if (completedTimes[i] < totalTrainingTimes)

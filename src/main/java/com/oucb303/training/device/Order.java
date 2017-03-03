@@ -29,7 +29,7 @@ public class Order
         NONE, SHORT, ONE, TWO
     }
 
-    /*灯的模式*/
+    /*灯光模式*/
     public static enum LightModel
     {
         /*无、外圈、里圈、全部、关灯*/

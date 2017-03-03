@@ -43,8 +43,7 @@ import butterknife.OnClick;
 /**
  * 随机训练
  */
-public class RandomTrainingActivity extends Activity
-{
+public class RandomTrainingActivity extends Activity {
     @Bind(R.id.bt_distance_cancel)
     ImageView btDistanceCancel;
     @Bind(R.id.layout_cancel)
@@ -131,6 +130,10 @@ public class RandomTrainingActivity extends Activity
     Spinner spDevNum;
     @Bind(R.id.tv_device_list)
     TextView tvDeviceList;
+    @Bind(R.id.btn_on)
+    Button btnOn;
+    @Bind(R.id.btn_off)
+    Button btnOff;
 
 
     //感应模式和灯光模式集合
@@ -148,7 +151,7 @@ public class RandomTrainingActivity extends Activity
     //随机模式 0:次数随机  1:时间随机
     private int randomMode;
 
-    private Device device;
+    private Device device;//device里有设备灯列表，设备数量
     //运行的总次数、当前运行的次数、遗漏次数、训练的总时间
     private int totalTimes, currentTimes, lostTimes, trainingTime;
     //当前亮的灯
@@ -175,15 +178,11 @@ public class RandomTrainingActivity extends Activity
 
     private int level;
 
-    private Handler timerHandler = new Handler()
-    {
+    private Handler timerHandler = new Handler() {
         @Override
-        public void handleMessage(Message msg)
-        {
-            if (msg.what == timer.TIMER_FLAG)
-            {
-                if (randomMode == 1 && timer.time >= trainingTime)
-                {
+        public void handleMessage(Message msg) {
+            if (msg.what == timer.TIMER_FLAG) {
+                if (randomMode == 1 && timer.time >= trainingTime) {
                     Log.d(Constant.LOG_TAG + "xx:", timer.time + "");
                     timer.stopTimer();
                     stopTraining();
@@ -194,21 +193,16 @@ public class RandomTrainingActivity extends Activity
         }
     };
 
-    Handler handler = new Handler()
-    {
+    Handler handler = new Handler() {
         @Override
-        public void handleMessage(Message msg)
-        {
-            switch (msg.what)
-            {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
                 case TIME_RECEIVE:
                     String data = msg.obj.toString();
                     //返回数据不为空
-                    if (data != null && data.length() >= 4)
-                    {
+                    if (data != null && data.length() >= 4) {
                         timeList.addAll(DataAnalyzeUtils.analyzeTimeData(data));
-                        if (timeAdapter != null)
-                        {
+                        if (timeAdapter != null) {
                             timeAdapter.notifyDataSetChanged();
                             lvTimes.setSelection(timeList.size() - 1);
                         }
@@ -232,8 +226,7 @@ public class RandomTrainingActivity extends Activity
     };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_randomtraining);
         ButterKnife.bind(this);
@@ -244,22 +237,19 @@ public class RandomTrainingActivity extends Activity
 
         device.createDeviceList(RandomTrainingActivity.this);
         // 判断是否插入协调器，
-        if (device.devCount > 0)
-        {
+        if (device.devCount > 0) {
             device.connect(RandomTrainingActivity.this);
             device.initConfig();
         }
     }
 
     @Override
-    protected void onStart()
-    {
+    protected void onStart() {
         super.onStart();
     }
 
     @Override
-    protected void onDestroy()
-    {
+    protected void onDestroy() {
         if (trainingFlag)
             stopTraining();
         device.disconnect();
@@ -267,10 +257,8 @@ public class RandomTrainingActivity extends Activity
     }
 
     @Override
-    public void onBackPressed()
-    {
-        if (trainingFlag)
-        {
+    public void onBackPressed() {
+        if (trainingFlag) {
             Toast.makeText(RandomTrainingActivity.this, "请先停止训练后再退出!", Toast
                     .LENGTH_SHORT).show();
             return;
@@ -278,14 +266,12 @@ public class RandomTrainingActivity extends Activity
         super.onBackPressed();
     }
 
-    public void initView()
-    {
+    public void initView() {
         tvTitle.setText("随机训练");
         imgHelp.setVisibility(View.VISIBLE);
         timeAdapter = new RandomTimeAdapter(this, timeList);
         lvTimes.setAdapter(timeAdapter);
-        if (randomMode == 0)
-        {
+        if (randomMode == 0) {
             //次数随机
             llTrainingTimes.setVisibility(View.VISIBLE);
             llTrainingTime.setVisibility(View.GONE);
@@ -295,8 +281,7 @@ public class RandomTrainingActivity extends Activity
                     (barTrainingTimes, 0));
             imgTrainingTimesAdd.setOnTouchListener(new AddOrSubBtnClickListener
                     (barTrainingTimes, 1));
-        } else
-        {
+        } else {
             //时间随机
             llTrainingTimes.setVisibility(View.GONE);
             llTrainingTime.setVisibility(View.VISIBLE);
@@ -307,11 +292,9 @@ public class RandomTrainingActivity extends Activity
             imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener
                     (barTrainingTime, 1));
         }
-        if (level != 0)
-        {
+        if (level != 0) {
             tvTitle.setText("换物跑");
-            switch (level)
-            {
+            switch (level) {
                 case 1:
                     level = 20;
                     break;
@@ -326,7 +309,7 @@ public class RandomTrainingActivity extends Activity
         }
         //设置seekbar 拖动事件的监听器
         barDelayTime.setOnSeekBarChangeListener(new MySeekBarListener(tvDelayTime, 10));
-        barOverTime.setOnSeekBarChangeListener(new MySeekBarListener(tvOverTime, 28,2));
+        barOverTime.setOnSeekBarChangeListener(new MySeekBarListener(tvOverTime, 28, 2));
         //设置加减按钮的监听事件
         imgDelayTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 0));
         imgDelayTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 1));
@@ -335,17 +318,15 @@ public class RandomTrainingActivity extends Activity
 
         //选择设备个数spinner
         String[] num = new String[Device.DEVICE_LIST.size()];
-        for (int i = 0; i < num.length; i++)
-        {
+        for (int i = 0; i < num.length; i++) {
             num[i] = (i + 1) + "个";
         }
-        spDevNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(this, spDevNum, num)
-        {
+        spDevNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(this, spDevNum, num) {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
-            {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 super.onItemSelected(adapterView, view, i, l);
                 totalNum = i + 1;
+//                Toast.makeText(RandomTrainingActivity.this,"totalnum-----"+totalNum,Toast.LENGTH_LONG).show();
                 String str = "";
                 for (int j = 0; j < totalNum; j++)
                     str += Device.DEVICE_LIST.get(j).getDeviceNum() + "  ";
@@ -358,20 +339,16 @@ public class RandomTrainingActivity extends Activity
         //设定感应模式checkBox组合的点击事件
         ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
         actionModeCheckBox = new CheckBox(1, views);
-        new CheckBoxClickListener(actionModeCheckBox)
-        {
+        new CheckBoxClickListener(actionModeCheckBox) {
             @Override
-            public void doOtherThings(int checkedId)
-            {
+            public void doOtherThings(int checkedId) {
                 super.doOtherThings(checkedId);
                 //触碰或全部
-                if (checkedId == 2 || checkedId == 3)
-                {
+                if (checkedId == 2 || checkedId == 3) {
                     if (barDelayTime.getProgress() < 2)
                         barDelayTime.setProgress(2);
                     imgDelayTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 0, 2));
-                } else
-                {
+                } else {
                     imgDelayTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 0));
                 }
             }
@@ -386,11 +363,9 @@ public class RandomTrainingActivity extends Activity
         new CheckBoxClickListener(lightColorCheckBox);
     }
 
-    @OnClick({R.id.btn_begin, R.id.layout_cancel, R.id.img_help})
-    public void onClick(View view)
-    {
-        switch (view.getId())
-        {
+    @OnClick({R.id.btn_begin, R.id.layout_cancel, R.id.img_help,R.id.btn_on,R.id.btn_off})
+    public void onClick(View view) {
+        switch (view.getId()) {
             case R.id.btn_begin:
                 if (!device.checkDevice(RandomTrainingActivity.this))
                     return;
@@ -408,12 +383,18 @@ public class RandomTrainingActivity extends Activity
                 intent.putExtra("flag", 8);
                 startActivity(intent);
                 break;
+            case R.id.btn_on:
+                //totalNum组数，1：每组设备个数，0：类型
+                device.turnOnButton(totalNum,1,0);
+                break;
+            case R.id.btn_off:
+                device.turnOffAllTheLight();
+                break;
         }
     }
 
     //获取设备灯编号
-    private char getLightNum()
-    {
+    private char getLightNum() {
         int position = RandomUtils.getRandomNum(100) % totalNum;
         currentLight = Device.DEVICE_LIST.get(position).getDeviceNum();
         Log.d(Constant.LOG_TAG, "turn on :" + currentLight + "-" + currentTimes);
@@ -421,8 +402,7 @@ public class RandomTrainingActivity extends Activity
     }
 
     //开始训练
-    public void startTraining()
-    {
+    public void startTraining() {
         //训练开始
         trainingFlag = true;
         btnBegin.setText("停止");
@@ -460,13 +440,11 @@ public class RandomTrainingActivity extends Activity
     }
 
     //判断训练是否结束
-    public void isTrainingOver()
-    {
+    public void isTrainingOver() {
         if (!trainingFlag)
             return;
         //次数随机
-        if (randomMode == 0)
-        {
+        if (randomMode == 0) {
             if (currentTimes < totalTimes)
                 //发送开灯命令
                 turnOnLight();
@@ -477,8 +455,7 @@ public class RandomTrainingActivity extends Activity
     }
 
     //停止训练
-    public void stopTraining()
-    {
+    public void stopTraining() {
         trainingFlag = false;
         btnBegin.setText("开始");
         btnBegin.setEnabled(false);
@@ -490,8 +467,7 @@ public class RandomTrainingActivity extends Activity
 
         //计算平均时间
         int totalTime = 0;
-        for (TimeInfo info : timeList)
-        {
+        for (TimeInfo info : timeList) {
             totalTime += info.getTime();
         }
         totalTime += lostTimes * overTime;
@@ -505,13 +481,10 @@ public class RandomTrainingActivity extends Activity
     }
 
     //开灯
-    private void turnOnLight()
-    {
-        new Thread(new Runnable()
-        {
+    private void turnOnLight() {
+        new Thread(new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
                 if (delayTime > 0)
                     Timer.sleep(delayTime);
                 lastTurnOnLight = getLightNum();
@@ -529,8 +502,7 @@ public class RandomTrainingActivity extends Activity
     }
 
     //关灯
-    private void turnOffLight()
-    {
+    private void turnOffLight() {
         //device.turnOffLight(currentLight);
         device.sendOrder(currentLight,
                 Order.LightColor.NONE,
@@ -550,23 +522,18 @@ public class RandomTrainingActivity extends Activity
 
 
     //超时线程
-    class OverTimeThread extends Thread
-    {
+    class OverTimeThread extends Thread {
         private boolean stop = false;
 
-        public void stopThread()
-        {
+        public void stopThread() {
             stop = true;
         }
 
         @Override
-        public void run()
-        {
-            while (!stop)
-            {
+        public void run() {
+            while (!stop) {
                 durationTime += 100;
-                if (durationTime == overTime)
-                {
+                if (durationTime == overTime) {
                     //发送关灯命令
                     turnOffLight();
                     lostTimes++;

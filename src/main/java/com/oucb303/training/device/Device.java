@@ -194,6 +194,44 @@ public class Device
             }
         }
     }
+//    type为0表示：折返跑，换物跑，运球比赛，大课间活动，type为1表示：纵跳摸高，仰卧起坐
+    public void  turnOnButton(int groupNum,int groupSize,int type)
+    {
+        if (type==0){
+            for (int i = 0; i < groupNum; i++)
+            {
+                sendOrder(Device.DEVICE_LIST.get(i).getDeviceNum(),
+                        //灯的颜色
+                        Order.LightColor.values()[1],
+                        //声音模式
+                        Order.VoiceMode.NONE,
+                        //闪烁模式
+                        Order.BlinkModel.NONE,
+                        //灯光模式
+                        Order.LightModel.OUTER,
+                        //感应模式
+                        Order.ActionModel.NONE,
+                        //感应毁灭时操作
+                        Order.EndVoice.NONE);
+            }
+        }
+        else {
+            int a =0;
+            for (int k=1;k<=groupNum;k++){
+                for (int t =0;t<groupSize;t++)
+                {
+                    sendOrder(Device.DEVICE_LIST.get(t+a).getDeviceNum(),
+                            Order.LightColor.values()[k],
+                            Order.VoiceMode.NONE,
+                            Order.BlinkModel.NONE,
+                            Order.LightModel.OUTER,
+                            Order.ActionModel.NONE,
+                            Order.EndVoice.NONE);
+                }
+                a+=groupSize;
+            }
+        }
+    }
 
     public void sendOrder(char lightId, Order.LightColor color, Order.VoiceMode voiceMode, Order.BlinkModel blinkModel,
                           Order.LightModel lightModel, Order.ActionModel actionModel, Order.EndVoice endVoice)

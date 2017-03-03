@@ -50,6 +50,8 @@
         <activity android:name="com.oucb303.training.activity.TrainingListActivity" />
         <activity android:name="com.oucb303.training.activity.ShuttleRunActivity" />
         <activity android:name="com.oucb303.training.activity.ShuttleRunActivity1" />
+        <activity android:name="com.oucb303.training.activity.LargeRecessActivity" />
+        <activity android:name="com.oucb303.training.activity.DetailsActivity" />
         <activity android:name="com.oucb303.training.activity.VideoActivity" />
         <activity android:name="com.oucb303.training.activity.SitUpsActivity" />
         <activity
