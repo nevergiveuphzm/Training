@@ -47,6 +47,8 @@
         <activity android:name=".activity.TrainingListActivity"/>
         <activity android:name=".activity.ShuttleRunActivity"/>
         <activity android:name=".activity.ShuttleRunActivity1"/>
+        <activity android:name=".activity.LargeRecessActivity"/>
+        <activity android:name=".activity.DetailsActivity"/>
         <activity android:name=".activity.VideoActivity"/>
         <activity android:name=".activity.SitUpsActivity"/>
         <activity

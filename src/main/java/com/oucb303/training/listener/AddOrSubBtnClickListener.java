@@ -15,7 +15,7 @@ import com.oucb303.training.threads.Timer;
 public class AddOrSubBtnClickListener implements View.OnTouchListener
 {
     private SeekBar seekBar;
-    //按钮类型 0:加 1:减
+    //按钮类型 0: 减 1:加
     private int type;
     //单位
     private String suffix;

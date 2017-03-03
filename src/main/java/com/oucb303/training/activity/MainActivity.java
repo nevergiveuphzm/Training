@@ -330,15 +330,19 @@ public class MainActivity extends Activity
         List<DeviceInfo> powerInfos = DataAnalyzeUtils.analyzePowerData(data);
         Collections.sort(powerInfos, new PowerInfoComparetor());
         //清空电量列表
-        Log.d(Constant.LOG_TAG, "清空列表");
-        Device.DEVICE_LIST.clear();
-        //tvDeviceCount.setText("共0个设备");
-        //获取电量信息
-        Device.DEVICE_LIST.addAll(powerInfos);
-        powerAdapter.notifyDataSetChanged();
+        if (powerInfos != null && powerInfos.size() != 0)
+        {
+            Log.d(Constant.LOG_TAG, "清空列表");
+            Device.DEVICE_LIST.clear();
+            //tvDeviceCount.setText("共0个设备");
+            //获取电量信息
+            Device.DEVICE_LIST.addAll(powerInfos);
+            powerAdapter.notifyDataSetChanged();
 
-        tvDeviceCount.setText("共" + powerInfos.size() + "个设备");
+            tvDeviceCount.setText("共" + powerInfos.size() + "个设备");
+        }
         Log.i("AAA", powerInfos.size() + "");
+
     }
 
     private class AutoCheckPower extends Thread

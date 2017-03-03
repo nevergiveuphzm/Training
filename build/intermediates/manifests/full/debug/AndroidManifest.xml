@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.oucb303.training"
-    android:versionCode="2"
-    android:versionName="1.2.0" >
+    android:versionCode="5"
+    android:versionName="2.1.0" >
 
     <uses-sdk
         android:minSdkVersion="15"
@@ -50,6 +50,8 @@
         <activity android:name="com.oucb303.training.activity.TrainingListActivity" />
         <activity android:name="com.oucb303.training.activity.ShuttleRunActivity" />
         <activity android:name="com.oucb303.training.activity.ShuttleRunActivity1" />
+        <activity android:name="com.oucb303.training.activity.LargeRecessActivity" />
+        <activity android:name="com.oucb303.training.activity.DetailsActivity" />
         <activity android:name="com.oucb303.training.activity.VideoActivity" />
         <activity android:name="com.oucb303.training.activity.SitUpsActivity" />
         <activity

@@ -46,8 +46,7 @@ import butterknife.OnClick;
  * 仰卧起坐
  */
 
-public class SitUpsActivity extends AppCompatActivity
-{
+public class SitUpsActivity extends AppCompatActivity {
 
     @Bind(R.id.tv_title)
     TextView tvTitle;
@@ -93,6 +92,10 @@ public class SitUpsActivity extends AppCompatActivity
     android.widget.CheckBox cbVoice;
     @Bind(R.id.img_help)
     ImageView imgHelp;
+    @Bind(R.id.btn_on)
+    Button btnOn;
+    @Bind(R.id.btn_off)
+    Button btnOff;
 
     private Device device;
     private CheckBox actionModeCheckBox, lightModeCheckBox, lightColorCheckBox;
@@ -114,8 +117,7 @@ public class SitUpsActivity extends AppCompatActivity
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sit_ups);
         ButterKnife.bind(this);
@@ -124,32 +126,26 @@ public class SitUpsActivity extends AppCompatActivity
         device = new Device(this);
         device.createDeviceList(this);
         // 判断是否插入协调器，
-        if (device.devCount > 0)
-        {
+        if (device.devCount > 0) {
             device.connect(this);
             device.initConfig();
         }
     }
 
     @Override
-    protected void onDestroy()
-    {
+    protected void onDestroy() {
         super.onDestroy();
         device.disconnect();
 
     }
 
-    private Handler handler = new Handler()
-    {
+    private Handler handler = new Handler() {
         @Override
-        public void handleMessage(Message msg)
-        {
-            switch (msg.what)
-            {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
                 case Timer.TIMER_FLAG:
                     tvTotalTime.setText(msg.obj.toString());
-                    if (timer.time >= trainingTime)
-                    {
+                    if (timer.time >= trainingTime) {
                         stopTraining();
                         return;
                     }
@@ -167,8 +163,7 @@ public class SitUpsActivity extends AppCompatActivity
     };
 
 
-    private void initView()
-    {
+    private void initView() {
         tvTitle.setText("仰卧起坐训练");
         imgHelp.setVisibility(View.VISIBLE);
 
@@ -176,11 +171,9 @@ public class SitUpsActivity extends AppCompatActivity
         groupListViewAdapter = new GroupListViewAdapter(SitUpsActivity.this, groupSize);
         lvGroup.setAdapter(groupListViewAdapter);
         //解决listView 与scrollView的滑动冲突
-        lvGroup.setOnTouchListener(new View.OnTouchListener()
-        {
+        lvGroup.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent)
-            {
+            public boolean onTouch(View view, MotionEvent motionEvent) {
                 //从listView 抬起时将控制权还给scrollview
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP)
                     svContainer.requestDisallowInterceptTouchEvent(false);
@@ -200,11 +193,9 @@ public class SitUpsActivity extends AppCompatActivity
         groupNumChoose[0] = " ";
         for (int i = 1; i <= maxGroupNum; i++)
             groupNumChoose[i] = i + " 组";
-        spGroupNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(SitUpsActivity.this, spGroupNum, groupNumChoose)
-        {
+        spGroupNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(SitUpsActivity.this, spGroupNum, groupNumChoose) {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
-            {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 groupNum = i;
                 groupListViewAdapter.setGroupNum(i);
                 groupListViewAdapter.notifyDataSetChanged();
@@ -216,8 +207,7 @@ public class SitUpsActivity extends AppCompatActivity
         barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 10));
         imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
         imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
-        switch (level)
-        {
+        switch (level) {
             case 1:
                 level = 2;
                 break;
@@ -248,19 +238,16 @@ public class SitUpsActivity extends AppCompatActivity
         lvTimes.setAdapter(sitUpsTimeListAdapter);
     }
 
-    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help})
-    public void onClick(View view)
-    {
-        switch (view.getId())
-        {
+    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help,R.id.btn_on,R.id.btn_off})
+    public void onClick(View view) {
+        switch (view.getId()) {
             case R.id.layout_cancel:
                 this.finish();
                 break;
             case R.id.btn_begin:
                 if (!device.checkDevice(this))
                     return;
-                if (groupNum == 0)
-                {
+                if (groupNum == 0) {
                     Toast.makeText(this, "请选择训练分组!", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -274,11 +261,16 @@ public class SitUpsActivity extends AppCompatActivity
                 intent.putExtra("flag", 3);
                 startActivity(intent);
                 break;
+            case R.id.btn_on:
+                //groupNum组数，groupSize：每组设备个数，1：类型
+                device.turnOnButton(groupNum,groupSize,1);
+                break;
+            case R.id.btn_off:
+                device.turnOffAllTheLight();
+                break;
         }
     }
-
-    private void startTraining()
-    {
+    private void startTraining() {
         btnBegin.setText("停止");
         isTraining = true;
         scores = new int[groupNum];
@@ -294,8 +286,7 @@ public class SitUpsActivity extends AppCompatActivity
         new ReceiveThread(handler, device.ftDev, ReceiveThread.TIME_RECEIVE_THREAD, TIME_RECEIVE).start();
 
         //亮每组设备的第一个灯
-        for (int i = 0; i < groupNum; i++)
-        {
+        for (int i = 0; i < groupNum; i++) {
             sendOrder(Device.DEVICE_LIST.get(i * 2).getDeviceNum());
         }
         timer = new Timer(handler, trainingTime);
@@ -303,8 +294,7 @@ public class SitUpsActivity extends AppCompatActivity
         timer.start();
     }
 
-    private void stopTraining()
-    {
+    private void stopTraining() {
         isTraining = false;
         btnBegin.setText("开始");
         //结束时间线程
@@ -318,23 +308,18 @@ public class SitUpsActivity extends AppCompatActivity
     }
 
     //解析时间
-    private void analyzeTimeData(final String data)
-    {
+    private void analyzeTimeData(final String data) {
         //训练已结束
         if (!isTraining)
             return;
-        new Thread(new Runnable()
-        {
+        new Thread(new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
                 List<TimeInfo> infos = DataAnalyzeUtils.analyzeTimeData(data);
-                for (TimeInfo info : infos)
-                {
+                for (TimeInfo info : infos) {
                     int groupId = findDeviceGroupId(info.getDeviceNum());
                     char next = Device.DEVICE_LIST.get(groupId * groupSize).getDeviceNum();
-                    if (next == info.getDeviceNum())
-                    {
+                    if (next == info.getDeviceNum()) {
                         next = Device.DEVICE_LIST.get(groupId * groupSize + 1).getDeviceNum();
                         scores[groupId] += 1;
                     }
@@ -350,24 +335,20 @@ public class SitUpsActivity extends AppCompatActivity
 
     }
 
-    public void sendOrder(char deviceNum)
-    {
+    public void sendOrder(char deviceNum) {
         device.sendOrder(deviceNum, Order.LightColor.values()[lightColorCheckBox.getCheckId()],
                 Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
                 Order.BlinkModel.NONE,
                 Order.LightModel.values()[lightModeCheckBox.getCheckId()],
-                Order.ActionModel.LIGHT,
+                Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                 Order.EndVoice.NONE);
     }
 
     //查找设备属于第几组
-    public int findDeviceGroupId(char deviceNum)
-    {
+    public int findDeviceGroupId(char deviceNum) {
         int position = 0;
-        for (int i = 0; i < Device.DEVICE_LIST.size(); i++)
-        {
-            if (Device.DEVICE_LIST.get(i).getDeviceNum() == deviceNum)
-            {
+        for (int i = 0; i < Device.DEVICE_LIST.size(); i++) {
+            if (Device.DEVICE_LIST.get(i).getDeviceNum() == deviceNum) {
                 position = i;
                 break;
             }

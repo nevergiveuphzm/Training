@@ -47,8 +47,7 @@ import butterknife.OnClick;
  * 运球比赛
  * Created by HP on 2016/12/5.
  */
-public class DribblingGameActivity extends AppCompatActivity
-{
+public class DribblingGameActivity extends AppCompatActivity {
 
 
     @Bind(R.id.bt_distance_cancel)
@@ -122,6 +121,10 @@ public class DribblingGameActivity extends AppCompatActivity
     SeekBar barOverTime;
     @Bind(R.id.img_over_time_add)
     ImageView imgOverTimeAdd;
+    @Bind(R.id.btn_on)
+    Button btnOn;
+    @Bind(R.id.btn_off)
+    Button btnOff;
     private Device device;
     //所选设备个数，分组数
     private int totalNum, groupNum;
@@ -147,24 +150,20 @@ public class DribblingGameActivity extends AppCompatActivity
 
     private int level;
 
-    private Handler handler = new Handler()
-    {
+    private Handler handler = new Handler() {
         //处理接收过来的数据的方法
         @Override
-        public void handleMessage(Message msg)
-        {
+        public void handleMessage(Message msg) {
             String data = msg.obj.toString();
             //比赛结束则不接收任何数据
             if (!trainningFlag)
                 return;
-            switch (msg.what)
-            {
+            switch (msg.what) {
                 //更新计时
                 case Timer.TIMER_FLAG:
                     tvTotalTime.setText(data);
                     //判断结束
-                    if (timer.time >= trainingTime)
-                    {
+                    if (timer.time >= trainingTime) {
                         Message message = Message.obtain();
                         message.what = STOP_TRAINING;
                         message.obj = "";
@@ -175,10 +174,8 @@ public class DribblingGameActivity extends AppCompatActivity
                 case TIME_RECEIVE:
                     if (data != null && data.length() > 7)
                         analyseData(data);
-                    for (int i = 0; i < groupNum; i++)
-                    {
-                        if (duration[i] != 0 && System.currentTimeMillis() - duration[i] > overTime)
-                        {
+                    for (int i = 0; i < groupNum; i++) {
+                        if (duration[i] != 0 && System.currentTimeMillis() - duration[i] > overTime) {
                             char deviceNum = Device.DEVICE_LIST.get(listRand.get(i)).getDeviceNum();
                             duration[i] = 0;
                             turnOffLight(deviceNum);
@@ -198,8 +195,7 @@ public class DribblingGameActivity extends AppCompatActivity
     };
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState)
-    {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dribbling_game);
         ButterKnife.bind(this);
@@ -208,8 +204,7 @@ public class DribblingGameActivity extends AppCompatActivity
         //更新设备连接列表
         device.createDeviceList(this);
         //判断协调器是否插入
-        if (device.devCount > 0)
-        {
+        if (device.devCount > 0) {
             //连接
             device.connect(this);
             //设备初始化
@@ -219,15 +214,13 @@ public class DribblingGameActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onDestroy()
-    {
+    protected void onDestroy() {
         super.onDestroy();
         if (device.devCount > 0)
             device.disconnect();
     }
 
-    public void initView()
-    {
+    public void initView() {
         if (level == 4)
             tvTitle.setText("多人混战");
         else
@@ -238,10 +231,8 @@ public class DribblingGameActivity extends AppCompatActivity
         lvScores.setAdapter(dribblingGameAdapter);
 
 
-        if (level != 0)
-        {
-            switch (level)
-            {
+        if (level != 0) {
+            switch (level) {
                 case 1:
                     level = 2;
                     break;
@@ -261,11 +252,9 @@ public class DribblingGameActivity extends AppCompatActivity
         lvGroup.setAdapter(dGroupListViewAdapter);
 
         //解决listview与scrollview的滑动冲突
-        lvGroup.setOnTouchListener(new View.OnTouchListener()
-        {
+        lvGroup.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent motionEvent)
-            {
+            public boolean onTouch(View v, MotionEvent motionEvent) {
                 //从listView 抬起时将控制权还给scrollview
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP)
                     svContainer.requestDisallowInterceptTouchEvent(false);
@@ -281,15 +270,12 @@ public class DribblingGameActivity extends AppCompatActivity
 
         //选择设备个数spinner
         String[] num = new String[Device.DEVICE_LIST.size()];
-        for (int i = 0; i < num.length; i++)
-        {
+        for (int i = 0; i < num.length; i++) {
             num[i] = (i + 1) + "个";
         }
-        spDevNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(this, spDevNum, num)
-        {
+        spDevNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(this, spDevNum, num) {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
-            {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 super.onItemSelected(adapterView, view, i, l);
                 totalNum = i + 1;
 
@@ -297,20 +283,17 @@ public class DribblingGameActivity extends AppCompatActivity
                 for (int j = 0; j < totalNum; j++)
                     str += Device.DEVICE_LIST.get(j).getDeviceNum() + "  ";
                 tvDeviceList.setText(str);
-                //Toast.makeText(DribblingGameActivity.this, "所选择的设备个数是" + totalNum + "个", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(DribblingGameActivity.this, "所选择的设备个数是" + totalNum + "个", Toast.LENGTH_SHORT).show();
             }
         });
 
         //训练分组spinner
         String[] groupCount = new String[]{" ", "一组", "两组", "三组"};
-        trainingSubgroups.setOnItemSelectedListener(new SpinnerItemSelectedListener(this, trainingSubgroups, groupCount)
-        {
+        trainingSubgroups.setOnItemSelectedListener(new SpinnerItemSelectedListener(this, trainingSubgroups, groupCount) {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
-            {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 groupNum = i;
-                if (totalNum < groupNum)
-                {
+                if (totalNum < groupNum) {
                     Toast.makeText(DribblingGameActivity.this, "当前设备数量为" + Device.DEVICE_LIST.size() + ",不能分成" + i + "组!",
                             Toast.LENGTH_LONG).show();
                     trainingSubgroups.setSelection(0);
@@ -346,11 +329,9 @@ public class DribblingGameActivity extends AppCompatActivity
         new CheckBoxClickListener(lightModeCheckBox);
     }
 
-    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help})
-    public void onClick(View view)
-    {
-        switch (view.getId())
-        {
+    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help,R.id.btn_on,R.id.btn_off})
+    public void onClick(View view) {
+        switch (view.getId()) {
             case R.id.layout_cancel:
                 this.finish();
                 break;
@@ -358,8 +339,7 @@ public class DribblingGameActivity extends AppCompatActivity
                 //检测设备
                 if (!device.checkDevice(this))
                     return;
-                if (groupNum <= 0)
-                {
+                if (groupNum <= 0) {
                     Toast.makeText(this, "未选择分组,不能开始!", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -376,12 +356,19 @@ public class DribblingGameActivity extends AppCompatActivity
                     intent.putExtra("flag", 5);
                 startActivity(intent);
                 break;
+            case R.id.btn_on:
+                //totalNum组数，1：每组设备个数，0：类型
+                device.turnOnButton(totalNum,1,0);
+                break;
+            case R.id.btn_off:
+                for (int i = 0; i < totalNum; i++)
+                    turnOffLight(Device.DEVICE_LIST.get(i).getDeviceNum());
+                break;
         }
     }
 
     //开始训练
-    public void startTraining()
-    {
+    public void startTraining() {
         btnBegin.setText("停止");
         trainningFlag = true;
         //trainingTime是总时间
@@ -394,17 +381,16 @@ public class DribblingGameActivity extends AppCompatActivity
         scores = new int[groupNum];
         listRand.clear();
         //初始化
-        for (int i = 0; i < groupNum; i++)
-        {
+        for (int i = 0; i < groupNum; i++) {
             scores[i] = 0;
         }
         dribblingGameAdapter.setScores(scores);
         dribblingGameAdapter.notifyDataSetChanged();
 
         createRandomNumber();
+        Log.i("listRand-----------",""+listRand.size());
         //开启全部灯
-        for (int i = 0; i < listRand.size(); i++)
-        {
+        for (int i = 0; i < listRand.size(); i++) {
             device.sendOrder(Device.DEVICE_LIST.get(listRand.get(i)).getDeviceNum(),
                     Order.LightColor.values()[i + 1],
                     Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
@@ -429,8 +415,7 @@ public class DribblingGameActivity extends AppCompatActivity
     }
 
     //停止训练
-    public void stopTraining()
-    {
+    public void stopTraining() {
         timer.stopTimer();
         btnBegin.setText("开始");
         btnBegin.setEnabled(false);
@@ -447,17 +432,13 @@ public class DribblingGameActivity extends AppCompatActivity
     }
 
     //解析数据
-    public void analyseData(final String data)
-    {
+    public void analyseData(final String data) {
         //infos里有设备编号和返回时间
         List<TimeInfo> infos = DataAnalyzeUtils.analyzeTimeData(data);
-        for (TimeInfo info : infos)
-        {
+        for (TimeInfo info : infos) {
             char deviceNum = info.getDeviceNum();
-            for (int i = 0; i < groupNum; i++)
-            {
-                if (deviceNum == deviceNums[i])
-                {
+            for (int i = 0; i < groupNum; i++) {
+                if (deviceNum == deviceNums[i]) {
                     scores[i]++;
                     turnOnLight(i);
                 }
@@ -470,24 +451,19 @@ public class DribblingGameActivity extends AppCompatActivity
     }
 
     //开灯
-    public void turnOnLight(final int groupId)
-    {
+    public void turnOnLight(final int groupId) {
         listRand.remove(groupId);
         Random random = new Random();
-        while (listRand.size() < groupNum)
-        {
+        while (listRand.size() < groupNum) {
             int rand = random.nextInt(totalNum);
-            if (!listRand.contains(rand))
-            {
+            if (!listRand.contains(rand)) {
                 listRand.add(groupId, rand);
                 deviceNums[groupId] = Device.DEVICE_LIST.get(rand).getDeviceNum();
             }
         }
-        new Thread(new Runnable()
-        {
+        new Thread(new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
                 Timer.sleep(200 + delayTime);
                 //若训练结束则返回
                 if (!trainningFlag)
@@ -505,13 +481,10 @@ public class DribblingGameActivity extends AppCompatActivity
     }
 
     //关灯
-    private void turnOffLight(final char deviceNum)
-    {
-        new Thread(new Runnable()
-        {
+    private void turnOffLight(final char deviceNum) {
+        new Thread(new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
                 device.sendOrder(deviceNum,
                         Order.LightColor.NONE,
                         Order.VoiceMode.NONE,
@@ -524,39 +497,31 @@ public class DribblingGameActivity extends AppCompatActivity
     }
 
     //生成随机数
-    private void createRandomNumber()
-    {
+    private void createRandomNumber() {
         Random random = new Random();
-        while (listRand.size() < groupNum)
-        {
+        while (listRand.size() < groupNum) {
             int randomInt = random.nextInt(totalNum);
-            if (!listRand.contains(randomInt))
-            {
+            if (!listRand.contains(randomInt)) {
                 listRand.add(randomInt);
-            } else
-            {
+            } else {
                 System.out.println("该数字已经被添加,不能重复添加");
             }
         }
     }
 
     //结束动画
-    private void endingMovie()
-    {
+    private void endingMovie() {
         int position = 0;
         int max = scores[0];
-        for (int i = 1; i < scores.length; i++)
-        {
-            if (max < scores[i])
-            {
+        for (int i = 1; i < scores.length; i++) {
+            if (max < scores[i]) {
                 max = scores[i];
                 position = i;
             }
         }
 
         int temp = 0;
-        while (temp < 5)
-        {
+        while (temp < 5) {
             for (int i = 0; i < totalNum; i++)
                 device.sendOrder(Device.DEVICE_LIST.get(i).getDeviceNum(),
                         Order.LightColor.values()[position + 1],

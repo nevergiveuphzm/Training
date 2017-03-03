@@ -404,15 +404,32 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="设备个数"
+                            android:layout_weight="0.8"
                             android:textSize="25sp"/>
 
                         <Spinner
+                            android:layout_weight="0.5"
                             android:id="@+id/sp_dev_num"
-                            android:layout_width="200dp"
+                            android:layout_width="190dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:background="@drawable/spinner">
                         </Spinner>
+
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="开灯"
+                            android:layout_weight="1"
+                            android:id="@+id/btn_on" />
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="关灯"
+                            android:layout_weight="1"
+                            android:id="@+id/btn_off" />
 
                     </LinearLayout>
 

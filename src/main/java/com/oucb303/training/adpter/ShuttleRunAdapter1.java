@@ -57,8 +57,8 @@ public class ShuttleRunAdapter1 extends BaseAdapter
             view = LayoutInflater.from(context).inflate(R.layout.item_shuttle_run_group_time1, null);
         TextView tvGroupId = (TextView) view.findViewById(R.id.tv_group_id);
         TextView tvFinishTimes = (TextView) view.findViewById(R.id.tv_group_finish_times);
-
         TextView tvGroupTotalTime = (TextView) view.findViewById(R.id.tv_total_time);
+
         tvGroupId.setText("第 " + (position + 1) + " 组");
         tvFinishTimes.setText(completedTimes[position] + "");
        if (completedTimes[position]<0)
