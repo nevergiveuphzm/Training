@@ -354,8 +354,13 @@ public class MainActivity extends Activity
         {
             while (powerFlag)
             {
-                // 发送获取全部设备电量指令
+                //发送获取全部设备电量指令
                 device.sendGetDeviceInfo();
+                Timer.sleep(300);
+                device.sendGetDeviceInfo();
+                Timer.sleep(300);
+                device.sendGetDeviceInfo();
+
                 //开启接收电量的线程
                 new ReceiveThread(handler, device.ftDev, ReceiveThread.POWER_RECEIVE_THREAD,
                         POWER_RECEIVE).start();

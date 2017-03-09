@@ -24,11 +24,14 @@ import com.oucb303.training.device.Device;
 import com.oucb303.training.device.Order;
 import com.oucb303.training.listener.SpinnerItemSelectedListener;
 import com.oucb303.training.model.DeviceInfo;
+import com.oucb303.training.model.PowerInfoComparetor;
 import com.oucb303.training.model.TimeInfo;
 import com.oucb303.training.threads.ReceiveThread;
+import com.oucb303.training.threads.Timer;
 import com.oucb303.training.utils.DataAnalyzeUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
@@ -112,6 +115,7 @@ public class TestActivity extends AppCompatActivity
                     if (data.length() > 0)
                     {
                         List<DeviceInfo> infos = DataAnalyzeUtils.analyzePowerData(data);
+                        Collections.sort(infos, new PowerInfoComparetor());
                         addressList.clear();
                         Device.DEVICE_LIST.addAll(infos);
                         for (DeviceInfo info : infos)
@@ -232,6 +236,14 @@ public class TestActivity extends AppCompatActivity
                 addressList.clear();
                 Device.DEVICE_LIST.clear();
                 addressAdapter.notifyDataSetChanged();
+                device.sendGetDeviceInfo();
+                Timer.sleep(300);
+                device.sendGetDeviceInfo();
+                Timer.sleep(300);
+                device.sendGetDeviceInfo();
+                Timer.sleep(300);
+                device.sendGetDeviceInfo();
+                Timer.sleep(300);
                 device.sendGetDeviceInfo();
                 new ReceiveThread(handler, device.ftDev, ReceiveThread.POWER_RECEIVE_THREAD, 2).start();
                 break;

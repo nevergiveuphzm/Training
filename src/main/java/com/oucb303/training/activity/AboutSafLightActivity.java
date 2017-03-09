@@ -72,8 +72,8 @@ public class AboutSafLightActivity extends AppCompatActivity
 
     private void initView()
     {
-        tvAppName.setText("SafLight v" + packageInfo.versionName);
-        tvTitle.setText("关于SafLight");
+        tvAppName.setText("saflight v" + packageInfo.versionName);
+        tvTitle.setText("关于saflight");
 
 
         dialog = new ProgressDialog(this);
