@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by HP on 2017/2/28.
+ * Created by HP on 2017/2/28  .
  */
 public class DetailsActivity extends AppCompatActivity {
 
