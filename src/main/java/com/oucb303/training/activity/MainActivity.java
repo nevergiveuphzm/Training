@@ -196,6 +196,7 @@ public class MainActivity extends Activity
      */
     private void initView()
     {
+        tvDeviceCount.setText("共" + Device.DEVICE_LIST.size() + "个设备");
         //屏蔽或放开测试按钮
         SharedPreferences sp = getSharedPreferences("Training", MODE_PRIVATE);
         if (sp.getBoolean("flag_btnTest_visible", false))
@@ -360,7 +361,6 @@ public class MainActivity extends Activity
                 device.sendGetDeviceInfo();
                 Timer.sleep(300);
                 device.sendGetDeviceInfo();
-
                 //开启接收电量的线程
                 new ReceiveThread(handler, device.ftDev, ReceiveThread.POWER_RECEIVE_THREAD,
                         POWER_RECEIVE).start();
