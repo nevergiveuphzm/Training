@@ -196,7 +196,6 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
     protected void onDestroy() {
         super.onDestroy();
         device.disconnect();
-
     }
 
     private void initView() {

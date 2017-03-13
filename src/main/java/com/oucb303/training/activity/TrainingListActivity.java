@@ -41,6 +41,7 @@ public class TrainingListActivity extends Activity
             {"换物跑", "描述1", R.drawable.bwp, 4, "1 2 3"},
             {"运球比赛", "描述1", R.drawable.ball, 5, "1 2 3"},
             {"大课间活动","描述1",R.drawable.run,8,"1 2 3"},
+            {"八分钟跑","描述1",R.drawable.run,9,"1 2 3"},
             {"多人混战", "描述1", R.drawable.ball, 6, "4"},
             {"双人对抗", "描述1", R.drawable.srdk, 7, "4"}
     };
@@ -108,6 +109,12 @@ public class TrainingListActivity extends Activity
                     //大课间活动
                     case 8:
                         intent.setClass(TrainingListActivity.this, LargeRecessActivity.class);
+                        intent.putExtra("level", level);
+                        startActivity(intent);
+                        break;
+                    //八分钟跑
+                    case 9:
+                        intent.setClass(TrainingListActivity.this, EightSecondRunActivity.class);
                         intent.putExtra("level", level);
                         startActivity(intent);
                         break;

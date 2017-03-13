@@ -19,6 +19,7 @@ import java.util.List;
 
 public class RandomTimeAdapter extends BaseAdapter
 {
+    //TimeInfo里包括：设备编号，返回的时间，数据是否有效
     private List<TimeInfo> timeList;
     private Context context;
     private LayoutInflater inflater;

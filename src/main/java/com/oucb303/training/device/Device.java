@@ -194,7 +194,7 @@ public class Device
             }
         }
     }
-//    type为0表示：折返跑，换物跑，运球比赛，大课间活动，type为1表示：纵跳摸高，仰卧起坐
+//    type为0表示：折返跑，换物跑，运球比赛，大课间活动,八秒钟跑，type为1表示：纵跳摸高，仰卧起坐
     public void  turnOnButton(int groupNum,int groupSize,int type)
     {
         if (type==0){
