@@ -362,7 +362,7 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
         timer.start();
     }
 
-    //结束训练
+    //结束训 练
     public void stopTraining() {
         trainingBeginFlag = false;
         btnBegin.setText("开始");
