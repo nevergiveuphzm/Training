@@ -406,10 +406,12 @@ public class RandomTrainingActivity extends Activity {
         //训练开始
         trainingFlag = true;
         btnBegin.setText("停止");
+        //运行的总次数
         totalTimes = new Integer(tvTrainingTimes.getText().toString().trim());
         //totalTimes = 10000;
         delayTime = (int) ((new Double(tvDelayTime.getText().toString().trim())) * 1000);
         overTime = new Integer(tvOverTime.getText().toString().trim()) * 1000;
+        //训练总时间
         trainingTime = (int) ((new Double(tvTrainingTime.getText().toString().trim())) * 60 * 1000);
         Log.d(Constant.LOG_TAG, "系统参数:" + totalTimes + "-" + delayTime + "-" +
                 overTime);
@@ -418,6 +420,7 @@ public class RandomTrainingActivity extends Activity {
         durationTime = 0;
         lostTimes = 0;
         timeList.clear();
+        //平均时间和遗漏次数
         tvAverageTime.setText("---");
         tvLostTimes.setText("---");
         timeAdapter.notifyDataSetChanged();
@@ -430,8 +433,7 @@ public class RandomTrainingActivity extends Activity {
         overTimeThread = new OverTimeThread();
         overTimeThread.start();
         //开启接收返回灭灯时间线程
-        new ReceiveThread(handler, device.ftDev, ReceiveThread.TIME_RECEIVE_THREAD,
-                TIME_RECEIVE).start();
+        new ReceiveThread(handler, device.ftDev, ReceiveThread.TIME_RECEIVE_THREAD, TIME_RECEIVE).start();
         //开启计时线程
         beginTime = System.currentTimeMillis();
         timer = new Timer(timerHandler, trainingTime);
@@ -487,6 +489,7 @@ public class RandomTrainingActivity extends Activity {
             public void run() {
                 if (delayTime > 0)
                     Timer.sleep(delayTime);
+                //获取到的是当前亮的灯编号
                 lastTurnOnLight = getLightNum();
                 device.sendOrder(lastTurnOnLight,
                         Order.LightColor.values()[lightColorCheckBox.getCheckId()],

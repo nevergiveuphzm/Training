@@ -51,6 +51,7 @@
         <activity android:name=".activity.DetailsActivity"/>
         <activity android:name=".activity.VideoActivity"/>
         <activity android:name=".activity.SitUpsActivity"/>
+        <activity android:name=".activity.EightSecondRunActivity"/>
         <activity
             android:name=".activity.TestActivity"
             android:windowSoftInputMode="stateVisible|adjustResize">
