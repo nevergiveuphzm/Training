@@ -76,7 +76,7 @@ public class TestActivity extends AppCompatActivity
     @Bind(R.id.btn_change1)
     Button btnChange1;
 
-    private String[] colors = {"000无", "001蓝", "010红", "011品红"};
+    private String[] colors = {"000无", "001蓝", "010红", "011绿","100蓝-红","101蓝-绿","110红-绿","111蓝-红-绿"};
     private String[] voices = {"00无", "01短响", "10连续响1s", "11连续响2s"};
     private String[] blinks = {"00无", "01快闪", "10慢闪", "11先闪后灭"};
     private String[] lights = {"000无", "001外圈灯亮", "010里圈灯亮", "011全部亮", "100关灯"};

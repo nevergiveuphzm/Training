@@ -18,8 +18,8 @@ public class Order
     /*灯的颜色*/
     public static enum LightColor
     {
-        /*无、蓝色、红色*/
-        NONE, BLUE, RED, BLUE_RED
+        /*无、蓝色、红色、绿色、蓝-红、*/
+        NONE, BLUE, RED, GREEN, BLUE_RED,BLUE_GREEN,RED_GREEN,BLUE_RED_GREEN
     }
 
     /*蜂鸣器*/
