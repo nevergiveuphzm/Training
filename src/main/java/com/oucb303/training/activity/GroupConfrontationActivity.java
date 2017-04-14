@@ -214,6 +214,7 @@ public class GroupConfrontationActivity extends AppCompatActivity
         {
             case R.id.layout_cancel:
                 this.finish();
+                device.turnOffAllTheLight();
                 break;
             case R.id.btn_begin:
                 //检测设备
@@ -249,7 +250,9 @@ public class GroupConfrontationActivity extends AppCompatActivity
             for (int j = 0; j < groupSize; j++)
             {
                 GroupLightInfo lightInfo = new GroupLightInfo();
+                //设备编号
                 lightInfo.deviceInfo = Device.DEVICE_LIST.get(i * groupSize + j);
+                //0表示该是还未亮起
                 lightInfo.lightFlag = 0;
                 lightInfos[i].add(lightInfo);
             }
@@ -267,9 +270,11 @@ public class GroupConfrontationActivity extends AppCompatActivity
         //开启接收时间线程
         new ReceiveThread(handler, device.ftDev, ReceiveThread.TIME_RECEIVE_THREAD, TIME_RECEIVE).start();
 
-        int position1 = createRandomNum(0);
+        int position1 = createRandomNum(0);//从第一组还未亮起的灯中随机抽取一个
         GroupLightInfo temp = lightInfos[0].get(position1);
+        //lightFlag为1表示设备亮正常颜色
         temp.lightFlag = 1;
+        //亮蓝灯
         turnOnLight(position1, 0, 1);
 
         int position2 = createRandomNum(0);
@@ -300,7 +305,7 @@ public class GroupConfrontationActivity extends AppCompatActivity
         Random random = new Random();
         while (true)
         {
-            int rand = random.nextInt(100) % groupSize;
+            int rand = random.nextInt(100) % groupSize;//0-groupSize-1
 
             int lightFlg = lightInfos[groupNum].get(rand).lightFlag;
             if (lightFlg == 0)

@@ -148,6 +148,7 @@ public class DribblingGameActivity extends AppCompatActivity {
     private long startTime;
     private ArrayList<Integer> listRand = new ArrayList<>();
 
+
     private int level;
 
     private Handler handler = new Handler() {
@@ -334,6 +335,7 @@ public class DribblingGameActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.layout_cancel:
                 this.finish();
+                device.turnOffAllTheLight();
                 break;
             case R.id.btn_begin:
                 //检测设备
@@ -386,7 +388,7 @@ public class DribblingGameActivity extends AppCompatActivity {
         }
         dribblingGameAdapter.setScores(scores);
         dribblingGameAdapter.notifyDataSetChanged();
-
+        //创建随机队列
         createRandomNumber();
         Log.i("listRand-----------",""+listRand.size());
         //开启全部灯
@@ -398,7 +400,9 @@ public class DribblingGameActivity extends AppCompatActivity {
                     Order.LightModel.values()[lightModeCheckBox.getCheckId()],
                     Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                     Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
+            //每次开灯的设备编号
             deviceNums[i] = Device.DEVICE_LIST.get(listRand.get(i)).getDeviceNum();
+            //每组设备灯亮起的当前时间
             duration[i] = System.currentTimeMillis();
         }
         //清除串口数据
@@ -438,29 +442,34 @@ public class DribblingGameActivity extends AppCompatActivity {
         for (TimeInfo info : infos) {
             char deviceNum = info.getDeviceNum();
             for (int i = 0; i < groupNum; i++) {
+                //i 就是对应的组号
                 if (deviceNum == deviceNums[i]) {
                     scores[i]++;
                     turnOnLight(i);
                 }
             }
         }
+        //更新成绩
         Message msg = Message.obtain();
         msg.what = UPDATE_SCORES;
         msg.obj = "";
         handler.sendMessage(msg);
     }
 
-    //开灯
+    //开某一个组的灯
     public void turnOnLight(final int groupId) {
+        //移除此列表中指定位置上的元素。
         listRand.remove(groupId);
         Random random = new Random();
         while (listRand.size() < groupNum) {
             int rand = random.nextInt(totalNum);
             if (!listRand.contains(rand)) {
+                //将指定的元素插入此列表中的指定位置。
                 listRand.add(groupId, rand);
                 deviceNums[groupId] = Device.DEVICE_LIST.get(rand).getDeviceNum();
             }
         }
+        Log.i("现在的随机序列是什么",""+listRand);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -501,6 +510,7 @@ public class DribblingGameActivity extends AppCompatActivity {
         Random random = new Random();
         while (listRand.size() < groupNum) {
             int randomInt = random.nextInt(totalNum);
+            //如果随机list里不包含产生的这个随机数，则将产生的这个随机数加入到随机list中
             if (!listRand.contains(randomInt)) {
                 listRand.add(randomInt);
             } else {

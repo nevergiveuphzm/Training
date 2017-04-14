@@ -144,7 +144,7 @@ public class RandomTrainingActivity extends Activity {
     private final int TIME_RECEIVE = 2;
     //停止训练标志
     private final int STOP_TRAINING = 3;
-    //更新时间运行次数等信息
+    //更新时间,运行次数等信息
     private final int LOST_TIME = 4;
     private final int UPDATE_TIMES = 5;
 
@@ -182,6 +182,7 @@ public class RandomTrainingActivity extends Activity {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == timer.TIMER_FLAG) {
+                //如果是时间随机，并且当前时间减去开始时间的时间差超过训练总时间
                 if (randomMode == 1 && timer.time >= trainingTime) {
                     Log.d(Constant.LOG_TAG + "xx:", timer.time + "");
                     timer.stopTimer();
@@ -275,22 +276,16 @@ public class RandomTrainingActivity extends Activity {
             //次数随机
             llTrainingTimes.setVisibility(View.VISIBLE);
             llTrainingTime.setVisibility(View.GONE);
-            barTrainingTimes.setOnSeekBarChangeListener(new MySeekBarListener
-                    (tvTrainingTimes, 500));
-            imgTrainingTimesSub.setOnTouchListener(new AddOrSubBtnClickListener
-                    (barTrainingTimes, 0));
-            imgTrainingTimesAdd.setOnTouchListener(new AddOrSubBtnClickListener
-                    (barTrainingTimes, 1));
+            barTrainingTimes.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTimes, 500));
+            imgTrainingTimesSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTimes, 0));
+            imgTrainingTimesAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTimes, 1));
         } else {
             //时间随机
             llTrainingTimes.setVisibility(View.GONE);
             llTrainingTime.setVisibility(View.VISIBLE);
-            barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener
-                    (tvTrainingTime, 30));
-            imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener
-                    (barTrainingTime, 0));
-            imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener
-                    (barTrainingTime, 1));
+            barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 30));
+            imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
+            imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
         }
         if (level != 0) {
             tvTitle.setText("换物跑");
@@ -377,6 +372,7 @@ public class RandomTrainingActivity extends Activity {
             //头部返回按钮
             case R.id.layout_cancel:
                 finish();
+                device.turnOffAllTheLight();
                 break;
             case R.id.img_help:
                 Intent intent = new Intent(this, HelpActivity.class);
@@ -413,8 +409,7 @@ public class RandomTrainingActivity extends Activity {
         overTime = new Integer(tvOverTime.getText().toString().trim()) * 1000;
         //训练总时间
         trainingTime = (int) ((new Double(tvTrainingTime.getText().toString().trim())) * 60 * 1000);
-        Log.d(Constant.LOG_TAG, "系统参数:" + totalTimes + "-" + delayTime + "-" +
-                overTime);
+        Log.d(Constant.LOG_TAG, "系统参数:" + totalTimes + "-" + delayTime + "-" + overTime);
         //数据清空
         currentTimes = 0;
         durationTime = 0;

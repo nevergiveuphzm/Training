@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -253,6 +254,7 @@ public class JumpHighActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 groupSize = i + 1;
+                Log.i("groupNum:-------------",""+groupNum);
                 if (Device.DEVICE_LIST.size() / groupSize < groupNum) {
                     Toast.makeText(JumpHighActivity.this, "当前设备数量为" + Device.DEVICE_LIST.size() + ",不能分成" + i + "组!",
                             Toast.LENGTH_LONG).show();
@@ -269,6 +271,7 @@ public class JumpHighActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 groupNum = i;
+                Log.i("groupSize:-------------",""+groupSize);
                 if (Device.DEVICE_LIST.size() / groupSize < groupNum) {
                     Toast.makeText(JumpHighActivity.this, "当前设备数量为" + Device.DEVICE_LIST.size() + ",不能分成" + i + "组!",
                             Toast.LENGTH_LONG).show();
@@ -300,6 +303,7 @@ public class JumpHighActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.layout_cancel:
                 this.finish();
+                device.turnOffAllTheLight();
                 break;
             case R.id.btn_begin:
                 if (!device.checkDevice(this))

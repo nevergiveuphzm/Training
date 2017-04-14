@@ -22,6 +22,13 @@ public class GroupListViewAdapter extends BaseAdapter
     private int groupSize;
     //分组数量
     private int groupNum;
+    //最大分组数
+//    private int maxGroupNum;
+
+    public GroupListViewAdapter(Context context)
+    {
+        this.context = context;
+    }
 
     public GroupListViewAdapter(Context context, int groupSize)
     {

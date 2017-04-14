@@ -18,7 +18,7 @@ public class Order
     /*灯的颜色*/
     public static enum LightColor
     {
-        /*无、蓝色、红色*/
+        /*无、蓝色、红色、品红*/
         NONE, BLUE, RED, BLUE_RED
     }
 

@@ -48,7 +48,7 @@ public class Device
         }
     }
 
-    //检测设备
+    //检测设备,如果没有返回false，否则返回
     public boolean checkDevice(Context context)
     {
         if (devCount <= 0)
@@ -147,7 +147,7 @@ public class Device
     }
 
     /**
-     * 区全部设备信息 电量、编号、短地址
+     * 获取全部设备信息 电量、编号、短地址
      */
     public void sendGetDeviceInfo()
     {
@@ -194,11 +194,11 @@ public class Device
             }
         }
     }
-//    type为0表示：折返跑，换物跑，运球比赛，大课间活动,八秒钟跑，type为1表示：纵跳摸高，仰卧起坐
+//    type为0表示：折返跑，换物跑，运球比赛，大课间活动,八秒钟跑，type为1表示：纵跳摸高，仰卧起坐，胆大心细
     public void  turnOnButton(int groupNum,int groupSize,int type)
     {
         if (type==0){
-            for (int i = 0; i < groupNum; i++)
+            for (int i = 0; i < groupNum*groupSize; i++)
             {
                 sendOrder(Device.DEVICE_LIST.get(i).getDeviceNum(),
                         //灯的颜色
@@ -217,11 +217,22 @@ public class Device
         }
         else {
             int a =0;
-            for (int k=1;k<=groupNum;k++){
+//            int num = groupNum%3;
+            for (int k=1;k <= groupNum;k++){
                 for (int t =0;t<groupSize;t++)
                 {
+                    if ((k%3)==0)
+                    {
+                        sendOrder(Device.DEVICE_LIST.get(t+a).getDeviceNum(),
+                                Order.LightColor.values()[3],
+                                Order.VoiceMode.NONE,
+                                Order.BlinkModel.NONE,
+                                Order.LightModel.OUTER,
+                                Order.ActionModel.NONE,
+                                Order.EndVoice.NONE);
+                    }
                     sendOrder(Device.DEVICE_LIST.get(t+a).getDeviceNum(),
-                            Order.LightColor.values()[k],
+                            Order.LightColor.values()[k % 3],
                             Order.VoiceMode.NONE,
                             Order.BlinkModel.NONE,
                             Order.LightModel.OUTER,
