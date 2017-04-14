@@ -75,6 +75,8 @@ public class TestActivity extends AppCompatActivity
     EditText etPanId1;
     @Bind(R.id.btn_change1)
     Button btnChange1;
+    @Bind(R.id.tv_blockTime)
+    TextView tvBlockTime;
 
     private String[] colors = {"000无", "001蓝", "010红", "011品红"};
     private String[] voices = {"00无", "01短响", "10连续响1s", "11连续响2s"};
@@ -138,6 +140,7 @@ public class TestActivity extends AppCompatActivity
         setContentView(R.layout.activity_test);
         ButterKnife.bind(this);
         tvTitle.setText("测试系统");
+        tvBlockTime.setText(Device.BLOCK_TIME + "ms");
 
         device = new Device(TestActivity.this);
 
@@ -214,11 +217,20 @@ public class TestActivity extends AppCompatActivity
     }
 
     @OnClick({R.id.layout_cancel, R.id.btn_send_order, R.id.btn_clear, R.id.btn_get_address,
-            R.id.btn_change, R.id.btn_change1, R.id.btn_turn_off_all_lights, R.id.btn_turn_on_all_lights})
+            R.id.btn_change, R.id.btn_change1, R.id.btn_turn_off_all_lights, R.id.btn_turn_on_all_lights,
+            R.id.btn_add_time, R.id.btn_sub_time})
     public void onClick(View view)
     {
         switch (view.getId())
         {
+            case R.id.btn_add_time:
+                Device.BLOCK_TIME++;
+                tvBlockTime.setText(Device.BLOCK_TIME + "ms");
+                break;
+            case R.id.btn_sub_time:
+                Device.BLOCK_TIME--;
+                tvBlockTime.setText(Device.BLOCK_TIME + "ms");
+                break;
             case R.id.layout_cancel:
                 this.finish();
                 break;
@@ -237,13 +249,9 @@ public class TestActivity extends AppCompatActivity
                 Device.DEVICE_LIST.clear();
                 addressAdapter.notifyDataSetChanged();
                 device.sendGetDeviceInfo();
-                Timer.sleep(300);
+                Timer.sleep(3000);
                 device.sendGetDeviceInfo();
-                Timer.sleep(300);
-                device.sendGetDeviceInfo();
-                Timer.sleep(300);
-                device.sendGetDeviceInfo();
-                Timer.sleep(300);
+                Timer.sleep(3000);
                 device.sendGetDeviceInfo();
                 new ReceiveThread(handler, device.ftDev, ReceiveThread.POWER_RECEIVE_THREAD, 2).start();
                 break;

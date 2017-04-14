@@ -22,6 +22,8 @@ public class Device
     //设备灯列表
     public static List<DeviceInfo> DEVICE_LIST = new ArrayList<>();
 
+    public static int BLOCK_TIME = 100;
+
     public FT_Device ftDev;
     private D2xxManager ftdid2xx;
 
@@ -194,10 +196,12 @@ public class Device
             }
         }
     }
-//    type为0表示：折返跑，换物跑，运球比赛，大课间活动,八秒钟跑，type为1表示：纵跳摸高，仰卧起坐
-    public void  turnOnButton(int groupNum,int groupSize,int type)
+
+    //    type为0表示：折返跑，换物跑，运球比赛，大课间活动,八秒钟跑，type为1表示：纵跳摸高，仰卧起坐
+    public void turnOnButton(int groupNum, int groupSize, int type)
     {
-        if (type==0){
+        if (type == 0)
+        {
             for (int i = 0; i < groupNum; i++)
             {
                 sendOrder(Device.DEVICE_LIST.get(i).getDeviceNum(),
@@ -214,13 +218,15 @@ public class Device
                         //感应毁灭时操作
                         Order.EndVoice.NONE);
             }
-        }
-        else {
-            int a =0;
-            for (int k=1;k<=groupNum;k++){
-                for (int t =0;t<groupSize;t++)
+        } else
+        {
+            int a = 0;
+            for (int k = 0; k < groupNum; k++)
+            {
+                for (int t = 0; t < groupSize; t++)
                 {
-                    sendOrder(Device.DEVICE_LIST.get(t+a).getDeviceNum(),
+                    k = k % 3 + 1;
+                    sendOrder(Device.DEVICE_LIST.get(t + a).getDeviceNum(),
                             Order.LightColor.values()[k],
                             Order.VoiceMode.NONE,
                             Order.BlinkModel.NONE,
@@ -228,7 +234,7 @@ public class Device
                             Order.ActionModel.NONE,
                             Order.EndVoice.NONE);
                 }
-                a+=groupSize;
+                a += groupSize;
             }
         }
     }
@@ -244,7 +250,7 @@ public class Device
 
     private synchronized void sendMessage(String data)
     {
-        Timer.sleep(20);
+        Timer.sleep(BLOCK_TIME);
         Log.d(Constant.LOG_TAG, "send message:" + data);
 
         if (ftDev.isOpen() == false)
