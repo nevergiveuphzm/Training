@@ -72,8 +72,8 @@ public class RandomTimesModuleActivity extends AppCompatActivity {
     SeekBar barOverTime;
     @Bind(R.id.img_over_time_add)
     ImageView imgOverTimeAdd;
-    @Bind(R.id.sp_light_num)
-    Spinner spLightNum;
+    //@Bind(R.id.sp_light_num)
+    //Spinner spLightNum;
     @Bind(R.id.btn_on)
     Button btnOn;
     @Bind(R.id.sp_dev_num)
