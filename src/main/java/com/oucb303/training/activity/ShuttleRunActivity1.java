@@ -281,6 +281,7 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.layout_cancel:
                 this.finish();
+                device.turnOffAllTheLight();
                 break;
             case R.id.img_help:
                 Intent intent = new Intent(this, HelpActivity.class);

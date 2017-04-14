@@ -50,17 +50,17 @@ import io.vov.vitamio.utils.StringUtils;
  * controls with the state of the MediaPlayer.
  * <p/>
  * The way to use this class is to a) instantiate it programatically or b)
- * create it in your xml layout.
+ * create it in your xml item_bold_cautious.
  * <p/>
  * a) The MediaController will create a default set of controls and put them in
  * a window floating above your application. Specifically, the controls will
  * float above the view specified with setAnchorView(). By default, the window
  * will disappear if left idle for three seconds and reappear when the user
- * touches the anchor view. To customize the MediaController's style, layout and
+ * touches the anchor view. To customize the MediaController's style, item_bold_cautious and
  * controls you should extend MediaController and override the {#link
  * {@link #makeControllerView()} method.
  * <p/>
- * b) The MediaController is a FrameLayout, you can put it in your layout xml
+ * b) The MediaController is a FrameLayout, you can put it in your item_bold_cautious xml
  * and get it through {@link #findViewById(int)}.
  * <p/>
  * NOTES: In each way, if you want customize the MediaController, the SeekBar's
@@ -71,7 +71,7 @@ import io.vov.vitamio.utils.StringUtils;
  * drawable and a play_button drawable.
  * <p/>
  * Functions like show() and hide() have no effect when MediaController is
- * created in an xml layout.
+ * created in an xml item_bold_cautious.
  */
 public class MediaController extends FrameLayout {
   private static final int sDefaultTimeout = 3000;

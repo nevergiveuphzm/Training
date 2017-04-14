@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
@@ -96,6 +97,10 @@ public class SitUpsActivity extends AppCompatActivity {
     Button btnOn;
     @Bind(R.id.btn_off)
     Button btnOff;
+    @Bind(R.id.layout_cancel)
+    LinearLayout layoutCancel;
+    @Bind(R.id.lightMode_checkBox)
+    LinearLayout lightModecheckBox;
 
     private Device device;
     private CheckBox actionModeCheckBox, lightModeCheckBox, lightColorCheckBox;
@@ -107,7 +112,7 @@ public class SitUpsActivity extends AppCompatActivity {
     //是否正在训练标志
     private boolean isTraining = false;
     //每组的设备数量  最大分组数  组数
-    private int groupSize = 2, maxGroupNum = 4, groupNum;
+    private int groupSize = 2, maxGroupNum, groupNum;
     private GroupListViewAdapter groupListViewAdapter;
     private SitUpsTimeListAdapter sitUpsTimeListAdapter;
     //训练成绩
@@ -136,7 +141,6 @@ public class SitUpsActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         device.disconnect();
-
     }
 
     private Handler handler = new Handler() {
@@ -164,7 +168,11 @@ public class SitUpsActivity extends AppCompatActivity {
 
 
     private void initView() {
-        tvTitle.setText("仰卧起坐训练");
+        if (level == 4) {
+            tvTitle.setText("交替活动");
+            lightModecheckBox.setVisibility(View.GONE);
+        } else
+            tvTitle.setText("仰卧起坐训练");
         imgHelp.setVisibility(View.VISIBLE);
 
         ///初始化分组listView
@@ -187,8 +195,7 @@ public class SitUpsActivity extends AppCompatActivity {
         Collections.sort(Device.DEVICE_LIST, new PowerInfoComparetor());
 
         //初始化分组下拉框
-        if (maxGroupNum > Device.DEVICE_LIST.size() / 2)
-            maxGroupNum = Device.DEVICE_LIST.size() / 2;
+        maxGroupNum = Device.DEVICE_LIST.size() / 2;
         String[] groupNumChoose = new String[maxGroupNum + 1];
         groupNumChoose[0] = " ";
         for (int i = 1; i <= maxGroupNum; i++)
@@ -201,8 +208,6 @@ public class SitUpsActivity extends AppCompatActivity {
                 groupListViewAdapter.notifyDataSetChanged();
             }
         });
-
-
         //训练时间拖动条初始化
         barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 10));
         imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
@@ -234,15 +239,17 @@ public class SitUpsActivity extends AppCompatActivity {
         lightColorCheckBox = new CheckBox(1, views2);
         new CheckBoxClickListener(lightColorCheckBox);
 
+        //初始化右侧listview
         sitUpsTimeListAdapter = new SitUpsTimeListAdapter(this);
         lvTimes.setAdapter(sitUpsTimeListAdapter);
     }
 
-    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help,R.id.btn_on,R.id.btn_off})
+    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help, R.id.btn_on, R.id.btn_off})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_cancel:
                 this.finish();
+                device.turnOffAllTheLight();
                 break;
             case R.id.btn_begin:
                 if (!device.checkDevice(this))
@@ -263,13 +270,14 @@ public class SitUpsActivity extends AppCompatActivity {
                 break;
             case R.id.btn_on:
                 //groupNum组数，groupSize：每组设备个数，1：类型
-                device.turnOnButton(groupNum,groupSize,1);
+                device.turnOnButton(groupNum, groupSize, 1);
                 break;
             case R.id.btn_off:
                 device.turnOffAllTheLight();
                 break;
         }
     }
+
     private void startTraining() {
         btnBegin.setText("停止");
         isTraining = true;
@@ -303,8 +311,6 @@ public class SitUpsActivity extends AppCompatActivity {
         timer.sleep(200);
         //结束接收时间线程
         ReceiveThread.stopThread();
-
-
     }
 
     //解析时间
@@ -318,6 +324,8 @@ public class SitUpsActivity extends AppCompatActivity {
                 List<TimeInfo> infos = DataAnalyzeUtils.analyzeTimeData(data);
                 for (TimeInfo info : infos) {
                     int groupId = findDeviceGroupId(info.getDeviceNum());
+                    Log.d("getDeviceNum----------", "" + info.getDeviceNum());
+                    Log.d("groupID---------------", "" + groupId);
                     char next = Device.DEVICE_LIST.get(groupId * groupSize).getDeviceNum();
                     if (next == info.getDeviceNum()) {
                         next = Device.DEVICE_LIST.get(groupId * groupSize + 1).getDeviceNum();

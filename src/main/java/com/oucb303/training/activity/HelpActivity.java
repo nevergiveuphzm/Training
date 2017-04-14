@@ -67,6 +67,18 @@ public class HelpActivity extends AppCompatActivity
             case 8:
                 imgHelpContent.setImageResource(R.drawable.help_romdom);
                 break;
+            //大课间活动
+            case 9:
+                imgHelpContent.setImageResource(R.drawable.help_large_recess);
+                break;
+            //八秒钟跑
+            case 10:
+                imgHelpContent.setImageResource(R.drawable.help_eight_run);
+                break;
+            //胆大心细
+            case 11:
+                imgHelpContent.setImageResource(R.drawable.help_bold_cautious);
+                break;
         }
     }
 

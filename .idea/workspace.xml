@@ -22,6 +22,11 @@
       </config>
     </shared>
     <layouts>
+      <layout url="file://$USER_HOME$/AppData/Local/Android/sdk/platforms/android-23/data/res/layout/simple_spinner_dropdown_item.xml">
+        <config>
+          <theme>@android:style/Theme.Material.Light</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/src/main/res/layout/activity_about_saf_light.xml">
         <config>
           <theme>@style/AppTheme</theme>
@@ -42,6 +47,11 @@
           <theme>@style/AppTheme</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/src/main/res/layout/activity_group_resist.xml">
+        <config>
+          <theme>@style/AppTheme</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/src/main/res/layout/activity_help.xml">
         <config>
           <theme>@style/AppTheme</theme>
@@ -58,6 +68,11 @@
         </config>
       </layout>
       <layout url="file://$PROJECT_DIR$/src/main/res/layout/activity_main.xml">
+        <config>
+          <theme>@style/AppTheme</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/src/main/res/layout/activity_random_train.xml">
         <config>
           <theme>@style/AppTheme</theme>
         </config>
@@ -97,12 +112,27 @@
           <theme>@style/AppTheme</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/src/main/res/layout/activity_time_keeper.xml">
+        <config>
+          <theme>@style/AppTheme</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/src/main/res/layout/activity_time_module.xml">
+        <config>
+          <theme>@style/AppTheme</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/src/main/res/layout/details.xml">
         <config>
           <theme>@style/AppTheme</theme>
         </config>
       </layout>
       <layout url="file://$PROJECT_DIR$/src/main/res/layout/dialog_add_sequence.xml">
+        <config>
+          <theme>@style/AppTheme</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/src/main/res/layout/item_bold_cautious.xml">
         <config>
           <theme>@style/AppTheme</theme>
         </config>
@@ -127,6 +157,11 @@
           <theme>@style/AppTheme</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/src/main/res/layout/item_sequenceset_lv_horizontal.xml">
+        <config>
+          <theme>@style/AppTheme</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/src/main/res/layout/item_shuttle_run_group_time1.xml">
         <config>
           <theme>@style/AppTheme</theme>
@@ -143,6 +178,21 @@
         </config>
       </layout>
       <layout url="file://$PROJECT_DIR$/src/main/res/layout/item_statistics_time1.xml">
+        <config>
+          <theme>@style/AppTheme</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/src/main/res/layout/item_time_dialog.xml">
+        <config>
+          <theme>@style/AppTheme</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/src/main/res/layout/item_time_keeper.xml">
+        <config>
+          <theme>@style/AppTheme</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/src/main/res/layout/item_time_module.xml">
         <config>
           <theme>@style/AppTheme</theme>
         </config>
@@ -164,9 +214,65 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="be2eea7d-9068-42c3-a907-aa89287108be" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/BoldCautiousActivity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_bold_cautious.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_appindexing_8_1_0.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_basement_8_1_0.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/cache.properties.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/fileHashes.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/fileSnapshots.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/outputFileStates.bin" afterPath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/outputFileStates.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/taskArtifacts.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/res/resources-debug.ap_" afterPath="$PROJECT_DIR$/build/intermediates/res/resources-debug.ap_" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/res/drawable/help_bold_cautious.png" afterPath="$PROJECT_DIR$/src/main/res/drawable/help_bold_cautious.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/generated/source/r/debug/android/support/v7/appcompat/R.java" afterPath="$PROJECT_DIR$/build/generated/source/r/debug/android/support/v7/appcompat/R.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/generated/source/r/debug/com/oucb303/training/R.java" afterPath="$PROJECT_DIR$/build/generated/source/r/debug/com/oucb303/training/R.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/manifests/full/debug/AndroidManifest.xml" afterPath="$PROJECT_DIR$/build/intermediates/manifests/full/debug/AndroidManifest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/symbols/debug/R.txt" afterPath="$PROJECT_DIR$/build/intermediates/symbols/debug/R.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/src/main/AndroidManifest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/BoldCautiousActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/BoldCautiousActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/DetailsActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/DetailsActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/DribblingGameActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/DribblingGameActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/EightSecondRunActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/EightSecondRunActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/GroupConfrontationActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/GroupConfrontationActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/GroupResistActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/GroupResistActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/HelpActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/HelpActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/JumpHighActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/JumpHighActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/LargeRecessActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/LargeRecessActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/RandomTimeActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/RandomTimeActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/RandomTimesModuleActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/RandomTimesModuleActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/RandomTrainingActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/RandomTrainingActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/ShuttleRunActivity1.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/ShuttleRunActivity1.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/SitUpsActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/SitUpsActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/TimeKeeperActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/TimeKeeperActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/TimingModuleActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/TimingModuleActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/TrainingListActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/TrainingListActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/BoldCautiousAdapter.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/BoldCautiousAdapter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/GroupListViewAdapter.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/GroupListViewAdapter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/GroupResistAdapter.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/GroupResistAdapter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/LargeDetailsAdapter.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/LargeDetailsAdapter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/RandomTimesModuleAdapter.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/RandomTimesModuleAdapter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/TimeKeeperAdapter.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/TimeKeeperAdapter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/TimingModuleAdapter.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/TimingModuleAdapter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/device/Device.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/device/Device.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/device/Order.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/device/Order.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/threads/Timer.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/threads/Timer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/RandomUtils.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/RandomUtils.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/res/layout/activity_bold_cautious.xml" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_bold_cautious.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/res/layout/activity_group_resist.xml" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_group_resist.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/res/layout/activity_large_recess.xml" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_large_recess.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/res/layout/activity_random_train.xml" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_random_train.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/res/layout/activity_sit_ups.xml" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_sit_ups.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/res/layout/activity_time_keeper.xml" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_time_keeper.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/res/layout/activity_time_module.xml" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_time_module.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/res/layout/item_bold_cautious.xml" afterPath="$PROJECT_DIR$/src/main/res/layout/item_bold_cautious.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/res/layout/item_situps_score_list.xml" afterPath="$PROJECT_DIR$/src/main/res/layout/item_situps_score_list.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/res/layout/item_statistics_time1.xml" afterPath="$PROJECT_DIR$/src/main/res/layout/item_statistics_time1.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/res/layout/item_time_dialog.xml" afterPath="$PROJECT_DIR$/src/main/res/layout/item_time_dialog.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/res/layout/item_time_keeper.xml" afterPath="$PROJECT_DIR$/src/main/res/layout/item_time_keeper.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/res/layout/item_time_module.xml" afterPath="$PROJECT_DIR$/src/main/res/layout/item_time_module.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vitamio/src/io/vov/vitamio/widget/MediaController.java" afterPath="$PROJECT_DIR$/vitamio/src/io/vov/vitamio/widget/MediaController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vitamio/src/io/vov/vitamio/widget/VideoView.java" afterPath="$PROJECT_DIR$/vitamio/src/io/vov/vitamio/widget/VideoView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vitamio/vitamio.iml" afterPath="$PROJECT_DIR$/vitamio/vitamio.iml" />
     </list>
     <ignored path="Training.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -207,41 +313,84 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="BoldCautiousActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/BoldCautiousActivity.java">
+      <file leaf-file-name="GroupResistActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/GroupResistActivity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="12" column="43" selection-start-line="12" selection-start-column="43" selection-end-line="12" selection-end-column="43" />
+              <caret line="536" column="33" selection-start-line="536" selection-start-column="33" selection-end-line="536" selection-end-column="33" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="method#onCreate#0;class#GroupResistActivity#0" expanded="false" />
+                <element signature="method#onDestroy#0;class#GroupResistActivity#0" expanded="false" />
+                <element signature="method#initView#0;class#GroupResistActivity#0" expanded="false" />
+                <element signature="method#onClick#0;class#GroupResistActivity#0" expanded="false" />
+                <element signature="method#startTraining#0;class#GroupResistActivity#0" expanded="false" />
+                <element signature="method#createRandomNumber#0;class#GroupResistActivity#0" expanded="false" />
+                <element signature="method#findDeviceGroupId#0;class#GroupResistActivity#0" expanded="false" />
+                <element signature="method#stopTraining#0;class#GroupResistActivity#0" expanded="false" />
+                <element signature="method#turnOffLight#0;class#GroupResistActivity#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="activity_bold_cautious.xml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_bold_cautious.xml">
+      <file leaf-file-name="RandomTimesModuleActivity.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/RandomTimesModuleActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7697368">
-              <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
-              <folding />
+            <state vertical-scroll-proportion="0.8976982">
+              <caret line="620" column="17" selection-start-line="620" selection-start-column="17" selection-end-line="620" selection-end-column="17" />
+              <folding>
+                <element signature="e#5838#7195#0" expanded="true" />
+                <element signature="e#7194#7195#0" expanded="true" />
+                <element signature="method#onCreate#0;class#RandomTimesModuleActivity#0" expanded="false" />
+                <element signature="method#onStart#0;class#RandomTimesModuleActivity#0" expanded="false" />
+                <element signature="method#onPause#0;class#RandomTimesModuleActivity#0" expanded="false" />
+                <element signature="method#onBackPressed#0;class#RandomTimesModuleActivity#0" expanded="false" />
+                <element signature="method#initView#0;class#RandomTimesModuleActivity#0" expanded="false" />
+                <element signature="e#10726#10734#0" expanded="true" />
+                <element signature="method#onClick#0;class#RandomTimesModuleActivity#0" expanded="false" />
+                <element signature="method#createRandomList#0;class#RandomTimesModuleActivity#0" expanded="false" />
+                <element signature="method#stopTraining#0;class#RandomTimesModuleActivity#0" expanded="false" />
+                <element signature="method#isTrainingOver#0;class#RandomTimesModuleActivity#0" expanded="false" />
+                <element signature="e#18176#19029#0" expanded="true" />
+                <element signature="e#19028#19029#0" expanded="true" />
+                <element signature="e#19913#19914#0" expanded="true" />
+                <element signature="e#19948#19949#0" expanded="true" />
+              </folding>
             </state>
-          </provider>
-          <provider editor-type-id="android-designer">
-            <state />
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="activity_sit_ups.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_sit_ups.xml">
+      <file leaf-file-name="DribblingGameActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/DribblingGameActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.4626865">
-              <caret line="122" column="70" selection-start-line="122" selection-start-column="20" selection-end-line="122" selection-end-column="70" />
-              <folding />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="148" column="60" selection-start-line="148" selection-start-column="4" selection-end-line="148" selection-end-column="60" />
+              <folding>
+                <element signature="method#onCreate#0;class#DribblingGameActivity#0" expanded="false" />
+                <element signature="method#onDestroy#0;class#DribblingGameActivity#0" expanded="false" />
+                <element signature="e#10279#10291#0" expanded="false" />
+                <element signature="method#turnOffLight#0;class#DribblingGameActivity#0" expanded="false" />
+                <element signature="method#createRandomNumber#0;class#DribblingGameActivity#0" expanded="false" />
+                <element signature="method#endingMovie#0;class#DribblingGameActivity#0" expanded="false" />
+              </folding>
             </state>
           </provider>
-          <provider editor-type-id="android-designer">
-            <state />
+        </entry>
+      </file>
+      <file leaf-file-name="RandomTrainingActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/RandomTrainingActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-14.057143">
+              <caret line="540" column="15" selection-start-line="540" selection-start-column="15" selection-end-line="540" selection-end-column="15" />
+              <folding>
+                <element signature="method#onCreate#0;class#RandomTrainingActivity#0" expanded="false" />
+                <element signature="method#onDestroy#0;class#RandomTrainingActivity#0" expanded="false" />
+                <element signature="method#initView#0;class#RandomTrainingActivity#0" expanded="false" />
+                <element signature="class#10689:11293" expanded="false" />
+                <element signature="method#onClick#0;class#RandomTrainingActivity#0" expanded="false" />
+              </folding>
+            </state>
           </provider>
         </entry>
       </file>
@@ -711,6 +860,16 @@
                 <option name="description" value="Prepare com.android.support:support-vector-drawable:23.3.0" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="prepareComAndroidSupportSupportVectorDrawable2330Library" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Prepare com.google.android.gms:play-services-appindexing:8.1.0" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="prepareComGoogleAndroidGmsPlayServicesAppindexing810Library" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Prepare com.google.android.gms:play-services-basement:8.1.0" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="prepareComGoogleAndroidGmsPlayServicesBasement810Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
@@ -1539,7 +1698,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="4460457076590" />
+        <entry key="$PROJECT_DIR$" value="4462222933060" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -1559,11 +1718,13 @@
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpcore/4.4.2/b8e98ae35bf6e3f14382deb60f2ea6e4e0e220fd/httpcore-4.4.2.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.greenrobot/greendao/3.2.0/acbf44ee00ef129add249852f9aec3d8b16bae6a/greendao-3.2.0-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.greenrobot/greendao/3.2.0/e70040568b2929b8e5869ad1ffca8e4386dc53bc/greendao-3.2.0.jar" />
+                            <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/google/m2repository/com/google/android/gms/play-services-appindexing/8.1.0/play-services-appindexing-8.1.0.aar" />
                             <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/support-vector-drawable/23.3.0/support-vector-drawable-23.3.0.aar" />
                             <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/animated-vector-drawable/23.3.0/animated-vector-drawable-23.3.0.aar" />
                             <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/support-v4/23.3.0/support-v4-23.3.0.aar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.greenrobot/greendao-api/3.2.0/82de7a8ce53fdcecc04fab6fbad3ec8f5fd4564a/greendao-api-3.2.0-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.greenrobot/greendao-api/3.2.0/c6d610abe1d75d758431c9234917a349abc0a0ac/greendao-api-3.2.0.jar" />
+                            <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/google/m2repository/com/google/android/gms/play-services-basement/8.1.0/play-services-basement-8.1.0.aar" />
                             <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.3.0/support-annotations-23.3.0.jar" />
                             <option value="$MODULE_DIR$/libs/achartengine-1.1.0.jar" />
                             <option value="$MODULE_DIR$/libs/android-async-http-1.4.8.jar" />
@@ -1857,11 +2018,13 @@
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpcore/4.4.2/b8e98ae35bf6e3f14382deb60f2ea6e4e0e220fd/httpcore-4.4.2.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.greenrobot/greendao/3.2.0/acbf44ee00ef129add249852f9aec3d8b16bae6a/greendao-3.2.0-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.greenrobot/greendao/3.2.0/e70040568b2929b8e5869ad1ffca8e4386dc53bc/greendao-3.2.0.jar" />
+                            <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/google/m2repository/com/google/android/gms/play-services-appindexing/8.1.0/play-services-appindexing-8.1.0.aar" />
                             <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/support-vector-drawable/23.3.0/support-vector-drawable-23.3.0.aar" />
                             <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/animated-vector-drawable/23.3.0/animated-vector-drawable-23.3.0.aar" />
                             <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/support-v4/23.3.0/support-v4-23.3.0.aar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.greenrobot/greendao-api/3.2.0/82de7a8ce53fdcecc04fab6fbad3ec8f5fd4564a/greendao-api-3.2.0-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.greenrobot/greendao-api/3.2.0/c6d610abe1d75d758431c9234917a349abc0a0ac/greendao-api-3.2.0.jar" />
+                            <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/google/m2repository/com/google/android/gms/play-services-basement/8.1.0/play-services-basement-8.1.0.aar" />
                             <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.3.0/support-annotations-23.3.0.jar" />
                             <option value="$MODULE_DIR$/libs/achartengine-1.1.0.jar" />
                             <option value="$MODULE_DIR$/libs/android-async-http-1.4.8.jar" />
@@ -2076,65 +2239,64 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/device/BraceletManager.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/MainActivity.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/widget/BraceletManager.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/daoservice/ShuttleRunSer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/daoservice/JumpHighSer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/DialogUtils.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/NetworkUtils.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/SettingActivity.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/entity/JumpHigh.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/entity/ShuttleRun.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/SaveActivity.java" />
-        <option value="$PROJECT_DIR$/src/main/res/layout/activity_main.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/AboutSafLightActivity.java" />
-        <option value="$PROJECT_DIR$/src/main/res/layout/layout_title_bar.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/CustomDialog.java" />
-        <option value="$PROJECT_DIR$/src/main/res/values/styles.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/ShuttleRunAdapter1.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/LargeRecessAdapter.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/Details.java" />
-        <option value="$PROJECT_DIR$/src/main/res/layout/item_largerecess_completedtimes_list.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/listener/AddOrSubBtnClickListener.java" />
-        <option value="$PROJECT_DIR$/src/main/res/layout/details.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/LargeDetailsAdapter.java" />
-        <option value="$PROJECT_DIR$/src/main/res/layout/activity_randomtraining.xml" />
-        <option value="$PROJECT_DIR$/src/main/res/layout/activity_large_recess.xml" />
-        <option value="$PROJECT_DIR$/src/main/res/layout/activity_dribbling_game.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/device/Order.java" />
-        <option value="$PROJECT_DIR$/src/main/res/layout/activity_jump_high.xml" />
-        <option value="$PROJECT_DIR$/src/main/res/layout/activity_shuttle_run1.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/DribblingGameActivity.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/JumpHighActivity.java" />
-        <option value="$PROJECT_DIR$/src/main/res/layout/activity_setting.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/SitUpsActivity.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/DetailsActivity.java" />
-        <option value="$PROJECT_DIR$/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/TrainingListActivity.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/LargeRecessActivity.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/device/Device.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/RandomTimeAdapter.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/EightSecondRunAdapter.java" />
         <option value="$PROJECT_DIR$/src/main/res/layout/item_eight_time.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/RandomTrainingActivity.java" />
         <option value="$PROJECT_DIR$/src/main/res/layout/activity_eightsecondrun.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/EightSecondRunAdapter.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/Test.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/threads/Timer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/EightSecondRunActivity.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/ShuttleRunActivity1.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/BoldCautiousActivity.java" />
-        <option value="$PROJECT_DIR$/src/main/res/layout/activity_sit_ups.xml" />
+        <option value="$PROJECT_DIR$/src/main/res/layout/item_situps_score_list.xml" />
+        <option value="$PROJECT_DIR$/src/main/res/layout/item_bold_cautious.xml" />
         <option value="$PROJECT_DIR$/src/main/res/layout/activity_bold_cautious.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/BoldCautiousAdapter.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/HelpActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/res/layout/activity_large_recess.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/BoldCautiousActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/EightSecondRunActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/res/layout/activity_sit_ups.xml" />
+        <option value="$PROJECT_DIR$/src/main/res/layout/item_time_module.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/TimeLimitAdapter.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/TimeLimitActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/TimingModuleAdapter.java" />
+        <option value="$PROJECT_DIR$/src/main/res/layout/activity_time_module.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/LargeRecessActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/res/layout/item_time_dialog.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/DetailsActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/listener/SpinnerItemSelectedListener.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/GroupListViewAdapter.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/JumpHighActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/LargeDetailsAdapter.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/threads/Timer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/RandomModuleActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/SitUpsActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/device/Device.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/RandomUtils.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/RandomTrainingActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/TimeKeeperActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/TimingModuleActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/res/layout/item_statistics_time1.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/RandomTimesModuleAdapter.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/device/Order.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/GroupConfrontationActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/TrainingListActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/src/main/res/layout/activity_group_resist.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/GroupResistAdapter.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/DribblingGameActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/GroupResistActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/res/layout/activity_time_keeper.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/TimeKeeperAdapter.java" />
+        <option value="$PROJECT_DIR$/src/main/res/layout/item_time_keeper.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/RandomTimeActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/res/layout/activity_random_train.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/RandomTimesModuleActivity.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-9" />
-    <option name="y" value="-9" />
+    <option name="x" value="-8" />
     <option name="width" value="1932" />
-    <option name="height" value="1048" />
+    <option name="height" value="1038" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -2161,16 +2323,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Training" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -2197,28 +2349,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="Training" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Training" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Training" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="layout" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -2275,19 +2405,20 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+        </subPane>
+      </pane>
+      <pane id="ProjectPane">
+        <subPane>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="Training" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Training" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="PackagesPane">
         <subPane>
           <PATH>
@@ -2308,7 +2439,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -2319,7 +2449,7 @@
     <property name="android.project.structure.proportion" value="0.15" />
     <property name="device.picker.selection" value="0123456789ABCDEF" />
     <property name="last_opened_file_path" value="D:/Git/bin/git.exe" />
-    <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager2.WIDTH" value="399" />
+    <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager2.WIDTH" value="375" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/res/mipmap-xhdpi" />
     <property name="UI_DESIGNER_EDITOR_MODE.PaletteToolWindowManager.SHOW" value="true" />
     <property name="UI_DESIGNER_EDITOR_MODE.PaletteToolWindowManager.WIDTH" value="254" />
@@ -2339,6 +2469,7 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="1136" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://D:/ASworkspase/Training/src/main/java/com/oucb303/training/activity/SitUpsActivity.java" />
   </component>
   <component name="RecentsManager">
     <key name="ExtractSuperBase.RECENT_KEYS">
@@ -2348,10 +2479,10 @@
       <recent name="com.oucb303.training.adpter" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\ASworkspase\Training\src\main\res\drawable" />
       <recent name="D:\ASworkspase\Training\src\main\java\com\oucb303\training\utils" />
       <recent name="D:\ASworkspase\Training\src\main\res\mipmap-xhdpi" />
       <recent name="D:\ASworkspase\Training\src\main\res\anim" />
-      <recent name="D:\ASworkspase\Training\src\main\res\drawable" />
       <recent name="D:\ASworkspase\Training\src\main\res\layout" />
     </key>
   </component>
@@ -2685,8 +2816,8 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1932" height="1048" extended-state="0" />
-    <editor active="false" />
+    <frame x="-8" y="0" width="1932" height="1038" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -2694,26 +2825,26 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32945284" sideWeight="0.49785867" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.443539" sideWeight="0.4914071" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41327125" sideWeight="0.4914071" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.46100116" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4581861" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32945284" sideWeight="0.50428265" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32945284" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32945284" sideWeight="0.49785867" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3492433" sideWeight="0.49785867" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34864548" sideWeight="0.49785867" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32975295" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32945284" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20300752" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32945284" sideWeight="0.49571735" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2244898" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286219" sideWeight="0.49571735" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286219" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -2731,248 +2862,315 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="65" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/DribblingGameActivity.java</url>
+          <line>459</line>
+          <properties class="com.oucb303.training.activity.DribblingGameActivity" method="turnOnLight" />
+          <option name="timeStamp" value="104" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="107" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-23/android/widget/TextView.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/listener/AddOrSubBtnClickListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33252722">
-          <caret line="4172" column="22" selection-start-line="4172" selection-start-column="22" selection-end-line="4172" selection-end-column="22" />
-          <folding>
-            <element signature="e#149532#149533#0" expanded="false" />
-            <element signature="e#149574#149575#0" expanded="false" />
-          </folding>
+        <state vertical-scroll-proportion="0.33292535">
+          <caret line="26" column="11" selection-start-line="26" selection-start-column="11" selection-end-line="26" selection-end-column="11" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/LargeDetailsAdapter.java">
+    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-23/java/text/DecimalFormat.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36275697">
-          <caret line="81" column="22" selection-start-line="81" selection-start-column="22" selection-end-line="81" selection-end-column="22" />
+        <state vertical-scroll-proportion="0.33292535">
+          <caret line="533" column="11" selection-start-line="533" selection-start-column="11" selection-end-line="533" selection-end-column="11" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_jump_high.xml">
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.764706">
-          <caret line="163" column="54" selection-start-line="163" selection-start-column="54" selection-end-line="163" selection-end-column="54" />
+    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-23/android/view/LayoutInflater.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33292535">
+          <caret line="372" column="16" selection-start-line="372" selection-start-column="16" selection-end-line="372" selection-end-column="16" />
         </state>
       </provider>
-      <provider selected="true" editor-type-id="android-designer">
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/res/layout/item_statistics_time1.xml">
+      <provider editor-type-id="android-designer">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-23/android/util/Log.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33252722">
-          <caret line="108" column="49" selection-start-line="108" selection-start-column="49" selection-end-line="108" selection-end-column="49" />
-          <folding>
-            <element signature="e#3623#3624#0" expanded="false" />
-          </folding>
+        <state vertical-scroll-proportion="-4.1044774">
+          <caret line="27" column="37" selection-start-line="27" selection-start-column="37" selection-end-line="27" selection-end-column="37" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/SettingActivity.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/RandomTimeAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="75" column="39" selection-start-line="75" selection-start-column="39" selection-end-line="75" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_setting.xml">
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.4117646">
-          <caret line="93" column="40" selection-start-line="93" selection-start-column="40" selection-end-line="93" selection-end-column="40" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_help.xml">
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/drawable/help_shuttle_run.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/SequenceTrainingActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.8742442">
-          <caret line="51" column="13" selection-start-line="51" selection-start-column="13" selection-end-line="51" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/SequenceRunningActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.6324062">
-          <caret line="249" column="39" selection-start-line="249" selection-start-column="39" selection-end-line="249" selection-end-column="39" />
+          <caret line="66" column="31" selection-start-line="66" selection-start-column="31" selection-end-line="66" selection-end-column="31" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/JumpHighActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.030229745">
-          <caret line="433" column="19" selection-start-line="433" selection-start-column="19" selection-end-line="433" selection-end-column="19" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="426" column="78" selection-start-line="426" selection-start-column="78" selection-end-line="426" selection-end-column="78" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/SitUpsActivity.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/RandomUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3349456">
-          <caret line="342" column="75" selection-start-line="342" selection-start-column="75" selection-end-line="342" selection-end-column="75" />
+        <state vertical-scroll-proportion="0.42321643">
+          <caret line="14" column="59" selection-start-line="14" selection-start-column="59" selection-end-line="14" selection-end-column="59" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/GroupConfrontationActivity.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/RandomTimesModuleAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.030229745">
-          <caret line="221" column="35" selection-start-line="221" selection-start-column="35" selection-end-line="221" selection-end-column="35" />
+        <state vertical-scroll-proportion="0.35740513">
+          <caret line="58" column="15" selection-start-line="58" selection-start-column="15" selection-end-line="58" selection-end-column="15" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/DetailsActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2744861">
-          <caret line="65" column="21" selection-start-line="65" selection-start-column="21" selection-end-line="65" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/device/Order.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.030229745">
-          <caret line="42" column="16" selection-start-line="42" selection-start-column="16" selection-end-line="42" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/drawable/jump.png">
-      <provider selected="true" editor-type-id="images">
+    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/platforms/android-23/data/res/layout/simple_spinner_dropdown_item.xml">
+      <provider selected="true" editor-type-id="android-designer">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/TrainingListActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.90689236">
-          <caret line="88" column="32" selection-start-line="88" selection-start-column="32" selection-end-line="88" selection-end-column="32" />
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/listener/SpinnerItemSelectedListener.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="31" column="16" selection-start-line="31" selection-start-column="16" selection-end-line="31" selection-end-column="16" />
+          <caret line="25" column="87" selection-start-line="25" selection-start-column="87" selection-end-line="25" selection-end-column="87" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-23/android/widget/ArrayAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33292535">
+          <caret line="412" column="16" selection-start-line="412" selection-start-column="16" selection-end-line="412" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/entity/ShuttleRun.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="90" column="45" selection-start-line="90" selection-start-column="45" selection-end-line="90" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/daoservice/ShuttleRunSer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="29" column="27" selection-start-line="29" selection-start-column="27" selection-end-line="29" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/entity/JumpHigh.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="88" column="23" selection-start-line="88" selection-start-column="23" selection-end-line="88" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/SaveActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="3.0293758">
+          <caret line="194" column="25" selection-start-line="194" selection-start-column="25" selection-end-line="194" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-23/android/view/View.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33292535">
+          <caret line="17194" column="16" selection-start-line="17194" selection-start-column="16" selection-end-line="17194" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/res/layout/item_sequenceset_lv_horizontal.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/ConfrontationAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="54" column="74" selection-start-line="54" selection-start-column="74" selection-end-line="54" selection-end-column="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/ShuttleRunActivity1.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.285714">
+          <caret line="133" column="38" selection-start-line="133" selection-start-column="38" selection-end-line="133" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/TrainingListActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="166" column="56" selection-start-line="166" selection-start-column="56" selection-end-line="166" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-17.147058">
+          <caret line="89" column="61" selection-start-line="89" selection-start-column="61" selection-end-line="89" selection-end-column="61" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_dribbling_game.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.7761195">
-          <caret line="334" column="40" selection-start-line="334" selection-start-column="40" selection-end-line="334" selection-end-column="40" />
-        </state>
-      </provider>
       <provider editor-type-id="android-designer">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/model/CheckBox.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45586458">
-          <caret line="17" column="30" selection-start-line="17" selection-start-column="30" selection-end-line="17" selection-end-column="30" />
+        <state vertical-scroll-proportion="0.9668508">
+          <caret line="14" column="26" selection-start-line="0" selection-start-column="0" selection-end-line="732" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/layout/item_statistics_time.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.625">
-          <caret line="19" column="26" selection-start-line="0" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_group_resist.xml">
       <provider editor-type-id="android-designer">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/layout/item_statistics_time1.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.65789473">
-          <caret line="20" column="19" selection-start-line="0" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.4">
+          <caret line="424" column="45" selection-start-line="424" selection-start-column="45" selection-end-line="424" selection-end-column="45" />
         </state>
       </provider>
-      <provider editor-type-id="android-designer">
-        <state />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/DGroupListViewAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="11" selection-start-line="22" selection-start-column="11" selection-end-line="22" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/DetailsActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="69" column="63" selection-start-line="69" selection-start-column="63" selection-end-line="69" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/AboutSafLightActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="44" column="13" selection-start-line="44" selection-start-column="13" selection-end-line="44" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/threads/Timer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6634027">
+          <caret line="78" column="16" selection-start-line="78" selection-start-column="16" selection-end-line="78" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/threads/ReceiveThread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7246022">
+          <caret line="101" column="23" selection-start-line="101" selection-start-column="23" selection-end-line="101" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/device/Order.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="32" column="23" selection-start-line="32" selection-start-column="23" selection-end-line="32" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/LargeRecessActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="158" column="26" selection-start-line="158" selection-start-column="26" selection-end-line="158" selection-end-column="26" />
+          <folding>
+            <element signature="e#4653#5528#0" expanded="false" />
+            <element signature="e#5527#5528#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/GroupResistAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.69400245">
+          <caret line="55" column="36" selection-start-line="55" selection-start-column="36" selection-end-line="55" selection-end-column="36" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/DribblingGameAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="50" column="26" selection-start-line="50" selection-start-column="26" selection-end-line="50" selection-end-column="26" />
+          <caret line="47" column="61" selection-start-line="47" selection-start-column="52" selection-end-line="47" selection-end-column="61" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#765#766#0" expanded="false" />
+            <element signature="e#792#793#0" expanded="false" />
+            <element signature="e#849#850#0" expanded="false" />
+            <element signature="e#873#874#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-23/android/widget/AbsSpinner.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/SitUpsActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33252722">
-          <caret line="276" column="16" selection-start-line="276" selection-start-column="16" selection-end-line="276" selection-end-column="16" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="317" column="7" selection-start-line="317" selection-start-column="7" selection-end-line="319" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/layout/item_eight_time.xml">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/BaseTrainingActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33289474">
-          <caret line="23" column="32" selection-start-line="23" selection-start-column="32" selection-end-line="23" selection-end-column="32" />
+        <state vertical-scroll-proportion="0.59319526">
+          <caret line="52" column="49" selection-start-line="52" selection-start-column="49" selection-end-line="52" selection-end-column="49" />
         </state>
       </provider>
-      <provider editor-type-id="android-designer">
-        <state />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/GroupConfrontationActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="167" column="32" selection-start-line="167" selection-start-column="32" selection-end-line="167" selection-end-column="32" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-23/java/util/ArrayList.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="4.9274487">
-          <caret line="186" column="29" selection-start-line="186" selection-start-column="29" selection-end-line="186" selection-end-column="29" />
+        <state vertical-scroll-proportion="0.33284023">
+          <caret line="142" column="26" selection-start-line="142" selection-start-column="26" selection-end-line="142" selection-end-column="26" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_randomtraining.xml">
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.7352941">
-          <caret line="870" column="50" selection-start-line="870" selection-start-column="50" selection-end-line="870" selection-end-column="50" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_large_recess.xml">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/model/DeviceInfo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3618421">
-          <caret line="48" column="40" selection-start-line="48" selection-start-column="40" selection-end-line="48" selection-end-column="40" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-23/java/lang/String.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33252722">
-          <caret line="288" column="23" selection-start-line="288" selection-start-column="23" selection-end-line="288" selection-end-column="23" />
+        <state vertical-scroll-proportion="0.6286982">
+          <caret line="29" column="24" selection-start-line="29" selection-start-column="15" selection-end-line="29" selection-end-column="24" />
+          <folding>
+            <element signature="e#384#385#0" expanded="false" />
+            <element signature="e#416#417#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/DataAnalyzeUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.15114874">
-          <caret line="121" column="24" selection-start-line="121" selection-start-column="24" selection-end-line="121" selection-end-column="24" />
+        <state vertical-scroll-proportion="0.33175355">
+          <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2980,142 +3178,155 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="21" column="16" selection-start-line="21" selection-start-column="16" selection-end-line="21" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/HelpActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.030229745">
-          <caret line="40" column="68" selection-start-line="40" selection-start-column="68" selection-end-line="40" selection-end-column="68" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/TestActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.60459495">
-          <caret line="43" column="13" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7915567">
-          <caret line="12" column="18" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/device/Device.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="116" column="0" selection-start-line="116" selection-start-column="0" selection-end-line="116" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="161" column="46" selection-start-line="161" selection-start-column="46" selection-end-line="161" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_shuttle_run1.xml">
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.9411764">
-          <caret line="50" column="40" selection-start-line="50" selection-start-column="40" selection-end-line="50" selection-end-column="40" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-23/android/os/Message.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33252722">
-          <caret line="64" column="18" selection-start-line="64" selection-start-column="18" selection-end-line="64" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/EightSecondRunAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="56" column="32" selection-start-line="56" selection-start-column="32" selection-end-line="56" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/ShuttleRunActivity1.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.9927448">
-          <caret line="359" column="35" selection-start-line="359" selection-start-column="35" selection-end-line="359" selection-end-column="35" />
           <folding>
-            <element signature="method#onStart#0;class#ShuttleRunActivity1#0" expanded="false" />
-            <element signature="method#onDestroy#0;class#ShuttleRunActivity1#0" expanded="false" />
-            <element signature="method#onClick#0;class#ShuttleRunActivity1#0" expanded="false" />
-            <element signature="method#stopTraining#0;class#ShuttleRunActivity1#0" expanded="false" />
+            <element signature="e#370#371#0" expanded="true" />
+            <element signature="e#412#413#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/EightSecondRunActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.030229745">
-          <caret line="136" column="58" selection-start-line="136" selection-start-column="58" selection-end-line="136" selection-end-column="58" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#onCreate#0;class#EightSecondRunActivity#0" expanded="false" />
-            <element signature="method#onDestroy#0;class#EightSecondRunActivity#0" expanded="false" />
-            <element signature="method#initView#0;class#EightSecondRunActivity#0" expanded="false" />
-            <element signature="method#onClick#0;class#EightSecondRunActivity#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/threads/ReceiveThread.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.57678354">
-          <caret line="96" column="28" selection-start-line="96" selection-start-column="22" selection-end-line="96" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/threads/Timer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.18379685">
-          <caret line="56" column="25" selection-start-line="56" selection-start-column="16" selection-end-line="56" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/RandomTrainingActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.030229745">
-          <caret line="399" column="81" selection-start-line="399" selection-start-column="81" selection-end-line="399" selection-end-column="81" />
+        <state vertical-scroll-proportion="-14.057143">
+          <caret line="540" column="15" selection-start-line="540" selection-start-column="15" selection-end-line="540" selection-end-column="15" />
           <folding>
             <element signature="method#onCreate#0;class#RandomTrainingActivity#0" expanded="false" />
             <element signature="method#onDestroy#0;class#RandomTrainingActivity#0" expanded="false" />
+            <element signature="method#initView#0;class#RandomTrainingActivity#0" expanded="false" />
+            <element signature="class#10689:11293" expanded="false" />
             <element signature="method#onClick#0;class#RandomTrainingActivity#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/RandomTimeAdapter.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/device/Device.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.63724303">
-          <caret line="71" column="32" selection-start-line="71" selection-start-column="32" selection-end-line="71" selection-end-column="32" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="200" column="36" selection-start-line="200" selection-start-column="36" selection-end-line="200" selection-end-column="36" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/TimeKeeperActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="130" column="21" selection-start-line="130" selection-start-column="21" selection-end-line="130" selection-end-column="21" />
+          <folding>
+            <element signature="method#onCreate#0;class#TimeKeeperActivity#0" expanded="false" />
+            <element signature="method#onStart#0;class#TimeKeeperActivity#0" expanded="false" />
+            <element signature="method#onDestroy#0;class#TimeKeeperActivity#0" expanded="false" />
+            <element signature="method#onItemClick#0;class#TimeKeeperActivity#0" expanded="false" />
+            <element signature="method#onClick#0;class#TimeKeeperActivity#0" expanded="false" />
+            <element signature="method#turnOnLight#0;class#TimeKeeperActivity#0" expanded="false" />
+            <element signature="e#17172#17248#0" expanded="false" />
+            <element signature="method#findDeviceGroupId#0;class#TimeKeeperActivity#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/RandomTimeActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7303507">
+          <caret line="388" column="46" selection-start-line="388" selection-start-column="46" selection-end-line="388" selection-end-column="46" />
+          <folding>
+            <element signature="method#onCreate#0;class#RandomTimeActivity#0" expanded="false" />
+            <element signature="method#onDestroy#0;class#RandomTimeActivity#0" expanded="false" />
+            <element signature="class#9858:10920" expanded="false" />
+            <element signature="class#11000:11319" expanded="false" />
+            <element signature="method#startTraining#0;class#RandomTimeActivity#0" expanded="false" />
+            <element signature="method#stopTraining#0;class#RandomTimeActivity#0" expanded="false" />
+            <element signature="method#isTrainingOver#0;class#RandomTimeActivity#0" expanded="false" />
+            <element signature="method#getLightNum#0;class#RandomTimeActivity#0" expanded="false" />
+            <element signature="e#16879#16932#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/TimingModuleActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.30471584">
+          <caret line="355" column="9" selection-start-line="355" selection-start-column="9" selection-end-line="355" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/res/layout/item_time_keeper.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.43026316">
+          <caret line="18" column="40" selection-start-line="18" selection-start-column="40" selection-end-line="18" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_time_keeper.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.4986842">
+          <caret line="501" column="56" selection-start-line="501" selection-start-column="56" selection-end-line="501" selection-end-column="56" />
+          <folding>
+            <element signature="e#1749#1780#0" expanded="true" />
+            <element signature="e#3154#3185#0" expanded="true" />
+            <element signature="e#4498#4529#0" expanded="true" />
+            <element signature="e#5601#5632#0" expanded="true" />
+            <element signature="e#5999#6030#0" expanded="true" />
+            <element signature="e#6397#6428#0" expanded="true" />
+            <element signature="e#8040#8071#0" expanded="true" />
+            <element signature="e#9363#9394#0" expanded="true" />
+            <element signature="e#10688#10719#0" expanded="true" />
+            <element signature="e#12016#12047#0" expanded="true" />
+            <element signature="e#13062#13093#0" expanded="true" />
+            <element signature="e#14384#14415#0" expanded="true" />
+            <element signature="e#15707#15738#0" expanded="true" />
+            <element signature="e#17035#17066#0" expanded="true" />
+            <element signature="e#18192#18223#0" expanded="true" />
+            <element signature="e#18725#18756#0" expanded="true" />
+            <element signature="e#19749#19780#0" expanded="true" />
+            <element signature="e#20104#20135#0" expanded="true" />
+            <element signature="e#22392#22423#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/TimeKeeperAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2986699">
+          <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/GroupResistActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="536" column="33" selection-start-line="536" selection-start-column="33" selection-end-line="536" selection-end-column="33" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#onCreate#0;class#GroupResistActivity#0" expanded="false" />
+            <element signature="method#onDestroy#0;class#GroupResistActivity#0" expanded="false" />
+            <element signature="method#initView#0;class#GroupResistActivity#0" expanded="false" />
+            <element signature="method#onClick#0;class#GroupResistActivity#0" expanded="false" />
+            <element signature="method#startTraining#0;class#GroupResistActivity#0" expanded="false" />
+            <element signature="method#createRandomNumber#0;class#GroupResistActivity#0" expanded="false" />
+            <element signature="method#findDeviceGroupId#0;class#GroupResistActivity#0" expanded="false" />
+            <element signature="method#stopTraining#0;class#GroupResistActivity#0" expanded="false" />
+            <element signature="method#turnOffLight#0;class#GroupResistActivity#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/DribblingGameActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.1535671">
-          <caret line="442" column="35" selection-start-line="442" selection-start-column="35" selection-end-line="442" selection-end-column="35" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="148" column="60" selection-start-line="148" selection-start-column="4" selection-end-line="148" selection-end-column="60" />
           <folding>
             <element signature="method#onCreate#0;class#DribblingGameActivity#0" expanded="false" />
             <element signature="method#onDestroy#0;class#DribblingGameActivity#0" expanded="false" />
-            <element signature="method#onClick#0;class#DribblingGameActivity#0" expanded="false" />
-            <element signature="method#stopTraining#0;class#DribblingGameActivity#0" expanded="false" />
-            <element signature="method#turnOnLight#0;class#DribblingGameActivity#0" expanded="false" />
+            <element signature="e#10279#10291#0" expanded="false" />
             <element signature="method#turnOffLight#0;class#DribblingGameActivity#0" expanded="false" />
             <element signature="method#createRandomNumber#0;class#DribblingGameActivity#0" expanded="false" />
             <element signature="method#endingMovie#0;class#DribblingGameActivity#0" expanded="false" />
@@ -3123,60 +3334,66 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/LargeRecessActivity.java">
+    <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_random_train.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.030229745">
-          <caret line="392" column="22" selection-start-line="392" selection-start-column="22" selection-end-line="392" selection-end-column="22" />
+        <state vertical-scroll-proportion="0.93421054">
+          <caret line="889" column="0" selection-start-line="889" selection-start-column="0" selection-end-line="889" selection-end-column="0" />
           <folding>
-            <element signature="method#onCreate#0;class#LargeRecessActivity#0" expanded="false" />
-            <element signature="method#onItemClick#0;class#LargeRecessActivity#0" expanded="false" />
-            <element signature="e#10151#10188#0" expanded="false" />
-            <element signature="method#onClick#0;class#LargeRecessActivity#0" expanded="false" />
+            <element signature="e#2032#2063#0" expanded="true" />
+            <element signature="e#2473#2504#0" expanded="true" />
+            <element signature="e#2848#2879#0" expanded="true" />
+            <element signature="e#6438#6469#0" expanded="true" />
+            <element signature="e#6882#6913#0" expanded="true" />
+            <element signature="e#7256#7287#0" expanded="true" />
+            <element signature="e#10741#10772#0" expanded="true" />
+            <element signature="e#11182#11213#0" expanded="true" />
+            <element signature="e#11556#11587#0" expanded="true" />
+            <element signature="e#15027#15058#0" expanded="true" />
+            <element signature="e#15464#15495#0" expanded="true" />
+            <element signature="e#15838#15869#0" expanded="true" />
+            <element signature="e#22047#22078#0" expanded="true" />
+            <element signature="e#22402#22433#0" expanded="true" />
+            <element signature="e#23759#23790#0" expanded="true" />
+            <element signature="e#25082#25113#0" expanded="true" />
+            <element signature="e#26407#26438#0" expanded="true" />
+            <element signature="e#27735#27766#0" expanded="true" />
+            <element signature="e#28783#28814#0" expanded="true" />
+            <element signature="e#30105#30136#0" expanded="true" />
+            <element signature="e#31428#31459#0" expanded="true" />
+            <element signature="e#32756#32787#0" expanded="true" />
+            <element signature="e#33913#33944#0" expanded="true" />
+            <element signature="e#34446#34477#0" expanded="true" />
+            <element signature="e#34984#35015#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/BoldCautiousActivity.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/RandomTimesModuleActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="43" selection-start-line="12" selection-start-column="43" selection-end-line="12" selection-end-column="43" />
+        <state vertical-scroll-proportion="0.8976982">
+          <caret line="620" column="17" selection-start-line="620" selection-start-column="17" selection-end-line="620" selection-end-column="17" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#5838#7195#0" expanded="true" />
+            <element signature="e#7194#7195#0" expanded="true" />
+            <element signature="method#onCreate#0;class#RandomTimesModuleActivity#0" expanded="false" />
+            <element signature="method#onStart#0;class#RandomTimesModuleActivity#0" expanded="false" />
+            <element signature="method#onPause#0;class#RandomTimesModuleActivity#0" expanded="false" />
+            <element signature="method#onBackPressed#0;class#RandomTimesModuleActivity#0" expanded="false" />
+            <element signature="method#initView#0;class#RandomTimesModuleActivity#0" expanded="false" />
+            <element signature="e#10726#10734#0" expanded="true" />
+            <element signature="method#onClick#0;class#RandomTimesModuleActivity#0" expanded="false" />
+            <element signature="method#createRandomList#0;class#RandomTimesModuleActivity#0" expanded="false" />
+            <element signature="method#stopTraining#0;class#RandomTimesModuleActivity#0" expanded="false" />
+            <element signature="method#isTrainingOver#0;class#RandomTimesModuleActivity#0" expanded="false" />
+            <element signature="e#18176#19029#0" expanded="true" />
+            <element signature="e#19028#19029#0" expanded="true" />
+            <element signature="e#19913#19914#0" expanded="true" />
+            <element signature="e#19948#19949#0" expanded="true" />
           </folding>
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_sit_ups.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.4626865">
-          <caret line="122" column="70" selection-start-line="122" selection-start-column="20" selection-end-line="122" selection-end-column="70" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_eightsecondrun.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.0776316">
-          <caret line="467" column="62" selection-start-line="467" selection-start-column="62" selection-end-line="467" selection-end-column="62" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_bold_cautious.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7697368">
-          <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
   </component>

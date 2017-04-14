@@ -52,6 +52,7 @@
         <activity android:name=".activity.VideoActivity"/>
         <activity android:name=".activity.SitUpsActivity"/>
         <activity android:name=".activity.EightSecondRunActivity"/>
+        <activity android:name=".activity.BoldCautiousActivity"/>
         <activity
             android:name=".activity.TestActivity"
             android:windowSoftInputMode="stateVisible|adjustResize">
@@ -77,6 +78,16 @@
             android:name=".activity.SaveActivity"
             android:windowSoftInputMode="adjustPan">
 
+        </activity>
+        <activity android:name=".activity.TimingModuleActivity">
+        </activity>
+        <activity android:name=".activity.TimeKeeperActivity">
+        </activity>
+        <activity android:name=".activity.RandomTimesModuleActivity">
+        </activity>
+        <activity android:name=".activity.RandomTimeActivity">
+        </activity>
+        <activity android:name=".activity.GroupResistActivity">
         </activity>
     </application>
 

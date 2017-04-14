@@ -40,10 +40,17 @@ public class TrainingListActivity extends Activity
             {"仰卧起坐", "描述1", R.drawable.ywqz, 3, "1 2 3"},
             {"换物跑", "描述1", R.drawable.bwp, 4, "1 2 3"},
             {"运球比赛", "描述1", R.drawable.ball, 5, "1 2 3"},
-            {"大课间活动","描述1",R.drawable.run,8,"1 2 3"},
-            {"八分钟跑","描述1",R.drawable.run,9,"1 2 3"},
+            {"大课间活动","描述1",R.drawable.large_recess,8,"1 2 3"},
+            {"八秒钟跑","描述1",R.drawable.eight,9,"1 2 3"},
+            {"胆大心细","描述1",R.drawable.bold_cautious,10,"1 2 3"},
             {"多人混战", "描述1", R.drawable.ball, 6, "4"},
-            {"双人对抗", "描述1", R.drawable.srdk, 7, "4"}
+            {"双人对抗", "描述1", R.drawable.srdk, 7, "4"},
+            {"交替", "描述1", R.drawable.ywqz, 11, "4"},//交替
+            {"限时","描述1",R.drawable.eight,12,"4"},//限时
+            {"计时","描述1",R.drawable.time_keeper,13,"4"},//计时
+            {"次数随机","描述1",R.drawable.time_keeper,14,"4"},//次数随机
+            {"时间随机","描述1",R.drawable.time_keeper,15,"4"},//时间随机
+            {"分组对抗","描述1",R.drawable.time_keeper,16,"4"}//分组对抗
     };
 
     @Override
@@ -101,6 +108,7 @@ public class TrainingListActivity extends Activity
                         intent.putExtra("level", level);
                         startActivity(intent);
                         break;
+                    //分组对抗赛
                     case 7:
                         intent.setClass(TrainingListActivity.this, GroupConfrontationActivity.class);
                         intent.putExtra("level", level);
@@ -112,9 +120,50 @@ public class TrainingListActivity extends Activity
                         intent.putExtra("level", level);
                         startActivity(intent);
                         break;
-                    //八分钟跑
+                    //八秒钟跑
                     case 9:
                         intent.setClass(TrainingListActivity.this, EightSecondRunActivity.class);
+                        intent.putExtra("level", level);
+                        startActivity(intent);
+                        break;
+                    //胆大心细
+                    case 10:
+                        intent.setClass(TrainingListActivity.this, BoldCautiousActivity.class);
+                        intent.putExtra("level", level);
+                        startActivity(intent);
+                        break;
+                    case 11://仰卧起坐---交替
+                        intent.setClass(TrainingListActivity.this, SitUpsActivity.class);
+                        intent.putExtra("level", level);
+                        startActivity(intent);
+                        break;
+                    //八秒钟跑---限时活动
+                    case 12:
+                        intent.setClass(TrainingListActivity.this, TimingModuleActivity.class);
+                        intent.putExtra("level", level);
+                        startActivity(intent);
+                        break;
+                    //计时活动
+                    case 13:
+                        intent.setClass(TrainingListActivity.this, TimeKeeperActivity.class);
+                        intent.putExtra("level", level);
+                        startActivity(intent);
+                        break;
+                    //次数随机
+                    case 14:
+                        intent.setClass(TrainingListActivity.this, RandomTimesModuleActivity.class);
+                        intent.putExtra("level", level);
+                        startActivity(intent);
+                        break;
+                    //时间随机
+                    case 15:
+                        intent.setClass(TrainingListActivity.this, RandomTimeActivity.class);
+                        intent.putExtra("level", level);
+                        startActivity(intent);
+                        break;
+                    //分组对抗
+                    case 16:
+                        intent.setClass(TrainingListActivity.this, GroupResistActivity.class);
                         intent.putExtra("level", level);
                         startActivity(intent);
                         break;
