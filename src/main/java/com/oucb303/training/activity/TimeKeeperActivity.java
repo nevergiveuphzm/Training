@@ -403,7 +403,7 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
         timeKeeperAdapter.notifyDataSetChanged();
 
         //清除串口数据
-        new ReceiveThread(handler, device.ftDev, ReceiveThread.CLEAR_DATA_THREAD, 0);
+        new ReceiveThread(handler, device.ftDev, ReceiveThread.CLEAR_DATA_THREAD, 0).start();
         //开启接收设备返回时间的监听线程
         new ReceiveThread(handler, device.ftDev, ReceiveThread.TIME_RECEIVE_THREAD, TIME_RECEIVE).start();
 
@@ -447,6 +447,8 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
             public void run() {
                 timer.sleep(5000);
 
+                if (!trainingFlag)
+                    return;
                 device.sendOrder(deviceNum,
                         Order.LightColor.values()[lightColorCheckBox.getCheckId()],
                         Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
