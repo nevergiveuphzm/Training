@@ -292,7 +292,7 @@ public class RandomTimeActivity extends AppCompatActivity {
 
         //设置延时和超时的 seekbar 拖动事件的监听器
         barDelayTime.setOnSeekBarChangeListener(new MySeekBarListener(tvDelayTime,10));
-        barOverTime.setOnSeekBarChangeListener(new MySeekBarListener(tvOverTime,28,2));
+        barOverTime.setOnSeekBarChangeListener(new MySeekBarListener(tvOverTime,25,5));
         //设置加减按钮的监听事件
         imgDelayTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime,1));
         imgDelayTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime,0));
