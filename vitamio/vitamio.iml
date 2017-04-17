@@ -58,13 +58,6 @@
       <sourceFolder url="file://$MODULE_DIR$/../../vitamio/src/main/assets" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/../../vitamio/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../vitamio/src/main/jni" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../../vitamio/src/test/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../../vitamio/src/test/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../../vitamio/src/test/assets" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../../vitamio/src/test/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../../vitamio/src/test/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../../vitamio/src/test/jni" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../../vitamio/src/test/rs" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../vitamio/src/androidTest/res" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/../../vitamio/src/androidTest/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/../../vitamio/src/androidTest/assets" type="java-test-resource" />
@@ -72,6 +65,13 @@
       <sourceFolder url="file://$MODULE_DIR$/../../vitamio/src/androidTest/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../vitamio/src/androidTest/jni" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../vitamio/src/androidTest/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../vitamio/src/test/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../../vitamio/src/test/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../../vitamio/src/test/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../../vitamio/src/test/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../vitamio/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../vitamio/src/test/jni" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../vitamio/src/test/rs" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/../../vitamio/build/intermediates/assets" />
       <excludeFolder url="file://$MODULE_DIR$/../../vitamio/build/intermediates/blame" />
       <excludeFolder url="file://$MODULE_DIR$/../../vitamio/build/intermediates/bundles" />

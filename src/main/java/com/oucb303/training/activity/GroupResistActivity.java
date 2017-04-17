@@ -376,8 +376,9 @@ public class GroupResistActivity extends AppCompatActivity {
                 device.turnOnButton(totalNum,lightEveryNum,0);
                 break;
             case R.id.btn_off:
-                for (int i = 0; i < totalNum; i++)
+//                for (int i = 0; i < totalNum; i++)
 //                    turnOffLight(Device.DEVICE_LIST.get(i).getDeviceNum());
+                device.turnOffAllTheLight();
                 break;
         }
     }

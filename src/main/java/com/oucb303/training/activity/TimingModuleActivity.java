@@ -125,6 +125,7 @@ public class TimingModuleActivity extends AppCompatActivity {
     //接收到灭灯时间标志
     private final int TIME_RECEIVE = 1;
     private final int UPDATE_TIMES = 2;
+    private final int STOP_TRAIN = 3;
 
     private TimingModuleAdapter timingModuleAdapter;
 
@@ -169,14 +170,23 @@ public class TimingModuleActivity extends AppCompatActivity {
                     String data = msg.obj.toString();
                     if (data != null && data.length() >= 4)
                     {
+
                         analyzeTimeData(data);
-                        isTrainingOver();
+
+//                        if (timeList.size() == totalNum)
+//                            stopTraining();
+                        Message msg1 = Message.obtain();
+                        msg1.what = UPDATE_TIMES;
+                        msg1.obj = "";
+                        handler.sendMessage(msg1);
                     }
                     break;
                 //更新完成次数
                 case UPDATE_TIMES:
                     timingModuleAdapter.notifyDataSetChanged();
                     break;
+                case STOP_TRAIN:
+                    isTrainingOver();
             }
         }
     };
@@ -209,8 +219,10 @@ public class TimingModuleActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+        if (trainingFlag)
+            stopTraining();
         device.disconnect();
+        super.onDestroy();
     }
 
     public void initView()
@@ -349,7 +361,11 @@ public class TimingModuleActivity extends AppCompatActivity {
         if(!trainingFlag)
             return;
         if(timeList.size() == totalNum)
+        {
             stopTraining();
+            Log.i("?????????>>>>>","<<<<<<<<<<");
+        }
+
 //        if(timer.time >= trainingTime)
 //            stopTraining();
     }
@@ -364,11 +380,15 @@ public class TimingModuleActivity extends AppCompatActivity {
 //                List<TimeInfo>infos = DataAnalyzeUtils.analyzeTimeData(data);
                 //设备编号和时间
                 timeList.addAll(DataAnalyzeUtils.analyzeTimeData(data));
-                Log.i("timeList:-----------",""+timeList);
+
                 Message msg = Message.obtain();
-                msg.what = UPDATE_TIMES;
+                msg.what = STOP_TRAIN;
                 msg.obj = "";
                 handler.sendMessage(msg);
+
+                Log.i("timeList:-----------",""+timeList);
+
+
             }
         }).start();
     }

@@ -61,7 +61,7 @@ public class TimingModuleAdapter extends BaseAdapter {
         TextView tvNote = (TextView) view.findViewById(R.id.tv_note);
 
         tvNum.setText((i+1)+"");
-        Log.i("trainingTime:------",""+trainingTime);
+//        Log.i("trainingTime:------",""+trainingTime);
         if ((timeList.get(i).getTime() == 0)||(timeList.get(i).getTime() >= trainingTime))
         {
             tvTime.setText("---");

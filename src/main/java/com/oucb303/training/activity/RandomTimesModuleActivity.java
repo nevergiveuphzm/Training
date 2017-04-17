@@ -212,13 +212,15 @@ public class RandomTimesModuleActivity extends AppCompatActivity {
                             //将列表移动到最后的位置
                             lvTimes.setSelection(timeList.size()-1);
                         }
-                        tvCurrentTimes.setText(currentTimes + "");
                         isTrainingOver();
                     }
-
+                    //Log.i("最终显示运行次数：",""+currentTimes);
+                    tvCurrentTimes.setText(currentTimes + "");
                     break;
                 case LOST_TIME:
                     tvLostTimes.setText(lostTimes + "");
+                    Log.d("AAAAAAAAAAAAAA","oerhgergerg");
+                    //tvCurrentTimes.setText("sdvdvs");
                     isTrainingOver();
                     break;
                 //更新完成次数
@@ -516,8 +518,10 @@ public class RandomTimesModuleActivity extends AppCompatActivity {
         //如果结束了
         if (!trainingFlag)
             return;
-        if (currentTimes >= totalTimes)
+        if (currentTimes >= totalTimes) {
             stopTraining();
+//            currentTimes = timeList.size();
+        }
     }
 
     public void analyseData(final String data)
@@ -583,6 +587,9 @@ public class RandomTimesModuleActivity extends AppCompatActivity {
                 Order.LightModel.TURN_OFF,
                 Order.ActionModel.TURN_OFF,
                 Order.EndVoice.NONE);
+
+        //超时了运行次数也要加1
+
         //如果超时了，也要放到timeList里，然后放到adapter里，显示在右侧的listView之中，更新listView的数据
         TimeInfo info = new TimeInfo();
         info.setDeviceNum(deviceNum);
@@ -615,8 +622,9 @@ public class RandomTimesModuleActivity extends AppCompatActivity {
                         turnOffLight(deviceNum);
                         turnOnLight(i);
                         lostTimes++;
+                        currentTimes++;
                         //更新遗漏次数
-                        Message msg = new Message();
+                        Message msg = handler.obtainMessage();
                         msg.what = LOST_TIME;
                         handler.sendMessage(msg);
                     }

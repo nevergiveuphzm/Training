@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.oucb303.training.R;
 import com.oucb303.training.adpter.RandomTimesModuleAdapter;
@@ -37,6 +38,8 @@ import com.oucb303.training.utils.RandomUtils;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -146,7 +149,7 @@ public class RandomTimeActivity extends AppCompatActivity {
     //训练开始的标志
     private boolean trainingFlag = false;
     //运行的总次数、当前运行的次数、遗漏次数、训练的总时间
-    private int totalTimes, currentTimes, lostTimes, trainingTime, currentTimes1;
+    private int totalTimes, currentTimes, lostTimes, trainingTime;
     //延迟时间 单位是毫秒
     private int delayTime;
     //超时时间 单位毫秒
@@ -165,6 +168,12 @@ public class RandomTimeActivity extends AppCompatActivity {
     private char[] currentLight;
     //获取到的是当前亮的灯编号
     private char[] lastTurnOnLight;
+    //每次开灯的设备编号
+    private char[] deviceNums;
+    //存放随机数的list
+    private List<Integer> listRand = new ArrayList<>();
+    //每组设备灯亮起的时间
+    private long[] duration;
 
     //感应模式和灯光模式集合
     private CheckBox actionModeCheckBox, lightModeCheckBox, lightColorCheckBox;
@@ -214,20 +223,21 @@ public class RandomTimeActivity extends AppCompatActivity {
                     //返回数据不为空
                     if (data !=null&&data.length()>=4)
                     {
-                        timeList.addAll(DataAnalyzeUtils.analyzeTimeData(data));
+                        analyseData(data);
                         if (randomTimesModuleAdapter != null)
                         {
                             randomTimesModuleAdapter.notifyDataSetChanged();
                             //将列表移动到最后的位置
                             lvTimes.setSelection(timeList.size()-1);
                         }
-                        Log.i("当前运行总次数currentTimes1：",""+currentTimes1);
-                        tvCurrentTimes.setText(currentTimes1 + "");
+
                         isTrainingOver();
                     }
+                    tvCurrentTimes.setText(currentTimes + "");
                     break;
                 case LOST_TIME:
                     tvLostTimes.setText(lostTimes + "");
+                    tvCurrentTimes.setText(currentTimes + "");
                     isTrainingOver();
                     break;
                 //更新完成次数
@@ -268,8 +278,20 @@ public class RandomTimeActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+        if (trainingFlag)
+            stopTraining();
         device.disconnect();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (trainingFlag) {
+            Toast.makeText(RandomTimeActivity.this, "请先停止训练后再退出!", Toast
+                    .LENGTH_SHORT).show();
+            return;
+        }
+        super.onBackPressed();
     }
 
     public void initView()
@@ -393,6 +415,7 @@ public class RandomTimeActivity extends AppCompatActivity {
                 break;
         }
     }
+
     //开始训练
     public void startTraining()
     {
@@ -407,12 +430,17 @@ public class RandomTimeActivity extends AppCompatActivity {
         //训练总时间
         trainingTime = (int) ((new Double(tvTrainingTime.getText().toString().trim())) * 60 * 1000);
         //数据清空
+        listRand.clear();
         currentTimes = 0;
-        currentTimes1 = 0;
 
         lostTimes = 0;
-        durationTime = 0;
+        //开灯命令发送后 灯持续亮的时间,单位毫秒
+        durationTime =0;
         timeList.clear();
+        //每次开灯的设备编号
+        deviceNums = new char[everyLightNum];
+        //每组设备灯亮起的时间
+        duration = new long[everyLightNum];
         //平均时间和遗漏次数
         tvAverageTime.setText("---");
         tvLostTimes.setText("---");
@@ -422,8 +450,28 @@ public class RandomTimeActivity extends AppCompatActivity {
 
         //清除串口数据
         new ReceiveThread(handler,device.ftDev,ReceiveThread.CLEAR_DATA_THREAD,0).start();
-        //发送开灯命令
-        turnOnLight();
+
+        //创建随机序列
+        createRandomList();
+        Log.i("刚开始的随机序列：",""+listRand);
+        //发送开灯命令,随机亮起某几个灯
+        for (int i = 0;i<everyLightNum;i++)
+        {
+            device.sendOrder(Device.DEVICE_LIST.get(listRand.get(i)).getDeviceNum(),
+                    Order.LightColor.values()[lightColorCheckBox.getCheckId()],
+                    Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
+                    Order.BlinkModel.NONE,
+                    Order.LightModel.values()[1],
+                    Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
+                    Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
+            //每次开灯的设备编号
+            deviceNums[i] = Device.DEVICE_LIST.get(listRand.get(i)).getDeviceNum();
+            //每组设备灯亮起的当前时间
+            duration[i] = System.currentTimeMillis();
+            //开灯命令发送后 灯持续亮的时间
+            durationTime = 0;
+        }
+
         //开启超时线程
         overTimeThread = new OverTimeThread();
         overTimeThread.start();
@@ -437,6 +485,18 @@ public class RandomTimeActivity extends AppCompatActivity {
         timer.setBeginTime(beginTime);
         timer.start();
     }
+
+    //生成随机序列
+    private void createRandomList() {
+        Random random = new Random();
+        while(listRand.size()<everyLightNum){
+            int randonInt = random.nextInt(totalNum);
+            if(!listRand.contains(randonInt)){
+                listRand.add(randonInt);
+            }
+        }
+    }
+
     //停止训练
     public void stopTraining()
     {
@@ -465,17 +525,20 @@ public class RandomTimeActivity extends AppCompatActivity {
         ReceiveThread.stopThread();
         btnBegin.setEnabled(true);
     }
+
     //判断训练是否结束
     public void isTrainingOver()
     {
         //如果结束了
         if (!trainingFlag)
             return;
-        if (currentTimes1 < totalTimes)
-            turnOnLight();
-        else
+        if (currentTimes >= totalTimes)
+        {
             stopTraining();
+        }
+
     }
+
     //获取设备编号
     public char[] getLightNum()
     {
@@ -508,46 +571,64 @@ public class RandomTimeActivity extends AppCompatActivity {
         }
         return currentLight;
     }
-    //开灯
-    public void turnOnLight()
+
+    public void analyseData(final String data)
     {
+        List<TimeInfo> infos = DataAnalyzeUtils.analyzeTimeData(data);
+        for (TimeInfo info : infos)
+        {
+            char deviceNum = info.getDeviceNum();
+            for (int i = 0; i < everyLightNum; i++) {
+                //deviceNums[i]记录每次开灯的设备编号
+                if (deviceNum == deviceNums[i]) {
+                    //i的值就是这个设备在listRand里的序号
+                    turnOnLight(i);
+                }
+            }
+            timeList.add(info);
+            currentTimes++;
+
+        }
+    }
+
+    //开灯
+    public void turnOnLight(final int position) {
+        //移除此列表中指定位置上的元素。
+        listRand.remove(position);
+        Random random = new Random();
+        while (listRand.size() < everyLightNum) {
+            int rand = random.nextInt(totalNum);
+            if (!listRand.contains(rand)) {
+                //将指定的元素插入此列表中的指定位置。
+                listRand.add(position, rand);
+                //记录这次开灯的编号
+                deviceNums[position] = Device.DEVICE_LIST.get(rand).getDeviceNum();
+            }
+        }
+        Log.i("现在的随机序列是什么",""+listRand);
         new Thread(new Runnable() {
             @Override
             public void run() {
-                if (delayTime > 0)
-                    Timer.sleep(delayTime);
-
-                lastTurnOnLight = new char[everyLightNum];
-                lastTurnOnLight = getLightNum();
-//                for (int i = 0;i<everyLightNum;i++)
-//                {
-//                    Log.i("当前亮灯编号lastTurnOnLight：",""+lastTurnOnLight[i]);
-//                }
-
-                //获取到的是当前亮的灯编号
-                for (int i = 0;i<everyLightNum;i++)
-                {
-                    device.sendOrder(lastTurnOnLight[i],
-                            Order.LightColor.values()[lightColorCheckBox.getCheckId()],
-                            Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                            Order.BlinkModel.NONE,
-                            Order.LightModel.values()[1],
-                            Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                            Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
-                    //当前运行次数
-                    currentTimes++;
-                    currentTimes1 = currentTimes/everyLightNum;
-                    //开灯命令发送后 灯持续亮的时间
-                    durationTime = 0;
-                }
-
+                Timer.sleep(200 + delayTime);
+                //若训练结束则返回
+                if (!trainingFlag)
+                    return;
+                device.sendOrder(Device.DEVICE_LIST.get(listRand.get(position)).getDeviceNum(),
+                        Order.LightColor.values()[lightColorCheckBox.getCheckId()],
+                        Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
+                        Order.BlinkModel.NONE,
+                        Order.LightModel.values()[1],
+                        Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
+                        Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
+                //记录这个灯亮起的实时时间
+                duration[position] = System.currentTimeMillis();
             }
         }).start();
     }
+
     //如果超时了就要关灯
     public void turnOffLight(char deviceNum)
     {
-
         device.sendOrder(deviceNum,
                 Order.LightColor.NONE,
                 Order.VoiceMode.values()[cbOverTimeVoice.isChecked() ? 1 : 0],
@@ -559,11 +640,13 @@ public class RandomTimeActivity extends AppCompatActivity {
         TimeInfo info = new TimeInfo();
         info.setDeviceNum(deviceNum);
         timeList.add(info);
+
         Message msg = handler.obtainMessage();
         msg.what = UPDATE_TIMES;
         msg.obj = "";
         handler.sendMessage(msg);
     }
+
     //超时线程,从开始训练就开始跑
     class OverTimeThread extends Thread
     {
@@ -576,24 +659,22 @@ public class RandomTimeActivity extends AppCompatActivity {
         public void run() {
             while (!stop)
             {
-                for (int i = 0;i<everyLightNum;i++)
-                {
+                for (int i = 0; i < everyLightNum; i++) {
+                    if (duration[i] != 0 && System.currentTimeMillis() - duration[i] > overTime) {
 
-                    durationTime += 100;
-                    //如果亮灯时间等于超时时间，关灯
-                    if (durationTime == overTime)
-                    {
-                        Log.i("当前亮灯编号??????：",""+currentLight[i]);
-                        turnOffLight(currentLight[i]);
+                        char deviceNum = Device.DEVICE_LIST.get(listRand.get(i)).getDeviceNum();
+                        Log.i("此时超时的是：",""+deviceNum);
+                        duration[i] = 0;
+                        turnOffLight(deviceNum);
+                        turnOnLight(i);
                         lostTimes++;
+                        currentTimes++;
                         //更新遗漏次数
                         Message msg = new Message();
                         msg.what = LOST_TIME;
                         handler.sendMessage(msg);
                     }
-                    Timer.sleep(100);
                 }
-
             }
         }
     }
