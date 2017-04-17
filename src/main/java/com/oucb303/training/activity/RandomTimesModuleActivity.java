@@ -608,7 +608,9 @@ public class RandomTimesModuleActivity extends AppCompatActivity {
             {
                 for (int i = 0; i < everyLightNum; i++) {
                     if (duration[i] != 0 && System.currentTimeMillis() - duration[i] > overTime) {
+
                         char deviceNum = Device.DEVICE_LIST.get(listRand.get(i)).getDeviceNum();
+                        Log.i("此时超时的是：",""+deviceNum);
                         duration[i] = 0;
                         turnOffLight(deviceNum);
                         turnOnLight(i);

@@ -261,8 +261,6 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
                 groupNum = i;
-//                Log.i("groupSize:-------------",""+groupSize);
-//                Log.i("groupNum:？？？？？？？？",""+groupNum);
                 if (Device.DEVICE_LIST.size() / groupSize < groupNum) {
                     Toast.makeText(TimeKeeperActivity.this, "当前设备数量为" + Device.DEVICE_LIST.size() + ",不能分成" + groupNum + "组!",
                             Toast.LENGTH_LONG).show();
@@ -403,7 +401,7 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
         timeKeeperAdapter.notifyDataSetChanged();
 
         //清除串口数据
-        new ReceiveThread(handler, device.ftDev, ReceiveThread.CLEAR_DATA_THREAD, 0);
+        new ReceiveThread(handler, device.ftDev, ReceiveThread.CLEAR_DATA_THREAD, 0).start();
         //开启接收设备返回时间的监听线程
         new ReceiveThread(handler, device.ftDev, ReceiveThread.TIME_RECEIVE_THREAD, TIME_RECEIVE).start();
 
@@ -447,6 +445,8 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
             public void run() {
                 timer.sleep(5000);
 
+                if (!trainingFlag)
+                    return;
                 device.sendOrder(deviceNum,
                         Order.LightColor.values()[lightColorCheckBox.getCheckId()],
                         Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],

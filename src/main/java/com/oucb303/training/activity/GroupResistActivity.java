@@ -41,8 +41,12 @@ import com.oucb303.training.utils.DataAnalyzeUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -150,10 +154,14 @@ public class GroupResistActivity extends AppCompatActivity {
     private long startTime;
     //计时器
     private Timer timer;
+    //超时线程
+    private OverTimeThread overTimeThread;
     //行表示组号，列数表示每组每次开几个灯,存放的是设备编号
     private char[][] deviceNums;
-//    //每组设备灯亮起的时间
-//    private long[] duration;
+    //每组设备灯亮起的时间
+//    private Map<Character,Integer> overTimeMap;
+    //每组设备灯亮起的时间
+    private long[] duration;
 
     Handler handler = new Handler()
     {
@@ -396,6 +404,10 @@ public class GroupResistActivity extends AppCompatActivity {
                 deviceNums[i][j] = '\0';
             }
         }
+
+        //每组设备灯亮起的时间
+        duration = new long[groupNum * lightEveryNum];
+
         groupResistAdapter.setScores(scores);
         groupResistAdapter.notifyDataSetChanged();
         //创建随机队列
@@ -417,6 +429,12 @@ public class GroupResistActivity extends AppCompatActivity {
                         Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
 
                 deviceNums[i][j] = Device.DEVICE_LIST.get(listRand.get(position)).getDeviceNum();
+
+//                overTimeMap.put(Device.DEVICE_LIST.get(listRand.get(position)).getDeviceNum(),(int)System.currentTimeMillis());
+
+                //每组设备灯亮起的当前时间
+                duration[position] = System.currentTimeMillis();
+
                 position ++;
             }
             t++;
@@ -426,6 +444,10 @@ public class GroupResistActivity extends AppCompatActivity {
 
         //开启接收设备返回时间的监听线程,返回时间和编号
         new ReceiveThread(handler, device.ftDev, ReceiveThread.TIME_RECEIVE_THREAD, TIME_RECEIVE).start();
+
+        //开启超时线程
+        overTimeThread = new OverTimeThread();
+        overTimeThread.start();
 
         startTime = System.currentTimeMillis();
         //开启计时器
@@ -556,10 +578,17 @@ public class GroupResistActivity extends AppCompatActivity {
                         Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                         Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
 
+                //记录这个灯亮起的时间编号
+//                overTimeMap.put(Device.DEVICE_LIST.get(listRand.get(finalListNum)).getDeviceNum(),(int)System.currentTimeMillis());
+
+                //记录这个灯亮起的实时时间
+                duration[finalListNum] = System.currentTimeMillis();
+
             }
         }).start();
     }
 
+    //查找设备的组号和所在的列
     private int[] findDeviceGroupId(char deviceNum) {
         //遍历deviceNums数组与deviceNum作比较
         int flag = 0;
@@ -589,6 +618,10 @@ public class GroupResistActivity extends AppCompatActivity {
         btnBegin.setText("开始");
         btnBegin.setEnabled(false);
         trainningFlag = false;
+
+        if (overTimeThread != null)
+            overTimeThread.stopThread();
+
         for (int i = 0; i < groupNum * lightEveryNum; i++)
             turnOffLight(Device.DEVICE_LIST.get(listRand.get(i)).getDeviceNum());
 
@@ -612,6 +645,34 @@ public class GroupResistActivity extends AppCompatActivity {
                         Order.EndVoice.NONE);
             }
         }).start();
+    }
+
+    class OverTimeThread extends Thread
+    {
+        private boolean stop = false;
+        public void stopThread()
+        {
+            stop = true;
+        }
+
+        @Override
+        public void run() {
+            while (!stop)
+            {
+                for (int i = 0; i < groupNum * lightEveryNum; i++) {
+                    if (duration[i] != 0 && System.currentTimeMillis() - duration[i] > overTime) {
+
+                        char deviceNum = Device.DEVICE_LIST.get(listRand.get(i)).getDeviceNum();
+                        Log.i("此时超时的是：",""+deviceNum);
+                        duration[i] = 0;
+                        turnOffLight(deviceNum);
+                        int[] Id = findDeviceGroupId(deviceNum);
+                        turnOnLight(Id[0],Id[1],deviceNum);
+                    }
+                }
+                Timer.sleep(100);
+            }
+        }
     }
 
 }

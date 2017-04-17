@@ -1,5 +1,6 @@
 package com.oucb303.training.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -117,13 +119,14 @@ public class JumpHighActivity extends AppCompatActivity {
     //训练的总时间
     private int trainingTime;
     //每组设备个数、分组数
-    private int groupSize = 1, groupNum;
+    private int groupSize = 1, groupNum,maxGroupSize;
     //是否正在训练标志
     private boolean trainingFlag = false;
 
     private int colors[];
     private int level;
 
+    private Context context;
 
     private Handler handler = new Handler() {
         @Override
@@ -182,6 +185,7 @@ public class JumpHighActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jump_high);
         ButterKnife.bind(this);
+        context = this;
         level = getIntent().getIntExtra("level", 1);
         initView();
         device = new Device(this);
@@ -205,8 +209,6 @@ public class JumpHighActivity extends AppCompatActivity {
         if (device.devCount > 0)
             device.disconnect();
     }
-
-
     private void initView() {
         tvTitle.setText("纵跳摸高");
         imgHelp.setVisibility(View.VISIBLE);
@@ -250,38 +252,69 @@ public class JumpHighActivity extends AppCompatActivity {
 
         barTrainingTime.setProgress(level);
 
-        spDevNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(this, spDevNum, new String[]{"一个", "两个", "三个", "四个"}) {
+        maxGroupSize = Device.DEVICE_LIST.size();
+        String[] lightNum = new String[maxGroupSize];
+        for (int i = 0;i < lightNum.length;i++)
+            lightNum[i] = (i+1)+"个";
+
+        spDevNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(this, spDevNum, lightNum) {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 groupSize = i + 1;
-                Log.i("groupNum:-------------",""+groupNum);
-                if (Device.DEVICE_LIST.size() / groupSize < groupNum) {
-                    Toast.makeText(JumpHighActivity.this, "当前设备数量为" + Device.DEVICE_LIST.size() + ",不能分成" + i + "组!",
-                            Toast.LENGTH_LONG).show();
-                    spGroupNum.setSelection(0);
-                    groupNum = 0;
-                }
-                groupListViewAdapter.setGroupNum(groupNum);
-                groupListViewAdapter.setGroupSize(groupSize);
-                groupListViewAdapter.notifyDataSetChanged();
-            }
-        });
+//                Log.d("groupNum",""+groupNum);
 
-        spGroupNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(this, spGroupNum, new String[]{" ", "一组", "两组", "三组", "四组"}) {
+//                if (Device.DEVICE_LIST.size() / groupSize < groupNum) {
+////                    Toast.makeText(JumpHighActivity.this, "当前设备数量为" + Device.DEVICE_LIST.size() + ",不能分成" + groupNum + "组!",
+////                            Toast.LENGTH_LONG).show();
+//                    spGroupNum.setSelection(0);
+//                    groupNum = 0;
+//                }
+
+
+
+                int totalGroupNum = Device.DEVICE_LIST.size() / groupSize;
+                String[] trainGroupNum = new String[totalGroupNum+1];
+                trainGroupNum[0] = "";
+                for (int j = 1;j <= totalGroupNum;j++)
+                    trainGroupNum[j] = j  + "组";
+
+                ArrayAdapter<String> adapterGroupNum = new ArrayAdapter<String>(context,android.R.layout.simple_spinner_item, trainGroupNum);
+                adapterGroupNum.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spGroupNum.setAdapter(adapterGroupNum);
+//                if (Device.DEVICE_LIST.size() / groupSize < groupNum) {
+//                    Toast.makeText(JumpHighActivity.this, "当前设备数量为" + Device.DEVICE_LIST.size() + ",不能分成" + i + "组!",
+//                            Toast.LENGTH_LONG).show();
+//                    spGroupNum.setSelection(0);
+//                    groupNum = 0;
+//                }
+//                groupListViewAdapter.setGroupNum(groupNum)
+            }
+        });
+        spGroupNum.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                groupNum = i;
-                Log.i("groupSize:-------------",""+groupSize);
-                if (Device.DEVICE_LIST.size() / groupSize < groupNum) {
-                    Toast.makeText(JumpHighActivity.this, "当前设备数量为" + Device.DEVICE_LIST.size() + ",不能分成" + i + "组!",
-                            Toast.LENGTH_LONG).show();
-                    spGroupNum.setSelection(0);
-                    groupNum = 0;
-                }
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                groupNum = position;
+
+                groupListViewAdapter.setGroupSize(groupSize);
                 groupListViewAdapter.setGroupNum(groupNum);
                 groupListViewAdapter.notifyDataSetChanged();
             }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
+//        String[] trainGroupNum = new String[]
+
+
+//        spGroupNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(this, spGroupNum, new String[]{" ", "一组", "两组", "三组", "四组"}) {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                groupNum = i;
+//
+//                groupListViewAdapter.setGroupNum(groupNum);
+//                groupListViewAdapter.notifyDataSetChanged();
+//            }
+//        });
 
         //设定感应模式checkBox组合的点击事件
         ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
