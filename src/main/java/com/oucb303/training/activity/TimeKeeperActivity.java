@@ -261,8 +261,6 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
                 groupNum = i;
-//                Log.i("groupSize:-------------",""+groupSize);
-//                Log.i("groupNum:？？？？？？？？",""+groupNum);
                 if (Device.DEVICE_LIST.size() / groupSize < groupNum) {
                     Toast.makeText(TimeKeeperActivity.this, "当前设备数量为" + Device.DEVICE_LIST.size() + ",不能分成" + groupNum + "组!",
                             Toast.LENGTH_LONG).show();
