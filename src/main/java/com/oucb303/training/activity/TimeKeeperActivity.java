@@ -126,6 +126,8 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
     private List<Map<Integer, Integer>> list_finishTime = new ArrayList<>();
     //训练开始时间
     private int startTime;
+    //用于训练次数为1的情况下，记录组号
+    private Integer[] ids;
 
     private GroupListViewAdapter groupListViewAdapter;
     private TimeKeeperAdapter timeKeeperAdapter;
@@ -394,6 +396,10 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
             completeTimes[i] = 0;
         }
 
+        ids = new Integer[Device.DEVICE_LIST.size()];
+        for (int j = 0; j < ids.length; j++)
+            ids[j] = -1;
+
         list_finishTime.clear();
 
         timeKeeperAdapter.setCompletedTimes(completeTimes);
@@ -459,35 +465,38 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
     }
 
     public void analyzeTimeData(final String data) {
-        Log.i("执行几次","执行几次");
+        Log.i("解析数据执行几次","");
         new Thread(new Runnable() {
             @Override
             public void run() {
                 //设备编号和时间
                 List<TimeInfo> infos = DataAnalyzeUtils.analyzeTimeData(data);
+                Log.i("TimeInfo里都有什么",""+infos);
                 int i = 0;
+
                 for (TimeInfo info : infos) {
                     //得到组号
                     int groupId = findDeviceGroupId(info.getDeviceNum());
 
-                    Integer[] ids = new Integer[Device.DEVICE_LIST.size()];
-                    for (int j = 0; j < ids.length; j++)
-                        ids[j] = -1;
-                    int flag = 0;
-                    //寻找组号是否有相同的，如果有，跳出循环
-                    for (int j = 0; j < ids.length; j++) {
-                        if (ids[j] == groupId) {
-                            flag = 1;
+
+                    if (totalTrainingTimes == 1){
+                        int flag = 0;
+                        //寻找组号是否有相同的，如果有，跳出循环
+                        for (int j = 0; j < ids.length; j++) {
+                            if (ids[j] == groupId) {
+                                flag = 1;
+                                break;
+                            }
+                        }
+
+                        if (flag == 1)
                             break;
+                        else {
+                            ids[i] = groupId;
+                            i++;
                         }
                     }
 
-                    if (flag == 1)
-                        break;
-                    else {
-                        ids[i] = groupId;
-                        i++;
-                    }
                     //如果设备组号大于分组数肯定是错误的
                     if (groupId > groupNum)
                         continue;
@@ -508,12 +517,17 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
                     currentTime[groupId] = (int) (System.currentTimeMillis());
 
 //                    Log.i("startTime---", "" + startTime);
-
+                    Log.d("进行几次训练：",""+totalTrainingTimes);
                     if (completeTimes[groupId] == totalTrainingTimes) {
+
                         finishTime[groupId] = (int) System.currentTimeMillis() - startTime;
                         Log.i("finishTime[groupId]---", "" + finishTime[groupId]);
                     } else
+                    {
+                        Log.d("completeTimes[groupId]：",""+groupId+"---"+completeTimes[groupId]);
                         turnOnLight(info.getDeviceNum());
+                    }
+
                 }
                 //解析完数据就要更新完成次数
                 Message msg = Message.obtain();

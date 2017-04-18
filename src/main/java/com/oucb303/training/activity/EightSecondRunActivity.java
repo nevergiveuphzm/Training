@@ -332,6 +332,10 @@ public class EightSecondRunActivity extends AppCompatActivity {
         if (!trainingFlag)
             return;
         if (timeList.size() == totalNum)
+        {
+            Log.i("?????????>>>>>","<<<<<<<<<<");
             stopTraining();
+        }
+
     }
 }
