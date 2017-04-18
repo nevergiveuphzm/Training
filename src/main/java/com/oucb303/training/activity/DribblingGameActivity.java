@@ -359,7 +359,7 @@ public class DribblingGameActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.btn_on:
-                //totalNum组数，1：每组设备个数，0：类型
+                //totalNum组数，1：每组设备个数，1：类型
                 device.turnOnButton(totalNum,1,0);
                 break;
             case R.id.btn_off:

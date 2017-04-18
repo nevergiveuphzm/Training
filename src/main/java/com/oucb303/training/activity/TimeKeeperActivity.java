@@ -128,6 +128,13 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
     private int startTime;
     //用于训练次数为1的情况下，记录组号
     private Integer[] ids;
+    //记录ids里的编号
+    private int positionIds;
+
+    //i记录行号，j记录列号  例如:
+    //0  A  B
+    //1  C  D
+    private char[][] deviceNum;
 
     private GroupListViewAdapter groupListViewAdapter;
     private TimeKeeperAdapter timeKeeperAdapter;
@@ -396,9 +403,15 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
             completeTimes[i] = 0;
         }
 
-        ids = new Integer[Device.DEVICE_LIST.size()];
+        ids = new Integer[groupSize * groupNum];
         for (int j = 0; j < ids.length; j++)
             ids[j] = -1;
+        positionIds = 0;
+
+        //i记录行号，j记录列号  例如:
+        //0  A  B
+        //1  C  D
+        deviceNum = new char[groupNum][groupSize];
 
         list_finishTime.clear();
 
@@ -412,14 +425,25 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
         new ReceiveThread(handler, device.ftDev, ReceiveThread.TIME_RECEIVE_THREAD, TIME_RECEIVE).start();
 
         //开全灯
-        for (int i = 0; i < groupNum*groupSize; i++) {
-            device.sendOrder(Device.DEVICE_LIST.get(i).getDeviceNum(),
-                    Order.LightColor.values()[lightColorCheckBox.getCheckId()],
-                    Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                    Order.BlinkModel.NONE,
-                    Order.LightModel.values()[1],
-                    Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                    Order.EndVoice.NONE);
+        int count = 0;
+        for (int i = 0; i < groupNum; i++) {
+            for (int j = 0;j < groupSize;j++)
+            {
+                device.sendOrder(Device.DEVICE_LIST.get(count).getDeviceNum(),
+                        Order.LightColor.values()[lightColorCheckBox.getCheckId()],
+                        Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
+                        Order.BlinkModel.NONE,
+                        Order.LightModel.values()[1],
+                        Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
+                        Order.EndVoice.NONE);
+                //i记录行号，j记录列号  例如:
+                //0  A  B
+                //1  C  D
+                deviceNum[i][j] = Device.DEVICE_LIST.get(count).getDeviceNum();
+                count++;
+            }
+
+
         }
 
         currentTime = new int[groupNum];
@@ -472,17 +496,26 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
                 //设备编号和时间
                 List<TimeInfo> infos = DataAnalyzeUtils.analyzeTimeData(data);
                 Log.i("TimeInfo里都有什么",""+infos);
-                int i = 0;
 
                 for (TimeInfo info : infos) {
+                    Log.i("Info是什么",""+info);
                     //得到组号
                     int groupId = findDeviceGroupId(info.getDeviceNum());
 
-
-                    if (totalTrainingTimes == 1){
+                    if (totalTrainingTimes == 1 && groupSize == 2){
+                        for (int j = 0;j<groupSize;j++){
+                                if (info.getDeviceNum() == deviceNum[groupId][j]){
+                                    if (j == 1)
+                                        turnOffLight(deviceNum[groupId][j-1]);
+                                    else
+                                        turnOffLight(deviceNum[groupId][j+1]);
+                                }
+                            }
+                        Log.d("groupId----------",""+groupId);
                         int flag = 0;
                         //寻找组号是否有相同的，如果有，跳出循环
                         for (int j = 0; j < ids.length; j++) {
+                            Log.d("ids[j]都有什么：",""+ids[j]);
                             if (ids[j] == groupId) {
                                 flag = 1;
                                 break;
@@ -490,18 +523,20 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
                         }
 
                         if (flag == 1)
-                            break;
+                            continue;
+
                         else {
-                            ids[i] = groupId;
-                            i++;
+                            ids[positionIds] = groupId;
+//                            Log.d("ids[i]是什么：",""+positionIds+"----"+ids[positionIds]);
+                            positionIds++;
+//                            Log.d(">>>>>>>>>>>>>>>>>>>","<<<<<<<<<<<");
                         }
                     }
-
                     //如果设备组号大于分组数肯定是错误的
                     if (groupId > groupNum)
                         continue;
                     completeTimes[groupId] += 1;
-
+                    Log.d("completeTimes[groupId]：",""+groupId+"---"+completeTimes[groupId]);
 //                    Log.i("completeTimes--", "" + completeTimes[groupId]);
 //                    Log.i("totalTrainingTimes-----", "" + totalTrainingTimes);
 //                    Log.i("currentTime[groupId]---", "" + currentTime[groupId]);
@@ -516,15 +551,11 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
                     //此次完成训练的时间点
                     currentTime[groupId] = (int) (System.currentTimeMillis());
 
-//                    Log.i("startTime---", "" + startTime);
-                    Log.d("进行几次训练：",""+totalTrainingTimes);
                     if (completeTimes[groupId] == totalTrainingTimes) {
-
                         finishTime[groupId] = (int) System.currentTimeMillis() - startTime;
-                        Log.i("finishTime[groupId]---", "" + finishTime[groupId]);
+//                        Log.i("finishTime[groupId]---", "" + finishTime[groupId]);
                     } else
                     {
-                        Log.d("completeTimes[groupId]：",""+groupId+"---"+completeTimes[groupId]);
                         turnOnLight(info.getDeviceNum());
                     }
 
@@ -543,6 +574,17 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
                 }
             }
         }).start();
+    }
+
+    //关灯
+    public void turnOffLight(char deviceNum) {
+        device.sendOrder(deviceNum,
+                Order.LightColor.NONE,
+                Order.VoiceMode.NONE,
+                Order.BlinkModel.NONE,
+                Order.LightModel.TURN_OFF,
+                Order.ActionModel.TURN_OFF,
+                Order.EndVoice.NONE);
     }
 
     //查找设备属于第几组

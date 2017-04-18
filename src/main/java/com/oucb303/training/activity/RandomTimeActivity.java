@@ -230,10 +230,10 @@ public class RandomTimeActivity extends AppCompatActivity {
                             //将列表移动到最后的位置
                             lvTimes.setSelection(timeList.size()-1);
                         }
-
+                        tvCurrentTimes.setText(currentTimes + "");
                         isTrainingOver();
                     }
-                    tvCurrentTimes.setText(currentTimes + "");
+
                     break;
                 case LOST_TIME:
                     tvLostTimes.setText(lostTimes + "");
@@ -434,8 +434,7 @@ public class RandomTimeActivity extends AppCompatActivity {
         currentTimes = 0;
 
         lostTimes = 0;
-        //开灯命令发送后 灯持续亮的时间,单位毫秒
-        durationTime =0;
+
         timeList.clear();
         //每次开灯的设备编号
         deviceNums = new char[everyLightNum];
@@ -468,8 +467,7 @@ public class RandomTimeActivity extends AppCompatActivity {
             deviceNums[i] = Device.DEVICE_LIST.get(listRand.get(i)).getDeviceNum();
             //每组设备灯亮起的当前时间
             duration[i] = System.currentTimeMillis();
-            //开灯命令发送后 灯持续亮的时间
-            durationTime = 0;
+
         }
 
         //开启超时线程
@@ -527,50 +525,50 @@ public class RandomTimeActivity extends AppCompatActivity {
     }
 
     //判断训练是否结束
-    public void isTrainingOver()
+    public boolean isTrainingOver()
     {
         //如果结束了
         if (!trainingFlag)
-            return;
-        if (currentTimes >= totalTimes)
-        {
-            stopTraining();
-        }
-
+            return true;
+//        if (currentTimes >= totalTimes) {
+//            stopTraining();
+//            return true;
+//        }
+        return false;
     }
 
     //获取设备编号
-    public char[] getLightNum()
-    {
-        currentLight = new char[everyLightNum];
-        for (int i = 0;i<everyLightNum;i++)
-            currentLight[i] = '\0';
-
-        int[] position = new int[everyLightNum];
-        int count = 0;
-        for (int i = 0;i<everyLightNum;i++)
-        {
-            position[i] = -1;
-        }
-        while (count < everyLightNum)
-        {
-            int num = RandomUtils.getRandomNum(100) % totalNum;
-            boolean flag = true;
-            for (int j = 0;j < everyLightNum;j++) {
-                if (position[j] == num) {
-                    flag = false;
-                    break;
-                }
-            }
-            if (flag) {
-                position[count] = num;
-                //当前亮的灯
-                currentLight[count] = Device.DEVICE_LIST.get(position[count]).getDeviceNum();
-                count++;
-            }
-        }
-        return currentLight;
-    }
+//    public char[] getLightNum()
+//    {
+//        currentLight = new char[everyLightNum];
+//        for (int i = 0;i<everyLightNum;i++)
+//            currentLight[i] = '\0';
+//
+//        int[] position = new int[everyLightNum];
+//        int count = 0;
+//        for (int i = 0;i<everyLightNum;i++)
+//        {
+//            position[i] = -1;
+//        }
+//        while (count < everyLightNum)
+//        {
+//            int num = RandomUtils.getRandomNum(100) % totalNum;
+//            boolean flag = true;
+//            for (int j = 0;j < everyLightNum;j++) {
+//                if (position[j] == num) {
+//                    flag = false;
+//                    break;
+//                }
+//            }
+//            if (flag) {
+//                position[count] = num;
+//                //当前亮的灯
+//                currentLight[count] = Device.DEVICE_LIST.get(position[count]).getDeviceNum();
+//                count++;
+//            }
+//        }
+//        return currentLight;
+//    }
 
     public void analyseData(final String data)
     {
@@ -587,7 +585,6 @@ public class RandomTimeActivity extends AppCompatActivity {
             }
             timeList.add(info);
             currentTimes++;
-
         }
     }
 
