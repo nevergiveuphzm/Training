@@ -89,6 +89,8 @@
         </activity>
         <activity android:name=".activity.GroupResistActivity">
         </activity>
+        <activity android:name=".activity.BadmintonActivity">
+        </activity>
     </application>
 
 </manifest>
