@@ -418,13 +418,14 @@
                             android:background="@drawable/spinner">
                         </Spinner>
 
-
                         <Button
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="关灯"
+                            android:text="开灯"
                             android:layout_weight="1"
-                            android:id="@+id/btn_off" />
+                            android:id="@+id/btn_on" />
+
+
 
                     </LinearLayout>
                     <LinearLayout
@@ -449,12 +450,13 @@
                             android:background="@drawable/spinner">
                         </Spinner>
 
+
                         <Button
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="开灯"
+                            android:text="关灯"
                             android:layout_weight="1"
-                            android:id="@+id/btn_on" />
+                            android:id="@+id/btn_off" />
 
 
                     </LinearLayout>

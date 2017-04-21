@@ -218,9 +218,8 @@ public class RandomTimesModuleActivity extends AppCompatActivity {
                     //Log.i("最终显示运行次数：",""+currentTimes);
                     break;
                 case LOST_TIME:
-                    tvLostTimes.setText(lostTimes + "ee");
-                    Log.d("AAAAAAAAAAAAAA","oerhgergerg");
-                    tvCurrentTimes.setText("sdvdvs");
+                    tvLostTimes.setText(lostTimes + "");
+                    tvCurrentTimes.setText(currentTimes+"");
                     isTrainingOver();
                     break;
                 //更新完成次数
@@ -513,32 +512,35 @@ public class RandomTimesModuleActivity extends AppCompatActivity {
         btnBegin.setEnabled(true);
     }
     //判断训练是否结束
-    public void isTrainingOver()
+    public boolean isTrainingOver()
     {
         //如果结束了
         if (!trainingFlag)
-            return;
+            return true;
         if (currentTimes >= totalTimes) {
             stopTraining();
-//            currentTimes = timeList.size();
+            return true;
         }
+        return false;
     }
 
     public void analyseData(final String data)
     {
         List<TimeInfo> infos = DataAnalyzeUtils.analyzeTimeData(data);
-        for (TimeInfo info : infos)
+        outterLoop:for (TimeInfo info : infos)
         {
             char deviceNum = info.getDeviceNum();
             for (int i = 0; i < everyLightNum; i++) {
                 //deviceNums[i]记录每次开灯的设备编号
                 if (deviceNum == deviceNums[i]) {
                     //i的值就是这个设备在listRand里的序号
+                    if(isTrainingOver())
+                        break outterLoop;
                     turnOnLight(i);
+                    timeList.add(info);
+                    currentTimes++;
                 }
             }
-            timeList.add(info);
-            currentTimes++;
 
         }
     }

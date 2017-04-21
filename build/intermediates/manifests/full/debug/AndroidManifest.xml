@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.oucb303.training"
     android:versionCode="5"
-    android:versionName="2.2.0" >
+    android:versionName="2.2.1" >
 
     <uses-sdk
         android:minSdkVersion="15"
@@ -88,6 +88,8 @@
         <activity android:name="com.oucb303.training.activity.RandomTimeActivity" >
         </activity>
         <activity android:name="com.oucb303.training.activity.GroupResistActivity" >
+        </activity>
+        <activity android:name="com.oucb303.training.activity.BadmintonActivity" >
         </activity>
         <activity
             android:name="io.vov.vitamio.activity.InitActivity"

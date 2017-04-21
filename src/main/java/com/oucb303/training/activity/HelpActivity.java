@@ -79,6 +79,10 @@ public class HelpActivity extends AppCompatActivity
             case 11:
                 imgHelpContent.setImageResource(R.drawable.help_bold_cautious);
                 break;
+            //羽毛球步法训练
+            case 12:
+                imgHelpContent.setImageResource(R.drawable.help_badminton_training);
+                break;
         }
     }
 

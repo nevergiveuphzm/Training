@@ -140,6 +140,7 @@ public class TimingModuleActivity extends AppCompatActivity {
                 case Timer.TIMER_FLAG:
                     //更新计时
                     String time = msg.obj.toString();
+                    Log.d("右侧总时间：",""+time);
                     tvTotalTime.setText(time);
                     //把超时的按顺序罗列出来
                     if(timer.time >= trainingTime)
@@ -264,10 +265,10 @@ public class TimingModuleActivity extends AppCompatActivity {
         new CheckBoxClickListener(lightColorCheckBox);
 
         //训练时间拖动条初始化
-        barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime,2));
+        barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime,100));
         imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime,1));
         imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime,0));
-        tvMaxTime.setText("2");
+        tvMaxTime.setText("100");
 
         //初始化右侧listView
         timingModuleAdapter = new TimingModuleAdapter(this,timeList);
@@ -307,7 +308,9 @@ public class TimingModuleActivity extends AppCompatActivity {
         trainingFlag = true;
         btnBegin.setText("停止");
         //训练时间
-        trainingTime = (int) (new Double(tvTrainingTime.getText().toString())*60*1000);
+//        trainingTime = (int) (new Double(tvTrainingTime.getText().toString())*60*1000);
+        trainingTime = (int) (new Double(tvTrainingTime.getText().toString())*1000);
+        Log.d("训练时间是多少",""+ trainingTime);
         //timeList存设备编号和时间
         timeList.clear();
         //存放设备编号
