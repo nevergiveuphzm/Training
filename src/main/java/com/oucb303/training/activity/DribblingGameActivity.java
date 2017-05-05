@@ -105,6 +105,8 @@ public class DribblingGameActivity extends AppCompatActivity {
     TextView tvDeviceList;
     @Bind(R.id.img_help)
     ImageView imgHelp;
+    @Bind(R.id.img_save)
+    ImageView imgSave;
     @Bind(R.id.tv_delay_time)
     TextView tvDelayTime;
     @Bind(R.id.img_delay_time_sub)
@@ -213,7 +215,11 @@ public class DribblingGameActivity extends AppCompatActivity {
         }
         initView();
     }
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        imgSave.setEnabled(false);
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -222,15 +228,14 @@ public class DribblingGameActivity extends AppCompatActivity {
     }
 
     public void initView() {
+        imgSave.setVisibility(View.VISIBLE);
+        imgHelp.setVisibility(View.VISIBLE);
         if (level == 4)
             tvTitle.setText("多人混战");
         else
             tvTitle.setText("运球比赛");
-        imgHelp.setVisibility(View.VISIBLE);
-
         dribblingGameAdapter = new DribblingGameAdapter(this);
         lvScores.setAdapter(dribblingGameAdapter);
-
 
         if (level != 0) {
             switch (level) {
@@ -330,7 +335,7 @@ public class DribblingGameActivity extends AppCompatActivity {
         new CheckBoxClickListener(lightModeCheckBox);
     }
 
-    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help,R.id.btn_on,R.id.btn_off})
+    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help,R.id.btn_on,R.id.btn_off,R.id.img_save})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_cancel:
@@ -365,6 +370,25 @@ public class DribblingGameActivity extends AppCompatActivity {
             case R.id.btn_off:
                 for (int i = 0; i < totalNum; i++)
                     turnOffLight(Device.DEVICE_LIST.get(i).getDeviceNum());
+                break;
+            case R.id.img_save:
+                Intent it = new Intent(this,SaveActivity.class);
+                Bundle bundle = new Bundle();
+                //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 5:运球比赛、多人混战 ...
+                bundle.putString("trainingCategory","5");
+                if(level==4){
+                    bundle.putString("trainingName","多人混战");
+                }else {
+                    bundle.putString("trainingName","运球比赛");
+                }
+                //训练总时间
+                bundle.putInt("trainingTime",trainingTime);
+                //设备个数
+                bundle.putInt("DeviceNum",totalNum);
+                //每组得分
+                bundle.putIntArray("scores",scores);
+                it.putExtras(bundle);
+                startActivity(it);
                 break;
         }
     }
@@ -422,6 +446,7 @@ public class DribblingGameActivity extends AppCompatActivity {
     public void stopTraining() {
         timer.stopTimer();
         btnBegin.setText("开始");
+        imgSave.setEnabled(true);
         btnBegin.setEnabled(false);
         trainningFlag = false;
         for (int i = 0; i < groupNum; i++)

@@ -35,6 +35,7 @@ import com.oucb303.training.model.TimeInfo;
 import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.threads.Timer;
 import com.oucb303.training.utils.DataAnalyzeUtils;
+import com.oucb303.training.utils.DataUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,6 +49,7 @@ import butterknife.OnClick;
 
 /**
  * Created by HP on 2017/3/30.
+ * 计时活动基本模块
  */
 public class TimeKeeperActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
@@ -104,10 +106,10 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
     private int level;
     private Device device;
     //最大分组数目
-    private  int maxGroupNum;
+    private int maxGroupNum;
     //当前所选择的组数是
     private int groupNum;
-//    //当前所选择的灯的个数
+    //    //当前所选择的灯的个数
 //    private int lightNum;
     //每组最终完成所有次数所用时间
     private int[] finishTime;
@@ -130,7 +132,8 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
     private Integer[] ids;
     //记录ids里的编号
     private int positionIds;
-
+    //训练总时间
+    private int totalTime = 0;
     //i记录行号，j记录列号  例如:
     //0  A  B
     //1  C  D
@@ -205,7 +208,7 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
 
     public void initView() {
         tvTitle.setText("计时活动");
-
+        imgSave.setVisibility(View.VISIBLE);
         //设备排序
         Collections.sort(Device.DEVICE_LIST, new PowerInfoComparetor());
 
@@ -219,16 +222,13 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 super.onItemSelected(adapterView, view, i, l);
                 totalTrainingTimes = i + 1;
-                if (totalTrainingTimes != 1)
-                {
+                if (totalTrainingTimes != 1) {
                     spLightNum.setSelection(0);
                     spLightNum.setEnabled(false);
                     groupSize = 1;
                     groupListViewAdapter.setGroupSize(groupSize);
                     groupListViewAdapter.notifyDataSetChanged();
-                }
-                else
-                {
+                } else {
                     spLightNum.setEnabled(true);
                 }
             }
@@ -236,31 +236,30 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
 
         //初始化每组设备个数下拉框
         final String[] lightNumChoose = new String[2];
-        for (int i = 0;i<2;i++)
-        {
-            lightNumChoose[i] = (i+1) + "个";
+        for (int i = 0; i < 2; i++) {
+            lightNumChoose[i] = (i + 1) + "个";
         }
-        spLightNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(this,spLightNum,lightNumChoose) {
-                @Override
-                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        spLightNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(this, spLightNum, lightNumChoose) {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-                    groupSize = i+1;
-                    if (Device.DEVICE_LIST.size() / groupSize < groupNum) {
-                        Toast.makeText(TimeKeeperActivity.this, "当前设备数量为" + Device.DEVICE_LIST.size() + ",不能分成" + groupNum + "组!",
-                                Toast.LENGTH_LONG).show();
-                        spGroupNum.setSelection(0);
-                        groupNum = 0;
-                    }
-
-                    groupListViewAdapter.setGroupNum(groupNum);
-                    groupListViewAdapter.setGroupSize(groupSize);
-                    groupListViewAdapter.notifyDataSetChanged();
+                groupSize = i + 1;
+                if (Device.DEVICE_LIST.size() / groupSize < groupNum) {
+                    Toast.makeText(TimeKeeperActivity.this, "当前设备数量为" + Device.DEVICE_LIST.size() + ",不能分成" + groupNum + "组!",
+                            Toast.LENGTH_LONG).show();
+                    spGroupNum.setSelection(0);
+                    groupNum = 0;
                 }
+
+                groupListViewAdapter.setGroupNum(groupNum);
+                groupListViewAdapter.setGroupSize(groupSize);
+                groupListViewAdapter.notifyDataSetChanged();
+            }
         });
 
         //初始化分组下拉框
         maxGroupNum = Device.DEVICE_LIST.size();
-        String[] groupNumChoose = new String[maxGroupNum+1];
+        String[] groupNumChoose = new String[maxGroupNum + 1];
         groupNumChoose[0] = " ";
         for (int i = 1; i <= maxGroupNum; i++) {
             groupNumChoose[i] = i + "组";
@@ -358,19 +357,27 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
                 startActivity(intent);
                 break;
             case R.id.img_save:
-
                 Intent it = new Intent(this, SaveActivity.class);
                 Bundle bundle = new Bundle();
-                //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 ...
-                bundle.putString("trainingCategory", "1");
-                //每组所用时间
-                bundle.putIntArray("finishTimes", finishTime);
-                //总次数（强度）
-                bundle.putInt("totalTrainingTimes", totalTrainingTimes);
+                //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 6:大课间跑圈，八秒钟跑,羽毛球训练，限时活动，计时活动 ...
+                bundle.putString("trainingCategory", "6");
+                bundle.putString("trainingName", "计时活动");//项目名称
+                bundle.putInt("totalTimes", totalTrainingTimes);//总次数
+                bundle.putInt("deviceNum", 1);//设备个数
+                int[] scores = new int[groupNum];
+                int[] avgScores = new int[groupNum];
+                for (int j = 0; j < groupNum; j++) {
+                    for (int i = 0; i < list_finishTime.size(); i++) {
+                        if (list_finishTime.get(i).get(j + 1) != null)
+                            scores[i] += list_finishTime.get(i).get(j + 1);
+                    }
+                    avgScores[j] = DataUtils.getAvg(scores);
+                }
+                bundle.putIntArray("scores", avgScores);//得分
+                bundle.putInt("totalTime", totalTime);//训练总时间
+                bundle.putInt("groupNum", groupNum);//分组数
                 it.putExtras(bundle);
                 startActivity(it);
-//                }
-
                 break;
             case R.id.btn_begin:
                 if (!device.checkDevice(this))
@@ -427,8 +434,7 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
         //开全灯
         int count = 0;
         for (int i = 0; i < groupNum; i++) {
-            for (int j = 0;j < groupSize;j++)
-            {
+            for (int j = 0; j < groupSize; j++) {
                 device.sendOrder(Device.DEVICE_LIST.get(count).getDeviceNum(),
                         Order.LightColor.values()[lightColorCheckBox.getCheckId()],
                         Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
@@ -462,6 +468,7 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
     public void stopTraining() {
         trainingFlag = false;
         btnBegin.setText("开始");
+        imgSave.setEnabled(true);
         //结束时间线程
         timer.stopTimer();
         //结束接收返回时间线程
@@ -489,63 +496,51 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
     }
 
     public void analyzeTimeData(final String data) {
-        Log.i("解析数据执行几次","");
+        Log.i("解析数据执行几次", "");
         new Thread(new Runnable() {
             @Override
             public void run() {
                 //设备编号和时间
                 List<TimeInfo> infos = DataAnalyzeUtils.analyzeTimeData(data);
-                Log.i("TimeInfo里都有什么",""+infos);
+                Log.i("TimeInfo里都有什么", "" + infos);
 
                 for (TimeInfo info : infos) {
-                    Log.i("Info是什么",""+info);
+                    Log.i("Info是什么", "" + info);
                     //得到组号
                     int groupId = findDeviceGroupId(info.getDeviceNum());
 
-                    if (totalTrainingTimes == 1 && groupSize == 2){
-                        for (int j = 0;j<groupSize;j++){
-                                if (info.getDeviceNum() == deviceNum[groupId][j]){
-                                    if (j == 1)
-                                        turnOffLight(deviceNum[groupId][j-1]);
-                                    else
-                                        turnOffLight(deviceNum[groupId][j+1]);
-                                }
+                    if (totalTrainingTimes == 1 && groupSize == 2) {
+                        for (int j = 0; j < groupSize; j++) {
+                            if (info.getDeviceNum() == deviceNum[groupId][j]) {
+                                if (j == 1)
+                                    turnOffLight(deviceNum[groupId][j - 1]);
+                                else
+                                    turnOffLight(deviceNum[groupId][j + 1]);
                             }
-                        Log.d("groupId----------",""+groupId);
+                        }
                         int flag = 0;
                         //寻找组号是否有相同的，如果有，跳出循环
                         for (int j = 0; j < ids.length; j++) {
-                            Log.d("ids[j]都有什么：",""+ids[j]);
                             if (ids[j] == groupId) {
                                 flag = 1;
                                 break;
                             }
                         }
-
                         if (flag == 1)
                             continue;
-
                         else {
                             ids[positionIds] = groupId;
-//                            Log.d("ids[i]是什么：",""+positionIds+"----"+ids[positionIds]);
                             positionIds++;
-//                            Log.d(">>>>>>>>>>>>>>>>>>>","<<<<<<<<<<<");
                         }
                     }
                     //如果设备组号大于分组数肯定是错误的
                     if (groupId > groupNum)
                         continue;
                     completeTimes[groupId] += 1;
-                    Log.d("completeTimes[groupId]：",""+groupId+"---"+completeTimes[groupId]);
-//                    Log.i("completeTimes--", "" + completeTimes[groupId]);
-//                    Log.i("totalTrainingTimes-----", "" + totalTrainingTimes);
-//                    Log.i("currentTime[groupId]---", "" + currentTime[groupId]);
+                    Log.d("completeTimes[groupId]：", "" + groupId + "---" + completeTimes[groupId]);
                     //map_finishTime存的是组号，和这个组这一次所用的时间
-
                     Map<Integer, Integer> map_finishTime = new HashMap<Integer, Integer>();
                     map_finishTime.put(groupId, (int) (System.currentTimeMillis()) - currentTime[groupId]);
-
-//                    Log.i("System.currentTime", "" + (int) (System.currentTimeMillis()));
 
                     list_finishTime.add(map_finishTime);
                     //此次完成训练的时间点
@@ -553,9 +548,7 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
 
                     if (completeTimes[groupId] == totalTrainingTimes) {
                         finishTime[groupId] = (int) System.currentTimeMillis() - startTime;
-//                        Log.i("finishTime[groupId]---", "" + finishTime[groupId]);
-                    } else
-                    {
+                    } else {
                         turnOnLight(info.getDeviceNum());
                     }
 
@@ -596,7 +589,7 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
                 break;
             }
         }
-        return position/groupSize;
+        return position / groupSize;
     }
 
     //判断训练是否结束

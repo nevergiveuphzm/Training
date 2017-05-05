@@ -264,6 +264,23 @@ public class EightSecondRunActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.img_save:
+                Intent it = new Intent(this, SaveActivity.class);
+                Bundle bundle = new Bundle();
+                //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 6:大课间跑圈、八秒钟跑 ...
+                bundle.putString("trainingCategory", "6");
+                //每组规定时间内的所完成的次数
+                bundle.putString("trainingName","八秒钟跑");
+                int[] trainingTime = new int[timeList.size()];
+                for(int i=0;i<timeList.size();i++){
+                    trainingTime[i] = timeList.get(i).getTime();
+                }
+                bundle.putIntArray("scores",trainingTime);
+                bundle.putInt("totalTimes", 0);//总次数
+                bundle.putInt("totalTime",8000);//训练总时间
+                bundle.putInt("deviceNum",totalNum);//设备个数
+                bundle.putInt("groupNum",totalNum);//分组数
+                it.putExtras(bundle);
+                startActivity(it);
                 break;
             case R.id.btn_begin:
                 if (!device.checkDevice(this))

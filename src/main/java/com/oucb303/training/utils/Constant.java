@@ -17,6 +17,6 @@ public class Constant
     public final static String APP_STORAGE_PATH = Environment.getExternalStorageDirectory().getAbsoluteFile() + "/Saflight/";
     //下载路径
     public final static String DOWNLOAD_PATH = APP_STORAGE_PATH + "/Download/";
-
+    public static String[] EXCELTITLE = { "项目名称", "学号", "总次数", "设备个数", "得分", "总时间", "分组数", "运动时间", "是否上传" };
 
 }

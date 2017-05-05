@@ -14,19 +14,34 @@ import org.greenrobot.greendao.annotation.Generated;
 public class ShuttleRun {
     @Id(autoincrement = true)
     private Long id;
+
     //学生编号
     private String studentNum;
+    //分组数
+    private int groupNum;
     //训练强度：2【50*2】  4【50*4】  6【50*6】...
     private int intension;
     //总时间（毫秒）
     private int totalTime;
     //运动时间
-    private Date trainingTime;
+    private String trainingTime;
     //是否已上传
     private boolean isUpload;
 
     @Generated(hash = 2132780409)
     public ShuttleRun() {
+    }
+
+    @Generated(hash = 1570938668)
+    public ShuttleRun(Long id, String studentNum, int groupNum, int intension, int totalTime,
+            String trainingTime, boolean isUpload) {
+        this.id = id;
+        this.studentNum = studentNum;
+        this.groupNum = groupNum;
+        this.intension = intension;
+        this.totalTime = totalTime;
+        this.trainingTime = trainingTime;
+        this.isUpload = isUpload;
     }
 
     @Override
@@ -36,19 +51,9 @@ public class ShuttleRun {
 
     @Override
     public String toString() {
-        return "["+id+","+studentNum+","+intension+","+totalTime+","+trainingTime+"，"+isUpload+"]";
+        return "["+id+","+studentNum+","+intension+","+groupNum+","+totalTime+","+trainingTime+"，"+isUpload+"]";
     }
 
-    @Generated(hash = 1294005537)
-    public ShuttleRun(Long id, String studentNum, int intension, int totalTime, Date trainingTime,
-            boolean isUpload) {
-        this.id = id;
-        this.studentNum = studentNum;
-        this.intension = intension;
-        this.totalTime = totalTime;
-        this.trainingTime = trainingTime;
-        this.isUpload = isUpload;
-    }
 
     public Long getId() {
         return this.id;
@@ -69,12 +74,6 @@ public class ShuttleRun {
     public void setTotalTime(int totalTime) {
         this.totalTime = totalTime;
     }
-    public Date getTrainingTime() {
-        return this.trainingTime;
-    }
-    public void setTrainingTime(Date trainingTime) {
-        this.trainingTime = trainingTime;
-    }
 
     public int getIntension() {
         return this.intension;
@@ -91,6 +90,24 @@ public class ShuttleRun {
     public void setIsUpload(boolean isUpload) {
         this.isUpload = isUpload;
     }
+
+    public int getGroupNum() {
+        return this.groupNum;
+    }
+
+    public void setGroupNum(int groupNum) {
+        this.groupNum = groupNum;
+    }
+
+    public String getTrainingTime() {
+        return this.trainingTime;
+    }
+
+    public void setTrainingTime(String trainingTime) {
+        this.trainingTime = trainingTime;
+    }
+
+
 
 
 

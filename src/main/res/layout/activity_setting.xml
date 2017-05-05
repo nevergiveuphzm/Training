@@ -113,7 +113,70 @@
 
 
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="导出数据"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"/>
+                <TextView
+                    android:id="@+id/tv_beginDate"
+                    android:layout_width="160dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="50dp"
+                    android:layout_height="40dp"
+                    android:background="@android:drawable/edit_text"
+                    android:gravity="center"
+                    android:hint="起始时间"
+                    android:imeOptions="flagNoExtractUi"
+                    android:inputType="number"
+                    android:textSize="15sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_height="40dp"
+                    android:text="-----"
+                    android:gravity="center"
+                    android:imeOptions="flagNoExtractUi"
+                    android:inputType="number"
+                    android:textSize="20sp" />
+                <TextView
+                    android:id="@+id/tv_endDate"
+                    android:layout_width="160dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_height="40dp"
+                    android:background="@android:drawable/edit_text"
+                    android:gravity="center"
+                    android:hint="截止时间"
+                    android:imeOptions="flagNoExtractUi"
+                    android:inputType="number"
+                    android:textSize="15sp" />
+                <Button
+                    android:id="@+id/btn_export"
+                    android:layout_gravity="right"
+                    android:layout_width="100dp"
+                    android:layout_marginLeft="650dp"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="导出"
+                    android:textColor="@color/piechart_blue"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/ll_about"

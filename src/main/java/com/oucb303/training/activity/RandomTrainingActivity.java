@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -114,6 +115,8 @@ public class RandomTrainingActivity extends Activity {
     LinearLayout llTrainingTimes;
     @Bind(R.id.img_help)
     ImageView imgHelp;
+    @Bind(R.id.img_save)
+    ImageView imgSave;
     @Bind(R.id.cb_voice)
     android.widget.CheckBox cbVoice;
     @Bind(R.id.img_light_color_blue)
@@ -175,7 +178,7 @@ public class RandomTrainingActivity extends Activity {
     //选用的设备个数
     private int totalNum;
     private char lastTurnOnLight;
-
+    private long endTime,allTime;
     private int level;
 
     private Handler timerHandler = new Handler() {
@@ -247,6 +250,7 @@ public class RandomTrainingActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
+        imgSave.setEnabled(false);
     }
 
     @Override
@@ -270,6 +274,7 @@ public class RandomTrainingActivity extends Activity {
     public void initView() {
         tvTitle.setText("随机训练");
         imgHelp.setVisibility(View.VISIBLE);
+        imgSave.setVisibility(View.VISIBLE);
         timeAdapter = new RandomTimeAdapter(this, timeList);
         lvTimes.setAdapter(timeAdapter);
         if (randomMode == 0) {
@@ -358,7 +363,7 @@ public class RandomTrainingActivity extends Activity {
         new CheckBoxClickListener(lightColorCheckBox);
     }
 
-    @OnClick({R.id.btn_begin, R.id.layout_cancel, R.id.img_help,R.id.btn_on,R.id.btn_off})
+    @OnClick({R.id.btn_begin, R.id.layout_cancel, R.id.img_help,R.id.btn_on,R.id.btn_off,R.id.img_save})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_begin:
@@ -385,6 +390,29 @@ public class RandomTrainingActivity extends Activity {
                 break;
             case R.id.btn_off:
                 device.turnOffAllTheLight();
+                break;
+            case R.id.img_save:
+                Intent it = new Intent(this,SaveActivity.class);
+                Bundle bundle = new Bundle();
+                //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 4:换物跑、时间随机、次数随机 ...
+                bundle.putString("trainingCategory","4");
+                if(randomMode==0){
+                    bundle.putString("trainingName","次数随机");
+                    trainingTime = (int)allTime;
+                }else{
+                    bundle.putString("trainingName","时间随机");
+                }
+
+                if(level!=0)
+                    bundle.putString("trainingName","换物跑");
+                //训练总时间
+                bundle.putInt("trainingTime",trainingTime);
+                //每组设备个数
+                bundle.putInt("groupDeviceNum",totalNum);
+                //总次数
+                bundle.putInt("totalTimes",currentTimes);
+                it.putExtras(bundle);
+                startActivity(it);
                 break;
         }
     }
@@ -456,6 +484,7 @@ public class RandomTrainingActivity extends Activity {
         trainingFlag = false;
         btnBegin.setText("开始");
         btnBegin.setEnabled(false);
+        imgSave.setEnabled(true);
         if (overTimeThread != null)
             overTimeThread.stopThread();
         if (timer != null)
@@ -475,6 +504,8 @@ public class RandomTrainingActivity extends Activity {
         //结束接收返回灭灯时间线程
         ReceiveThread.stopThread();
         btnBegin.setEnabled(true);
+        endTime = System.currentTimeMillis();
+        allTime = endTime-beginTime;
     }
 
     //开灯

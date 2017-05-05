@@ -50,6 +50,7 @@ import butterknife.OnClick;
 
 /**
  * Created by HP on 2017/2/27.
+ * 大课间跑圈
  */
 public class LargeRecessActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
@@ -343,10 +344,14 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
             case R.id.img_save:
                 Intent it = new Intent(this, SaveActivity.class);
                 Bundle bundle = new Bundle();
-                //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 4:大课间活动 ...
-                bundle.putString("trainingCategory", "4");
-                //每组规定时间内的所完成的次数
-                bundle.putIntArray("completedTimes", completedTimes);
+                //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 6:大课间跑圈，八秒钟跑 ...
+                bundle.putString("trainingCategory", "6");
+                bundle.putString("trainingName","大课间活动");//项目名称
+                bundle.putInt("totalTimes", 0);//总次数
+                bundle.putInt("deviceNum",goupNum);//设备个数
+                bundle.putIntArray("scores", completedTimes);//得分
+                bundle.putInt("totalTime",trainingTime);//训练总时间
+                bundle.putInt("groupNum",goupNum);//分组数
                 it.putExtras(bundle);
                 startActivity(it);
                 break;

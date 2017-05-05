@@ -1,6 +1,7 @@
 package com.oucb303.training.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -47,6 +48,7 @@ import butterknife.OnClick;
 
 /**
  * Created by HP on 2017/4/10.
+ * 时间随机基本模块
  */
 public class RandomTimeActivity extends AppCompatActivity {
 
@@ -274,6 +276,8 @@ public class RandomTimeActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        imgSave.setEnabled(false);
+        imgSave.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -389,7 +393,7 @@ public class RandomTimeActivity extends AppCompatActivity {
         lightColorCheckBox = new CheckBox(1, views2);
         new CheckBoxClickListener(lightColorCheckBox);
     }
-    @OnClick({R.id.btn_begin, R.id.layout_cancel, R.id.img_help,R.id.btn_on,R.id.btn_off})
+    @OnClick({R.id.btn_begin, R.id.layout_cancel, R.id.img_help,R.id.btn_on,R.id.btn_off,R.id.img_save})
     public void onClick(View view)
     {
         switch (view.getId())
@@ -412,6 +416,21 @@ public class RandomTimeActivity extends AppCompatActivity {
                 break;
             case R.id.btn_off:
                 device.turnOffAllTheLight();
+                break;
+            case R.id.img_save:
+                Intent it = new Intent(this,SaveActivity.class);
+                Bundle bundle = new Bundle();
+                //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 4:换物跑、时间随机、次数随机 ...
+                bundle.putString("trainingCategory","4");
+                bundle.putString("trainingName","时间随机");
+                //训练总时间
+                bundle.putInt("trainingTime",trainingTime);
+                //每组设备个数
+                bundle.putInt("groupDeviceNum",totalNum);
+                //总次数
+                bundle.putInt("totalTimes",currentTimes);
+                it.putExtras(bundle);
+                startActivity(it);
                 break;
         }
     }
@@ -501,7 +520,7 @@ public class RandomTimeActivity extends AppCompatActivity {
         trainingFlag = false;
         btnBegin.setText("开始");
         btnBegin.setEnabled(false);
-
+        imgSave.setEnabled(true);
         if (overTimeThread != null)
             overTimeThread.stopThread();
         if (timer != null)

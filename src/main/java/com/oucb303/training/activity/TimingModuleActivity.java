@@ -1,5 +1,6 @@
 package com.oucb303.training.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -44,6 +45,7 @@ import butterknife.OnClick;
 
 /**
  * Created by HP on 2017/3/29.
+ * 限时活动基本模块
  */
 public class TimingModuleActivity extends AppCompatActivity {
     @Bind(R.id.bt_distance_cancel)
@@ -275,7 +277,7 @@ public class TimingModuleActivity extends AppCompatActivity {
         lvTimes.setAdapter(timingModuleAdapter);
     }
 
-    @OnClick({R.id.btn_off,R.id.btn_on,R.id.layout_cancel,R.id.btn_begin})
+    @OnClick({R.id.btn_off,R.id.btn_on,R.id.layout_cancel,R.id.btn_begin,R.id.img_save})
     public void onClick(View view)
     {
         switch (view.getId())
@@ -298,6 +300,25 @@ public class TimingModuleActivity extends AppCompatActivity {
                     stopTraining();
                 else
                     startTraining();
+                break;
+            case R.id.img_save:
+                Intent it = new Intent(this, SaveActivity.class);
+                Bundle bundle = new Bundle();
+                //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 6:大课间跑圈、八秒钟跑、限时活动 ...
+                bundle.putString("trainingCategory", "6");
+                //每组规定时间内的所完成的次数
+                bundle.putString("trainingName","限时活动");
+                int[] trainTime = new int[timeList.size()];
+                for(int i=0;i<timeList.size();i++){
+                    trainTime[i] = timeList.get(i).getTime();
+                }
+                bundle.putIntArray("scores",trainTime);
+                bundle.putInt("totalTimes", 1);//总次数
+                bundle.putInt("totalTime",trainingTime);//训练总时间
+                bundle.putInt("deviceNum",totalNum);//设备个数
+                bundle.putInt("groupNum",totalNum);//分组数
+                it.putExtras(bundle);
+                startActivity(it);
                 break;
         }
     }
@@ -347,6 +368,7 @@ public class TimingModuleActivity extends AppCompatActivity {
     {
         trainingFlag = false;
         btnBegin.setText("开始");
+        imgSave.setEnabled(true);
         btnBegin.setEnabled(false);
         //结束时间线程
         if(timer!=null)

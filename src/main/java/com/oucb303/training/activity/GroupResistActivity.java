@@ -54,6 +54,7 @@ import butterknife.OnClick;
 
 /**
  * Created by HP on 2017/4/11.
+ * 分组对抗基本模块
  */
 public class GroupResistActivity extends AppCompatActivity {
     @Bind(R.id.bt_distance_cancel)
@@ -223,6 +224,8 @@ public class GroupResistActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        imgSave.setEnabled(false);
+        imgSave.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -343,7 +346,7 @@ public class GroupResistActivity extends AppCompatActivity {
         lvScores.setAdapter(groupResistAdapter);
     }
 
-    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help,R.id.btn_on,R.id.btn_off})
+    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help,R.id.btn_on,R.id.btn_off,R.id.img_save})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_cancel:
@@ -376,9 +379,22 @@ public class GroupResistActivity extends AppCompatActivity {
                 device.turnOnButton(totalNum,1,0);
                 break;
             case R.id.btn_off:
-//                for (int i = 0; i < totalNum; i++)
-//                    turnOffLight(Device.DEVICE_LIST.get(i).getDeviceNum());
                 device.turnOffAllTheLight();
+                break;
+            case R.id.img_save:
+                Intent it = new Intent(this,SaveActivity.class);
+                Bundle bundle = new Bundle();
+                //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 5:运球比赛、多人混战、分组对抗 ...
+                bundle.putString("trainingCategory","5");
+                bundle.putString("trainingName","分组对抗");
+                //训练总时间
+                bundle.putInt("trainingTime",trainingTime);
+                //设备个数
+                bundle.putInt("DeviceNum",totalNum);
+                //每组得分
+                bundle.putIntArray("scores",scores);
+                it.putExtras(bundle);
+                startActivity(it);
                 break;
         }
     }
@@ -618,6 +634,7 @@ public class GroupResistActivity extends AppCompatActivity {
         timer.stopTimer();
         btnBegin.setText("开始");
         btnBegin.setEnabled(false);
+        imgSave.setEnabled(true);
         trainningFlag = false;
 
         if (overTimeThread != null)

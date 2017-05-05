@@ -220,7 +220,7 @@ public class BoldCautiousActivity extends AppCompatActivity {
         boldCautiousAdapter = new BoldCautiousAdapter(this);
         lvTimes.setAdapter(boldCautiousAdapter);
     }
-    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help,R.id.btn_on,R.id.btn_off})
+    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help,R.id.btn_on,R.id.btn_off,R.id.img_save})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_cancel:
@@ -243,6 +243,20 @@ public class BoldCautiousActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, HelpActivity.class);
                 intent.putExtra("flag", 11);
                 startActivity(intent);
+                break;
+            case R.id.img_save:
+                Intent it = new Intent(this, SaveActivity.class);
+                Bundle bundle = new Bundle();
+                //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 6:大课间跑圈，八秒钟跑，胆大心细 ...
+                bundle.putString("trainingCategory", "6");
+                bundle.putString("trainingName","胆大心细");//项目名称
+                bundle.putInt("totalTimes", 2);//总次数
+                bundle.putInt("deviceNum",2);//设备个数
+                bundle.putIntArray("scores", scores);//得分
+                bundle.putInt("totalTime",0);//训练总时间
+                bundle.putInt("groupNum",groupNum);//分组数
+                it.putExtras(bundle);
+                startActivity(it);
                 break;
             case R.id.btn_on:
                 //groupNum组数，groupSize：每组设备个数，1：类型

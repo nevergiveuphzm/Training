@@ -93,6 +93,8 @@ public class SitUpsActivity extends AppCompatActivity {
     android.widget.CheckBox cbVoice;
     @Bind(R.id.img_help)
     ImageView imgHelp;
+    @Bind(R.id.img_save)
+    ImageView imgSave;
     @Bind(R.id.btn_on)
     Button btnOn;
     @Bind(R.id.btn_off)
@@ -174,7 +176,7 @@ public class SitUpsActivity extends AppCompatActivity {
         } else
             tvTitle.setText("仰卧起坐训练");
         imgHelp.setVisibility(View.VISIBLE);
-
+        imgSave.setVisibility(View.VISIBLE);
         ///初始化分组listView
         groupListViewAdapter = new GroupListViewAdapter(SitUpsActivity.this, groupSize);
         lvGroup.setAdapter(groupListViewAdapter);
@@ -243,8 +245,12 @@ public class SitUpsActivity extends AppCompatActivity {
         sitUpsTimeListAdapter = new SitUpsTimeListAdapter(this);
         lvTimes.setAdapter(sitUpsTimeListAdapter);
     }
-
-    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help, R.id.btn_on, R.id.btn_off})
+    @Override
+    protected void onStart() {
+        super.onStart();
+        imgSave.setEnabled(false);
+    }
+    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help, R.id.btn_on, R.id.btn_off,R.id.img_save})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_cancel:
@@ -275,11 +281,29 @@ public class SitUpsActivity extends AppCompatActivity {
             case R.id.btn_off:
                 device.turnOffAllTheLight();
                 break;
+            case R.id.img_save:
+                Intent it = new Intent(this,SaveActivity.class);
+                Bundle bundle = new Bundle();
+                //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐、交替活动 ...
+                if(level==4){
+                    bundle.putString("trainingName","交替活动");
+                }else {
+                    bundle.putString("trainingName","仰卧起坐");
+                }
+                bundle.putString("trainingCategory","3");
+                //训练总时间
+                bundle.putInt("trainingTime",trainingTime);
+                //次数
+                bundle.putIntArray("scores",scores);
+                it.putExtras(bundle);
+                startActivity(it);
+                break;
         }
     }
 
     private void startTraining() {
         btnBegin.setText("停止");
+        imgSave.setEnabled(true);
         isTraining = true;
         scores = new int[groupNum];
         sitUpsTimeListAdapter.setScores(scores);

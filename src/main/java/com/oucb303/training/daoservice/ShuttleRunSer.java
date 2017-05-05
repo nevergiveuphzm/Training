@@ -26,6 +26,10 @@ public class ShuttleRunSer {
     {
         return shuttleRunDao.loadAll();
     }
+    //查询某一时间段内的数据
+    public List<ShuttleRun> selectByTimeSpan(String where,String[] strings){
+        return shuttleRunDao.queryRaw(where,strings);
+    }
     //清空所有数据
     public void deleteAll(){
         shuttleRunDao.deleteAll();

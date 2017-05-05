@@ -149,35 +149,65 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="be2eea7d-9068-42c3-a907-aa89287108be" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/res/drawable/badminton_training.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/res/drawable/help_badminton_training.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/badmintonActivity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_badminton.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/cache.properties" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/cache.properties.lock" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/fileHashes.bin" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/fileSnapshots.bin" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/outputFileStates.bin" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/taskArtifacts.bin" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libs/jxl.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/commons_beanutils_1_7_0.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/json_lib_2_2_3_jdk15.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/jxl.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/daoservice/BaseTrainingDataSer.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/daoservice/DribblingGameSer.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/daoservice/RandomTrainingSer.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/daoservice/SitUpsSer.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/entity/BaseTrainingData.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/entity/DribblingGame.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/entity/RandomTraining.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/entity/SitUps.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/DataUtils.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/ExcelUtils.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/android_android_23.xml" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/cache.properties.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/fileHashes.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/fileSnapshots.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/outputFileStates.bin" afterPath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/outputFileStates.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/taskArtifacts.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/res/resources-debug.ap_" afterPath="$PROJECT_DIR$/build/intermediates/res/resources-debug.ap_" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/cache.properties" afterPath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/cache.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/animated_vector_drawable_23_3_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/animated_vector_drawable_23_3_0.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/appcompat_v7_23_3_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/appcompat_v7_23_3_0.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_annotations_23_3_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_annotations_23_3_0.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_v4_23_3_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_v4_23_3_0.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_vector_drawable_23_3_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_vector_drawable_23_3_0.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.gradle" afterPath="$PROJECT_DIR$/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/generated/source/buildConfig/debug/com/oucb303/training/BuildConfig.java" afterPath="$PROJECT_DIR$/build/generated/source/buildConfig/debug/com/oucb303/training/BuildConfig.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/generated/source/r/debug/android/support/v7/appcompat/R.java" afterPath="$PROJECT_DIR$/build/generated/source/r/debug/android/support/v7/appcompat/R.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/generated/source/r/debug/com/oucb303/training/R.java" afterPath="$PROJECT_DIR$/build/generated/source/r/debug/com/oucb303/training/R.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/manifests/full/debug/AndroidManifest.xml" afterPath="$PROJECT_DIR$/build/intermediates/manifests/full/debug/AndroidManifest.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/symbols/debug/R.txt" afterPath="$PROJECT_DIR$/build/intermediates/symbols/debug/R.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local.properties" afterPath="$PROJECT_DIR$/local.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/HelpActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/HelpActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/MainActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/TrainingListActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/TrainingListActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/RandomUtils.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/RandomUtils.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/App.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/App.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/BoldCautiousActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/BoldCautiousActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/DribblingGameActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/DribblingGameActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/EightSecondRunActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/EightSecondRunActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/GroupResistActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/GroupResistActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/LargeRecessActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/LargeRecessActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/RandomTimeActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/RandomTimeActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/RandomTimesModuleActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/RandomTimesModuleActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/RandomTrainingActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/RandomTrainingActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/SaveActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/SaveActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/SettingActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/SettingActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/SitUpsActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/SitUpsActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/TimeKeeperActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/TimeKeeperActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/TimingModuleActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/TimingModuleActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/daoservice/JumpHighSer.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/daoservice/JumpHighSer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/daoservice/ShuttleRunSer.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/daoservice/ShuttleRunSer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/entity/JumpHigh.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/entity/JumpHigh.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/entity/ShuttleRun.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/entity/ShuttleRun.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/Constant.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/Constant.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/DateUtil.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/DateUtil.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/FileUtils.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/FileUtils.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/OperateUtils.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/OperateUtils.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/res/layout/activity_setting.xml" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_setting.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vitamio/vitamio.iml" afterPath="$PROJECT_DIR$/vitamio/vitamio.iml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/badmintonActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/BadmintonActivity.java" />
     </list>
     <ignored path="Training.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -218,11 +248,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="BadmintonActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/BadmintonActivity.java">
+      <file leaf-file-name="SaveActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/SaveActivity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="350" column="42" selection-start-line="350" selection-start-column="42" selection-end-line="350" selection-end-column="42" />
+              <caret line="324" column="17" selection-start-line="324" selection-start-column="17" selection-end-line="324" selection-end-column="17" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -230,51 +260,83 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HelpActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/HelpActivity.java">
+      <file leaf-file-name="SettingActivity.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/SettingActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="83" column="84" selection-start-line="83" selection-start-column="84" selection-end-line="83" selection-end-column="84" />
-              <folding />
+            <state vertical-scroll-proportion="0.061728396">
+              <caret line="182" column="98" selection-start-line="182" selection-start-column="98" selection-end-line="182" selection-end-column="98" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TrainingListActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/TrainingListActivity.java">
+      <file leaf-file-name="DataUtils.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/DataUtils.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="53" column="70" selection-start-line="53" selection-start-column="70" selection-end-line="53" selection-end-column="70" />
-              <folding />
+              <caret line="52" column="89" selection-start-line="52" selection-start-column="89" selection-end-line="52" selection-end-column="89" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/MainActivity.java">
+      <file leaf-file-name="RandomTraining.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/entity/RandomTraining.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8456221">
-              <caret line="400" column="88" selection-start-line="400" selection-start-column="88" selection-end-line="400" selection-end-column="88" />
-              <folding />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="97" column="0" selection-start-line="97" selection-start-column="0" selection-end-line="97" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="false" />
+                <element signature="e#1442#1443#0" expanded="false" />
+                <element signature="e#1472#1473#0" expanded="false" />
+                <element signature="e#1506#1507#0" expanded="false" />
+                <element signature="e#1534#1535#0" expanded="false" />
+                <element signature="e#1586#1587#0" expanded="false" />
+                <element signature="e#1630#1631#0" expanded="false" />
+                <element signature="e#1663#1664#0" expanded="false" />
+                <element signature="e#1700#1701#0" expanded="false" />
+                <element signature="e#1747#1748#0" expanded="false" />
+                <element signature="e#1789#1790#0" expanded="false" />
+                <element signature="e#1822#1823#0" expanded="false" />
+                <element signature="e#1859#1860#0" expanded="false" />
+                <element signature="e#1906#1907#0" expanded="false" />
+                <element signature="e#1948#1949#0" expanded="false" />
+                <element signature="e#1985#1986#0" expanded="false" />
+                <element signature="e#2021#2022#0" expanded="false" />
+                <element signature="e#2070#2071#0" expanded="false" />
+                <element signature="e#2110#2111#0" expanded="false" />
+                <element signature="e#2147#2148#0" expanded="false" />
+                <element signature="e#2185#2186#0" expanded="false" />
+                <element signature="e#2219#2220#0" expanded="false" />
+                <element signature="e#2252#2253#0" expanded="false" />
+                <element signature="e#2301#2302#0" expanded="false" />
+                <element signature="e#2345#2346#0" expanded="false" />
+                <element signature="e#2378#2379#0" expanded="false" />
+                <element signature="e#2409#2410#0" expanded="false" />
+                <element signature="e#2454#2455#0" expanded="false" />
+                <element signature="e#2487#2488#0" expanded="false" />
+                <element signature="e#2526#2527#0" expanded="false" />
+                <element signature="e#2566#2567#0" expanded="false" />
+                <element signature="e#2622#2623#0" expanded="false" />
+                <element signature="e#2670#2671#0" expanded="false" />
+                <element signature="e#2711#2712#0" expanded="false" />
+                <element signature="e#2751#2752#0" expanded="false" />
+                <element signature="e#2809#2810#0" expanded="false" />
+                <element signature="e#2857#2858#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="bold_cautious.png" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/res/drawable/bold_cautious.png">
-          <provider selected="true" editor-type-id="images">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="activity_badminton.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_badminton.xml">
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
+      <file leaf-file-name="BaseTrainingDataSer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/daoservice/BaseTrainingDataSer.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="389" column="16" selection-start-line="389" selection-start-column="16" selection-end-line="389" selection-end-column="16" />
+              <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="28" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -1574,7 +1636,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="4468712324000" />
+        <entry key="$PROJECT_DIR$" value="4465321962754" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -1591,21 +1653,24 @@
                           <list>
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.greenrobot/greendao-api/3.2.0/82de7a8ce53fdcecc04fab6fbad3ec8f5fd4564a/greendao-api-3.2.0-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.greenrobot/greendao-api/3.2.0/c6d610abe1d75d758431c9234917a349abc0a0ac/greendao-api-3.2.0.jar" />
-                            <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/appcompat-v7/23.3.0/appcompat-v7-23.3.0.aar" />
+                            <option value="H:/ASsdk/extras/android/m2repository/com/android/support/appcompat-v7/23.3.0/appcompat-v7-23.3.0.aar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpcore/4.4.2/a4316911e17f4b13a5651c0ba79ecc977d1b9268/httpcore-4.4.2-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpcore/4.4.2/b8e98ae35bf6e3f14382deb60f2ea6e4e0e220fd/httpcore-4.4.2.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.greenrobot/greendao/3.2.0/acbf44ee00ef129add249852f9aec3d8b16bae6a/greendao-3.2.0-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.greenrobot/greendao/3.2.0/e70040568b2929b8e5869ad1ffca8e4386dc53bc/greendao-3.2.0.jar" />
-                            <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/support-vector-drawable/23.3.0/support-vector-drawable-23.3.0.aar" />
-                            <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/animated-vector-drawable/23.3.0/animated-vector-drawable-23.3.0.aar" />
-                            <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/support-v4/23.3.0/support-v4-23.3.0.aar" />
-                            <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.3.0/support-annotations-23.3.0.jar" />
+                            <option value="H:/ASsdk/extras/android/m2repository/com/android/support/support-vector-drawable/23.3.0/support-vector-drawable-23.3.0.aar" />
+                            <option value="H:/ASsdk/extras/android/m2repository/com/android/support/animated-vector-drawable/23.3.0/animated-vector-drawable-23.3.0.aar" />
+                            <option value="H:/ASsdk/extras/android/m2repository/com/android/support/support-v4/23.3.0/support-v4-23.3.0.aar" />
+                            <option value="H:/ASsdk/extras/android/m2repository/com/android/support/support-annotations/23.3.0/support-annotations-23.3.0.jar" />
                             <option value="$MODULE_DIR$/libs/achartengine-1.1.0.jar" />
                             <option value="$MODULE_DIR$/libs/android-async-http-1.4.8.jar" />
                             <option value="$MODULE_DIR$/libs/butterknife-7.0.1.jar" />
                             <option value="$MODULE_DIR$/libs/d2xx.jar" />
                             <option value="$MODULE_DIR$/libs/hellocharts-library-1.5.8.jar" />
+                            <option value="$MODULE_DIR$/libs/jxl.jar" />
                             <option value="$MODULE_DIR$/libs/uApi-android-1.8.10.16.jar" />
+                            <option value="$MODULE_DIR$/libs/commons-beanutils-1.7.0.jar" />
+                            <option value="$MODULE_DIR$/libs/json-lib-2.2.3-jdk15.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.greenrobot/greendao-gradle-plugin/3.2.0/b5b83f1e19c2a81acc83f3b27b52c17a2383aa10/greendao-gradle-plugin-3.2.0-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.greenrobot/greendao-gradle-plugin/3.2.0/97cb4b03f569cae607bff8506d7be1023cf5ca04/greendao-gradle-plugin-3.2.0.jar" />
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/com/android/tools/build/gradle/2.0.0/gradle-2.0.0.jar" />
@@ -1889,21 +1954,24 @@
                           <list>
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.greenrobot/greendao-api/3.2.0/82de7a8ce53fdcecc04fab6fbad3ec8f5fd4564a/greendao-api-3.2.0-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.greenrobot/greendao-api/3.2.0/c6d610abe1d75d758431c9234917a349abc0a0ac/greendao-api-3.2.0.jar" />
-                            <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/appcompat-v7/23.3.0/appcompat-v7-23.3.0.aar" />
+                            <option value="H:/ASsdk/extras/android/m2repository/com/android/support/appcompat-v7/23.3.0/appcompat-v7-23.3.0.aar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpcore/4.4.2/a4316911e17f4b13a5651c0ba79ecc977d1b9268/httpcore-4.4.2-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpcore/4.4.2/b8e98ae35bf6e3f14382deb60f2ea6e4e0e220fd/httpcore-4.4.2.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.greenrobot/greendao/3.2.0/acbf44ee00ef129add249852f9aec3d8b16bae6a/greendao-3.2.0-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.greenrobot/greendao/3.2.0/e70040568b2929b8e5869ad1ffca8e4386dc53bc/greendao-3.2.0.jar" />
-                            <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/support-vector-drawable/23.3.0/support-vector-drawable-23.3.0.aar" />
-                            <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/animated-vector-drawable/23.3.0/animated-vector-drawable-23.3.0.aar" />
-                            <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/support-v4/23.3.0/support-v4-23.3.0.aar" />
-                            <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.3.0/support-annotations-23.3.0.jar" />
+                            <option value="H:/ASsdk/extras/android/m2repository/com/android/support/support-vector-drawable/23.3.0/support-vector-drawable-23.3.0.aar" />
+                            <option value="H:/ASsdk/extras/android/m2repository/com/android/support/animated-vector-drawable/23.3.0/animated-vector-drawable-23.3.0.aar" />
+                            <option value="H:/ASsdk/extras/android/m2repository/com/android/support/support-v4/23.3.0/support-v4-23.3.0.aar" />
+                            <option value="H:/ASsdk/extras/android/m2repository/com/android/support/support-annotations/23.3.0/support-annotations-23.3.0.jar" />
                             <option value="$MODULE_DIR$/libs/achartengine-1.1.0.jar" />
                             <option value="$MODULE_DIR$/libs/android-async-http-1.4.8.jar" />
                             <option value="$MODULE_DIR$/libs/butterknife-7.0.1.jar" />
                             <option value="$MODULE_DIR$/libs/d2xx.jar" />
                             <option value="$MODULE_DIR$/libs/hellocharts-library-1.5.8.jar" />
+                            <option value="$MODULE_DIR$/libs/jxl.jar" />
                             <option value="$MODULE_DIR$/libs/uApi-android-1.8.10.16.jar" />
+                            <option value="$MODULE_DIR$/libs/commons-beanutils-1.7.0.jar" />
+                            <option value="$MODULE_DIR$/libs/json-lib-2.2.3-jdk15.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.greenrobot/greendao-gradle-plugin/3.2.0/b5b83f1e19c2a81acc83f3b27b52c17a2383aa10/greendao-gradle-plugin-3.2.0-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.greenrobot/greendao-gradle-plugin/3.2.0/97cb4b03f569cae607bff8506d7be1023cf5ca04/greendao-gradle-plugin-3.2.0.jar" />
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/com/android/tools/build/gradle/2.0.0/gradle-2.0.0.jar" />
@@ -2037,64 +2105,6 @@
               <option name="name" value="Training" />
               <option name="projectBuildClasspath">
                 <list>
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/ant-1.9.3.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/ant-launcher-1.9.3.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/gradle-base-services-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/gradle-base-services-groovy-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/gradle-cli-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/gradle-core-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/gradle-docs-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/gradle-launcher-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/gradle-messaging-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/gradle-model-core-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/gradle-model-groovy-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/gradle-native-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/gradle-open-api-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/gradle-resources-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/gradle-tooling-api-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/gradle-ui-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/gradle-wrapper-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/groovy-all-2.4.4.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-announce-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-antlr-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-build-comparison-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-build-init-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-code-quality-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-dependency-management-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-diagnostics-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-ear-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-ide-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-ide-native-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-ivy-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-jacoco-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-javascript-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-jetty-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-language-groovy-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-language-java-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-language-jvm-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-language-native-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-language-scala-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-maven-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-osgi-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-platform-base-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-platform-jvm-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-platform-native-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-platform-play-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-plugin-development-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-plugin-use-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-plugins-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-publish-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-reporting-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-resources-http-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-resources-s3-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-resources-sftp-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-scala-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-signing-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-sonar-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-test-kit-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-testing-native-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/gradle-tooling-api-builders-2.10.jar" />
-                  <option value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10/lib/plugins/ivy-2.2.0.jar" />
                   <option value="$PROJECT_DIR$/buildSrc/src/main/java" />
                   <option value="$PROJECT_DIR$/buildSrc/src/main/groovy" />
                 </list>
@@ -2111,65 +2121,65 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/res/layout/item_save_student_num.xml" />
-        <option value="$PROJECT_DIR$/src/main/res/layout/activity_save.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/device/Bracelet.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/device/BraceletManager.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/widget/BraceletManager.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/daoservice/ShuttleRunSer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/daoservice/JumpHighSer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/DialogUtils.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/NetworkUtils.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/SettingActivity.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/entity/JumpHigh.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/entity/ShuttleRun.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/SaveActivity.java" />
-        <option value="$PROJECT_DIR$/src/main/res/layout/activity_main.xml" />
-        <option value="$PROJECT_DIR$/src/main/res/layout/layout_title_bar.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/CustomDialog.java" />
-        <option value="$PROJECT_DIR$/src/main/res/values/styles.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/ShuttleRunAdapter1.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/LargeRecessAdapter.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/Details.java" />
-        <option value="$PROJECT_DIR$/src/main/res/layout/item_largerecess_completedtimes_list.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/listener/AddOrSubBtnClickListener.java" />
-        <option value="$PROJECT_DIR$/src/main/res/layout/details.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/LargeDetailsAdapter.java" />
-        <option value="$PROJECT_DIR$/src/main/res/layout/activity_randomtraining.xml" />
-        <option value="$PROJECT_DIR$/src/main/res/layout/activity_large_recess.xml" />
-        <option value="$PROJECT_DIR$/src/main/res/layout/activity_dribbling_game.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/device/Order.java" />
-        <option value="$PROJECT_DIR$/src/main/res/layout/activity_jump_high.xml" />
         <option value="$PROJECT_DIR$/src/main/res/layout/activity_shuttle_run1.xml" />
         <option value="$PROJECT_DIR$/src/main/res/layout/activity_sit_ups.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/device/Device.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/DribblingGameActivity.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/RandomTrainingActivity.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/SitUpsActivity.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/ShuttleRunActivity1.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/LargeRecessActivity.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/DetailsActivity.java" />
-        <option value="$PROJECT_DIR$/src/main/res/layout/activity_setting.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/AboutSafLightActivity.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/RandomTimesModuleActivity.java" />
         <option value="$PROJECT_DIR$/src/main/res/layout/activity_random_train.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/JumpHighActivity.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/badmintonActivity.java" />
         <option value="$PROJECT_DIR$/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/src/main/res/layout/activity_badminton.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/RandomUtils.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/BadmintonActivity.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/HelpActivity.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/TrainingListActivity.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/MainActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/res/layout/layout_title_bar.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/JumpHighActivity.java" />
+        <option value="$PROJECT_DIR$/build.gradle" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/EightSecondRunActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/LargeRecessActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/BoldCautiousActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/DribblingGameActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/SitUpsActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/RandomTrainingActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/RandomTimesModuleActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/RandomTimeActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/GroupResistActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/TimingModuleActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/TimeKeeperActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/res/layout/activity_setting.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/Constant.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/OperateUtils.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/FileUtils.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/daoservice/BaseTrainingDataSer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/BadmintonActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/entity/BaseTrainingData.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/DateUtil.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/App.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/daoservice/DribblingGameSer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/entity/DribblingGame.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/daoservice/JumpHighSer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/entity/JumpHigh.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/daoservice/SitUpsSer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/entity/SitUps.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/entity/ShuttleRun.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/daoservice/ShuttleRunSer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/entity/RandomTraining.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/SaveActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/daoservice/RandomTrainingSer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/DataUtils.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/ExcelUtils.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/SettingActivity.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-9" />
-    <option name="y" value="-9" />
-    <option name="width" value="1938" />
-    <option name="height" value="1048" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1382" />
+    <option name="height" value="744" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -2224,60 +2234,6 @@
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Training" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Training" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Training" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Training" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="training" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Training" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Training" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="training" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="activity" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="Scratches" />
@@ -2288,6 +2244,16 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="Training" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Training" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Training" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -2325,7 +2291,7 @@
     <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager2.WIDTH" value="248" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/res/mipmap-xhdpi" />
     <property name="UI_DESIGNER_EDITOR_MODE.PaletteToolWindowManager.SHOW" value="true" />
-    <property name="UI_DESIGNER_EDITOR_MODE.PaletteToolWindowManager.WIDTH" value="254" />
+    <property name="UI_DESIGNER_EDITOR_MODE.PaletteToolWindowManager.WIDTH" value="203" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="212" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="238" />
@@ -2348,11 +2314,11 @@
       <recent name="com.oucb303.training.activity" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\ASworkspase\Training\src\main\res\drawable" />
+      <recent name="D:\ASworkspase\Training\libs" />
       <recent name="D:\ASworkspase\Training\src\main\java\com\oucb303\training\utils" />
-      <recent name="D:\ASworkspase\Training\src\main\res\mipmap-xhdpi" />
-      <recent name="D:\ASworkspase\Training\src\main\res\anim" />
-      <recent name="D:\ASworkspase\Training\src\main\res\layout" />
+      <recent name="D:\ASworkspase\Training\src\main\java\com\oucb303\training\daoservice" />
+      <recent name="D:\ASworkspase\Training\src\main\java\com\oucb303\training\entity" />
+      <recent name="D:\ASworkspase\Training\src\main\java\com\oucb303\training\activity" />
     </key>
   </component>
   <component name="RunManager" selected="Android Application.Training">
@@ -2374,15 +2340,15 @@
       <option name="PREFERRED_AVD" value="" />
       <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
       <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
-      <Hybrid>
-        <option name="WORKING_DIR" value="" />
-        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
-      </Hybrid>
       <Native>
         <option name="WORKING_DIR" value="" />
         <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
       </Native>
       <Java />
+      <Hybrid>
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+      </Hybrid>
       <Profilers>
         <option name="GAPID_DISABLE_PCS" value="false" />
       </Profilers>
@@ -2409,15 +2375,15 @@
       <option name="PREFERRED_AVD" value="" />
       <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
       <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
-      <Hybrid>
-        <option name="WORKING_DIR" value="" />
-        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
-      </Hybrid>
       <Native>
         <option name="WORKING_DIR" value="" />
         <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
       </Native>
       <Java />
+      <Hybrid>
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+      </Hybrid>
       <Profilers>
         <option name="GAPID_DISABLE_PCS" value="false" />
       </Profilers>
@@ -2595,15 +2561,15 @@
       <option name="PREFERRED_AVD" value="" />
       <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
       <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
-      <Hybrid>
-        <option name="WORKING_DIR" value="" />
-        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
-      </Hybrid>
       <Native>
         <option name="WORKING_DIR" value="" />
         <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
       </Native>
       <Java />
+      <Hybrid>
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+      </Hybrid>
       <Profilers>
         <option name="GAPID_DISABLE_PCS" value="false" />
       </Profilers>
@@ -2650,37 +2616,37 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1048" extended-state="7" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.05972696" sideWeight="0.49785867" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32945284" sideWeight="0.49785867" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Monitor" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.45750874" sideWeight="0.4914071" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.46100116" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.59720606" sideWeight="0.5085929" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25938568" sideWeight="0.4914071" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32945284" sideWeight="0.49785867" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32945284" sideWeight="0.49785867" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32945284" sideWeight="0.49785867" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32945284" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32945284" sideWeight="0.49785867" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15358362" sideWeight="0.49785867" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24054463" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22912206" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32945284" sideWeight="0.49785867" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.46100116" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -2701,257 +2667,90 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/res/drawable/bold_cautious.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_badminton.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="389" column="16" selection-start-line="389" selection-start-column="16" selection-end-line="389" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_dribbling_game.xml">
       <provider editor-type-id="android-designer">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.597015">
-          <caret line="315" column="56" selection-start-line="315" selection-start-column="56" selection-end-line="315" selection-end-column="56" />
+        <state vertical-scroll-proportion="0.3448276">
+          <caret line="6" column="36" selection-start-line="6" selection-start-column="36" selection-end-line="6" selection-end-column="36" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_jump_high.xml">
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.764706">
-          <caret line="163" column="54" selection-start-line="163" selection-start-column="54" selection-end-line="163" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/model/CheckBox.java">
+    <entry file="file://H:/ASsdk/sources/android-23/java/util/ArrayList.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="23" column="23" selection-start-line="23" selection-start-column="23" selection-end-line="23" selection-end-column="23" />
+        <state vertical-scroll-proportion="0.3326087">
+          <caret line="113" column="29" selection-start-line="113" selection-start-column="29" selection-end-line="113" selection-end-column="29" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_large_recess.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/local.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.65789473">
-          <caret line="159" column="56" selection-start-line="147" selection-start-column="24" selection-end-line="159" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_shuttle_run1.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3618421">
-          <caret line="53" column="56" selection-start-line="53" selection-start-column="56" selection-end-line="53" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_sit_ups.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="160" column="52" selection-start-line="160" selection-start-column="52" selection-end-line="160" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_help.xml">
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/drawable/help_shuttle_run.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/ShuttleRunActivity1.java">
+    <entry file="file://$PROJECT_DIR$/settings.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="369" column="0" selection-start-line="369" selection-start-column="0" selection-end-line="369" selection-end-column="0" />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/SitUpsActivity.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/BoldCautiousActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="323" column="45" selection-start-line="323" selection-start-column="45" selection-end-line="323" selection-end-column="45" />
+          <caret line="256" column="56" selection-start-line="256" selection-start-column="56" selection-end-line="256" selection-end-column="56" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/SequenceTrainingActivity.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/VersionUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.8742442">
-          <caret line="51" column="13" selection-start-line="51" selection-start-column="13" selection-end-line="51" selection-end-column="13" />
+        <state vertical-scroll-proportion="-0.3005618">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/SequenceRunningActivity.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/SharedPreferencesUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.6324062">
-          <caret line="249" column="39" selection-start-line="249" selection-start-column="39" selection-end-line="249" selection-end-column="39" />
+        <state vertical-scroll-proportion="-1.3539326">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/GroupConfrontationActivity.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/RandomUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="8.258528">
-          <caret line="221" column="35" selection-start-line="221" selection-start-column="35" selection-end-line="221" selection-end-column="35" />
+        <state vertical-scroll-proportion="0.91292137">
+          <caret line="19" column="28" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/DetailsActivity.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/NetworkUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.9299821">
-          <caret line="65" column="21" selection-start-line="65" selection-start-column="21" selection-end-line="65" selection-end-column="21" />
+        <state vertical-scroll-proportion="0.28089887">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/LargeRecessActivity.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/ListUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.044883303">
-          <caret line="390" column="79" selection-start-line="390" selection-start-column="79" selection-end-line="390" selection-end-column="79" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_setting.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="131" column="45" selection-start-line="131" selection-start-column="45" selection-end-line="131" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/AboutSafLightActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.15159574">
-          <caret line="44" column="13" selection-start-line="44" selection-start-column="13" selection-end-line="44" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/SettingActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.06648936">
-          <caret line="150" column="17" selection-start-line="150" selection-start-column="17" selection-end-line="150" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/device/Device.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="3.1818182">
-          <caret line="118" column="9" selection-start-line="118" selection-start-column="9" selection-end-line="118" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/entity/Light.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.35">
+        <state vertical-scroll-proportion="-11.429775">
           <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/model/Light.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/DialogUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38863635">
-          <caret line="14" column="29" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="29" />
+        <state vertical-scroll-proportion="-1.3539326">
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/threads/ReceiveThread.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/BaseTrainingActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="47" column="28" selection-start-line="47" selection-start-column="24" selection-end-line="47" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/threads/Timer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.90966386">
-          <caret line="74" column="20" selection-start-line="74" selection-start-column="18" selection-end-line="74" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/DribblingGameActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="25.686813">
-          <caret line="415" column="23" selection-start-line="415" selection-start-column="23" selection-end-line="415" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/RandomTimesModuleActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="239" column="42" selection-start-line="239" selection-start-column="42" selection-end-line="239" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_random_train.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="461" column="35" selection-start-line="461" selection-start-column="35" selection-end-line="461" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/GroupListViewAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.9917582">
-          <caret line="40" column="21" selection-start-line="40" selection-start-column="13" selection-end-line="40" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/listener/SpinnerItemSelectedListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.0989012">
-          <caret line="20" column="87" selection-start-line="20" selection-start-column="39" selection-end-line="20" selection-end-column="87" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/JumpHighActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.70604396">
-          <caret line="280" column="48" selection-start-line="280" selection-start-column="48" selection-end-line="280" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5073892">
-          <caret line="91" column="59" selection-start-line="91" selection-start-column="59" selection-end-line="91" selection-end-column="59" />
-          <folding>
-            <element signature="e#844#862#0" expanded="true" />
-          </folding>
+          <caret line="51" column="51" selection-start-line="51" selection-start-column="51" selection-end-line="51" selection-end-column="51" />
         </state>
       </provider>
     </entry>
@@ -2960,144 +2759,327 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.953125">
-          <caret line="41" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="960" selection-end-column="0" />
-          <folding />
+        <state vertical-scroll-proportion="0.078125">
+          <caret line="870" column="53" selection-start-line="870" selection-start-column="37" selection-end-line="870" selection-end-column="53" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/RandomTimeActivity.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/LargeRecessActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.056818">
-          <caret line="50" column="31" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="31" />
+        <state vertical-scroll-proportion="-5.3333335">
+          <caret line="422" column="33" selection-start-line="422" selection-start-column="33" selection-end-line="422" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/SitUpsActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="28.9">
+          <caret line="290" column="57" selection-start-line="290" selection-start-column="53" selection-end-line="290" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/EightSecondRunActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6559633">
+          <caret line="283" column="22" selection-start-line="265" selection-start-column="11" selection-end-line="283" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="53" column="38" selection-start-line="53" selection-start-column="30" selection-end-line="53" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://H:/ASsdk/sources/android-23/java/util/Map.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.16885965">
+          <caret line="192" column="31" selection-start-line="192" selection-start-column="26" selection-end-line="192" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/threads/Timer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7719298">
+          <caret line="72" column="25" selection-start-line="72" selection-start-column="22" selection-end-line="72" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://H:/ASsdk/sources/android-23/android/app/Activity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334">
+          <caret line="4166" column="16" selection-start-line="4166" selection-start-column="16" selection-end-line="4166" selection-end-column="16" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/RandomTrainingActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="226" column="6" selection-start-line="46" selection-start-column="3" selection-end-line="226" selection-end-column="6" />
+        <state vertical-scroll-proportion="-4.733333">
+          <caret line="402" column="60" selection-start-line="402" selection-start-column="20" selection-end-line="402" selection-end-column="60" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/BaseTrainingActivity.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/RandomTimeActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.32894737">
+          <caret line="50" column="11" selection-start-line="50" selection-start-column="11" selection-end-line="50" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/RandomTimesModuleActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.32894737">
+          <caret line="51" column="11" selection-start-line="51" selection-start-column="11" selection-end-line="51" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/DribblingGameActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="47" column="49" selection-start-line="47" selection-start-column="16" selection-end-line="47" selection-end-column="49" />
+          <caret line="391" column="22" selection-start-line="373" selection-start-column="12" selection-end-line="391" selection-end-column="22" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/layout/item_training_list.xml">
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/adpter/TrainingListAdapter.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/GroupResistActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.22727273">
-          <caret line="53" column="73" selection-start-line="53" selection-start-column="73" selection-end-line="53" selection-end-column="73" />
-          <folding />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="386" column="66" selection-start-line="386" selection-start-column="62" selection-end-line="386" selection-end-column="66" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_badminton.xml">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/TimingModuleActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="47" column="11" selection-start-line="47" selection-start-column="11" selection-end-line="47" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/TimeKeeperActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="373" column="60" selection-start-line="373" selection-start-column="60" selection-end-line="373" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_setting.xml">
       <provider editor-type-id="android-designer">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.17091836">
+          <caret line="157" column="44" selection-start-line="157" selection-start-column="44" selection-end-line="157" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/Constant.java">
+      <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="389" column="16" selection-start-line="389" selection-start-column="16" selection-end-line="389" selection-end-column="16" />
-          <folding />
+          <caret line="19" column="10" selection-start-line="19" selection-start-column="10" selection-end-line="19" selection-end-column="10" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/OperateUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.39772728">
-          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/ListUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.056818">
-          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/DateUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.0454545">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/RandomUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="28" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
+          <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/device/Order.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/FileUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="42" column="19" selection-start-line="42" selection-start-column="14" selection-end-line="42" selection-end-column="19" />
+        <state vertical-scroll-proportion="1.8135965">
+          <caret line="42" column="25" selection-start-line="42" selection-start-column="25" selection-end-line="42" selection-end-column="25" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/BadmintonActivity.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.0333333">
+          <caret line="373" column="49" selection-start-line="373" selection-start-column="49" selection-end-line="373" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/DateUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="17.5">
+          <caret line="25" column="73" selection-start-line="25" selection-start-column="73" selection-end-line="25" selection-end-column="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/App.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.23155738">
+          <caret line="21" column="18" selection-start-line="21" selection-start-column="18" selection-end-line="21" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/entity/BaseTrainingData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8956159">
+          <caret line="130" column="5" selection-start-line="130" selection-start-column="5" selection-end-line="130" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/entity/DribblingGame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5219207">
+          <caret line="51" column="79" selection-start-line="51" selection-start-column="79" selection-end-line="51" selection-end-column="79" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/daoservice/DribblingGameSer.java">
+      <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="350" column="42" selection-start-line="350" selection-start-column="42" selection-end-line="350" selection-end-column="42" />
+          <caret line="24" column="2" selection-start-line="24" selection-start-column="2" selection-end-line="27" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/daoservice/JumpHighSer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6450939">
+          <caret line="26" column="26" selection-start-line="26" selection-start-column="26" selection-end-line="26" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/JumpHighActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="358" column="50" selection-start-line="358" selection-start-column="50" selection-end-line="358" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/entity/JumpHigh.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.536017">
+          <caret line="92" column="0" selection-start-line="92" selection-start-column="0" selection-end-line="92" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/daoservice/SitUpsSer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6292373">
+          <caret line="31" column="24" selection-start-line="31" selection-start-column="24" selection-end-line="31" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/entity/SitUps.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="23" column="25" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/daoservice/ShuttleRunSer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8045977">
+          <caret line="30" column="28" selection-start-line="30" selection-start-column="28" selection-end-line="30" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/entity/RandomTraining.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="97" column="0" selection-start-line="97" selection-start-column="0" selection-end-line="97" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#1442#1443#0" expanded="false" />
+            <element signature="e#1472#1473#0" expanded="false" />
+            <element signature="e#1506#1507#0" expanded="false" />
+            <element signature="e#1534#1535#0" expanded="false" />
+            <element signature="e#1586#1587#0" expanded="false" />
+            <element signature="e#1630#1631#0" expanded="false" />
+            <element signature="e#1663#1664#0" expanded="false" />
+            <element signature="e#1700#1701#0" expanded="false" />
+            <element signature="e#1747#1748#0" expanded="false" />
+            <element signature="e#1789#1790#0" expanded="false" />
+            <element signature="e#1822#1823#0" expanded="false" />
+            <element signature="e#1859#1860#0" expanded="false" />
+            <element signature="e#1906#1907#0" expanded="false" />
+            <element signature="e#1948#1949#0" expanded="false" />
+            <element signature="e#1985#1986#0" expanded="false" />
+            <element signature="e#2021#2022#0" expanded="false" />
+            <element signature="e#2070#2071#0" expanded="false" />
+            <element signature="e#2110#2111#0" expanded="false" />
+            <element signature="e#2147#2148#0" expanded="false" />
+            <element signature="e#2185#2186#0" expanded="false" />
+            <element signature="e#2219#2220#0" expanded="false" />
+            <element signature="e#2252#2253#0" expanded="false" />
+            <element signature="e#2301#2302#0" expanded="false" />
+            <element signature="e#2345#2346#0" expanded="false" />
+            <element signature="e#2378#2379#0" expanded="false" />
+            <element signature="e#2409#2410#0" expanded="false" />
+            <element signature="e#2454#2455#0" expanded="false" />
+            <element signature="e#2487#2488#0" expanded="false" />
+            <element signature="e#2526#2527#0" expanded="false" />
+            <element signature="e#2566#2567#0" expanded="false" />
+            <element signature="e#2622#2623#0" expanded="false" />
+            <element signature="e#2670#2671#0" expanded="false" />
+            <element signature="e#2711#2712#0" expanded="false" />
+            <element signature="e#2751#2752#0" expanded="false" />
+            <element signature="e#2809#2810#0" expanded="false" />
+            <element signature="e#2857#2858#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/entity/ShuttleRun.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4731801">
+          <caret line="24" column="25" selection-start-line="24" selection-start-column="16" selection-end-line="24" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/daoservice/RandomTrainingSer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5210728">
+          <caret line="27" column="32" selection-start-line="27" selection-start-column="32" selection-end-line="27" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/daoservice/BaseTrainingDataSer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="28" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/DataUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="52" column="89" selection-start-line="52" selection-start-column="89" selection-end-line="52" selection-end-column="89" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/drawable/help_bold_cautious.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/HelpActivity.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/SaveActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="83" column="84" selection-start-line="83" selection-start-column="84" selection-end-line="83" selection-end-column="84" />
+          <caret line="324" column="17" selection-start-line="324" selection-start-column="17" selection-end-line="324" selection-end-column="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/utils/ExcelUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.80932206">
+          <caret line="109" column="58" selection-start-line="109" selection-start-column="58" selection-end-line="109" selection-end-column="58" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/drawable/bold_cautious.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/drawable/badminton_training.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/TrainingListActivity.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/SettingActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="53" column="70" selection-start-line="53" selection-start-column="70" selection-end-line="53" selection-end-column="70" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/oucb303/training/activity/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8456221">
-          <caret line="400" column="88" selection-start-line="400" selection-start-column="88" selection-end-line="400" selection-end-column="88" />
-          <folding />
+        <state vertical-scroll-proportion="0.061728396">
+          <caret line="182" column="98" selection-start-line="182" selection-start-column="98" selection-end-line="182" selection-end-column="98" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
