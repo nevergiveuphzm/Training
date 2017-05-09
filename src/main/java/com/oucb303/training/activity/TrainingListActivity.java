@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.oucb303.training.R;
 import com.oucb303.training.adpter.TrainingListAdapter;
+import com.oucb303.training.utils.ConfigParamUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -187,7 +188,10 @@ public class TrainingListActivity extends Activity
         {
             if ((item[4].toString()).contains("" + level))
                 res.add(item);
+            if( ConfigParamUtils.getDefaultDeviceNum(this)<12&&(item[0].toString()).contains("羽毛球步法训练"))
+                res.remove(item);
         }
+
         return res;
     }
 
