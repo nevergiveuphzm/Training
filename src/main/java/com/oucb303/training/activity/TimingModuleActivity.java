@@ -351,7 +351,7 @@ public class TimingModuleActivity extends AppCompatActivity {
                     Order.BlinkModel.NONE,
                     Order.LightModel.values()[1],
                     Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                    Order.EndVoice.NONE);
+                    Order.EndVoice.values()[cbEndVoice.isChecked()?1:0]);
             deviceNumList.add(Device.DEVICE_LIST.get(i).getDeviceNum());
         }
 
@@ -374,6 +374,7 @@ public class TimingModuleActivity extends AppCompatActivity {
         if(timer!=null)
             timer.stopTimer();
         device.turnOffAllTheLight();
+
         //暂停0.5秒,等全部数据返回结束接收线程
         Timer.sleep(500);
         //结束接收返回灭灯时间线程

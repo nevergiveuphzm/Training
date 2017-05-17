@@ -296,7 +296,7 @@ public class BoldCautiousActivity extends AppCompatActivity {
                     Order.BlinkModel.NONE,
                     Order.LightModel.values()[lightModeCheckBox.getCheckId()],
                     Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                    Order.EndVoice.NONE);
+                    Order.EndVoice.values()[cbVoice.isChecked() ?1:0]);
         }
         startTime = System.currentTimeMillis();
         timer = new Timer(handler);
