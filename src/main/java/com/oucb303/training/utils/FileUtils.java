@@ -1,5 +1,7 @@
 package com.oucb303.training.utils;
 
+import android.os.Environment;
+
 import java.io.File;
 import java.io.FileOutputStream;
 
@@ -29,5 +31,23 @@ public class FileUtils
         {
             e.printStackTrace();
         }
+    }
+   //获取文件
+    public static void makeDir(File dir) {
+        if (!dir.getParentFile().exists()) {
+            makeDir(dir.getParentFile());
+        }
+        dir.mkdir();
+    }
+    //获取文件路径
+    public static String getSDPath() {
+        File sdDir = null;
+        boolean sdCardExist = Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
+        if (sdCardExist) {
+            sdDir = Environment.getExternalStorageDirectory();
+        }
+        String dir = sdDir.toString();
+        return dir;
+
     }
 }

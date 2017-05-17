@@ -59,21 +59,23 @@ public class DetailsActivity extends AppCompatActivity {
         Intent intent = this.getIntent();
         Bundle bundle = intent.getExtras();
         groupId = bundle.getInt("groupId");
-        Log.i("groupId","groupId---"+String.valueOf(groupId));
+//        Log.i("groupId","groupId---"+String.valueOf(groupId));
 
         List<Map<String,Integer>> list_finishTime = (ArrayList) bundle.getSerializable("list_detail");
         List<Integer> time = new ArrayList<>();
+
 //        Log.i("mmmm","所点击的灭灯次数---"+list_finishTime.get(groupId).size());
+
         for(int i=0;i<list_finishTime.size();i++){
             if(list_finishTime.get(i).get(String.valueOf(groupId))!=null){
-            time.add(list_finishTime.get(i).get(String.valueOf(groupId)));
+               time.add(list_finishTime.get(i).get(String.valueOf(groupId)));
             }
             Log.i("aaaa","aaa---"+list_finishTime.get(i).toString());
         }
 
         tvTitle.setText("每组训练详情");
-        largeDetailsAdapter = new LargeDetailsAdapter(this,time,groupId);
 
+        largeDetailsAdapter = new LargeDetailsAdapter(this,time,groupId);
         lvTimes.setAdapter(largeDetailsAdapter);
         largeDetailsAdapter.notifyDataSetChanged();
 

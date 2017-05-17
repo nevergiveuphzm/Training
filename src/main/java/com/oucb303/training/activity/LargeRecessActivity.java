@@ -50,6 +50,7 @@ import butterknife.OnClick;
 
 /**
  * Created by HP on 2017/2/27.
+ * 大课间跑圈
  */
 public class LargeRecessActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
@@ -114,6 +115,8 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
     Button btnOn;
     @Bind(R.id.btn_off)
     Button btnOff;
+    @Bind(R.id.tv_maxTime)
+    TextView tvMaxTime;
     private Device device;
     private int level;
     private int maxGroupNum;//做多分组数目
@@ -123,7 +126,6 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
     private final int groupSize = 1;//每组所需设备个数
     private GroupListViewAdapter groupListViewAdapter;
     private LargeRecessAdapter largeRecessAdapter;
-    private LargeDetailsAdapter largeDetailsAdapter;
     //感应模式和灯光模式集合
     private CheckBox actionModeCheckBox, lightColorCheckBox, lightModeCheckBox;
     private boolean isTraining = false;//是否正在训练标志
@@ -132,7 +134,7 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
     //存放所有的map,map存的是：key值是组号，value值是每次灭灯所用时间
     private List<Map<String, Integer>> list_finishTime = new ArrayList<>();
 
-    //上一次次完成训练的时间
+    //上一次完成训练的时间
     private int[] currentTime;
 
     private final int TIME_RECEIVE = 1;
@@ -175,6 +177,7 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
         setContentView(R.layout.activity_large_recess);
         ButterKnife.bind(this);
         level = getIntent().getIntExtra("level", 1);
+
         initView();
         device = new Device(this);
         //更新连接设备列表
@@ -208,8 +211,8 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
 
         //初始化训练分组下拉框
         maxGroupNum = Device.DEVICE_LIST.size();
-        if (maxGroupNum > 8)
-            maxGroupNum = 8;
+//        if (maxGroupNum > 8)
+//            maxGroupNum = 8;
         String[] groupNumChoose = new String[maxGroupNum + 1];
         groupNumChoose[0] = "";
         for (int i = 1; i <= maxGroupNum; i++) {
@@ -225,23 +228,37 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
             }
         });
 
-        //训练时间拖动条初始化
-        barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 10));
-        imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
-        imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
+
 
         switch (level) {
             case 1:
-                level = 4;
+                level = 2;
+                //训练时间拖动条初始化
+                barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 10));
+                imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
+                imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
+                tvMaxTime.setText("10");
+
                 break;
             case 2:
-                level = 5;
+                level = 4;
+                barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 20));
+                imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
+                imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
+                tvMaxTime.setText("20");
+
                 break;
             case 3:
-                level = 7;
+                level = 5;
+                barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 30));
+                imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
+                imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
+                tvMaxTime.setText("30");
+
                 break;
         }
         barTrainingTime.setProgress(level);
+
 
         //初始化左侧分组listView
         groupListViewAdapter = new GroupListViewAdapter(LargeRecessActivity.this, groupSize);
@@ -312,7 +329,7 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
 //    }
 
 
-    @OnClick({R.id.layout_cancel, R.id.img_help, R.id.btn_begin, R.id.img_save,R.id.btn_on,R.id.btn_off})
+    @OnClick({R.id.layout_cancel, R.id.img_help, R.id.btn_begin, R.id.img_save, R.id.btn_on, R.id.btn_off})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_cancel:
@@ -321,16 +338,20 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
                 break;
             case R.id.img_help:
                 Intent intent = new Intent(this, HelpActivity.class);
-                intent.putExtra("flag", 1);
+                intent.putExtra("flag", 9);
                 startActivity(intent);
                 break;
             case R.id.img_save:
                 Intent it = new Intent(this, SaveActivity.class);
                 Bundle bundle = new Bundle();
-                //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 4:大课间活动 ...
-                bundle.putString("trainingCategory", "4");
-                //每组规定时间内的所完成的次数
-                bundle.putIntArray("completedTimes", completedTimes);
+                //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 6:大课间跑圈，八秒钟跑 ...
+                bundle.putString("trainingCategory", "6");
+                bundle.putString("trainingName","大课间活动");//项目名称
+                bundle.putInt("totalTimes", 0);//总次数
+                bundle.putInt("deviceNum",goupNum);//设备个数
+                bundle.putIntArray("scores", completedTimes);//得分
+                bundle.putInt("totalTime",trainingTime);//训练总时间
+                bundle.putInt("groupNum",goupNum);//分组数
                 it.putExtras(bundle);
                 startActivity(it);
                 break;
@@ -348,7 +369,7 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
                 break;
             case R.id.btn_on:
                 //goupNum组数，1：每组设备个数，0：类型
-                device.turnOnButton(goupNum,1,0);
+                device.turnOnButton(goupNum, 1, 0);
                 break;
             case R.id.btn_off:
                 device.turnOffAllTheLight();
@@ -388,7 +409,7 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
                     Order.BlinkModel.NONE,
                     Order.LightModel.values()[lightModeCheckBox.getCheckId()],
                     Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                    Order.EndVoice.NONE);
+                    Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
         }
         timer = new Timer(handler, trainingTime);
         timer.setBeginTime(System.currentTimeMillis());
@@ -427,14 +448,14 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
 
     //解析饭回来的数据,灭一次解析一次，如果同时灭多盏灯，就是解析一次,infos里存放同时灭灯个数
     public void analyzeTimeData(final String data) {
-//        Log.i("sssssssssssssss","ssssss---------------");
         if (!isTraining)
             return;
         new Thread(new Runnable() {
             @Override
             public void run() {
+                //编号和时间
                 List<TimeInfo> infos = DataAnalyzeUtils.analyzeTimeData(data);
-                Log.i("mmmmmmmmmmmmmmmmmmm","所点击的灭灯次数---"+infos.size());
+//                Log.i("mmmmmmmmmmmmmmmmmmm", "所点击的灭灯次数---" + infos.size());
                 for (TimeInfo info : infos) {
                     int groupId = findDeviceGroupId(info.getDeviceNum());
                     //如果设备组号大于分组数肯定是错误的
@@ -442,14 +463,13 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
                         continue;
                     Log.d(Constant.LOG_TAG, info.getDeviceNum() + " groupId " + groupId);
                     completedTimes[groupId] += 1;
+
                     //map_finishTime存的是组号，和这个组这一次所用的时间
                     Map<String, Integer> map_finishTime = new HashMap<>();
                     map_finishTime.put(String.valueOf(groupId), (int) (System.currentTimeMillis() - currentTime[groupId]));
 
                     list_finishTime.add(map_finishTime);
-//                    for(int i=0;i<list_finishTime.size();i++){
-//                        Log.d(Constant.LOG_TAG,"list_finishTime    ----"+list_finishTime.get(i).toString());
-//                    }
+
                     //上一次的当前时间
                     currentTime[groupId] = (int) (System.currentTimeMillis());
                     turnOnLight(info.getDeviceNum());

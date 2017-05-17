@@ -65,6 +65,10 @@
       <sourceFolder url="file://$MODULE_DIR$/../../vitamio/src/androidTest/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../vitamio/src/androidTest/jni" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../vitamio/src/androidTest/rs" isTestSource="true" />
+<<<<<<< HEAD
+      <excludeFolder url="file://$MODULE_DIR$/../../vitamio/build/intermediates/assets" />
+      <excludeFolder url="file://$MODULE_DIR$/../../vitamio/build/intermediates/blame" />
+=======
       <sourceFolder url="file://$MODULE_DIR$/../../vitamio/src/test/res" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/../../vitamio/src/test/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/../../vitamio/src/test/assets" type="java-test-resource" />
@@ -72,8 +76,7 @@
       <sourceFolder url="file://$MODULE_DIR$/../../vitamio/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../vitamio/src/test/jni" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../vitamio/src/test/rs" isTestSource="true" />
-      <excludeFolder url="file://$MODULE_DIR$/../../vitamio/build/intermediates/assets" />
-      <excludeFolder url="file://$MODULE_DIR$/../../vitamio/build/intermediates/blame" />
+>>>>>>> origin/baichangcai-pc
       <excludeFolder url="file://$MODULE_DIR$/../../vitamio/build/intermediates/bundles" />
       <excludeFolder url="file://$MODULE_DIR$/../../vitamio/build/intermediates/classes" />
       <excludeFolder url="file://$MODULE_DIR$/../../vitamio/build/intermediates/dependency-cache" />

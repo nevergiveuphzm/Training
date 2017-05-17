@@ -22,6 +22,10 @@ public class JumpHighSer {
     public List<JumpHigh> loadAllShuttleRun(){
         return jumpHighDao.loadAll();
     }
+    //查询某一时间段内的数据
+    public List<JumpHigh> selectByTimeSpan(String where,String[] strings){
+        return jumpHighDao.queryRaw(where,strings);
+    }
     //删除所有数据
     public void deleteAll(){
         jumpHighDao.deleteAll();

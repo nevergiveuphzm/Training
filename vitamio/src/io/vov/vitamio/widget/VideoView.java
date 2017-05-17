@@ -59,7 +59,7 @@ import java.util.Map;
 /**
  * Displays a video file. The VideoView class can load images from various
  * sources (such as resources or content providers), takes care of computing its
- * measurement from the video so that it can be used in any layout manager, and
+ * measurement from the video so that it can be used in any item_bold_cautious manager, and
  * provides various display options such as scaling and tinting.
  * <p/>
  * VideoView also provide many wrapper methods for

@@ -9,7 +9,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 5
-        versionName "2.1.2"
+        versionName "2.2.1"
     }
     buildTypes {
         release {
@@ -21,16 +21,19 @@ android {
 
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile files('libs/achartengine-1.1.0.jar')
+    compile files('libs/butterknife-7.0.1.jar')
     compile files('libs/d2xx.jar')
     // compile project(':vitamio')
     compile files('libs/android-async-http-1.4.8.jar')
     compile 'org.apache.httpcomponents:httpcore:4.4.2'
     compile project(':vitamio')
     compile files('libs/hellocharts-library-1.5.8.jar')
-    compile files('libs/butterknife-7.0.1.jar')
+    compile files('libs/commons-beanutils-1.7.0.jar')
+    compile files('libs/json-lib-2.2.3-jdk15.jar')
+    compile files('libs/jxl.jar')
 }
 
 /*greenDAO配置*/
@@ -56,5 +59,5 @@ dependencies {
 }
 
 greendao {
-    schemaVersion 3
+    schemaVersion 4
 }

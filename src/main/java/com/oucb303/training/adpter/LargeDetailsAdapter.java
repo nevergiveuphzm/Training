@@ -25,6 +25,7 @@ public class LargeDetailsAdapter extends BaseAdapter {
     private int groupId;
     private int[] completedTimes;//规定时间内的完成次数
     private List<Integer> finishTime;//每次完成所用时间
+
     public LargeDetailsAdapter(Context context,List<Integer> finishTime,int groupId){
         this.context = context;
         this.finishTime = finishTime;
@@ -59,7 +60,6 @@ public class LargeDetailsAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
 
-//        Log.i("fdsfdsf","dfdsfds");
         //关于finishTime的逻辑写道这里
             holder.tvGroupId.setText("第"+(groupId+1)+"组");
             holder.tvTimes.setText("第"+ (position+1) +"次");

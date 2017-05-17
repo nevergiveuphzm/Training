@@ -105,6 +105,8 @@ public class DribblingGameActivity extends AppCompatActivity {
     TextView tvDeviceList;
     @Bind(R.id.img_help)
     ImageView imgHelp;
+    @Bind(R.id.img_save)
+    ImageView imgSave;
     @Bind(R.id.tv_delay_time)
     TextView tvDelayTime;
     @Bind(R.id.img_delay_time_sub)
@@ -147,6 +149,7 @@ public class DribblingGameActivity extends AppCompatActivity {
     //训练开始时间
     private long startTime;
     private ArrayList<Integer> listRand = new ArrayList<>();
+
 
     private int level;
 
@@ -212,7 +215,11 @@ public class DribblingGameActivity extends AppCompatActivity {
         }
         initView();
     }
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        imgSave.setEnabled(false);
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -221,15 +228,14 @@ public class DribblingGameActivity extends AppCompatActivity {
     }
 
     public void initView() {
+        imgSave.setVisibility(View.VISIBLE);
+        imgHelp.setVisibility(View.VISIBLE);
         if (level == 4)
             tvTitle.setText("多人混战");
         else
             tvTitle.setText("运球比赛");
-        imgHelp.setVisibility(View.VISIBLE);
-
         dribblingGameAdapter = new DribblingGameAdapter(this);
         lvScores.setAdapter(dribblingGameAdapter);
-
 
         if (level != 0) {
             switch (level) {
@@ -329,11 +335,12 @@ public class DribblingGameActivity extends AppCompatActivity {
         new CheckBoxClickListener(lightModeCheckBox);
     }
 
-    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help,R.id.btn_on,R.id.btn_off})
+    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help,R.id.btn_on,R.id.btn_off,R.id.img_save})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_cancel:
                 this.finish();
+                device.turnOffAllTheLight();
                 break;
             case R.id.btn_begin:
                 //检测设备
@@ -357,12 +364,31 @@ public class DribblingGameActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.btn_on:
-                //totalNum组数，1：每组设备个数，0：类型
+                //totalNum组数，1：每组设备个数，1：类型
                 device.turnOnButton(totalNum,1,0);
                 break;
             case R.id.btn_off:
                 for (int i = 0; i < totalNum; i++)
                     turnOffLight(Device.DEVICE_LIST.get(i).getDeviceNum());
+                break;
+            case R.id.img_save:
+                Intent it = new Intent(this,SaveActivity.class);
+                Bundle bundle = new Bundle();
+                //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 5:运球比赛、多人混战 ...
+                bundle.putString("trainingCategory","5");
+                if(level==4){
+                    bundle.putString("trainingName","多人混战");
+                }else {
+                    bundle.putString("trainingName","运球比赛");
+                }
+                //训练总时间
+                bundle.putInt("trainingTime",trainingTime);
+                //设备个数
+                bundle.putInt("DeviceNum",totalNum);
+                //每组得分
+                bundle.putIntArray("scores",scores);
+                it.putExtras(bundle);
+                startActivity(it);
                 break;
         }
     }
@@ -386,7 +412,7 @@ public class DribblingGameActivity extends AppCompatActivity {
         }
         dribblingGameAdapter.setScores(scores);
         dribblingGameAdapter.notifyDataSetChanged();
-
+        //创建随机队列
         createRandomNumber();
         Log.i("listRand-----------",""+listRand.size());
         //开启全部灯
@@ -398,7 +424,9 @@ public class DribblingGameActivity extends AppCompatActivity {
                     Order.LightModel.values()[lightModeCheckBox.getCheckId()],
                     Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                     Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
+            //每次开灯的设备编号
             deviceNums[i] = Device.DEVICE_LIST.get(listRand.get(i)).getDeviceNum();
+            //每组设备灯亮起的当前时间
             duration[i] = System.currentTimeMillis();
         }
         //清除串口数据
@@ -418,6 +446,7 @@ public class DribblingGameActivity extends AppCompatActivity {
     public void stopTraining() {
         timer.stopTimer();
         btnBegin.setText("开始");
+        imgSave.setEnabled(true);
         btnBegin.setEnabled(false);
         trainningFlag = false;
         for (int i = 0; i < groupNum; i++)
@@ -438,29 +467,34 @@ public class DribblingGameActivity extends AppCompatActivity {
         for (TimeInfo info : infos) {
             char deviceNum = info.getDeviceNum();
             for (int i = 0; i < groupNum; i++) {
+                //i 就是对应的组号
                 if (deviceNum == deviceNums[i]) {
                     scores[i]++;
                     turnOnLight(i);
                 }
             }
         }
+        //更新成绩
         Message msg = Message.obtain();
         msg.what = UPDATE_SCORES;
         msg.obj = "";
         handler.sendMessage(msg);
     }
 
-    //开灯
+    //开某一个组的灯
     public void turnOnLight(final int groupId) {
+        //移除此列表中指定位置上的元素。
         listRand.remove(groupId);
         Random random = new Random();
         while (listRand.size() < groupNum) {
             int rand = random.nextInt(totalNum);
             if (!listRand.contains(rand)) {
+                //将指定的元素插入此列表中的指定位置。
                 listRand.add(groupId, rand);
                 deviceNums[groupId] = Device.DEVICE_LIST.get(rand).getDeviceNum();
             }
         }
+        Log.i("现在的随机序列是什么",""+listRand);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -501,6 +535,7 @@ public class DribblingGameActivity extends AppCompatActivity {
         Random random = new Random();
         while (listRand.size() < groupNum) {
             int randomInt = random.nextInt(totalNum);
+            //如果随机list里不包含产生的这个随机数，则将产生的这个随机数加入到随机list中
             if (!listRand.contains(randomInt)) {
                 listRand.add(randomInt);
             } else {

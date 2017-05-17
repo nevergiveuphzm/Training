@@ -120,7 +120,7 @@ public class EightSecondRunActivity extends AppCompatActivity {
     private final int UPDATE_TIMES = 5;
     //训练开始的时间
     private long beginTime;
-    //
+    //设备编号列表
     private List<Character> deviceNumList = new ArrayList<>();
 
 
@@ -135,11 +135,11 @@ public class EightSecondRunActivity extends AppCompatActivity {
                     if (timer.time >= 8000) {
                         stopTraining();
                        // tvTotalTime.setText("00:08:00");
-                            for (int j = 0;j<totalNum;j++)
-                            {
+                        for (int j = 0;j<totalNum;j++)
+                        {
                                 int flag = 0;
                                 for (int i=0;i<timeList.size();i++){
-                                    if (timeList.get(i).getDeviceNum()==deviceNumList.get(j))
+                                    if (timeList.get(i).getDeviceNum() == deviceNumList.get(j))
                                     {
                                         flag = 1;
                                         break;
@@ -149,10 +149,9 @@ public class EightSecondRunActivity extends AppCompatActivity {
                                     TimeInfo info = new TimeInfo();
                                     info.setDeviceNum(deviceNumList.get(j));
                                     timeList.add(info);
-                                    Log.i("ggggggggggggggg", "---" + timeList);
+//                                    Log.i("ggggggggggggggg", "---" + timeList);
                                 }
-                            }
-
+                        }
                         return;
                     }
                     break;
@@ -160,20 +159,18 @@ public class EightSecondRunActivity extends AppCompatActivity {
                     String data = msg.obj.toString();
                     //返回数据不为空
                     if (data != null && data.length() >= 4) {
+//                        设备编号和时间
                         timeList.addAll(DataAnalyzeUtils.analyzeTimeData(data));
-                        if (eightSecondRunAdapter != null) {
+                        if (eightSecondRunAdapter != null)
+                        {
                             eightSecondRunAdapter.notifyDataSetChanged();
                             lvTimes.setSelection(timeList.size() - 1);
                         }
                         isTrainingOver();
                     }
                     break;
-                case STOP_TRAINING:
-                    stopTraining();
-                    break;
-
-//                case UPDATE_TIMES:
-//                    eightSecondRunAdapter.notifyDataSetChanged();
+//                case STOP_TRAINING:
+//                    stopTraining();
 //                    break;
             }
         }
@@ -263,10 +260,27 @@ public class EightSecondRunActivity extends AppCompatActivity {
                 break;
             case R.id.img_help:
                 Intent intent = new Intent(this, HelpActivity.class);
-                intent.putExtra("flag", 1);
+                intent.putExtra("flag", 10);
                 startActivity(intent);
                 break;
             case R.id.img_save:
+                Intent it = new Intent(this, SaveActivity.class);
+                Bundle bundle = new Bundle();
+                //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 6:大课间跑圈、八秒钟跑 ...
+                bundle.putString("trainingCategory", "6");
+                //每组规定时间内的所完成的次数
+                bundle.putString("trainingName","八秒钟跑");
+                int[] trainingTime = new int[timeList.size()];
+                for(int i=0;i<timeList.size();i++){
+                    trainingTime[i] = timeList.get(i).getTime();
+                }
+                bundle.putIntArray("scores",trainingTime);
+                bundle.putInt("totalTimes", 0);//总次数
+                bundle.putInt("totalTime",8000);//训练总时间
+                bundle.putInt("deviceNum",totalNum);//设备个数
+                bundle.putInt("groupNum",totalNum);//分组数
+                it.putExtras(bundle);
+                startActivity(it);
                 break;
             case R.id.btn_begin:
                 if (!device.checkDevice(this))
@@ -303,7 +317,7 @@ public class EightSecondRunActivity extends AppCompatActivity {
                     Order.BlinkModel.NONE,
                     Order.LightModel.values()[lightModeCheckBox.getCheckId()],
                     Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                    Order.EndVoice.NONE);
+                    Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
             deviceNumList.add(Device.DEVICE_LIST.get(i).getDeviceNum());
             Log.d("deviceNumList---------",""+deviceNumList);
         }
@@ -334,9 +348,11 @@ public class EightSecondRunActivity extends AppCompatActivity {
     public void isTrainingOver() {
         if (!trainingFlag)
             return;
-
         if (timeList.size() == totalNum)
+        {
+            Log.i("?????????>>>>>","<<<<<<<<<<");
             stopTraining();
+        }
 
     }
 }

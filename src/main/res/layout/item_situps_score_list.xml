@@ -28,7 +28,4 @@
         android:textSize="@dimen/param_level4_font_size"
         android:text=""/>
 
-
-
-
 </LinearLayout>
