@@ -127,13 +127,20 @@ public class DribblingGameActivity extends AppCompatActivity {
     Button btnOn;
     @Bind(R.id.btn_off)
     Button btnOff;
+    @Bind(R.id.img_blink_mode_none)
+    ImageView imgBlinkModeNone;
+    @Bind(R.id.img_blink_mode_slow)
+    ImageView imgBlinkModeSlow;
+    @Bind(R.id.img_blink_mode_fast)
+    ImageView imgBlinkModeFast;
+
     private Device device;
     //所选设备个数，分组数
     private int totalNum, groupNum;
     private DGroupListViewAdapter dGroupListViewAdapter;
     private DribblingGameAdapter dribblingGameAdapter;
     //感应模式和灯光模式集合
-    private CheckBox actionModeCheckBox, lightModeCheckBox;
+    private CheckBox actionModeCheckBox, lightModeCheckBox,blinkModeCheckBox;
     //是否训练标志
     private boolean trainningFlag = false;
     //计时器
@@ -215,11 +222,13 @@ public class DribblingGameActivity extends AppCompatActivity {
         }
         initView();
     }
+
     @Override
     protected void onStart() {
         super.onStart();
         imgSave.setEnabled(false);
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -333,9 +342,13 @@ public class DribblingGameActivity extends AppCompatActivity {
         ImageView[] views1 = new ImageView[]{imgLightModeBeside, imgLightModeCenter, imgLightModeAllr};
         lightModeCheckBox = new CheckBox(1, views1);
         new CheckBoxClickListener(lightModeCheckBox);
+        //设定闪烁模式checkBox组合的点击事件
+        ImageView[] views2 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast};
+        blinkModeCheckBox = new CheckBox(1, views2);
+        new CheckBoxClickListener(blinkModeCheckBox);
     }
 
-    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help,R.id.btn_on,R.id.btn_off,R.id.img_save})
+    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help, R.id.btn_on, R.id.btn_off, R.id.img_save})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_cancel:
@@ -365,28 +378,28 @@ public class DribblingGameActivity extends AppCompatActivity {
                 break;
             case R.id.btn_on:
                 //totalNum组数，1：每组设备个数，1：类型
-                device.turnOnButton(totalNum,1,0);
+                device.turnOnButton(totalNum, 1, 0);
                 break;
             case R.id.btn_off:
                 for (int i = 0; i < totalNum; i++)
                     turnOffLight(Device.DEVICE_LIST.get(i).getDeviceNum());
                 break;
             case R.id.img_save:
-                Intent it = new Intent(this,SaveActivity.class);
+                Intent it = new Intent(this, SaveActivity.class);
                 Bundle bundle = new Bundle();
                 //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 5:运球比赛、多人混战 ...
-                bundle.putString("trainingCategory","5");
-                if(level==4){
-                    bundle.putString("trainingName","多人混战");
-                }else {
-                    bundle.putString("trainingName","运球比赛");
+                bundle.putString("trainingCategory", "5");
+                if (level == 4) {
+                    bundle.putString("trainingName", "多人混战");
+                } else {
+                    bundle.putString("trainingName", "运球比赛");
                 }
                 //训练总时间
-                bundle.putInt("trainingTime",trainingTime);
+                bundle.putInt("trainingTime", trainingTime);
                 //设备个数
-                bundle.putInt("DeviceNum",totalNum);
+                bundle.putInt("DeviceNum", totalNum);
                 //每组得分
-                bundle.putIntArray("scores",scores);
+                bundle.putIntArray("scores", scores);
                 it.putExtras(bundle);
                 startActivity(it);
                 break;
@@ -414,14 +427,14 @@ public class DribblingGameActivity extends AppCompatActivity {
         dribblingGameAdapter.notifyDataSetChanged();
         //创建随机队列
         createRandomNumber();
-        Log.i("listRand-----------",""+listRand.size());
+        Log.i("listRand-----------", "" + listRand.size());
         //开启全部灯
         for (int i = 0; i < listRand.size(); i++) {
             device.sendOrder(Device.DEVICE_LIST.get(listRand.get(i)).getDeviceNum(),
                     Order.LightColor.values()[i + 1],
                     Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                    Order.BlinkModel.NONE,
-                    Order.LightModel.values()[lightModeCheckBox.getCheckId()],
+                    Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()],
+                    Order.LightModel.OUTER,
                     Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                     Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
             //每次开灯的设备编号
@@ -494,7 +507,7 @@ public class DribblingGameActivity extends AppCompatActivity {
                 deviceNums[groupId] = Device.DEVICE_LIST.get(rand).getDeviceNum();
             }
         }
-        Log.i("现在的随机序列是什么",""+listRand);
+        Log.i("现在的随机序列是什么", "" + listRand);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -505,8 +518,8 @@ public class DribblingGameActivity extends AppCompatActivity {
                 device.sendOrder(Device.DEVICE_LIST.get(listRand.get(groupId)).getDeviceNum(),
                         Order.LightColor.values()[groupId + 1],
                         Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                        Order.BlinkModel.NONE,
-                        Order.LightModel.values()[lightModeCheckBox.getCheckId()],
+                        Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()],
+                        Order.LightModel.OUTER,
                         Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                         Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
                 duration[groupId] = System.currentTimeMillis();

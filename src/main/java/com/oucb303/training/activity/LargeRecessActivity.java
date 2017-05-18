@@ -21,7 +21,6 @@ import android.widget.Toast;
 
 import com.oucb303.training.R;
 import com.oucb303.training.adpter.GroupListViewAdapter;
-import com.oucb303.training.adpter.LargeDetailsAdapter;
 import com.oucb303.training.adpter.LargeRecessAdapter;
 import com.oucb303.training.device.Device;
 import com.oucb303.training.device.Order;
@@ -117,6 +116,14 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
     Button btnOff;
     @Bind(R.id.tv_maxTime)
     TextView tvMaxTime;
+    @Bind(R.id.img_blink_mode_none)
+    ImageView imgBlinkModeNone;
+    @Bind(R.id.img_blink_mode_slow)
+    ImageView imgBlinkModeSlow;
+    @Bind(R.id.img_blink_mode_fast)
+    ImageView imgBlinkModeFast;
+
+
     private Device device;
     private int level;
     private int maxGroupNum;//做多分组数目
@@ -127,7 +134,7 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
     private GroupListViewAdapter groupListViewAdapter;
     private LargeRecessAdapter largeRecessAdapter;
     //感应模式和灯光模式集合
-    private CheckBox actionModeCheckBox, lightColorCheckBox, lightModeCheckBox;
+    private CheckBox actionModeCheckBox, lightColorCheckBox, lightModeCheckBox,blinkModeCheckBox;
     private boolean isTraining = false;//是否正在训练标志
     //每组在规定时间内，完成的训练次数
     private int[] completedTimes;
@@ -229,7 +236,6 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
         });
 
 
-
         switch (level) {
             case 1:
                 level = 2;
@@ -296,6 +302,10 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
         ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
         lightColorCheckBox = new CheckBox(1, views2);
         new CheckBoxClickListener(lightColorCheckBox);
+        //设定闪烁模式checkbox组合的点击事件
+        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast,};
+        blinkModeCheckBox = new CheckBox(1, views3);
+        new CheckBoxClickListener(blinkModeCheckBox);
     }
 
 
@@ -346,12 +356,12 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
                 Bundle bundle = new Bundle();
                 //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 6:大课间跑圈，八秒钟跑 ...
                 bundle.putString("trainingCategory", "6");
-                bundle.putString("trainingName","大课间活动");//项目名称
+                bundle.putString("trainingName", "大课间活动");//项目名称
                 bundle.putInt("totalTimes", 0);//总次数
-                bundle.putInt("deviceNum",goupNum);//设备个数
+                bundle.putInt("deviceNum", goupNum);//设备个数
                 bundle.putIntArray("scores", completedTimes);//得分
-                bundle.putInt("totalTime",trainingTime);//训练总时间
-                bundle.putInt("groupNum",goupNum);//分组数
+                bundle.putInt("totalTime", trainingTime);//训练总时间
+                bundle.putInt("groupNum", goupNum);//分组数
                 it.putExtras(bundle);
                 startActivity(it);
                 break;
@@ -406,8 +416,8 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
             device.sendOrder(Device.DEVICE_LIST.get(i).getDeviceNum(),
                     Order.LightColor.values()[lightColorCheckBox.getCheckId()],
                     Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                    Order.BlinkModel.NONE,
-                    Order.LightModel.values()[lightModeCheckBox.getCheckId()],
+                    Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()],
+                    Order.LightModel.OUTER,
                     Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                     Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
         }
@@ -438,8 +448,8 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
                 device.sendOrder(deviceNum,
                         Order.LightColor.values()[lightColorCheckBox.getCheckId()],
                         Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                        Order.BlinkModel.NONE,
-                        Order.LightModel.values()[lightModeCheckBox.getCheckId()],
+                        Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()],
+                        Order.LightModel.OUTER,
                         Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                         Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
             }

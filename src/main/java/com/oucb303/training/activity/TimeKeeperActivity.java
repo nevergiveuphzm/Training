@@ -101,6 +101,12 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
     Button btnBegin;
     @Bind(R.id.sp_light_num)
     Spinner spLightNum;
+    @Bind(R.id.img_blink_mode_none)
+    ImageView imgBlinkModeNone;
+    @Bind(R.id.img_blink_mode_slow)
+    ImageView imgBlinkModeSlow;
+    @Bind(R.id.img_blink_mode_fast)
+    ImageView imgBlinkModeFast;
 
 
     private int level;
@@ -144,7 +150,7 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
     private LargeDetailsAdapter largeDetailsAdapter;
     private Timer timer;
 
-    private CheckBox actionModeCheckBox, lightColorCheckBox;
+    private CheckBox actionModeCheckBox, lightColorCheckBox,blinkModeCheckBox;
     private final int TIME_RECEIVE = 1;
     private final int UPDATE_TIMES = 2;
     private final int STOP_TRAINING = 3;
@@ -222,15 +228,15 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 super.onItemSelected(adapterView, view, i, l);
                 totalTrainingTimes = i + 1;
-                if (totalTrainingTimes != 1) {
-                    spLightNum.setSelection(0);
-                    spLightNum.setEnabled(false);
-                    groupSize = 1;
-                    groupListViewAdapter.setGroupSize(groupSize);
-                    groupListViewAdapter.notifyDataSetChanged();
-                } else {
-                    spLightNum.setEnabled(true);
-                }
+//                if (totalTrainingTimes != 1) {
+//                    spLightNum.setSelection(0);
+//                    spLightNum.setEnabled(false);
+//                    groupSize = 1;
+//                    groupListViewAdapter.setGroupSize(groupSize);
+//                    groupListViewAdapter.notifyDataSetChanged();
+//                } else {
+//                    spLightNum.setEnabled(true);
+//                }
             }
         });
 
@@ -314,6 +320,11 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
         ImageView[] views1 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
         lightColorCheckBox = new CheckBox(1, views1);
         new CheckBoxClickListener(lightColorCheckBox);
+
+        //设定闪烁模式checkbox组合的点击事件
+        ImageView[] views2 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast,};
+        blinkModeCheckBox = new CheckBox(1, views2);
+        new CheckBoxClickListener(blinkModeCheckBox);
     }
 
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -438,8 +449,8 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
                 device.sendOrder(Device.DEVICE_LIST.get(count).getDeviceNum(),
                         Order.LightColor.values()[lightColorCheckBox.getCheckId()],
                         Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                        Order.BlinkModel.NONE,
-                        Order.LightModel.values()[1],
+                        Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()],
+                        Order.LightModel.OUTER,
                         Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                         Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
                 //i记录行号，j记录列号  例如:
@@ -475,7 +486,7 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
         ReceiveThread.stopThread();
         device.turnOffAllTheLight();
     }
-
+    //开灯
     public void turnOnLight(final char deviceNum) {
         new Thread(new Runnable() {
             @Override
@@ -487,8 +498,8 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
                 device.sendOrder(deviceNum,
                         Order.LightColor.values()[lightColorCheckBox.getCheckId()],
                         Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                        Order.BlinkModel.NONE,
-                        Order.LightModel.values()[1],
+                        Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()],
+                        Order.LightModel.OUTER,
                         Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                         Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
             }
@@ -577,7 +588,7 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
                 Order.BlinkModel.NONE,
                 Order.LightModel.TURN_OFF,
                 Order.ActionModel.TURN_OFF,
-                Order.EndVoice.values()[cbEndVoice.isChecked()? 1 : 0]);
+                Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
     }
 
     //查找设备属于第几组

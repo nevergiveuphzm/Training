@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringDef;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -41,12 +40,8 @@ import com.oucb303.training.utils.DataAnalyzeUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
-import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -125,6 +120,12 @@ public class GroupResistActivity extends AppCompatActivity {
     ListView lvScores;
     @Bind(R.id.btn_begin)
     Button btnBegin;
+    @Bind(R.id.img_blink_mode_none)
+    ImageView imgBlinkModeNone;
+    @Bind(R.id.img_blink_mode_slow)
+    ImageView imgBlinkModeSlow;
+    @Bind(R.id.img_blink_mode_fast)
+    ImageView imgBlinkModeFast;
 
     private int level;
     private Device device;
@@ -139,7 +140,7 @@ public class GroupResistActivity extends AppCompatActivity {
     //当前所选每组每次亮灯个数
     private int lightEveryNum;
     //感应模式和灯光模式集合
-    private CheckBox actionModeCheckBox;
+    private CheckBox actionModeCheckBox,blinkModeCheckBox;
     //训练开始标志
     private boolean trainningFlag = false;
     //训练总时间,延迟时间,超时时间  单位是毫秒
@@ -164,16 +165,14 @@ public class GroupResistActivity extends AppCompatActivity {
     //每组设备灯亮起的时间
     private long[] duration;
 
-    Handler handler = new Handler()
-    {
+    Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             String data = msg.obj.toString();
             //比赛结束则不接收任何数据
             if (!trainningFlag)
                 return;
-            switch (msg.what)
-            {
+            switch (msg.what) {
                 //更新成绩
                 case UPDATE_SCORES:
                     groupResistAdapter.notifyDataSetChanged();
@@ -182,8 +181,7 @@ public class GroupResistActivity extends AppCompatActivity {
                 case Timer.TIMER_FLAG:
                     tvTotalTime.setText(data);
                     //判断是否结束
-                    if (timer.time >= trainingTime)
-                    {
+                    if (timer.time >= trainingTime) {
                         Message message = Message.obtain();
                         message.what = STOP_TRAINING;
                         message.obj = "";
@@ -207,20 +205,20 @@ public class GroupResistActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_resist);
         ButterKnife.bind(this);
-        level = getIntent().getIntExtra("level",0);
+        level = getIntent().getIntExtra("level", 0);
         context = this;
 
         device = new Device(this);
         //更新设备连接列表，当重新打开程序或是熄灭屏幕之后重新打开都会执行此方法，应该次列表的设备数量一般情况下为1
         device.createDeviceList(this);
         //判断协调器是否插入
-        if (device.devCount > 0)
-        {
+        if (device.devCount > 0) {
             device.connect(this);
             device.initConfig();
         }
         initView();
     }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -231,7 +229,7 @@ public class GroupResistActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (device.devCount > 0 )
+        if (device.devCount > 0)
             device.disconnect();
     }
 
@@ -239,48 +237,53 @@ public class GroupResistActivity extends AppCompatActivity {
         tvTitle.setText("分组对抗");
 
         //设备排序
-        Collections.sort(Device.DEVICE_LIST,new PowerInfoComparetor());
+        Collections.sort(Device.DEVICE_LIST, new PowerInfoComparetor());
 
         //训练时间
-        barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime,10));
+        barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 10));
         //0为减，1为加
-        imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime,1));
-        imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime,0));
+        imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
+        imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
         //设置延时和超时的 seekbar 拖动事件的监听器
-        barDelayTime.setOnSeekBarChangeListener(new MySeekBarListener(tvDelayTime,10));
-        barOverTime.setOnSeekBarChangeListener(new MySeekBarListener(tvOverTime,28,2));
+        barDelayTime.setOnSeekBarChangeListener(new MySeekBarListener(tvDelayTime, 10));
+        barOverTime.setOnSeekBarChangeListener(new MySeekBarListener(tvOverTime, 28, 2));
         //设置加减按钮的监听事件
-        imgDelayTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime,1));
-        imgDelayTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime,0));
+        imgDelayTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 1));
+        imgDelayTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 0));
 
-        imgOverTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barOverTime,1));
-        imgOverTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barOverTime,0));
+        imgOverTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barOverTime, 1));
+        imgOverTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barOverTime, 0));
         //设定感应模式checkBox组合的点击事件
         ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
-        actionModeCheckBox = new com.oucb303.training.model.CheckBox(1, views);
+        actionModeCheckBox = new CheckBox(1, views);
         new CheckBoxClickListener(actionModeCheckBox);
+
+        //设定闪烁模式checkbox组合的点击事件
+        ImageView[] views1 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast,};
+        blinkModeCheckBox = new CheckBox(1, views1);
+        new CheckBoxClickListener(blinkModeCheckBox);
 
         //选择设备个数spinner
         String[] num = new String[Device.DEVICE_LIST.size()];
-        for (int i = 0;i<num.length;i++)
+        for (int i = 0; i < num.length; i++)
             num[i] = (i + 1) + "个";
 
-        spDevNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(this,spDevNum,num) {
+        spDevNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(this, spDevNum, num) {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 super.onItemSelected(adapterView, view, i, l);
                 totalNum = i + 1;
                 String str = "";
-                for (int j = 0;j < totalNum;j++)
+                for (int j = 0; j < totalNum; j++)
                     str += Device.DEVICE_LIST.get(j).getDeviceNum() + "  ";
                 tvDeviceList.setText(str);
 
                 //每次亮灯个数spinner
                 String[] everyTimeNum = new String[totalNum];
-                for (int j = 0;j < everyTimeNum.length;j++)
+                for (int j = 0; j < everyTimeNum.length; j++)
                     everyTimeNum[j] = (j + 1) + "个";
 
-                ArrayAdapter<String> adapterEveryNum = new ArrayAdapter<String>(context,android.R.layout.simple_spinner_item, everyTimeNum);
+                ArrayAdapter<String> adapterEveryNum = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, everyTimeNum);
                 adapterEveryNum.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spLightNum.setAdapter(adapterEveryNum);
 
@@ -288,16 +291,16 @@ public class GroupResistActivity extends AppCompatActivity {
                 spLightNum.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        lightEveryNum  = i+1;
+                        lightEveryNum = i + 1;
 
                         //训练分组
                         int maxGoupNum = totalNum / lightEveryNum;
-                        if (maxGoupNum > 3)
-                            maxGoupNum = 3;
+                        if (maxGoupNum > 7)
+                            maxGoupNum = 7;
                         String[] groupCount = new String[maxGoupNum];
-                        for (int j = 0;j < groupCount.length;j++)
-                            groupCount[j] = (j+1) + "组";
-                        ArrayAdapter<String> adapterGroupCount = new ArrayAdapter<String>(context,android.R.layout.simple_spinner_item,groupCount);
+                        for (int j = 0; j < groupCount.length; j++)
+                            groupCount[j] = (j + 1) + "组";
+                        ArrayAdapter<String> adapterGroupCount = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, groupCount);
                         adapterGroupCount.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spGroupNum.setAdapter(adapterGroupCount);
 
@@ -317,6 +320,7 @@ public class GroupResistActivity extends AppCompatActivity {
                             }
                         });
                     }
+
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
                     }
@@ -346,7 +350,7 @@ public class GroupResistActivity extends AppCompatActivity {
         lvScores.setAdapter(groupResistAdapter);
     }
 
-    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help,R.id.btn_on,R.id.btn_off,R.id.img_save})
+    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help, R.id.btn_on, R.id.btn_off, R.id.img_save})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_cancel:
@@ -376,23 +380,23 @@ public class GroupResistActivity extends AppCompatActivity {
                 break;
             case R.id.btn_on:
                 //totalNum组数，lightEveryNum：每组设备个数，1：类型
-                device.turnOnButton(totalNum,1,0);
+                device.turnOnButton(totalNum, 1, 0);
                 break;
             case R.id.btn_off:
                 device.turnOffAllTheLight();
                 break;
             case R.id.img_save:
-                Intent it = new Intent(this,SaveActivity.class);
+                Intent it = new Intent(this, SaveActivity.class);
                 Bundle bundle = new Bundle();
                 //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 5:运球比赛、多人混战、分组对抗 ...
-                bundle.putString("trainingCategory","5");
-                bundle.putString("trainingName","分组对抗");
+                bundle.putString("trainingCategory", "5");
+                bundle.putString("trainingName", "分组对抗");
                 //训练总时间
-                bundle.putInt("trainingTime",trainingTime);
+                bundle.putInt("trainingTime", trainingTime);
                 //设备个数
-                bundle.putInt("DeviceNum",totalNum);
+                bundle.putInt("DeviceNum", totalNum);
                 //每组得分
-                bundle.putIntArray("scores",scores);
+                bundle.putIntArray("scores", scores);
                 it.putExtras(bundle);
                 startActivity(it);
                 break;
@@ -400,8 +404,7 @@ public class GroupResistActivity extends AppCompatActivity {
     }
 
     //开始训练
-    public void startTraining()
-    {
+    public void startTraining() {
         trainningFlag = true;
         btnBegin.setText("停止");
 
@@ -417,7 +420,7 @@ public class GroupResistActivity extends AppCompatActivity {
 
         deviceNums = new char[groupNum][lightEveryNum];
         for (int i = 0; i < groupNum; i++) {
-            for (int j = 0;j < lightEveryNum;j++){
+            for (int j = 0; j < lightEveryNum; j++) {
                 deviceNums[i][j] = '\0';
             }
         }
@@ -429,19 +432,17 @@ public class GroupResistActivity extends AppCompatActivity {
         groupResistAdapter.notifyDataSetChanged();
         //创建随机队列
         createRandomNumber();
-        Log.i("随机序列",""+listRand);
+        Log.i("随机序列", "" + listRand);
         //开启全部灯
         int position = 0;
         int t = 1;
-        for (int i = 0;i < groupNum;i++)
-        {
-            for (int j = 0;j < lightEveryNum;j++)
-            {
+        for (int i = 0; i < groupNum; i++) {
+            for (int j = 0; j < lightEveryNum; j++) {
                 device.sendOrder(Device.DEVICE_LIST.get(listRand.get(position)).getDeviceNum(),
                         Order.LightColor.values()[t],
                         Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                        Order.BlinkModel.NONE,
-                        Order.LightModel.values()[1],
+                        Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()],
+                        Order.LightModel.OUTER,
                         Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                         Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
 
@@ -452,7 +453,7 @@ public class GroupResistActivity extends AppCompatActivity {
                 //每组设备灯亮起的当前时间
                 duration[position] = System.currentTimeMillis();
 
-                position ++;
+                position++;
             }
             t++;
         }
@@ -476,10 +477,8 @@ public class GroupResistActivity extends AppCompatActivity {
     //生成随机数
     private void createRandomNumber() {
         Random random = new Random();
-        for (int i = 0;i < groupNum;i++)
-        {
-            for (int j = 0;j < lightEveryNum;j++)
-            {
+        for (int i = 0; i < groupNum; i++) {
+            for (int j = 0; j < lightEveryNum; j++) {
                 int randomInt = random.nextInt(totalNum);
                 //如果没有重复值，则加入
                 if (!listRand.contains(randomInt))
@@ -491,56 +490,50 @@ public class GroupResistActivity extends AppCompatActivity {
     }
 
     //解析数据
-    public void analyseData(final String data)
-    {
+    public void analyseData(final String data) {
         //存放编号和时间
         List<TimeInfo> infos = DataAnalyzeUtils.analyzeTimeData(data);
 
-        if (infos.size() == totalNum)
-        {
+        if (infos.size() == totalNum) {
             listRand.clear();
             //重新创建随机队列
             createRandomNumber();
-            Log.i("随机序列",""+listRand);
+            Log.i("随机序列", "" + listRand);
             //开启全部灯
             int position = 0;
             int t = 1;
-            for (int i = 0;i < groupNum;i++)
-            {
-                for (int j = 0;j < lightEveryNum;j++)
-                {
+            for (int i = 0; i < groupNum; i++) {
+                for (int j = 0; j < lightEveryNum; j++) {
                     device.sendOrder(Device.DEVICE_LIST.get(listRand.get(position)).getDeviceNum(),
                             Order.LightColor.values()[t],
                             Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                            Order.BlinkModel.NONE,
-                            Order.LightModel.values()[1],
+                            Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()],
+                            Order.LightModel.OUTER,
                             Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                             Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
 
                     deviceNums[i][j] = Device.DEVICE_LIST.get(listRand.get(position)).getDeviceNum();
-                    position ++;
+                    position++;
                 }
                 scores[i]++;
                 t++;
             }
-        }
-        else {
-            for (TimeInfo info : infos)
-            {
+        } else {
+            for (TimeInfo info : infos) {
                 int[] Id = findDeviceGroupId(info.getDeviceNum());
                 //组号
                 int groupId = Id[0];
                 //该设备所在的列号
                 int everyId = Id[1];
-                Log.i("进来的是什么灯",""+info+"--"+groupId+"---"+everyId);
-                scores[groupId] ++;
-                turnOnLight(groupId,everyId,info.getDeviceNum());
+                Log.i("进来的是什么灯", "" + info + "--" + groupId + "---" + everyId);
+                scores[groupId]++;
+                turnOnLight(groupId, everyId, info.getDeviceNum());
             }
         }
 
         //更新成绩
         Message msg = Message.obtain();
-        msg.what =  UPDATE_SCORES;
+        msg.what = UPDATE_SCORES;
         msg.obj = "";
         handler.sendMessage(msg);
     }
@@ -548,19 +541,18 @@ public class GroupResistActivity extends AppCompatActivity {
     //开某一组的任意灯
     private void turnOnLight(final int groupId, final int everyId, char deviceNum) {
         int lightNum = 0;
-        for (int i = 0;i < Device.DEVICE_LIST.size();i++){
-            if (deviceNum == Device.DEVICE_LIST.get(i).getDeviceNum())
-            {
+        for (int i = 0; i < Device.DEVICE_LIST.size(); i++) {
+            if (deviceNum == Device.DEVICE_LIST.get(i).getDeviceNum()) {
                 //找到了这个设备对应的编号
                 lightNum = i;
                 break;
             }
         }
-        Log.i("这个设备对应的编号",""+lightNum);
+        Log.i("这个设备对应的编号", "" + lightNum);
         int listNum = 0;//这个设备在随机队列里的序号
-        for (int j = 0;j < listRand.size();j++){
+        for (int j = 0; j < listRand.size(); j++) {
             //如果随机队列里包含这个编号，就找到了这个设备在随机队列里的序号,并且移除
-            if (listRand.get(j) == lightNum){
+            if (listRand.get(j) == lightNum) {
                 listNum = j;
                 listRand.remove(j);
                 break;
@@ -577,21 +569,21 @@ public class GroupResistActivity extends AppCompatActivity {
                 deviceNums[groupId][everyId] = Device.DEVICE_LIST.get(rand).getDeviceNum();
             }
         }
-        Log.i("现在的随机序列是什么",""+listRand);
+        Log.i("现在的随机序列是什么", "" + listRand);
         //亮起这一组的新的一盏灯
         final int finalListNum = listNum;
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Timer.sleep( delayTime);
+                Timer.sleep(delayTime);
                 //若训练结束则返回
                 if (!trainningFlag)
                     return;
                 device.sendOrder(Device.DEVICE_LIST.get(listRand.get(finalListNum)).getDeviceNum(),
                         Order.LightColor.values()[groupId + 1],
                         Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                        Order.BlinkModel.NONE,
-                        Order.LightModel.values()[1],
+                        Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()],
+                        Order.LightModel.OUTER,
                         Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                         Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
 
@@ -611,8 +603,7 @@ public class GroupResistActivity extends AppCompatActivity {
         int flag = 0;
         int[] Id = new int[2];//0表示组号，1表示该设备所在的列号
         for (int i = 0; i < groupNum; i++) {
-            for (int j = 0;j < lightEveryNum;j++)
-            {
+            for (int j = 0; j < lightEveryNum; j++) {
                 if (deviceNum == deviceNums[i][j]) {
                     //i 就是组号
                     Id[0] = i;
@@ -629,8 +620,7 @@ public class GroupResistActivity extends AppCompatActivity {
     }
 
     //停止训练
-    public void stopTraining()
-    {
+    public void stopTraining() {
         timer.stopTimer();
         btnBegin.setText("开始");
         btnBegin.setEnabled(false);
@@ -665,27 +655,25 @@ public class GroupResistActivity extends AppCompatActivity {
         }).start();
     }
 
-    class OverTimeThread extends Thread
-    {
+    class OverTimeThread extends Thread {
         private boolean stop = false;
-        public void stopThread()
-        {
+
+        public void stopThread() {
             stop = true;
         }
 
         @Override
         public void run() {
-            while (!stop)
-            {
+            while (!stop) {
                 for (int i = 0; i < groupNum * lightEveryNum; i++) {
                     if (duration[i] != 0 && System.currentTimeMillis() - duration[i] > overTime) {
 
                         char deviceNum = Device.DEVICE_LIST.get(listRand.get(i)).getDeviceNum();
-                        Log.i("此时超时的是：",""+deviceNum);
+                        Log.i("此时超时的是：", "" + deviceNum);
                         duration[i] = 0;
                         turnOffLight(deviceNum);
                         int[] Id = findDeviceGroupId(deviceNum);
-                        turnOnLight(Id[0],Id[1],deviceNum);
+                        turnOnLight(Id[0], Id[1], deviceNum);
                     }
                 }
                 Timer.sleep(100);

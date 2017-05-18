@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.Spinner;
@@ -67,12 +68,6 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
     ImageView imgActionModeLight;
     @Bind(R.id.img_action_mode_together)
     ImageView imgActionModeTogether;
-    @Bind(R.id.img_light_mode_center)
-    ImageView imgLightModeCenter;
-    @Bind(R.id.img_light_mode_all)
-    ImageView imgLightModeAll;
-    @Bind(R.id.img_light_mode_beside)
-    ImageView imgLightModeBeside;
     @Bind(R.id.btn_begin)
     Button btnBegin;
     @Bind(R.id.tv_total_time)
@@ -91,6 +86,13 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
     Button btnOn;
     @Bind(R.id.btn_off)
     Button btnOff;
+    @Bind(R.id.img_blink_mode_none)
+    ImageView imgBlinkModeNone;
+    @Bind(R.id.img_blink_mode_slow)
+    ImageView imgBlinkModeSlow;
+    @Bind(R.id.img_blink_mode_fast)
+    ImageView imgBlinkModeFast;
+
 
     private Device device;
     //做多分组数目
@@ -103,8 +105,8 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
     private final int groupSize = 1;
     private GroupListViewAdapter groupListViewAdapter;
     private ShuttleRunAdapter1 shuttleRunAdapter;
-    //感应模式和灯光模式集合
-    private CheckBox actionModeCheckBox, lightModeCheckBox, lightColorCheckBox;
+    //感应模式和闪烁模式，灯光颜色集合
+    private CheckBox actionModeCheckBox, blinkModeCheckBox, lightColorCheckBox;
     //训练开始标志
     private boolean trainingBeginFlag = false;
 
@@ -265,10 +267,10 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
         ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
         actionModeCheckBox = new CheckBox(1, views);
         new CheckBoxClickListener(actionModeCheckBox);
-        //设定灯光模式checkBox组合的点击事件
-        ImageView[] views1 = new ImageView[]{imgLightModeBeside, imgLightModeCenter, imgLightModeAll};
-        lightModeCheckBox = new CheckBox(1, views1);
-        new CheckBoxClickListener(lightModeCheckBox);
+        //设定闪烁模式checkBox组合的点击事件
+        ImageView[] views1 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast};
+        blinkModeCheckBox = new CheckBox(1, views1);
+        new CheckBoxClickListener(blinkModeCheckBox);
         //设定灯光颜色checkBox组合的点击事件
         ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
         lightColorCheckBox = new CheckBox(1, views2);
@@ -276,7 +278,7 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.layout_cancel, R.id.img_help, R.id.btn_begin, R.id.img_save,R.id.btn_off,R.id.btn_on})
+    @OnClick({R.id.layout_cancel, R.id.img_help, R.id.btn_begin, R.id.img_save, R.id.btn_off, R.id.btn_on})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_cancel:
@@ -317,7 +319,7 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
                 break;
             case R.id.btn_on:
                 //goupNum组数，1：每组设备个数，0：类型
-                device.turnOnButton(groupNum,1,0);
+                device.turnOnButton(groupNum, 1, 0);
                 break;
             case R.id.btn_off:
                 device.turnOffAllTheLight();
@@ -350,8 +352,8 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
             device.sendOrder(Device.DEVICE_LIST.get(i).getDeviceNum(),
                     Order.LightColor.values()[lightColorCheckBox.getCheckId()],
                     Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                    Order.BlinkModel.NONE,
-                    Order.LightModel.values()[lightModeCheckBox.getCheckId()],
+                    Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()],
+                    Order.LightModel.OUTER,
                     Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                     Order.EndVoice.NONE);
         }
@@ -383,8 +385,8 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
                 device.sendOrder(deviceNum,
                         Order.LightColor.values()[lightColorCheckBox.getCheckId()],
                         Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                        Order.BlinkModel.NONE,
-                        Order.LightModel.values()[lightModeCheckBox.getCheckId()],
+                        Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()],
+                        Order.LightModel.OUTER,
                         Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                         Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
             }

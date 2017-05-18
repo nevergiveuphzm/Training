@@ -3,7 +3,6 @@ package com.oucb303.training.activity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,7 +19,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.oucb303.training.App;
-import com.oucb303.training.BuildConfig;
 import com.oucb303.training.R;
 import com.oucb303.training.adpter.HorizonListViewAdapter;
 import com.oucb303.training.adpter.LightGridViewAdapter;
@@ -49,8 +47,7 @@ import butterknife.OnClick;
 /**
  * 设定序列  序列编程
  */
-public class SequenceTrainingActivity extends Activity
-{
+public class SequenceTrainingActivity extends Activity {
     @Bind(R.id.tv_title)
     TextView tv_title;
     @Bind(R.id.tv_delay_time)
@@ -93,6 +90,12 @@ public class SequenceTrainingActivity extends Activity
 
 
     List<Light> list_light_noCheck;
+    @Bind(R.id.img_blink_mode_none)
+    ImageView imgBlinkModeNone;
+    @Bind(R.id.img_blink_mode_slow)
+    ImageView imgBlinkModeSlow;
+    @Bind(R.id.img_blink_mode_fast)
+    ImageView imgBlinkModeFast;
     private SequenceTrainingActivity sequenceSetActivity;
     private GridView gridView;//显示灯的网格布局
     private HorizonListViewAdapter horizonListViewAdapter;//横向ListView布局适配器
@@ -104,7 +107,7 @@ public class SequenceTrainingActivity extends Activity
     private Light lights;//灯
     private Context mcontext;
     //感应模式和灯光模式集合
-    private CheckBox actionModeCheckBox, lightModeCheckBox, lightColorCheckBox;
+    private CheckBox actionModeCheckBox, lightModeCheckBox, lightColorCheckBox,blinkModeCheckBox;
     //选中的灯
     private Point choseLight = new Point();
     private SequenceSer sequenceSer;
@@ -115,8 +118,7 @@ public class SequenceTrainingActivity extends Activity
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sequence_training);
         ButterKnife.bind(this);
@@ -129,15 +131,12 @@ public class SequenceTrainingActivity extends Activity
         initListView();
 
         //纵向Listview的点击事件
-        sequenceSetListview.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
+        sequenceSetListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.d(Constant.LOG_TAG, position + "--" + list_adepter.size());
                 //如果是最后一个
-                if (position == list_adepter.size() - 1)
-                {
+                if (position == list_adepter.size() - 1) {
                     Map<String, Object> map = new HashMap<>();
                     map.put("list_light", null);
                     map.put("delay_time", 0.00);
@@ -152,30 +151,25 @@ public class SequenceTrainingActivity extends Activity
         });
 
         //记录下纵向listView的滑动位置
-        sequenceSetListview.setOnScrollListener(new AbsListView.OnScrollListener()
-        {
+        sequenceSetListview.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
-            public void onScrollStateChanged(AbsListView absListView, int scrollState)
-            {
+            public void onScrollStateChanged(AbsListView absListView, int scrollState) {
                 // 不滚动时保存当前滚动到的位置
-                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE)
-                {
+                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
                     scrolledX = sequenceSetListview.getScrollX();
                     scrolledY = sequenceSetListview.getScrollY();
                 }
             }
 
             @Override
-            public void onScroll(AbsListView absListView, int i, int i1, int i2)
-            {
+            public void onScroll(AbsListView absListView, int i, int i1, int i2) {
 
             }
         });
 
     }
 
-    private void initListView()
-    {
+    private void initListView() {
         //设置seekbar 拖动事件的监听器
         barDelayTime.setOnSeekBarChangeListener(new SequenceSeekBarChangeListener(tvDelayTime, 10));
         barOverTime.setOnSeekBarChangeListener(new SequenceSeekBarChangeListener(tvOverTime, 30));
@@ -196,6 +190,10 @@ public class SequenceTrainingActivity extends Activity
         ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
         lightColorCheckBox = new CheckBox(1, views2);
         new SequenceCheckBoxListener(lightColorCheckBox, 2);
+        //设定闪烁模式checkbox组合的点击事件
+        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast,};
+        blinkModeCheckBox = new CheckBox(1, views3);
+        new CheckBoxClickListener(blinkModeCheckBox);
 
         list_adepter.add(null);
         list_sequence.add(null);
@@ -211,10 +209,8 @@ public class SequenceTrainingActivity extends Activity
     }
 
     @OnClick({R.id.layout_cancel, R.id.btn_save, R.id.btn_random})
-    public void onClick(View view)
-    {
-        switch (view.getId())
-        {
+    public void onClick(View view) {
+        switch (view.getId()) {
             //头部返回按钮
             case R.id.layout_cancel:
                 finish();
@@ -228,11 +224,9 @@ public class SequenceTrainingActivity extends Activity
                 Button btnCancel = (Button) v.findViewById(R.id.btn_cancel);
                 final EditText etTitle = (EditText) v.findViewById(R.id.et_title);
                 final AlertDialog dialog = builder.create();
-                btnSave.setOnClickListener(new View.OnClickListener()
-                {
+                btnSave.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View view)
-                    {
+                    public void onClick(View view) {
                         String title = etTitle.getText().toString();
                         long res = sequenceSer.addSequence(list_sequence, title);
                         Log.d(Constant.LOG_TAG, "save result:" + res);
@@ -246,11 +240,9 @@ public class SequenceTrainingActivity extends Activity
                     }
                 });
 
-                btnCancel.setOnClickListener(new View.OnClickListener()
-                {
+                btnCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View view)
-                    {
+                    public void onClick(View view) {
                         dialog.dismiss();
                     }
                 });
@@ -267,14 +259,11 @@ public class SequenceTrainingActivity extends Activity
                 tvTitle.setText("随机生成序列个数");
                 final EditText etDeviceNum = (EditText) v1.findViewById(R.id.et_edit_value);
                 final AlertDialog dialog1 = builder1.create();
-                btnSave1.setOnClickListener(new View.OnClickListener()
-                {
+                btnSave1.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View view)
-                    {
+                    public void onClick(View view) {
                         String temp = etDeviceNum.getText().toString();
-                        if (!temp.matches("[1-9][0-9]*"))
-                        {
+                        if (!temp.matches("[1-9][0-9]*")) {
                             Toast.makeText(SequenceTrainingActivity.this, "输入不合法!(格式:1、2、3)", Toast.LENGTH_SHORT).show();
                             return;
                         }
@@ -284,11 +273,9 @@ public class SequenceTrainingActivity extends Activity
                     }
                 });
 
-                btnCancel1.setOnClickListener(new View.OnClickListener()
-                {
+                btnCancel1.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View view)
-                    {
+                    public void onClick(View view) {
                         dialog1.dismiss();
                     }
                 });
@@ -298,27 +285,22 @@ public class SequenceTrainingActivity extends Activity
     }
 
     //生成随机序列
-    private void createSequence(int num)
-    {
+    private void createSequence(int num) {
         ArrayList<Integer> numList = new ArrayList<>();
         Random random = new Random();
-        for (int i = 0; i < num; i++)
-        {
+        for (int i = 0; i < num; i++) {
             numList.clear();
             ArrayList<Light> lights = new ArrayList<>();
             int n = random.nextInt(100);
             n = n % 8 + 1;
-            while (numList.size() < n)
-            {
+            while (numList.size() < n) {
                 int temp = random.nextInt(1000) % defaultDeviceNum + 1;
-                if (!numList.contains(temp))
-                {
+                if (!numList.contains(temp)) {
                     numList.add(temp);
                 }
             }
             Collections.sort(numList);
-            for (int j = 0; j < numList.size(); j++)
-            {
+            for (int j = 0; j < numList.size(); j++) {
                 lights.add(new Light(numList.get(j), true));
             }
 
@@ -336,17 +318,14 @@ public class SequenceTrainingActivity extends Activity
 
 
     //横向灯的点击事件
-    private AdapterView.OnItemClickListener lightsItemClickListener = new AdapterView.OnItemClickListener()
-    {
+    private AdapterView.OnItemClickListener lightsItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
-        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
-        {
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             lightItemClick((Integer) (adapterView.getTag()), i);
         }
 
-        public void lightItemClick(int xPosition, int yPosition)
-        {
-            Log.d("AAAA","x:"+xPosition+"  y:"+yPosition);
+        public void lightItemClick(int xPosition, int yPosition) {
+            Log.d("AAAA", "x:" + xPosition + "  y:" + yPosition);
             List<Light> lights = (List<Light>) list_sequence.get(choseLight.x).get("list_light");
             Light light = lights.get(choseLight.y);
             light.setChoosed(false);
@@ -377,11 +356,9 @@ public class SequenceTrainingActivity extends Activity
      * 实现类，响应按钮点击事件
      * 点击Dialog中的每个灯，设置灯的状态
      */
-    private LightGridViewAdapter.ChangeLightClickListener changeLightClickListener = new LightGridViewAdapter.ChangeLightClickListener()
-    {
+    private LightGridViewAdapter.ChangeLightClickListener changeLightClickListener = new LightGridViewAdapter.ChangeLightClickListener() {
         @Override
-        public void myOnClick(int position, View v)
-        {
+        public void myOnClick(int position, View v) {
             if (list_light_noCheck.get(position).isChecked())
                 list_light_noCheck.get(position).setChecked(false);
             else
@@ -394,11 +371,9 @@ public class SequenceTrainingActivity extends Activity
      * 实现类，响应按钮点击事件
      * 点击“添加”，设置灯的数量
      */
-    private SequenceSettingListViewAdapter.AddLightClickListener addLightClickListener = new SequenceSettingListViewAdapter.AddLightClickListener()
-    {
+    private SequenceSettingListViewAdapter.AddLightClickListener addLightClickListener = new SequenceSettingListViewAdapter.AddLightClickListener() {
         @Override
-        public void myOnClick(final int position, View v)
-        {
+        public void myOnClick(final int position, View v) {
             AlertDialog.Builder builder = new AlertDialog.Builder(sequenceSetActivity);
             View view = LayoutInflater.from(mcontext).inflate(R.layout.dialog_addlight, null);
             builder.setView(view);
@@ -408,17 +383,14 @@ public class SequenceTrainingActivity extends Activity
             Button btn_cancel = (Button) view.findViewById(R.id.btn_cancel);
             final List<Light> list_light = (List<Light>) list_sequence.get(position).get("list_light");
             list_light_noCheck = new ArrayList<>();
-            for (int i = 1; i <= defaultDeviceNum; i++)
-            {
+            for (int i = 1; i <= defaultDeviceNum; i++) {
                 Light light = new Light(i, false);
                 list_light_noCheck.add(light);
             }
             //之前没有选中过设备
-            if (list_light != null && list_light.size() != 0)
-            {
+            if (list_light != null && list_light.size() != 0) {
                 //如果有，装进去之前的，用于回显
-                for (int j = 0; j < list_light.size(); j++)
-                {
+                for (int j = 0; j < list_light.size(); j++) {
                     list_light_noCheck.get(list_light.get(j).getNum() - 1).setChecked(true);
                 }
             }
@@ -427,22 +399,17 @@ public class SequenceTrainingActivity extends Activity
             gridView.setAdapter(lightGridViewAdapter);
             final AlertDialog alertDialog = builder.create();
             //确定
-            btn_sure.setOnClickListener(new View.OnClickListener()
-            {
+            btn_sure.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v)
-                {
+                public void onClick(View v) {
                     //将被选中的灯装入到横向ListView中
                     List<Light> list_light = (List<Light>) list_sequence.get(position).get("list_light");
-                    if (list_light == null)
-                    {
+                    if (list_light == null) {
                         list_light = new ArrayList<Light>();
                     }
                     list_light.clear();
-                    for (Light light : list_light_noCheck)
-                    {
-                        if (light.isChecked())
-                        {
+                    for (Light light : list_light_noCheck) {
+                        if (light.isChecked()) {
                             list_light.add(light);
                         }
                     }
@@ -455,20 +422,16 @@ public class SequenceTrainingActivity extends Activity
                 }
             });
             //取消
-            btn_cancel.setOnClickListener(new View.OnClickListener()
-            {
+            btn_cancel.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v)
-                {
+                public void onClick(View v) {
                     alertDialog.dismiss();
                 }
             });
             //删除
-            btn_del.setOnClickListener(new View.OnClickListener()
-            {
+            btn_del.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view)
-                {
+                public void onClick(View view) {
                     scrolledX = sequenceSetListview.getScrollX();
                     scrolledY = sequenceSetListview.getScrollY();
                     list_adepter.remove(position);
@@ -484,8 +447,7 @@ public class SequenceTrainingActivity extends Activity
 
 
     //更改控件的状态
-    private void changeWidgetState(boolean state)
-    {
+    private void changeWidgetState(boolean state) {
         barDelayTime.setEnabled(state);
         barOverTime.setEnabled(state);
         imgDelayTimeAdd.setEnabled(state);
@@ -501,20 +463,16 @@ public class SequenceTrainingActivity extends Activity
     }
 
     //seekbar 更新事件监听器
-    private class SequenceSeekBarChangeListener extends MySeekBarListener
-    {
-        public SequenceSeekBarChangeListener(TextView textView, int maxValue)
-        {
+    private class SequenceSeekBarChangeListener extends MySeekBarListener {
+        public SequenceSeekBarChangeListener(TextView textView, int maxValue) {
             super(textView, maxValue);
         }
 
         @Override
-        public void onProgressChanged(SeekBar seekBar, int i, boolean b)
-        {
+        public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
             super.onProgressChanged(seekBar, i, b);
             Light l = ((List<Light>) (list_sequence.get(choseLight.x).get("list_light"))).get(choseLight.y);
-            switch (getTextView().getId())
-            {
+            switch (getTextView().getId()) {
                 case R.id.tv_delay_time:
                     list_sequence.get(choseLight.x).put("delay_time", new Double(tvDelayTime.getText().toString()));
                     sequenceSetListViewAdapter.notifyDataSetChanged();
@@ -528,23 +486,19 @@ public class SequenceTrainingActivity extends Activity
     }
 
     //checkbox 更新监听事件
-    private class SequenceCheckBoxListener extends CheckBoxClickListener
-    {
+    private class SequenceCheckBoxListener extends CheckBoxClickListener {
         private int type;
 
-        public SequenceCheckBoxListener(CheckBox checkBox, int type)
-        {
+        public SequenceCheckBoxListener(CheckBox checkBox, int type) {
             super(checkBox);
             this.type = type;
         }
 
         @Override
-        public void onClick(View view)
-        {
+        public void onClick(View view) {
             super.onClick(view);
             Light l = ((List<Light>) (list_sequence.get(choseLight.x).get("list_light"))).get(choseLight.y);
-            switch (type)
-            {
+            switch (type) {
                 case 0:
                     l.setActionMode(actionModeCheckBox.getCheckId());
                     break;

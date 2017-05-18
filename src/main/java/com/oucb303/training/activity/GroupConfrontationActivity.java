@@ -40,11 +40,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 分组对抗赛
+ * 双人对抗赛
  */
 
-public class GroupConfrontationActivity extends AppCompatActivity
-{
+public class GroupConfrontationActivity extends AppCompatActivity {
 
     @Bind(R.id.tv_title)
     TextView tvTitle;
@@ -76,12 +75,18 @@ public class GroupConfrontationActivity extends AppCompatActivity
     HorizontalListView hlvGroup2;
     @Bind(R.id.img_help)
     ImageView imgHelp;
+    @Bind(R.id.img_blink_mode_none)
+    ImageView imgBlinkModeNone;
+    @Bind(R.id.img_blink_mode_slow)
+    ImageView imgBlinkModeSlow;
+    @Bind(R.id.img_blink_mode_fast)
+    ImageView imgBlinkModeFast;
 
 
     private Device device;
     private GroupListViewAdapter groupListViewAdapter;
     //感应模式和灯光模式集合
-    private CheckBox actionModeCheckBox, lightModeCheckBox;
+    private CheckBox actionModeCheckBox, lightModeCheckBox,blinkModeCheckBox;
 
     //每组设备个数
     private int groupSize;
@@ -94,26 +99,20 @@ public class GroupConfrontationActivity extends AppCompatActivity
     private Timer timer;
     private int delay = 1000;
 
-    private Handler handler = new Handler()
-    {
+    private Handler handler = new Handler() {
         @Override
-        public void handleMessage(Message msg)
-        {
+        public void handleMessage(Message msg) {
             String data = msg.obj.toString();
-            switch (msg.what)
-            {
+            switch (msg.what) {
                 case TIME_RECEIVE:
                     if (data != null && data.length() > 0)
                         analyzeData(data);
                     break;
                 case Timer.TIMER_FLAG:
-                    for (int i = 0; i < 2; i++)
-                    {
-                        for (int j = 0; j < groupSize; j++)
-                        {
+                    for (int i = 0; i < 2; i++) {
+                        for (int j = 0; j < groupSize; j++) {
                             GroupLightInfo info = lightInfos[i].get(j);
-                            if (info.lightFlag == 2 && timer.time - info.time > delay)
-                            {
+                            if (info.lightFlag == 2 && timer.time - info.time > delay) {
                                 //把原来的感应和灯关了
                                 device.sendOrder(Device.DEVICE_LIST.get(i * groupSize + j).getDeviceNum(),
                                         Order.LightColor.NONE,
@@ -134,8 +133,7 @@ public class GroupConfrontationActivity extends AppCompatActivity
     };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_confrontation);
         ButterKnife.bind(this);
@@ -145,8 +143,7 @@ public class GroupConfrontationActivity extends AppCompatActivity
         //更新设备连接列表
         device.createDeviceList(this);
         //判断协调器是否插入
-        if (device.devCount > 0)
-        {
+        if (device.devCount > 0) {
             //连接
             device.connect(this);
             //设备初始化
@@ -156,15 +153,13 @@ public class GroupConfrontationActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onDestroy()
-    {
+    protected void onDestroy() {
         super.onDestroy();
         if (device.devCount > 0)
             device.disconnect();
     }
 
-    private void initView()
-    {
+    private void initView() {
         tvTitle.setText("双人对抗");
 
         imgHelp.setVisibility(View.VISIBLE);
@@ -176,17 +171,14 @@ public class GroupConfrontationActivity extends AppCompatActivity
 
         //选择设备个数spinner
         String[] num = new String[]{" ", "3个", "4个"};
-        spGroupDeviceNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(this, spGroupDeviceNum, num)
-        {
+        spGroupDeviceNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(this, spGroupDeviceNum, num) {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
-            {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 super.onItemSelected(adapterView, view, i, l);
                 int totalNum = 0;
                 if (i > 0)
                     totalNum = (i + 2) * 2;
-                if (totalNum > Device.DEVICE_LIST.size())
-                {
+                if (totalNum > Device.DEVICE_LIST.size()) {
                     Toast.makeText(GroupConfrontationActivity.this, "当前设备不足!", Toast.LENGTH_SHORT).show();
                     totalNum = 0;
                 }
@@ -204,14 +196,17 @@ public class GroupConfrontationActivity extends AppCompatActivity
         ImageView[] views1 = new ImageView[]{imgLightModeBeside, imgLightModeCenter, imgLightModeAll};
         lightModeCheckBox = new CheckBox(1, views1);
         new CheckBoxClickListener(lightModeCheckBox);
+
+        //设定闪烁模式checkbox组合的点击事件
+        ImageView[] views2 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast,};
+        blinkModeCheckBox = new CheckBox(1, views2);
+        new CheckBoxClickListener(blinkModeCheckBox);
     }
 
 
     @OnClick({R.id.layout_cancel, R.id.img_help, R.id.btn_begin})
-    public void onClick(View view)
-    {
-        switch (view.getId())
-        {
+    public void onClick(View view) {
+        switch (view.getId()) {
             case R.id.layout_cancel:
                 this.finish();
                 device.turnOffAllTheLight();
@@ -220,8 +215,7 @@ public class GroupConfrontationActivity extends AppCompatActivity
                 //检测设备
                 if (!device.checkDevice(this))
                     return;
-                if (groupSize <= 0)
-                {
+                if (groupSize <= 0) {
                     Toast.makeText(this, "未选择分组,不能开始!", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -238,17 +232,14 @@ public class GroupConfrontationActivity extends AppCompatActivity
         }
     }
 
-    private void startTraining()
-    {
+    private void startTraining() {
         btnBegin.setText("停止");
         trainingFlag = true;
 
         //初始化每组的设备列表
-        for (int i = 0; i < 2; i++)
-        {
+        for (int i = 0; i < 2; i++) {
             lightInfos[i] = new ArrayList<>();
-            for (int j = 0; j < groupSize; j++)
-            {
+            for (int j = 0; j < groupSize; j++) {
                 GroupLightInfo lightInfo = new GroupLightInfo();
                 //设备编号
                 lightInfo.deviceInfo = Device.DEVICE_LIST.get(i * groupSize + j);
@@ -290,8 +281,7 @@ public class GroupConfrontationActivity extends AppCompatActivity
         groupOneAdapter.notifyDataSetChanged();
     }
 
-    private void stopTraining()
-    {
+    private void stopTraining() {
         btnBegin.setText("开始");
         trainingFlag = false;
         ReceiveThread.stopThread();
@@ -300,11 +290,9 @@ public class GroupConfrontationActivity extends AppCompatActivity
     }
 
     //从每组中还未亮起灯的设备中随机抽取一个
-    public int createRandomNum(int groupNum)
-    {
+    public int createRandomNum(int groupNum) {
         Random random = new Random();
-        while (true)
-        {
+        while (true) {
             int rand = random.nextInt(100) % groupSize;//0-groupSize-1
 
             int lightFlg = lightInfos[groupNum].get(rand).lightFlag;
@@ -313,15 +301,13 @@ public class GroupConfrontationActivity extends AppCompatActivity
         }
     }
 
-    private void turnOnLight(int position, int groupId, int lightFlag)
-    {
+    private void turnOnLight(int position, int groupId, int lightFlag) {
 
         position = groupId * groupSize + position;
         int color = 0;
         if (lightFlag == 2)
             color = 3; //品红
-        else if (lightFlag == 3)
-        {
+        else if (lightFlag == 3) {
             //不能挥灭的灯
             if (groupId == 0)
                 color = 2;
@@ -336,48 +322,42 @@ public class GroupConfrontationActivity extends AppCompatActivity
             device.sendOrder(Device.DEVICE_LIST.get(position).getDeviceNum(),
                     Order.LightColor.values()[color],
                     Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                    Order.BlinkModel.NONE,
-                    Order.LightModel.values()[lightModeCheckBox.getCheckId()],
+                    Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()],
+                    Order.LightModel.OUTER,
                     Order.ActionModel.TURN_OFF,
                     Order.EndVoice.NONE);
         else
             device.sendOrder(Device.DEVICE_LIST.get(position).getDeviceNum(),
                     Order.LightColor.values()[color],
                     Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                    Order.BlinkModel.NONE,
-                    Order.LightModel.values()[lightModeCheckBox.getCheckId()],
+                    Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()],
+                    Order.LightModel.OUTER,
                     Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                     Order.EndVoice.NONE);
     }
 
-    private void analyzeData(String data)
-    {
+    private void analyzeData(String data) {
         List<TimeInfo> infos = DataAnalyzeUtils.analyzeTimeData(data);
-        for (TimeInfo info : infos)
-        {
+        for (TimeInfo info : infos) {
             //该设备属于哪一组,并且在该组的位置
             int position = findPosition(info.getDeviceNum());
             int groupId = position / groupSize;
             position = position - groupId * groupSize;
             Log.d(Constant.LOG_TAG, position + "");
             //找到了设备在每组中的具体位置
-            if (lightInfos[groupId].get(position).deviceInfo.getDeviceNum() == info.getDeviceNum())
-            {
+            if (lightInfos[groupId].get(position).deviceInfo.getDeviceNum() == info.getDeviceNum()) {
                 int flag = lightInfos[groupId].get(position).lightFlag;
                 lightInfos[groupId].get(position).lightFlag = 0;
                 //2 表示该灯是对方将我方的灯点亮的
                 //1 系统随机点亮的
-                if (flag == 1)
-                {
+                if (flag == 1) {
                     //判断另一组设备灯是否全部都亮了
-                    if (isGroupLightsOn((groupId + 1) % 2))
-                    {
+                    if (isGroupLightsOn((groupId + 1) % 2)) {
                         stopTraining();
                         //全亮 表示另一组输了
                         endingMovie(groupId);
                         break;
-                    } else
-                    {
+                    } else {
                         int rand1 = createRandomNum(groupId);
                         lightInfos[groupId].get(rand1).lightFlag = 1;
                         turnOnLight(rand1, groupId, 1);
@@ -399,8 +379,7 @@ public class GroupConfrontationActivity extends AppCompatActivity
     }
 
     //查找设备在哪个组
-    private int findPosition(char num)
-    {
+    private int findPosition(char num) {
         for (int i = 0; i < Device.DEVICE_LIST.size(); i++)
             if (Device.DEVICE_LIST.get(i).getDeviceNum() == num)
                 return i;
@@ -408,10 +387,8 @@ public class GroupConfrontationActivity extends AppCompatActivity
     }
 
     //判断一组设备是否全部设备都已经亮了
-    private boolean isGroupLightsOn(int groupId)
-    {
-        for (int i = 0; i < groupSize; i++)
-        {
+    private boolean isGroupLightsOn(int groupId) {
+        for (int i = 0; i < groupSize; i++) {
             if (lightInfos[groupId].get(i).lightFlag == 0)
                 return false;
         }
@@ -419,11 +396,9 @@ public class GroupConfrontationActivity extends AppCompatActivity
     }
 
     //结束动画
-    private void endingMovie(int groupId)
-    {
+    private void endingMovie(int groupId) {
         int temp = 0;
-        while (temp < 5)
-        {
+        while (temp < 5) {
             for (int i = 0; i < groupSize * 2; i++)
                 device.sendOrder(Device.DEVICE_LIST.get(i).getDeviceNum(),
                         Order.LightColor.values()[groupId + 1],
@@ -447,8 +422,7 @@ public class GroupConfrontationActivity extends AppCompatActivity
         }
     }
 
-    public class GroupLightInfo
-    {
+    public class GroupLightInfo {
         public int lightFlag;
         public int time;
         public DeviceInfo deviceInfo;

@@ -104,8 +104,19 @@ public class SitUpsActivity extends AppCompatActivity {
     @Bind(R.id.lightMode_checkBox)
     LinearLayout lightModecheckBox;
 
+    @Bind(R.id.blinkMode_checkBox)
+    LinearLayout blinkModecheckBox;
+    @Bind(R.id.ll_params)
+    LinearLayout llParams;
+    @Bind(R.id.img_blink_mode_none)
+    ImageView imgBlinkModeNone;
+    @Bind(R.id.img_blink_mode_slow)
+    ImageView imgBlinkModeSlow;
+    @Bind(R.id.img_blink_mode_fast)
+    ImageView imgBlinkModeFast;
+
     private Device device;
-    private CheckBox actionModeCheckBox, lightModeCheckBox, lightColorCheckBox;
+    private CheckBox actionModeCheckBox, lightModeCheckBox, lightColorCheckBox, blinkModeCheckBox;
     private final int TIME_RECEIVE = 1, POWER_RECEIVER = 2, UPDATE_DATA = 3;
     //训练时间  单位毫秒
     private int trainingTime;
@@ -240,17 +251,23 @@ public class SitUpsActivity extends AppCompatActivity {
         ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
         lightColorCheckBox = new CheckBox(1, views2);
         new CheckBoxClickListener(lightColorCheckBox);
+        //设定闪烁模式checkbox组合的点击事件
+        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast};
+        blinkModeCheckBox = new CheckBox(1, views3);
+        new CheckBoxClickListener(blinkModeCheckBox);
 
         //初始化右侧listview
         sitUpsTimeListAdapter = new SitUpsTimeListAdapter(this);
         lvTimes.setAdapter(sitUpsTimeListAdapter);
     }
+
     @Override
     protected void onStart() {
         super.onStart();
         imgSave.setEnabled(false);
     }
-    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help, R.id.btn_on, R.id.btn_off,R.id.img_save})
+
+    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help, R.id.btn_on, R.id.btn_off, R.id.img_save})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_cancel:
@@ -282,19 +299,19 @@ public class SitUpsActivity extends AppCompatActivity {
                 device.turnOffAllTheLight();
                 break;
             case R.id.img_save:
-                Intent it = new Intent(this,SaveActivity.class);
+                Intent it = new Intent(this, SaveActivity.class);
                 Bundle bundle = new Bundle();
                 //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐、交替活动 ...
-                if(level==4){
-                    bundle.putString("trainingName","交替活动");
-                }else {
-                    bundle.putString("trainingName","仰卧起坐");
+                if (level == 4) {
+                    bundle.putString("trainingName", "交替活动");
+                } else {
+                    bundle.putString("trainingName", "仰卧起坐");
                 }
-                bundle.putString("trainingCategory","3");
+                bundle.putString("trainingCategory", "3");
                 //训练总时间
-                bundle.putInt("trainingTime",trainingTime);
+                bundle.putInt("trainingTime", trainingTime);
                 //次数
-                bundle.putIntArray("scores",scores);
+                bundle.putIntArray("scores", scores);
                 it.putExtras(bundle);
                 startActivity(it);
                 break;
@@ -370,8 +387,8 @@ public class SitUpsActivity extends AppCompatActivity {
     public void sendOrder(char deviceNum) {
         device.sendOrder(deviceNum, Order.LightColor.values()[lightColorCheckBox.getCheckId()],
                 Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                Order.BlinkModel.NONE,
-                Order.LightModel.values()[lightModeCheckBox.getCheckId()],
+                Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()],
+                Order.LightModel.OUTER,
                 Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                 Order.EndVoice.NONE);
     }

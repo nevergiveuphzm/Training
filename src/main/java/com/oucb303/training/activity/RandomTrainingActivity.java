@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -42,7 +41,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 随机训练
+ * 随机训练,换物跑
  */
 public class RandomTrainingActivity extends Activity {
     @Bind(R.id.bt_distance_cancel)
@@ -137,10 +136,16 @@ public class RandomTrainingActivity extends Activity {
     Button btnOn;
     @Bind(R.id.btn_off)
     Button btnOff;
+    @Bind(R.id.img_blink_mode_none)
+    ImageView imgBlinkModeNone;
+    @Bind(R.id.img_blink_mode_slow)
+    ImageView imgBlinkModeSlow;
+    @Bind(R.id.img_blink_mode_fast)
+    ImageView imgBlinkModeFast;
 
 
     //感应模式和灯光模式集合
-    private CheckBox actionModeCheckBox, lightModeCheckBox, lightColorCheckBox;
+    private CheckBox actionModeCheckBox, lightModeCheckBox, lightColorCheckBox,blinkModeCheckBox;
     //接收到电量信息标志
     private final int POWER_RECEIVE = 1;
     //接收到灭灯时间标志
@@ -178,7 +183,7 @@ public class RandomTrainingActivity extends Activity {
     //选用的设备个数
     private int totalNum;
     private char lastTurnOnLight;
-    private long endTime,allTime;
+    private long endTime, allTime;
     private int level;
 
     private Handler timerHandler = new Handler() {
@@ -361,9 +366,13 @@ public class RandomTrainingActivity extends Activity {
         ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
         lightColorCheckBox = new CheckBox(1, views2);
         new CheckBoxClickListener(lightColorCheckBox);
+        //设定闪烁模式checkBox组合的点击事件
+        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast};
+        blinkModeCheckBox = new CheckBox(1, views3);
+        new CheckBoxClickListener(blinkModeCheckBox);
     }
 
-    @OnClick({R.id.btn_begin, R.id.layout_cancel, R.id.img_help,R.id.btn_on,R.id.btn_off,R.id.img_save})
+    @OnClick({R.id.btn_begin, R.id.layout_cancel, R.id.img_help, R.id.btn_on, R.id.btn_off, R.id.img_save})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_begin:
@@ -386,31 +395,31 @@ public class RandomTrainingActivity extends Activity {
                 break;
             case R.id.btn_on:
                 //totalNum组数，1：每组设备个数，0：类型
-                device.turnOnButton(totalNum,1,0);
+                device.turnOnButton(totalNum, 1, 0);
                 break;
             case R.id.btn_off:
                 device.turnOffAllTheLight();
                 break;
             case R.id.img_save:
-                Intent it = new Intent(this,SaveActivity.class);
+                Intent it = new Intent(this, SaveActivity.class);
                 Bundle bundle = new Bundle();
                 //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 4:换物跑、时间随机、次数随机 ...
-                bundle.putString("trainingCategory","4");
-                if(randomMode==0){
-                    bundle.putString("trainingName","次数随机");
-                    trainingTime = (int)allTime;
-                }else{
-                    bundle.putString("trainingName","时间随机");
+                bundle.putString("trainingCategory", "4");
+                if (randomMode == 0) {
+                    bundle.putString("trainingName", "次数随机");
+                    trainingTime = (int) allTime;
+                } else {
+                    bundle.putString("trainingName", "时间随机");
                 }
 
-                if(level!=0)
-                    bundle.putString("trainingName","换物跑");
+                if (level != 0)
+                    bundle.putString("trainingName", "换物跑");
                 //训练总时间
-                bundle.putInt("trainingTime",trainingTime);
+                bundle.putInt("trainingTime", trainingTime);
                 //每组设备个数
-                bundle.putInt("groupDeviceNum",totalNum);
+                bundle.putInt("groupDeviceNum", totalNum);
                 //总次数
-                bundle.putInt("totalTimes",currentTimes);
+                bundle.putInt("totalTimes", currentTimes);
                 it.putExtras(bundle);
                 startActivity(it);
                 break;
@@ -505,7 +514,7 @@ public class RandomTrainingActivity extends Activity {
         ReceiveThread.stopThread();
         btnBegin.setEnabled(true);
         endTime = System.currentTimeMillis();
-        allTime = endTime-beginTime;
+        allTime = endTime - beginTime;
     }
 
     //开灯
@@ -520,8 +529,8 @@ public class RandomTrainingActivity extends Activity {
                 device.sendOrder(lastTurnOnLight,
                         Order.LightColor.values()[lightColorCheckBox.getCheckId()],
                         Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                        Order.BlinkModel.NONE,
-                        Order.LightModel.values()[lightModeCheckBox.getCheckId()],
+                        Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()],
+                        Order.LightModel.OUTER,
                         Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                         Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
                 currentTimes++;

@@ -15,7 +15,7 @@ import com.oucb303.training.device.Device;
  */
 public class DGroupListViewAdapter extends BaseAdapter {
 
-    String[] color = new String[]{"蓝色","红色","品红"};
+    String[] color = new String[]{"蓝色","红色","绿色","紫色","青色","黄色","白色"};
 
 //    分组数量
     private int groupNum;

@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -35,7 +34,6 @@ import com.oucb303.training.model.TimeInfo;
 import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.threads.Timer;
 import com.oucb303.training.utils.DataAnalyzeUtils;
-import com.oucb303.training.utils.RandomUtils;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -141,6 +139,12 @@ public class RandomTimesModuleActivity extends AppCompatActivity {
     ListView lvTimes;
     @Bind(R.id.btn_begin)
     Button btnBegin;
+    @Bind(R.id.img_blink_mode_none)
+    ImageView imgBlinkModeNone;
+    @Bind(R.id.img_blink_mode_slow)
+    ImageView imgBlinkModeSlow;
+    @Bind(R.id.img_blink_mode_fast)
+    ImageView imgBlinkModeFast;
 
 
     private int level;
@@ -160,7 +164,7 @@ public class RandomTimesModuleActivity extends AppCompatActivity {
     //开灯命令发送后 灯持续亮的时间,单位毫秒
     private int durationTime;
     //开始时间
-    private long beginTime,endTime;
+    private long beginTime, endTime;
     //编号和时间的列表
     private ArrayList<TimeInfo> timeList = new ArrayList<>();
     //编号和时间的列表
@@ -173,7 +177,7 @@ public class RandomTimesModuleActivity extends AppCompatActivity {
     private List<Integer> listRand = new ArrayList<>();
 
     //感应模式和灯光模式集合
-    private CheckBox actionModeCheckBox, lightColorCheckBox;
+    private CheckBox actionModeCheckBox, lightColorCheckBox, blinkModeCheckBox;
 
 
     private ArrayAdapter<String> adapterDeviceNum;
@@ -367,6 +371,11 @@ public class RandomTimesModuleActivity extends AppCompatActivity {
         ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
         lightColorCheckBox = new CheckBox(1, views2);
         new CheckBoxClickListener(lightColorCheckBox);
+
+        //设定闪烁模式checkbox组合的点击事件
+        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast,};
+        blinkModeCheckBox = new CheckBox(1, views3);
+        new CheckBoxClickListener(blinkModeCheckBox);
     }
 
     @OnClick({R.id.btn_begin, R.id.layout_cancel, R.id.img_help, R.id.btn_on, R.id.btn_off, R.id.img_save})
@@ -399,7 +408,7 @@ public class RandomTimesModuleActivity extends AppCompatActivity {
                 //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 4:换物跑、时间随机、次数随机 ...
                 bundle.putString("trainingCategory", "4");
                 bundle.putString("trainingName", "次数随机");
-                trainingTime = (int)(endTime-beginTime);
+                trainingTime = (int) (endTime - beginTime);
                 //训练总时间
                 bundle.putInt("trainingTime", trainingTime);
                 //每组设备个数
@@ -450,13 +459,14 @@ public class RandomTimesModuleActivity extends AppCompatActivity {
         //创建随机序列
         createRandomList();
         Log.i("刚开始的随机序列：", "" + listRand);
+
         //发送开灯命令,随机亮起某几个灯
         for (int i = 0; i < everyLightNum; i++) {
             device.sendOrder(Device.DEVICE_LIST.get(listRand.get(i)).getDeviceNum(),
                     Order.LightColor.values()[lightColorCheckBox.getCheckId()],
                     Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                    Order.BlinkModel.NONE,
-                    Order.LightModel.values()[1],
+                    Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()],
+                    Order.LightModel.OUTER,
                     Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                     Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
             //每次开灯的设备编号
@@ -576,8 +586,8 @@ public class RandomTimesModuleActivity extends AppCompatActivity {
                 device.sendOrder(Device.DEVICE_LIST.get(listRand.get(position)).getDeviceNum(),
                         Order.LightColor.values()[lightColorCheckBox.getCheckId()],
                         Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                        Order.BlinkModel.NONE,
-                        Order.LightModel.values()[1],
+                        Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()],
+                        Order.LightModel.OUTER,
                         Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                         Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
                 //记录这个灯亮起的实时时间

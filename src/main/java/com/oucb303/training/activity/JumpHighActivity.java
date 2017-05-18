@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -72,12 +71,12 @@ public class JumpHighActivity extends AppCompatActivity {
     ImageView imgActionModeTouch;
     @Bind(R.id.img_action_mode_together)
     ImageView imgActionModeTogether;
-    @Bind(R.id.img_light_mode_beside)
-    ImageView imgLightModeBeside;
-    @Bind(R.id.img_light_mode_center)
-    ImageView imgLightModeCenter;
-    @Bind(R.id.img_light_mode_all)
-    ImageView imgLightModeAll;
+//    @Bind(R.id.img_light_mode_beside)
+//    ImageView imgLightModeBeside;
+//    @Bind(R.id.img_light_mode_center)
+//    ImageView imgLightModeCenter;
+//    @Bind(R.id.img_light_mode_all)
+//    ImageView imgLightModeAll;
     @Bind(R.id.img_light_color_blue)
     ImageView imgLightColorBlue;
     @Bind(R.id.img_light_color_red)
@@ -106,9 +105,15 @@ public class JumpHighActivity extends AppCompatActivity {
     Button btnOn;
     @Bind(R.id.btn_off)
     Button btnOff;
+    @Bind(R.id.img_blink_mode_none)
+    ImageView imgBlinkModeNone;
+    @Bind(R.id.img_blink_mode_slow)
+    ImageView imgBlinkModeSlow;
+    @Bind(R.id.img_blink_mode_fast)
+    ImageView imgBlinkModeFast;
 
     private Device device;
-    private CheckBox actionModeCheckBox, lightModeCheckBox, lightColorCheckBox;
+    private CheckBox actionModeCheckBox, lightModeCheckBox, lightColorCheckBox,blinkModeCheckBox;
     private GroupListViewAdapter groupListViewAdapter;
     private Timer timer; //计时器
     //同一组的最小间隔
@@ -119,7 +124,7 @@ public class JumpHighActivity extends AppCompatActivity {
     //训练的总时间
     private int trainingTime;
     //每组设备个数、分组数
-    private int groupSize = 1, groupNum,maxGroupSize;
+    private int groupSize = 1, groupNum, maxGroupSize;
     //是否正在训练标志
     private boolean trainingFlag = false;
 
@@ -209,6 +214,7 @@ public class JumpHighActivity extends AppCompatActivity {
         if (device.devCount > 0)
             device.disconnect();
     }
+
     private void initView() {
         tvTitle.setText("纵跳摸高");
         imgHelp.setVisibility(View.VISIBLE);
@@ -254,8 +260,8 @@ public class JumpHighActivity extends AppCompatActivity {
 
         maxGroupSize = Device.DEVICE_LIST.size();
         String[] lightNum = new String[maxGroupSize];
-        for (int i = 0;i < lightNum.length;i++)
-            lightNum[i] = (i+1)+"个";
+        for (int i = 0; i < lightNum.length; i++)
+            lightNum[i] = (i + 1) + "个";
 
         spDevNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(this, spDevNum, lightNum) {
             @Override
@@ -271,14 +277,13 @@ public class JumpHighActivity extends AppCompatActivity {
 //                }
 
 
-
                 int totalGroupNum = Device.DEVICE_LIST.size() / groupSize;
-                String[] trainGroupNum = new String[totalGroupNum+1];
+                String[] trainGroupNum = new String[totalGroupNum + 1];
                 trainGroupNum[0] = "";
-                for (int j = 1;j <= totalGroupNum;j++)
-                    trainGroupNum[j] = j  + "组";
+                for (int j = 1; j <= totalGroupNum; j++)
+                    trainGroupNum[j] = j + "组";
 
-                ArrayAdapter<String> adapterGroupNum = new ArrayAdapter<String>(context,android.R.layout.simple_spinner_item, trainGroupNum);
+                ArrayAdapter<String> adapterGroupNum = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, trainGroupNum);
                 adapterGroupNum.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spGroupNum.setAdapter(adapterGroupNum);
 //                if (Device.DEVICE_LIST.size() / groupSize < groupNum) {
@@ -299,6 +304,7 @@ public class JumpHighActivity extends AppCompatActivity {
                 groupListViewAdapter.setGroupNum(groupNum);
                 groupListViewAdapter.notifyDataSetChanged();
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -321,17 +327,21 @@ public class JumpHighActivity extends AppCompatActivity {
         actionModeCheckBox = new CheckBox(1, views);
         new CheckBoxClickListener(actionModeCheckBox);
         //设定灯光模式checkBox组合的点击事件
-        ImageView[] views1 = new ImageView[]{imgLightModeBeside, imgLightModeCenter, imgLightModeAll,};
-        lightModeCheckBox = new CheckBox(1, views1);
-        new CheckBoxClickListener(lightModeCheckBox);
+//        ImageView[] views1 = new ImageView[]{imgLightModeBeside, imgLightModeCenter, imgLightModeAll,};
+//        lightModeCheckBox = new CheckBox(1, views1);
+//        new CheckBoxClickListener(lightModeCheckBox);
         //设定灯光颜色checkBox组合的点击事件
         ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
         lightColorCheckBox = new CheckBox(1, views2);
         new CheckBoxClickListener(lightColorCheckBox);
+        //设定闪烁模式checkbox组合的点击事件
+        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast,};
+        blinkModeCheckBox = new CheckBox(1, views3);
+        new CheckBoxClickListener(blinkModeCheckBox);
     }
 
 
-    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help, R.id.img_save,R.id.btn_on,R.id.btn_off})
+    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help, R.id.img_save, R.id.btn_on, R.id.btn_off})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_cancel:
@@ -373,7 +383,7 @@ public class JumpHighActivity extends AppCompatActivity {
                 break;
             case R.id.btn_on:
                 //groupNum组数，groupSize：每组设备个数，1：类型
-                device.turnOnButton(groupNum,groupSize,1);
+                device.turnOnButton(groupNum, groupSize, 1);
                 break;
             case R.id.btn_off:
                 device.turnOffAllTheLight();
@@ -408,8 +418,8 @@ public class JumpHighActivity extends AppCompatActivity {
             device.sendOrder(Device.DEVICE_LIST.get(i).getDeviceNum(),
                     Order.LightColor.values()[color == 3 ? 1 : color],
                     Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                    Order.BlinkModel.NONE,
-                    Order.LightModel.values()[lightModeCheckBox.getCheckId()],
+                    Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()],
+                    Order.LightModel.OUTER,
                     Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                     Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
         }
@@ -461,8 +471,8 @@ public class JumpHighActivity extends AppCompatActivity {
                     device.sendOrder(num,
                             Order.LightColor.values()[color],
                             Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                            Order.BlinkModel.NONE,
-                            Order.LightModel.values()[lightModeCheckBox.getCheckId()],
+                            Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()],
+                            Order.LightModel.OUTER,
                             Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                             Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
 

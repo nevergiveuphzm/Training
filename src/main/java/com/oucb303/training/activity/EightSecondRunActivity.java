@@ -39,6 +39,7 @@ import butterknife.OnClick;
 
 /**
  * Created by HP on   2017/3/9.
+ * 八秒钟跑
  */
 public class EightSecondRunActivity extends AppCompatActivity {
 
@@ -93,6 +94,12 @@ public class EightSecondRunActivity extends AppCompatActivity {
     ListView lvTimes;
     @Bind(R.id.btn_begin)
     Button btnBegin;
+    @Bind(R.id.img_blink_mode_none)
+    ImageView imgBlinkModeNone;
+    @Bind(R.id.img_blink_mode_slow)
+    ImageView imgBlinkModeSlow;
+    @Bind(R.id.img_blink_mode_fast)
+    ImageView imgBlinkModeFast;
 
 
     private int level;
@@ -103,7 +110,7 @@ public class EightSecondRunActivity extends AppCompatActivity {
     //所选设备个数
     private int totalNum;
     //感应模式和灯光模式集合
-    private CheckBox actionModeCheckBox, lightColorCheckBox, lightModeCheckBox;
+    private CheckBox actionModeCheckBox, lightColorCheckBox, lightModeCheckBox,blinkModeCheckBox;
 
     private EightSecondRunAdapter eightSecondRunAdapter;
     private Timer timer;
@@ -134,23 +141,21 @@ public class EightSecondRunActivity extends AppCompatActivity {
                     //如果超时
                     if (timer.time >= 8000) {
                         stopTraining();
-                       // tvTotalTime.setText("00:08:00");
-                        for (int j = 0;j<totalNum;j++)
-                        {
-                                int flag = 0;
-                                for (int i=0;i<timeList.size();i++){
-                                    if (timeList.get(i).getDeviceNum() == deviceNumList.get(j))
-                                    {
-                                        flag = 1;
-                                        break;
-                                    }
+                        // tvTotalTime.setText("00:08:00");
+                        for (int j = 0; j < totalNum; j++) {
+                            int flag = 0;
+                            for (int i = 0; i < timeList.size(); i++) {
+                                if (timeList.get(i).getDeviceNum() == deviceNumList.get(j)) {
+                                    flag = 1;
+                                    break;
                                 }
-                                if (flag!=1) {
-                                    TimeInfo info = new TimeInfo();
-                                    info.setDeviceNum(deviceNumList.get(j));
-                                    timeList.add(info);
+                            }
+                            if (flag != 1) {
+                                TimeInfo info = new TimeInfo();
+                                info.setDeviceNum(deviceNumList.get(j));
+                                timeList.add(info);
 //                                    Log.i("ggggggggggggggg", "---" + timeList);
-                                }
+                            }
                         }
                         return;
                     }
@@ -161,8 +166,7 @@ public class EightSecondRunActivity extends AppCompatActivity {
                     if (data != null && data.length() >= 4) {
 //                        设备编号和时间
                         timeList.addAll(DataAnalyzeUtils.analyzeTimeData(data));
-                        if (eightSecondRunAdapter != null)
-                        {
+                        if (eightSecondRunAdapter != null) {
                             eightSecondRunAdapter.notifyDataSetChanged();
                             lvTimes.setSelection(timeList.size() - 1);
                         }
@@ -245,6 +249,10 @@ public class EightSecondRunActivity extends AppCompatActivity {
         ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
         lightColorCheckBox = new CheckBox(1, views2);
         new CheckBoxClickListener(lightColorCheckBox);
+        //设定闪烁模式checkbox组合的点击事件
+        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast,};
+        blinkModeCheckBox = new CheckBox(1, views3);
+        new CheckBoxClickListener(blinkModeCheckBox);
 
         //初始化右侧listView
         eightSecondRunAdapter = new EightSecondRunAdapter(this, timeList);
@@ -269,16 +277,16 @@ public class EightSecondRunActivity extends AppCompatActivity {
                 //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 6:大课间跑圈、八秒钟跑 ...
                 bundle.putString("trainingCategory", "6");
                 //每组规定时间内的所完成的次数
-                bundle.putString("trainingName","八秒钟跑");
+                bundle.putString("trainingName", "八秒钟跑");
                 int[] trainingTime = new int[timeList.size()];
-                for(int i=0;i<timeList.size();i++){
+                for (int i = 0; i < timeList.size(); i++) {
                     trainingTime[i] = timeList.get(i).getTime();
                 }
-                bundle.putIntArray("scores",trainingTime);
+                bundle.putIntArray("scores", trainingTime);
                 bundle.putInt("totalTimes", 0);//总次数
-                bundle.putInt("totalTime",8000);//训练总时间
-                bundle.putInt("deviceNum",totalNum);//设备个数
-                bundle.putInt("groupNum",totalNum);//分组数
+                bundle.putInt("totalTime", 8000);//训练总时间
+                bundle.putInt("deviceNum", totalNum);//设备个数
+                bundle.putInt("groupNum", totalNum);//分组数
                 it.putExtras(bundle);
                 startActivity(it);
                 break;
@@ -314,18 +322,18 @@ public class EightSecondRunActivity extends AppCompatActivity {
             device.sendOrder(Device.DEVICE_LIST.get(i).getDeviceNum(),
                     Order.LightColor.values()[lightColorCheckBox.getCheckId()],
                     Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                    Order.BlinkModel.NONE,
-                    Order.LightModel.values()[lightModeCheckBox.getCheckId()],
+                    Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()],
+                    Order.LightModel.OUTER,
                     Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                     Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
             deviceNumList.add(Device.DEVICE_LIST.get(i).getDeviceNum());
-            Log.d("deviceNumList---------",""+deviceNumList);
+            Log.d("deviceNumList---------", "" + deviceNumList);
         }
         //开启接收返回灭灯时间线程
         new ReceiveThread(handler, device.ftDev, ReceiveThread.TIME_RECEIVE_THREAD, TIME_RECEIVE).start();
         //开启计时线程
         beginTime = System.currentTimeMillis();
-        timer = new Timer(handler,8000);
+        timer = new Timer(handler, 8000);
         timer.setBeginTime(beginTime);
         timer.start();
     }
@@ -348,9 +356,8 @@ public class EightSecondRunActivity extends AppCompatActivity {
     public void isTrainingOver() {
         if (!trainingFlag)
             return;
-        if (timeList.size() == totalNum)
-        {
-            Log.i("?????????>>>>>","<<<<<<<<<<");
+        if (timeList.size() == totalNum) {
+            Log.i("?????????>>>>>", "<<<<<<<<<<");
             stopTraining();
         }
 
