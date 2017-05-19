@@ -409,7 +409,7 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
                     Order.BlinkModel.NONE,
                     Order.LightModel.values()[lightModeCheckBox.getCheckId()],
                     Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                    Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
+                    Order.EndVoice.NONE);
         }
         timer = new Timer(handler, trainingTime);
         timer.setBeginTime(System.currentTimeMillis());

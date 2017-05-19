@@ -398,28 +398,27 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="60dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="设备个数"
-                            android:layout_weight="0.7"
+                            android:layout_weight="1"
                             android:textSize="25sp"/>
 
                         <Spinner
-                            android:layout_weight="0.5"
+                            android:layout_weight="1"
                             android:id="@+id/sp_dev_num"
-                            android:layout_width="190dp"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="9dp"
                             android:background="@drawable/spinner">
                         </Spinner>
 
                         <Button
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="开灯"
                             android:layout_weight="1"
@@ -429,42 +428,9 @@
 
                     </LinearLayout>
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="每次亮灯个数"
-                            android:layout_weight="0.2"
-                            android:textSize="25sp"/>
-
-                        <Spinner
-                            android:layout_weight="0.5"
-                            android:id="@+id/sp_light_num"
-                            android:layout_width="190dp"
-                            android:layout_height="wrap_content"
-
-                            android:background="@drawable/spinner">
-                        </Spinner>
-
-
-                        <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="关灯"
-                            android:layout_weight="1"
-                            android:id="@+id/btn_off" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_height="60dp"
+                        android:gravity="center"
                         android:orientation="horizontal">
 
                         <TextView
@@ -481,6 +447,102 @@
                             android:textSize="@dimen/param_level1_font_size"/>
 
                     </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="训练分组"
+                            android:textSize="25sp"/>
+
+                        <Spinner
+                            android:id="@+id/sp_group_num"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/spinner"/>
+                        <View
+                            android:layout_width="0dip"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="每次亮灯个数"
+                            android:layout_weight="1"
+                            android:textSize="25sp"/>
+
+                        <Spinner
+                            android:layout_weight="1"
+                            android:id="@+id/sp_light_num"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+
+                            android:background="@drawable/spinner">
+                        </Spinner>
+
+
+                        <Button
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="关灯"
+                            android:layout_weight="1"
+                            android:id="@+id/btn_off" />
+
+
+                    </LinearLayout>
+
+                    <include layout="@layout/layout_line_horizontal"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal"
+                            android:text="组别"
+                            android:textSize="23sp"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal"
+                            android:text="编号"
+                            android:textSize="23sp"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal"
+                            android:text="备注"
+                            android:textSize="23sp"/>
+                    </LinearLayout>
+
+                    <ListView
+                        android:id="@+id/lv_group"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dip"
+                        android:scrollbars="none"/>
 
                 </LinearLayout>
 

@@ -441,7 +441,7 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
                         Order.BlinkModel.NONE,
                         Order.LightModel.values()[1],
                         Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                        Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
+                        Order.EndVoice.NONE);
                 //i记录行号，j记录列号  例如:
                 //0  A  B
                 //1  C  D
@@ -577,7 +577,7 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
                 Order.BlinkModel.NONE,
                 Order.LightModel.TURN_OFF,
                 Order.ActionModel.TURN_OFF,
-                Order.EndVoice.values()[cbEndVoice.isChecked()? 1 : 0]);
+                Order.EndVoice.NONE);
     }
 
     //查找设备属于第几组

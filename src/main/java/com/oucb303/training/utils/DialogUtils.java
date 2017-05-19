@@ -1,16 +1,24 @@
 package com.oucb303.training.utils;
 import android.app.Dialog;
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.oucb303.training.R;
+import com.oucb303.training.adpter.RankingListViewAdapter;
+
+import java.util.List;
 
 /**
  * Created by BaiChangCai on 2017/1/16.
@@ -38,6 +46,39 @@ public class DialogUtils {
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(isCancle);// 返回键是否可用
         dialog.setContentView(layout, new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));// 设置布局
+        return dialog;
+    }
+
+    /**
+     * 加载最终成绩排名的dialog
+     * @param context
+     * @param isCancle
+     * @return
+     */
+    public static Dialog createRankDialog(Context context, List<Integer> list,String total,int type, boolean isCancle)
+    {
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View v = inflater.inflate(R.layout.layout_dialog_ranking, null);// 得到加载view
+        LinearLayout layout = (LinearLayout)v.findViewById(R.id.dialog_ranking);// 加载布局
+        // main.xml中的ListView
+        ListView lvRanking = (ListView)v.findViewById(R.id.lv_ranking);
+        Button btnClose = (Button)v.findViewById(R.id.btn_close);// 提示文字
+
+        RankingListViewAdapter rankingListViewAdapter = new RankingListViewAdapter(context,list,total,type);
+        lvRanking.setAdapter(rankingListViewAdapter);
+
+        final Dialog dialog = new Dialog(context,R.style.dialog_rank);// 创建自定义样式dialog
+//        dialog.setCanceledOnTouchOutside(false);
+//        dialog.setCancelable(isCancle);// 返回键是否可用
+        dialog.setContentView(layout);// 设置布局
+
+
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
         return dialog;
     }
 

@@ -423,8 +423,7 @@
                             android:layout_weight="1"
                             android:text="超时响"
                             android:textColor="@color/font_lightdark"
-                            android:textSize="@dimen/param_level2_font_size"
-                            android:visibility="gone"/>
+                            android:textSize="@dimen/param_level2_font_size"/>
 
                     </LinearLayout>
                 </LinearLayout>
