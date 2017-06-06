@@ -52,7 +52,8 @@ public class TrainingListActivity extends Activity
             {"次数随机","描述1",R.drawable.random_times_module,14,"4"},//次数随机
             {"时间随机","描述1",R.drawable.random_time,15,"4"},//时间随机
             {"分组对抗","描述1",R.drawable.group_resist,16,"4"},//分组对抗
-            {"羽毛球步法训练","描述1",R.drawable.badminton_training,17,"1 2 3"}
+            {"羽毛球步法训练","描述1",R.drawable.badminton_training,17,"1 2 3"},
+            {"隔网对抗", "描述1", R.drawable.run, 18, "1 2 3 "}//隔网对抗
     };
 
     @Override
@@ -174,6 +175,11 @@ public class TrainingListActivity extends Activity
                         intent.setClass(TrainingListActivity.this, BadmintonActivity.class);
                         intent.putExtra("level", level);
                         intent.putExtra("randomMode", 0);
+                        startActivity(intent);
+                        break;
+                    case 18:
+                        intent.setClass(TrainingListActivity.this, WireNetConfrontationActivity.class);
+                        intent.putExtra("level", level);
                         startActivity(intent);
                         break;
                 }

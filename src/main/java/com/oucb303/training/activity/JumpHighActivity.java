@@ -418,7 +418,7 @@ public class JumpHighActivity extends AppCompatActivity {
             device.sendOrder(Device.DEVICE_LIST.get(i).getDeviceNum(),
                     Order.LightColor.values()[color == 3 ? 1 : color],
                     Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                    Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()],
+                    Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
                     Order.LightModel.OUTER,
                     Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                     Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
@@ -471,7 +471,7 @@ public class JumpHighActivity extends AppCompatActivity {
                     device.sendOrder(num,
                             Order.LightColor.values()[color],
                             Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                            Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()],
+                            Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
                             Order.LightModel.OUTER,
                             Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                             Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);

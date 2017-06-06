@@ -387,7 +387,7 @@ public class SitUpsActivity extends AppCompatActivity {
     public void sendOrder(char deviceNum) {
         device.sendOrder(deviceNum, Order.LightColor.values()[lightColorCheckBox.getCheckId()],
                 Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()],
+                Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
                 Order.LightModel.OUTER,
                 Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                 Order.EndVoice.NONE);

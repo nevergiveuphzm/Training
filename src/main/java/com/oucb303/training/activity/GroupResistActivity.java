@@ -441,14 +441,12 @@ public class GroupResistActivity extends AppCompatActivity {
                 device.sendOrder(Device.DEVICE_LIST.get(listRand.get(position)).getDeviceNum(),
                         Order.LightColor.values()[t],
                         Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                        Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()],
+                        Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
                         Order.LightModel.OUTER,
                         Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                         Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
 
                 deviceNums[i][j] = Device.DEVICE_LIST.get(listRand.get(position)).getDeviceNum();
-
-//                overTimeMap.put(Device.DEVICE_LIST.get(listRand.get(position)).getDeviceNum(),(int)System.currentTimeMillis());
 
                 //每组设备灯亮起的当前时间
                 duration[position] = System.currentTimeMillis();
@@ -507,7 +505,7 @@ public class GroupResistActivity extends AppCompatActivity {
                     device.sendOrder(Device.DEVICE_LIST.get(listRand.get(position)).getDeviceNum(),
                             Order.LightColor.values()[t],
                             Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                            Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()],
+                            Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
                             Order.LightModel.OUTER,
                             Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                             Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
@@ -582,7 +580,7 @@ public class GroupResistActivity extends AppCompatActivity {
                 device.sendOrder(Device.DEVICE_LIST.get(listRand.get(finalListNum)).getDeviceNum(),
                         Order.LightColor.values()[groupId + 1],
                         Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                        Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()],
+                        Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
                         Order.LightModel.OUTER,
                         Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                         Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);

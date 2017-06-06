@@ -320,7 +320,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_marginLeft="10dip"
-                                android:text="5"
+                                android:text="2"
                                 android:textSize="@dimen/param_level1_font_size"/>
 
                             <TextView
@@ -352,7 +352,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
-                                android:text="5"
+                                android:text="2"
                                 android:textSize="20dp"/>
 
                             <SeekBar
@@ -360,7 +360,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:max="25"
+                                android:max="28"
                                 android:progress="0"/>
 
                             <TextView

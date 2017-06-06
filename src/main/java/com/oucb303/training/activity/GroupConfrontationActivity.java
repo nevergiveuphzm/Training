@@ -322,7 +322,7 @@ public class GroupConfrontationActivity extends AppCompatActivity {
             device.sendOrder(Device.DEVICE_LIST.get(position).getDeviceNum(),
                     Order.LightColor.values()[color],
                     Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                    Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()],
+                    Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
                     Order.LightModel.OUTER,
                     Order.ActionModel.TURN_OFF,
                     Order.EndVoice.NONE);
@@ -330,7 +330,7 @@ public class GroupConfrontationActivity extends AppCompatActivity {
             device.sendOrder(Device.DEVICE_LIST.get(position).getDeviceNum(),
                     Order.LightColor.values()[color],
                     Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                    Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()],
+                    Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
                     Order.LightModel.OUTER,
                     Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                     Order.EndVoice.NONE);

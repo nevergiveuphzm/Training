@@ -20,7 +20,7 @@ public class Light
     //感应距离
     private int distance = 40;
     //超时时间
-    private int overTime = 5;
+    private int overTime = 2;
     //感应模式
     private int actionMode = 1;
     //灯光模式

@@ -158,7 +158,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_marginLeft="10dip"
                                 android:gravity="center"
-                                android:text="5"
+                                android:text="2"
                                 android:textSize="28sp"/>
 
                             <TextView
@@ -191,7 +191,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
-                                android:text="0"
+                                android:text="2"
                                 android:textSize="20dp"/>
 
                             <SeekBar
@@ -199,14 +199,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:max="30"
-                                android:progress="5"/>
+                                android:max="98"
+                                android:progress="0"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
-                                android:text="30"
+                                android:text="100"
                                 android:textSize="20dp"/>
 
                             <ImageView

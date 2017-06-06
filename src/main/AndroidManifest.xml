@@ -69,6 +69,8 @@
         </activity>
         <activity android:name=".activity.DribblingGameActivity">
         </activity>
+        <activity android:name=".activity.WireNetConfrontationActivity">
+        </activity>
         <activity android:name=".activity.HelpActivity">
         </activity>
 

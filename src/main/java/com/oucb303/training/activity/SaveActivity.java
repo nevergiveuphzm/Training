@@ -18,12 +18,14 @@ import com.oucb303.training.daoservice.JumpHighSer;
 import com.oucb303.training.daoservice.RandomTrainingSer;
 import com.oucb303.training.daoservice.ShuttleRunSer;
 import com.oucb303.training.daoservice.SitUpsSer;
+import com.oucb303.training.daoservice.WireNetConfrontSer;
 import com.oucb303.training.entity.BaseTrainingData;
 import com.oucb303.training.entity.DribblingGame;
 import com.oucb303.training.entity.JumpHigh;
 import com.oucb303.training.entity.RandomTraining;
 import com.oucb303.training.entity.ShuttleRun;
 import com.oucb303.training.entity.SitUps;
+import com.oucb303.training.entity.WireNetConfront;
 import com.oucb303.training.utils.Constant;
 import com.oucb303.training.utils.DateUtil;
 
@@ -138,6 +140,13 @@ public class SaveActivity extends AppCompatActivity{
             scores = bundle.getIntArray("scores");//得分
             groupDeviceNum = bundle.getInt("deviceNum");//设备个数
             totalTrainingTimes = bundle.getInt("totalTimes");//总次数
+        }else if (!trainingCategory.equals("")&& !trainingCategory.equals(null)&&trainingCategory.equals("7")){
+            //隔网对抗
+            totalTime = bundle.getInt("trainingTime");//总时间
+            trainingName = bundle.getString("trainingName");//项目名称
+            totalNum = bundle.getInt("totalNum");//设备个数
+            groupNum = bundle.getInt("groupNum");//分组数
+            scores = bundle.getIntArray("scores");//得分
         }
     }
 
@@ -232,6 +241,14 @@ public class SaveActivity extends AppCompatActivity{
                         }
                         tvAllData.setText(sb.toString());
                         break;
+                    case 7:
+                        List<WireNetConfront> wireNetConfrontList = new WireNetConfrontSer(((App)getApplication()).getDaoSession()).loadAllWireNetConfront();
+                        sb = new StringBuffer();
+                        for (WireNetConfront wireNetConfront:wireNetConfrontList) {
+                            sb.append(wireNetConfront.toString());
+                        }
+                        tvAllData.setText(sb.toString());
+                        break;
                 }
                 break;
             case R.id.btn_delete:
@@ -258,6 +275,10 @@ public class SaveActivity extends AppCompatActivity{
                         break;
                     case 6:
                         new BaseTrainingDataSer(((App) getApplication()).getDaoSession()).deleteAll();
+                        Toast.makeText(SaveActivity.this, "清空成功!", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 7:
+                        new WireNetConfrontSer(((App) getApplication()).getDaoSession()).deleteAll();
                         Toast.makeText(SaveActivity.this, "清空成功!", Toast.LENGTH_SHORT).show();
                         break;
                 }
@@ -364,6 +385,19 @@ public class SaveActivity extends AppCompatActivity{
 //                    this.finish();
                 }
                 break;
+            case 7:
+                WireNetConfrontSer wireNetConfrontSer = new WireNetConfrontSer(((App)getApplication()).getDaoSession());
+                for (int i = 0;i<studentNum.length;i++){
+                    WireNetConfront wireNetConfront = new WireNetConfront(null,trainingName,studentNum[i],groupNum,scores[i],totalNum,totalTime,false);
+                    long res = wireNetConfrontSer.addWireNetConfront(wireNetConfront);
+                    if (res < 0){
+                        FLAG_SUCCESS = false;
+                        break;
+                    }
+                }
+                if (FLAG_SUCCESS){
+                    Toast.makeText(SaveActivity.this, "保存成功!", Toast.LENGTH_SHORT).show();
+                }
 
         }
     }

@@ -171,8 +171,8 @@ public class SequenceTrainingActivity extends Activity {
 
     private void initListView() {
         //设置seekbar 拖动事件的监听器
-        barDelayTime.setOnSeekBarChangeListener(new SequenceSeekBarChangeListener(tvDelayTime, 10));
-        barOverTime.setOnSeekBarChangeListener(new SequenceSeekBarChangeListener(tvOverTime, 30));
+        barDelayTime.setOnSeekBarChangeListener(new SequenceSeekBarChangeListener(tvDelayTime, 10,0));
+        barOverTime.setOnSeekBarChangeListener(new SequenceSeekBarChangeListener(tvOverTime, 98,2));
         //设置加减按钮的监听事件
         imgDelayTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 0));
         imgDelayTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 1));
@@ -340,7 +340,7 @@ public class SequenceTrainingActivity extends Activity {
             list_adepter.get(xPosition).notifyDataSetChanged();
 
             barDelayTime.setProgress((int) (delayTime * 200 / 10));
-            int overTime = light.getOverTime() * 30 / 30;
+            int overTime = (light.getOverTime()-2);
             Log.d(Constant.LOG_TAG, overTime + "");
             barOverTime.setProgress(overTime);
             //模拟点击事件
@@ -464,8 +464,8 @@ public class SequenceTrainingActivity extends Activity {
 
     //seekbar 更新事件监听器
     private class SequenceSeekBarChangeListener extends MySeekBarListener {
-        public SequenceSeekBarChangeListener(TextView textView, int maxValue) {
-            super(textView, maxValue);
+        public SequenceSeekBarChangeListener(TextView textView, int maxValue,int minValue) {
+            super(textView, maxValue,minValue);
         }
 
         @Override
