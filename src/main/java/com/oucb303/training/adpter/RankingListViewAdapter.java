@@ -78,7 +78,12 @@ public class RankingListViewAdapter extends BaseAdapter {
             tvGroupNum.setText("第" + (listScore.get(position).groupNum + 1) + "组");
             //时间随机，填充次数
             tvTimes.setText(listScore.get(position).time+"次");
-            tvAllTime.setText(Integer.valueOf(mTotal)/listScore.get(position).time+"毫秒");
+            if(listScore.get(position).time!=0){
+                tvAllTime.setText(Integer.valueOf(mTotal)/listScore.get(position).time+"毫秒");
+            }else {
+                tvAllTime.setText(0+"毫秒");
+            }
+
         }else {
             Collections.sort(listScore, new Comparator<Score>() {
                 @Override
