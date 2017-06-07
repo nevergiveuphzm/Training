@@ -47,19 +47,17 @@ public class SaveListViewAdapter extends BaseAdapter{
         if(view==null){
             holder = new ViewHolder();
             view = LayoutInflater.from(mContext).inflate(R.layout.item_save_student_num, null);
-            //组号
             holder.tv_groupNum = (TextView) view.findViewById(R.id.tv_groupNum);
-            //学生编号
             holder.et_studentNum = (EditText) view.findViewById(R.id.et_studentNum);
             view.setTag(holder);
         }else {
+
             holder = (ViewHolder) view.getTag();
         }
 
         holder.ref = position;
         holder.tv_groupNum.setText(mList.get(position));
         holder.et_studentNum.setText(arrTemp[position]);
-        //给EditText增加监听器
         holder.et_studentNum.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

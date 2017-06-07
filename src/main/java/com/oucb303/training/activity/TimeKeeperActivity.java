@@ -452,7 +452,7 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
                         Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
                         Order.LightModel.OUTER,
                         Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                        Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
+                        Order.EndVoice.NONE);
                 //i记录行号，j记录列号  例如:
                 //0  A  B
                 //1  C  D

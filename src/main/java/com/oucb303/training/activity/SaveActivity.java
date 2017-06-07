@@ -95,7 +95,6 @@ public class SaveActivity extends AppCompatActivity{
         trainingCategory = bundle.getString("trainingCategory");
         //折返跑
         if(!trainingCategory.equals("")&&!trainingCategory.equals(null)&&trainingCategory.equals("1")){
-            //每组完成时间
              finishTimes = bundle.getIntArray("finishTimes");
              groupNum = finishTimes.length;
              totalTrainingTimes = bundle.getInt("totalTrainingTimes");
@@ -103,9 +102,7 @@ public class SaveActivity extends AppCompatActivity{
             //纵跳摸高
             totalTrainingTimes = bundle.getInt("trainingTime");
             Log.d("TRAINING_CATEGORY",trainingCategory);
-            //每组设备个数
             groupDeviceNum = bundle.getInt("groupDeviceNum");
-            //每组得分
             ArrayList scores=bundle.getParcelableArrayList("scores");
             if(scores.size()>0){
                 scoreList = (List<Map<String,Object>>) scores.get(0);
@@ -133,7 +130,7 @@ public class SaveActivity extends AppCompatActivity{
             scores=bundle.getIntArray("scores");
             groupNum = scores.length;
         }else if(!trainingCategory.equals("")&&!trainingCategory.equals(null)&&trainingCategory.equals("6")){
-            //大课间跑圈、八秒钟跑、羽毛球步法训练、计时活动
+            //大课间跑圈、八秒钟跑、羽毛球步法训练、计时活动、时间随机、次数随机基本模块
             totalTime = bundle.getInt("totalTime");//总时间
             trainingName = bundle.getString("trainingName");//项目名称
             groupNum = bundle.getInt("groupNum");//分组数
@@ -186,15 +183,15 @@ public class SaveActivity extends AppCompatActivity{
                 //显示获取的学生编号
                 List<String> list = new ArrayList<>();
                 for(int i=0;i<studentNum.length;i++){
-                   list.add(studentNum[i]);//list里存放学生编号信息
+                   list.add(studentNum[i]);
                 }
-                tvDetail.setText(list.toString());//显示学号
+                tvDetail.setText(list.toString());
                 break;
             case R.id.btn_select:
                 StringBuffer sb;
                 switch (Integer.valueOf(trainingCategory)) {
                     case 1:
-                        List<ShuttleRun> shuList = new ShuttleRunSer(((App) getApplication()).getDaoSession()).loadAllShuttleRun();//查询所有数据
+                        List<ShuttleRun> shuList = new ShuttleRunSer(((App) getApplication()).getDaoSession()).loadAllShuttleRun();
                         sb = new StringBuffer();
                         for(ShuttleRun shuttleRuns:shuList){
                             sb.append(shuttleRuns.toString());
@@ -293,8 +290,7 @@ public class SaveActivity extends AppCompatActivity{
             case 1:
                 ShuttleRunSer shuttleRunSer = new ShuttleRunSer(((App) getApplication()).getDaoSession());
                 for(int i=0;i<studentNum.length;i++){
-                    ShuttleRun shuttleRun =
-                            new ShuttleRun(null,studentNum[i],finishTimes.length,totalTrainingTimes,finishTimes[i],DateUtil.DateToString(new Date()),false);
+                    ShuttleRun shuttleRun = new ShuttleRun(null,studentNum[i],finishTimes.length,totalTrainingTimes,finishTimes[i],DateUtil.DateToString(new Date()),false);
                     long res = shuttleRunSer.addShuttleRun(shuttleRun);
                     Log.d(Constant.LOG_TAG, "save shuttle:" + res);
                     if (res<=0){

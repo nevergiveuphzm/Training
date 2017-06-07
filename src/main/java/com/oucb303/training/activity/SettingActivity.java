@@ -176,7 +176,9 @@ public class SettingActivity extends AppCompatActivity
                 } else
                 {
                     mDialog = DialogUtils.createLoadingDialog(SettingActivity.this, "正在上传数据，请稍候...", true);
+
                     mDialog.show();
+
                 }
                 break;
             case R.id.btn_export:

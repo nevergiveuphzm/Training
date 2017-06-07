@@ -13,7 +13,6 @@ import org.greenrobot.greendao.annotation.Generated;
 @Entity
 public class ShuttleRun {
     @Id(autoincrement = true)
-
     private Long id;
 
     //学生编号
@@ -107,5 +106,9 @@ public class ShuttleRun {
     public void setTrainingTime(String trainingTime) {
         this.trainingTime = trainingTime;
     }
+
+
+
+
 
 }

@@ -325,7 +325,7 @@ public class EightSecondRunActivity extends AppCompatActivity {
                     Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
                     Order.LightModel.OUTER,
                     Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                    Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
+                    Order.EndVoice.NONE);
             deviceNumList.add(Device.DEVICE_LIST.get(i).getDeviceNum());
             Log.d("deviceNumList---------", "" + deviceNumList);
         }
