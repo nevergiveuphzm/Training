@@ -1,6 +1,5 @@
 package com.oucb303.training.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -49,7 +48,8 @@ import butterknife.OnClick;
 /**
  * Created by HP on 2017/5/25.
  */
-public class WireNetConfrontationActivity extends AppCompatActivity {
+public class WireNetConfrontationActivity extends AppCompatActivity
+{
     @Bind(R.id.bt_distance_cancel)
     ImageView btDistanceCancel;
     @Bind(R.id.layout_cancel)
@@ -141,7 +141,7 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
     //训练总时间,超时时间  单位是毫秒
     private int trainingTime, overTime;
     //运行总次数,遗漏次数
-    private int totalTimes,lostTimes;
+    private int totalTimes, lostTimes;
     //成绩统计
     private int[] scores;
     //存放没有亮灯的设备编号  奇数
@@ -171,20 +171,24 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
     //此时超时的设备
     private char overTimeDeviceNum;
 
-    Handler handler = new Handler() {
+    Handler handler = new Handler()
+    {
         @Override
-        public void handleMessage(Message msg) {
+        public void handleMessage(Message msg)
+        {
             String data = msg.obj.toString();
             if (!trainningFlag)
                 return;
-            switch (msg.what) {
+            switch (msg.what)
+            {
                 case UPDATE_SCORES:
                     //更新成绩
                     wireNetConfrontationAdapter.notifyDataSetChanged();
                     break;
                 case Timer.TIMER_FLAG:
                     //判断是否结束
-                    if (timer.time >= trainingTime) {
+                    if (timer.time >= trainingTime)
+                    {
                         Message message = Message.obtain();
                         message.what = STOP_TRAINING;
                         message.obj = "";
@@ -195,9 +199,10 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
                     break;
                 case TIME_RECEIVE:
                     //接受返回的时间线程
-                    if (data != null && data.length() > 7){
+                    if (data != null && data.length() > 7)
+                    {
                         analyseData(data);
-                        tvCurrentTimes.setText(totalTimes+"");
+                        tvCurrentTimes.setText(totalTimes + "");
                     }
                     break;
                 case STOP_TRAINING:
@@ -211,7 +216,8 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
     };
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wirenetconfrontation);
         ButterKnife.bind(this);
@@ -221,7 +227,8 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
         //更新设备连接列表
         device.createDeviceList(this);
         //判断协调器是否插入
-        if (device.devCount > 0) {
+        if (device.devCount > 0)
+        {
             //连接
             device.connect(this);
             //设备初始化
@@ -230,7 +237,8 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
         initView();
     }
 
-    public void initView() {
+    public void initView()
+    {
         tvTitle.setText("隔网对抗");
         imgSave.setVisibility(View.VISIBLE);
         //设备排序
@@ -248,15 +256,19 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
         imgOverTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barOverTime, 0));
 
         //选择设备个数spinner
-        if (Device.DEVICE_LIST.size()>=4) {
+        if (Device.DEVICE_LIST.size() >= 4)
+        {
             String[] deviceNum = new String[Device.DEVICE_LIST.size() - 2];
             deviceNum[0] = "";
-            for (int i = 1; i < deviceNum.length; i++) {
+            for (int i = 1; i < deviceNum.length; i++)
+            {
                 deviceNum[i] = (i + 3) + "个";
             }
-            spDevNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(this, spDevNum, deviceNum) {
+            spDevNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(this, spDevNum, deviceNum)
+            {
                 @Override
-                public void onItemSelected(AdapterView<?> adapterView, View view, int poision, long l) {
+                public void onItemSelected(AdapterView<?> adapterView, View view, int poision, long l)
+                {
                     super.onItemSelected(adapterView, view, poision, l);
                     totalNum = poision + 3;
                     Toast.makeText(WireNetConfrontationActivity.this, "当前选择总设备个数是" + totalNum, Toast.LENGTH_SHORT).show();
@@ -264,22 +276,26 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
                     //每组设备个数spinner
                     final String[] everyNums = new String[totalNum / 2];
                     everyNums[0] = "";
-                    for (int i = 1; i < everyNums.length; i++) {
+                    for (int i = 1; i < everyNums.length; i++)
+                    {
                         everyNums[i] = (i + 1) + "个";
                     }
                     ArrayAdapter<String> adapterEveryNum = new ArrayAdapter<String>(WireNetConfrontationActivity.this, android.R.layout.simple_spinner_item, everyNums);
                     adapterEveryNum.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spDeviceNum.setAdapter(adapterEveryNum);
 
-                    spDeviceNum.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    spDeviceNum.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+                    {
 
                         @Override
-                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
+                        {
                             everyNum = i + 1;
 //                        Toast.makeText(WireNetConfrontationActivity.this, "当前选择每组设备个数是" + everyNum, Toast.LENGTH_SHORT).show();
 //                        Log.i("------------------","-----------------"+everyNum);
                             groupNum = totalNum / everyNum;
-                            if (groupNum % 2 != 0) {
+                            if (groupNum % 2 != 0)
+                            {
                                 //组数为奇数，不符合规定
                                 groupNum = groupNum - 1;
                             }
@@ -292,29 +308,34 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
                             //初始化每次亮灯个数spinner
                             String[] lightNums = new String[everyNum + 1];
                             lightNums[0] = "";
-                            for (int j = 1; j < lightNums.length; j++) {
+                            for (int j = 1; j < lightNums.length; j++)
+                            {
                                 lightNums[j] = j + "个";
                             }
                             ArrayAdapter<String> adapterLightNum = new ArrayAdapter<String>(WireNetConfrontationActivity.this, android.R.layout.simple_spinner_item, lightNums);
                             adapterLightNum.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                             spLightNum.setAdapter(adapterLightNum);
-                            spLightNum.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            spLightNum.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+                            {
 
                                 @Override
-                                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
+                                {
                                     lightNum = i;
 //                                Toast.makeText(WireNetConfrontationActivity.this, "当前每次亮灯个数是" + lightNum, Toast.LENGTH_SHORT).show();
                                 }
 
                                 @Override
-                                public void onNothingSelected(AdapterView<?> adapterView) {
+                                public void onNothingSelected(AdapterView<?> adapterView)
+                                {
 
                                 }
                             });
                         }
 
                         @Override
-                        public void onNothingSelected(AdapterView<?> adapterView) {
+                        public void onNothingSelected(AdapterView<?> adapterView)
+                        {
 
                         }
                     });
@@ -325,14 +346,15 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
 
             groupListViewAdapter = new GroupListViewAdapter(this);
             lvGroup.setAdapter(groupListViewAdapter);
-        }
-        else
-            Toast.makeText(this,"设备个数不足，不能运行!",Toast.LENGTH_SHORT).show();
+        } else
+            Toast.makeText(this, "设备个数不足，不能运行!", Toast.LENGTH_SHORT).show();
 
         //解决listView 与scrollView的滑动冲突
-        lvGroup.setOnTouchListener(new View.OnTouchListener() {
+        lvGroup.setOnTouchListener(new View.OnTouchListener()
+        {
             @Override
-            public boolean onTouch(View v, MotionEvent motionEvent) {
+            public boolean onTouch(View v, MotionEvent motionEvent)
+            {
                 //从listView 抬起时将控制权还给scrollview
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP)
                     svContainer.requestDisallowInterceptTouchEvent(false);
@@ -363,12 +385,14 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onDestroy()
+    {
         super.onDestroy();
     }
 
     @Override
-    protected void onPause() {
+    protected void onPause()
+    {
         super.onPause();
         device.turnOffAllTheLight();
         ReceiveThread.stopThread();
@@ -377,8 +401,10 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
     }
 
     @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help, R.id.btn_on, R.id.btn_off, R.id.img_save})
-    public void onClick(View view) {
-        switch (view.getId()) {
+    public void onClick(View view)
+    {
+        switch (view.getId())
+        {
             case R.id.layout_cancel:
                 this.finish();
                 device.turnOffAllTheLight();
@@ -387,7 +413,8 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
                 //检测设备
                 if (!device.checkDevice(this))
                     return;
-                if (groupNum <= 0) {
+                if (groupNum <= 0)
+                {
                     Toast.makeText(this, "未选择分组,不能开始!", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -403,32 +430,34 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
                 device.turnOffAllTheLight();
                 break;
             case R.id.img_save:
-                Intent intent = new Intent(this,SaveActivity.class);
+                Intent intent = new Intent(this, SaveActivity.class);
                 Bundle bundle = new Bundle();
                 //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 5:运球比赛、多人混战、分组对抗 ...
-                bundle.putString("trainingCategory","7");
-                bundle.putString("trainingName","隔网对抗");
+                bundle.putString("trainingCategory", "7");
+                bundle.putString("trainingName", "隔网对抗");
                 //训练总时间
-                bundle.putInt("trainingTime",trainingTime);
+                bundle.putInt("trainingTime", trainingTime);
                 //设备个数
-                bundle.putInt("totalNum",totalNum);
+                bundle.putInt("totalNum", totalNum);
                 //每组得分
-                bundle.putIntArray("scores",scores);
+                bundle.putIntArray("scores", scores);
                 //分组数
-                bundle.putInt("groupNum",groupNum);
+                bundle.putInt("groupNum", groupNum);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 break;
         }
     }
 
-    public void startTraining() {
+    public void startTraining()
+    {
         btnBegin.setText("停止");
         trainningFlag = true;
         Log.i("分组数是：", "---------" + groupNum);
         //初始化
         scores = new int[groupNum];
-        for (int i = 0; i < groupNum; i++) {
+        for (int i = 0; i < groupNum; i++)
+        {
             scores[i] = 0;
         }
         //每组设备灯亮起的时间
@@ -445,7 +474,8 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
         wireNetConfrontationAdapter.notifyDataSetChanged();
         //创建随机队列
         createRandomNumber(groupNum);
-        for (int i = 0; i < oddListRand.size(); i++) {
+        for (int i = 0; i < oddListRand.size(); i++)
+        {
             Log.i("奇数组的随机队列都有什么？", "=======" + oddListRand.get(i) + "\n");
         }
 //        for (int j = 0;j < oddListRand.size();j++)
@@ -458,13 +488,15 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
 //            }
 //
 //        }
-        for (int j = 0; j < oddListRand.size(); j++) {
-            for (int i = 0; i < lightNum; i++) {
+        for (int j = 0; j < oddListRand.size(); j++)
+        {
+            for (int i = 0; i < lightNum; i++)
+            {
                 //第一次开奇数组的灯
                 device.sendOrder(Device.DEVICE_LIST.get(oddListRand.get(j).get(0)).getDeviceNum(),
                         Order.LightColor.values()[1],
                         Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                        Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
+                        Order.BlinkModel.values()[blinkModeCheckBox.getCheckId() - 1],
                         Order.LightModel.OUTER,
                         Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                         Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
@@ -498,27 +530,31 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
     }
 
     //解析数据
-    public void analyseData(final String data) {
+    public void analyseData(final String data)
+    {
 //        new Thread(new Runnable() {
 //            @Override
 //            public void run() {
         //infos里有设备编号和返回时间
         List<TimeInfo> infos = DataAnalyzeUtils.analyzeTimeData(data);
         Log.i("infos里面有什么", "<<<<<<>>>>>><<<<>>>>>" + infos);
-        for (int t = 0; t < infos.size(); t++) {
+        for (int t = 0; t < infos.size(); t++)
+        {
             char deviceNum = infos.get(t).getDeviceNum();
 
             int groupId = findDeviceGroupId(infos.get(t).getDeviceNum());
             int lineNum = findDeviceGroupId(overTimeDeviceNum);
             //如果发现进来的是超时的那个设备，就不解析直接结束本次循环
             Log.i("此时超时的设备是overTimeDNum", "===11111=====" + overTimeDeviceNum);
-            if ((deviceNum == overTimeDeviceNum) && (duration[lineNum][1] == 0)) {
+            if ((deviceNum == overTimeDeviceNum) && ((int) (duration[lineNum][1]) == 0))
+            {
                 Log.i("哈哈哈啊哈哈哈", "我结束本次循环了");
                 overTimeDeviceNum = '\0';
                 continue;
             }
             scores[groupId] += 1;
-            if (groupId % 2 == 0) {
+            if (groupId % 2 == 0)
+            {
                 Log.i("evenListRand:----------", "------000000000------" + evenListRand);
                 //奇数组，开groupId + 1 组的灯
                 turnOnEvenLight(groupId / 2);
@@ -535,7 +571,8 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
 //                        }
                 addRand(deviceNum, groupId);
                 Log.i("oddListRand:----------", "--ccccccccccccccccc------" + oddListRand);
-            } else {
+            } else
+            {
                 //开groupId - 1组的灯
                 Log.i("evenListRand:----------", "--222222222222------" + evenListRand);
 //                        char deviceNum = infos.get(t).getDeviceNum();
@@ -626,14 +663,19 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
 //        }).start();
     }
 
-    public void addRand(char deviceNum, int groupId) {
-        for (int j = 0; j < Device.DEVICE_LIST.size(); j++) {
-            if (deviceNum == Device.DEVICE_LIST.get(j).getDeviceNum()) {
-                if (groupId % 2 == 0) {
+    public void addRand(char deviceNum, int groupId)
+    {
+        for (int j = 0; j < Device.DEVICE_LIST.size(); j++)
+        {
+            if (deviceNum == Device.DEVICE_LIST.get(j).getDeviceNum())
+            {
+                if (groupId % 2 == 0)
+                {
                     //j就是要加到oddListRand里的那个编号
                     if (checkRepeat(oddListRand, j))
                         oddListRand.get(groupId / 2).add(j);
-                } else {
+                } else
+                {
                     if (checkRepeat(evenListRand, j))
                         evenListRand.get(groupId / 2).add(j);
                 }
@@ -644,9 +686,12 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
         }
     }
 
-    public boolean checkRepeat(ArrayList<ArrayList<Integer>> listRand, int id) {
-        for (int i = 0; i < listRand.size(); i++) {
-            for (int j = 0; j < listRand.get(i).size(); j++) {
+    public boolean checkRepeat(ArrayList<ArrayList<Integer>> listRand, int id)
+    {
+        for (int i = 0; i < listRand.size(); i++)
+        {
+            for (int j = 0; j < listRand.get(i).size(); j++)
+            {
                 if (id == listRand.get(i).get(j))
                     return false;
             }
@@ -654,7 +699,8 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
         return true;
     }
 
-    private void turnOnOddLight(int num) {
+    private void turnOnOddLight(int num)
+    {
 //        new Thread(new Runnable() {
 //            @Override
 //            public void run() {
@@ -662,7 +708,7 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
         device.sendOrder(Device.DEVICE_LIST.get(oddListRand.get(num).get(0)).getDeviceNum(),
                 Order.LightColor.values()[1],
                 Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
+                Order.BlinkModel.values()[blinkModeCheckBox.getCheckId() - 1],
                 Order.LightModel.OUTER,
                 Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                 Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
@@ -675,10 +721,13 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
     }
 
     //查找设备属于第几组
-    public int findDeviceGroupId(char deviceNum) {
+    public int findDeviceGroupId(char deviceNum)
+    {
         int position = 0;
-        for (int i = 0; i < Device.DEVICE_LIST.size(); i++) {
-            if (Device.DEVICE_LIST.get(i).getDeviceNum() == deviceNum) {
+        for (int i = 0; i < Device.DEVICE_LIST.size(); i++)
+        {
+            if (Device.DEVICE_LIST.get(i).getDeviceNum() == deviceNum)
+            {
                 position = i;
                 break;
             }
@@ -687,32 +736,40 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
     }
 
     //生成随机数
-    private void createRandomNumber(int groupNum) {
-        for (int i = 0, j = 1; (i < groupNum) && (j < groupNum); i += 2, j += 2) {
+    private void createRandomNumber(int groupNum)
+    {
+        for (int i = 0, j = 1; (i < groupNum) && (j < groupNum); i += 2, j += 2)
+        {
             listRand1 = new ArrayList<>();
             listRand2 = new ArrayList<>();
             //lightNum是每次亮灯个数，everyNum是每组设备个数
-            while (listRand1.size() < everyNum) {
+            while (listRand1.size() < everyNum)
+            {
                 int randomInt1 = (int) (everyNum * Math.random() + everyNum * i);
                 //如果随机list里不包含产生的这个随机数，则将产生的这个随机数加入到随机list中
-                if (!listRand1.contains(randomInt1)) {
+                if (!listRand1.contains(randomInt1))
+                {
                     listRand1.add(randomInt1);
                     duration[randomInt1][0] = System.currentTimeMillis();
                     duration[randomInt1][1] = 0;
-                } else {
+                } else
+                {
                     System.out.println("该数字已经被添加,不能重复添加i");
                 }
             }
             oddListRand.add(listRand1);
             //lightNum是每次亮灯个数，everyNum是每组设备个数
-            while (listRand2.size() < everyNum) {
+            while (listRand2.size() < everyNum)
+            {
                 int randomInt2 = (int) (everyNum * Math.random() + everyNum * j);
                 //如果随机list里不包含产生的这个随机数，则将产生的这个随机数加入到随机list中
-                if (!listRand2.contains(randomInt2)) {
+                if (!listRand2.contains(randomInt2))
+                {
                     listRand2.add(randomInt2);
                     duration[randomInt2][0] = System.currentTimeMillis();
                     duration[randomInt2][1] = 0;
-                } else {
+                } else
+                {
                     System.out.println("该数字已经被添加,不能重复添加j");
                 }
             }
@@ -721,7 +778,8 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
     }
 
     //开第二组的一个灯
-    public void turnOnEvenLight(int num) {
+    public void turnOnEvenLight(int num)
+    {
 //        new Thread(new Runnable() {
 //            @Override
 //            public void run() {
@@ -729,7 +787,7 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
         device.sendOrder(Device.DEVICE_LIST.get(evenListRand.get(num).get(0)).getDeviceNum(),
                 Order.LightColor.values()[1],
                 Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
+                Order.BlinkModel.values()[blinkModeCheckBox.getCheckId() - 1],
                 Order.LightModel.OUTER,
                 Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                 Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
@@ -742,7 +800,8 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
     }
 
     //停止训练
-    private void stopTraining() {
+    private void stopTraining()
+    {
         timer.stopTimer();
         btnBegin.setText("开始");
         btnBegin.setEnabled(false);
@@ -755,20 +814,26 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
         btnBegin.setEnabled(true);
     }
 
-    class OverTimeThread extends Thread {
+    class OverTimeThread extends Thread
+    {
         private boolean stop = false;
 
-        public void stopThread() {
+        public void stopThread()
+        {
             stop = true;
         }
 
         @Override
-        public void run() {
-            while (!stop) {
-                for (int i = 0; i < duration.length; i++) {
+        public void run()
+        {
+            while (!stop)
+            {
+                for (int i = 0; i < duration.length; i++)
+                {
                     String countString = String.valueOf(duration[i][0]);
                     Long count = Long.valueOf(countString);
-                    if ((System.currentTimeMillis() - count >= overTime) && (duration[i][1] == 1) && (duration[i][0] != 0)) {
+                    if ((System.currentTimeMillis() - count >= overTime) && ((int)duration[i][1] == 1) && ((int)duration[i][0] != 0))
+                    {
 
                         //这个i就是设备的编号
                         int groupId = i / everyNum;
@@ -780,7 +845,8 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
                         //关灯
                         turnOffLight(deviceNum);
                         Timer.sleep(10);
-                        if (groupId % 2 == 0) {
+                        if (groupId % 2 == 0)
+                        {
                             turnOnEvenLight(groupId / 2);
                             Log.i("aadfjkdjfkdsjfkdj", "dfkdjfkdsjfkdsfksdj");
                             if (checkRepeat(oddListRand, i))
@@ -792,7 +858,8 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
 //                                }
 //                            }
 //                            addRand(deviceNum,groupId);
-                        } else {
+                        } else
+                        {
                             if (checkRepeat(evenListRand, i))
                                 evenListRand.get(groupId / 2).add(i);
 //                            for (int j = 0;j < Device.DEVICE_LIST.size(); j++){
@@ -817,7 +884,8 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
         }
     }
 
-    private void turnOffLight(final char deviceNum) {
+    private void turnOffLight(final char deviceNum)
+    {
         device.sendOrder(deviceNum,
                 Order.LightColor.NONE,
                 Order.VoiceMode.NONE,
