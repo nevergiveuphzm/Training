@@ -248,81 +248,86 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
         imgOverTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barOverTime, 0));
 
         //选择设备个数spinner
-        String[] deviceNum = new String[Device.DEVICE_LIST.size() - 2];
-        deviceNum[0] = "";
-        for (int i = 1; i < deviceNum.length; i++) {
-            deviceNum[i] = (i + 3) + "个";
-        }
-        spDevNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(this, spDevNum, deviceNum) {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int poision, long l) {
-                super.onItemSelected(adapterView, view, poision, l);
-                totalNum = poision + 3;
-                Toast.makeText(WireNetConfrontationActivity.this, "当前选择总设备个数是" + totalNum, Toast.LENGTH_SHORT).show();
+        if (Device.DEVICE_LIST.size()>=4) {
+            String[] deviceNum = new String[Device.DEVICE_LIST.size() - 2];
+            deviceNum[0] = "";
+            for (int i = 1; i < deviceNum.length; i++) {
+                deviceNum[i] = (i + 3) + "个";
+            }
+            spDevNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(this, spDevNum, deviceNum) {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int poision, long l) {
+                    super.onItemSelected(adapterView, view, poision, l);
+                    totalNum = poision + 3;
+                    Toast.makeText(WireNetConfrontationActivity.this, "当前选择总设备个数是" + totalNum, Toast.LENGTH_SHORT).show();
 
-                //每组设备个数spinner
-                final String[] everyNums = new String[totalNum / 2];
-                everyNums[0] = "";
-                for (int i = 1; i < everyNums.length; i++) {
-                    everyNums[i] = (i + 1) + "个";
-                }
-                ArrayAdapter<String> adapterEveryNum = new ArrayAdapter<String>(WireNetConfrontationActivity.this, android.R.layout.simple_spinner_item, everyNums);
-                adapterEveryNum.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spDeviceNum.setAdapter(adapterEveryNum);
+                    //每组设备个数spinner
+                    final String[] everyNums = new String[totalNum / 2];
+                    everyNums[0] = "";
+                    for (int i = 1; i < everyNums.length; i++) {
+                        everyNums[i] = (i + 1) + "个";
+                    }
+                    ArrayAdapter<String> adapterEveryNum = new ArrayAdapter<String>(WireNetConfrontationActivity.this, android.R.layout.simple_spinner_item, everyNums);
+                    adapterEveryNum.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spDeviceNum.setAdapter(adapterEveryNum);
 
-                spDeviceNum.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    spDeviceNum.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-                    @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        everyNum = i + 1;
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            everyNum = i + 1;
 //                        Toast.makeText(WireNetConfrontationActivity.this, "当前选择每组设备个数是" + everyNum, Toast.LENGTH_SHORT).show();
 //                        Log.i("------------------","-----------------"+everyNum);
-                        groupNum = totalNum / everyNum;
-                        if (groupNum % 2 != 0) {
-                            //组数为奇数，不符合规定
-                            groupNum = groupNum - 1;
-                        }
+                            groupNum = totalNum / everyNum;
+                            if (groupNum % 2 != 0) {
+                                //组数为奇数，不符合规定
+                                groupNum = groupNum - 1;
+                            }
 //                        Toast.makeText(WireNetConfrontationActivity.this, "当前分组是" + groupNum, Toast.LENGTH_SHORT).show();
-                        groupListViewAdapter.setGroupNum(groupNum);
-                        groupListViewAdapter.setGroupSize(everyNum);
-                        groupListViewAdapter.notifyDataSetChanged();
+                            groupListViewAdapter.setGroupNum(groupNum);
+                            groupListViewAdapter.setGroupSize(everyNum);
+                            groupListViewAdapter.notifyDataSetChanged();
 
 
-                        //初始化每次亮灯个数spinner
-                        String[] lightNums = new String[everyNum + 1];
-                        lightNums[0] = "";
-                        for (int j = 1; j < lightNums.length; j++) {
-                            lightNums[j] = j + "个";
-                        }
-                        ArrayAdapter<String> adapterLightNum = new ArrayAdapter<String>(WireNetConfrontationActivity.this, android.R.layout.simple_spinner_item, lightNums);
-                        adapterLightNum.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        spLightNum.setAdapter(adapterLightNum);
-                        spLightNum.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            //初始化每次亮灯个数spinner
+                            String[] lightNums = new String[everyNum + 1];
+                            lightNums[0] = "";
+                            for (int j = 1; j < lightNums.length; j++) {
+                                lightNums[j] = j + "个";
+                            }
+                            ArrayAdapter<String> adapterLightNum = new ArrayAdapter<String>(WireNetConfrontationActivity.this, android.R.layout.simple_spinner_item, lightNums);
+                            adapterLightNum.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            spLightNum.setAdapter(adapterLightNum);
+                            spLightNum.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-                            @Override
-                            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                                lightNum = i;
+                                @Override
+                                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                    lightNum = i;
 //                                Toast.makeText(WireNetConfrontationActivity.this, "当前每次亮灯个数是" + lightNum, Toast.LENGTH_SHORT).show();
-                            }
+                                }
 
-                            @Override
-                            public void onNothingSelected(AdapterView<?> adapterView) {
+                                @Override
+                                public void onNothingSelected(AdapterView<?> adapterView) {
 
-                            }
-                        });
-                    }
+                                }
+                            });
+                        }
 
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
 
-                    }
-                });
+                        }
+                    });
 
-            }
-        });
+                }
+            });
 
-        groupListViewAdapter = new GroupListViewAdapter(this);
-        lvGroup.setAdapter(groupListViewAdapter);
+
+            groupListViewAdapter = new GroupListViewAdapter(this);
+            lvGroup.setAdapter(groupListViewAdapter);
+        }
+        else
+            Toast.makeText(this,"设备个数不足，不能运行!",Toast.LENGTH_SHORT).show();
 
         //解决listView 与scrollView的滑动冲突
         lvGroup.setOnTouchListener(new View.OnTouchListener() {
@@ -365,7 +370,10 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        device.disconnect();
+        device.turnOffAllTheLight();
+        ReceiveThread.stopThread();
+        if (device.devCount > 0)
+            device.disconnect();
     }
 
     @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help, R.id.btn_on, R.id.btn_off, R.id.img_save})

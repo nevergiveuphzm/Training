@@ -209,7 +209,15 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        device.disconnect();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        device.turnOffAllTheLight();
+        ReceiveThread.stopThread();
+        if (device.devCount > 0)
+            device.disconnect();
     }
 
     public void initView() {

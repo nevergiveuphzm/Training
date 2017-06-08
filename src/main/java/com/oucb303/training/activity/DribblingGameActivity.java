@@ -230,8 +230,10 @@ public class DribblingGameActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onPause() {
+        super.onPause();
+        device.turnOffAllTheLight();
+        ReceiveThread.stopThread();
         if (device.devCount > 0)
             device.disconnect();
     }
