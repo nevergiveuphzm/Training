@@ -12,6 +12,7 @@ import com.oucb303.training.R;
 import com.oucb303.training.device.Device;
 import com.oucb303.training.model.DeviceInfo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,7 +35,11 @@ public class PowerAdapter extends BaseAdapter
     {
         if (Device.DEVICE_LIST == null)
             return 0;
-        return Device.DEVICE_LIST.size();
+//        if (Device.DEVICE_LIST.size() <= 8)
+//           return Device.DEVICE_LIST.size();
+//        else
+            return 8;
+//        return Device.DEVICE_LIST.size();
     }
 
     @Override
@@ -59,11 +64,8 @@ public class PowerAdapter extends BaseAdapter
 
         DeviceInfo info = Device.DEVICE_LIST.get(i);
 
-        tvDeviceNum.setText("设备" + info.getDeviceNum());
-//        if (info.getPower() == 0)
-//            tvPower.setText("5%");
-//        else
-//            tvPower.setText(info.getPower() + "0%");
+        tvDeviceNum.setText("" + info.getDeviceNum()+"   ");
+
         switch (info.getPower())
         {
             case 0:

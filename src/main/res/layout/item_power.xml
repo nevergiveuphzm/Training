@@ -5,14 +5,15 @@
     android:id="@+id/layout_power1"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
     <TextView
+        android:layout_marginLeft="40dp"
         android:id="@+id/tv_device_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="设备一"
+        android:text="A"
         android:textColor="@color/white"
         android:textSize="16sp"/>
 
@@ -39,6 +40,11 @@
             android:text="10%"
             android:textColor="@color/white"
             android:textSize="18sp"/>
+
+        <View
+            android:layout_width="30dp"
+            android:layout_height="0dp"
+            android:layout_weight="2"/>
     </LinearLayout>
 
 </LinearLayout>
