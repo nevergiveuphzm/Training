@@ -137,6 +137,16 @@ public class RandomTrainingActivity extends Activity {
     Button btnOn;
     @Bind(R.id.btn_off)
     Button btnOff;
+    @Bind(R.id.img_level_sub)
+    ImageView imgLevelsub;
+    @Bind(R.id.img_level_add)
+    ImageView imgLevelAdd;
+    @Bind(R.id.bar_level)
+    SeekBar barLevel;
+    @Bind(R.id.tv_level)
+    TextView tvLevel;
+    @Bind(R.id.ll_level)
+    LinearLayout lLevel;
 
 
     //感应模式和灯光模式集合
@@ -179,7 +189,7 @@ public class RandomTrainingActivity extends Activity {
     private int totalNum;
     private char lastTurnOnLight;
     private long endTime,allTime;
-    private int level;
+    private int level=20;
 
     private Handler timerHandler = new Handler() {
         @Override
@@ -280,6 +290,7 @@ public class RandomTrainingActivity extends Activity {
         if (randomMode == 0) {
             //次数随机
             llTrainingTimes.setVisibility(View.VISIBLE);
+            lLevel.setVisibility(View.GONE);
             llTrainingTime.setVisibility(View.GONE);
             barTrainingTimes.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTimes, 500));
             imgTrainingTimesSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTimes, 0));
@@ -287,6 +298,7 @@ public class RandomTrainingActivity extends Activity {
         } else {
             //时间随机
             llTrainingTimes.setVisibility(View.GONE);
+            lLevel.setVisibility(View.GONE);
             llTrainingTime.setVisibility(View.VISIBLE);
             barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 30));
             imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
@@ -294,18 +306,23 @@ public class RandomTrainingActivity extends Activity {
         }
         if (level != 0) {
             tvTitle.setText("换物跑");
-            switch (level) {
-                case 1:
-                    level = 20;
-                    break;
-                case 2:
-                    level = 50;
-                    break;
-                case 3:
-                    level = 100;
-                    break;
-            }
-            barTrainingTimes.setProgress(level);
+            lLevel.setVisibility(View.VISIBLE);
+            //初始化训练强度拖动条
+            barLevel.setOnSeekBarChangeListener(new MySeekBarListener(barTrainingTimes,tvLevel, 3));
+            imgLevelsub.setOnTouchListener(new AddOrSubBtnClickListener(barLevel, 0));
+            imgLevelAdd.setOnTouchListener(new AddOrSubBtnClickListener(barLevel, 1));
+//            switch (level) {
+//                case 1:
+//                    level = 20;
+//                    break;
+//                case 2:
+//                    level = 50;
+//                    break;
+//                case 3:
+//                    level = 100;
+//                    break;
+//            }
+//            barTrainingTimes.setProgress(level);
         }
         //设置seekbar 拖动事件的监听器
         barDelayTime.setOnSeekBarChangeListener(new MySeekBarListener(tvDelayTime, 10));

@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,7 +23,9 @@ import com.oucb303.training.adpter.GroupListViewAdapter;
 import com.oucb303.training.adpter.ShuttleRunAdapter1;
 import com.oucb303.training.device.Device;
 import com.oucb303.training.device.Order;
+import com.oucb303.training.listener.AddOrSubBtnClickListener;
 import com.oucb303.training.listener.CheckBoxClickListener;
+import com.oucb303.training.listener.MySeekBarListener;
 import com.oucb303.training.listener.SpinnerItemSelectedListener;
 import com.oucb303.training.model.CheckBox;
 import com.oucb303.training.model.PowerInfoComparetor;
@@ -91,6 +94,14 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
     Button btnOn;
     @Bind(R.id.btn_off)
     Button btnOff;
+    @Bind(R.id.bar_training_time)
+    SeekBar barTrainingTime;
+    @Bind(R.id.tv_level)
+    TextView tvLevel;
+    @Bind(R.id.img_training_time_add)
+    ImageView imgTrainingTimeAdd;
+    @Bind(R.id.img_training_time_sub)
+    ImageView imgTrainingTimeSub;
 
     private Device device;
     //做多分组数目
@@ -123,7 +134,7 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
     private final int UPDATE_TIMES = 3;
     private final int STOP_TRAINING = 4;
 
-    private int level;
+    private int level=0;
 
 
     private Handler handler = new Handler() {
@@ -158,7 +169,7 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shuttle_run1);
         ButterKnife.bind(this);
-        level = getIntent().getIntExtra("level", 1);
+//        level = getIntent().getIntExtra("level", 1);
         device = new Device(this);
         //更新连接设备列表
         device.createDeviceList(this);
@@ -225,17 +236,21 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
                 totalTrainingTimes = (i + 1) * 2;
             }
         });
-        switch (level) {
-            case 1:
-                level = 0;
-                break;
-            case 2:
-                level = 3;
-                break;
-            case 3:
-                level = 7;
-                break;
-        }
+        //训练时间拖动条初始化
+        barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(spTrainingTimes,tvLevel, 1));
+        imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
+        imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
+//        switch (level) {
+//            case 1:
+//                level = 0;
+//                break;
+//            case 2:
+//                level = 3;
+//                break;
+//            case 3:
+//                level = 7;
+//                break;
+//        }
         spTrainingTimes.setSelection(level);
 
         //初始化分组listview

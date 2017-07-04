@@ -103,6 +103,16 @@ public class SitUpsActivity extends AppCompatActivity {
     LinearLayout layoutCancel;
     @Bind(R.id.lightMode_checkBox)
     LinearLayout lightModecheckBox;
+    @Bind(R.id.img_level_sub)
+    ImageView imgLevelsub;
+    @Bind(R.id.img_level_add)
+    ImageView imgLevelAdd;
+    @Bind(R.id.bar_level)
+    SeekBar barLevel;
+    @Bind(R.id.tv_level)
+    TextView tvLevel;
+    @Bind(R.id.ll_level)
+    LinearLayout lLevel;
 
     private Device device;
     private CheckBox actionModeCheckBox, lightModeCheckBox, lightColorCheckBox;
@@ -120,7 +130,7 @@ public class SitUpsActivity extends AppCompatActivity {
     //训练成绩
     private int[] scores;
 
-    private int level;
+    private int level=2;
 
 
     @Override
@@ -173,8 +183,12 @@ public class SitUpsActivity extends AppCompatActivity {
         if (level == 4) {
             tvTitle.setText("交替活动");
             lightModecheckBox.setVisibility(View.GONE);
-        } else
+            lLevel.setVisibility(View.GONE);
+        } else{
             tvTitle.setText("仰卧起坐训练");
+            lLevel.setVisibility(View.VISIBLE);
+        }
+
         imgHelp.setVisibility(View.VISIBLE);
         imgSave.setVisibility(View.VISIBLE);
         ///初始化分组listView
@@ -210,21 +224,25 @@ public class SitUpsActivity extends AppCompatActivity {
                 groupListViewAdapter.notifyDataSetChanged();
             }
         });
+        //初始化训练强度拖动条
+        barLevel.setOnSeekBarChangeListener(new MySeekBarListener(barTrainingTime,tvLevel, 2));
+        imgLevelsub.setOnTouchListener(new AddOrSubBtnClickListener(barLevel, 0));
+        imgLevelAdd.setOnTouchListener(new AddOrSubBtnClickListener(barLevel, 1));
         //训练时间拖动条初始化
         barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 10));
         imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
         imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
-        switch (level) {
-            case 1:
-                level = 2;
-                break;
-            case 2:
-                level = 4;
-                break;
-            case 3:
-                level = 10;
-                break;
-        }
+//        switch (level) {
+//            case 1:
+//                level = 2;
+//                break;
+//            case 2:
+//                level = 4;
+//                break;
+//            case 3:
+//                level = 10;
+//                break;
+//        }
         Log.d(Constant.LOG_TAG, level + "ddd");
         barTrainingTime.setProgress(level);
 

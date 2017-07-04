@@ -1,2 +1,2 @@
-include ':vitamio'
+include ':vitamio','saflight'
 project(':vitamio').projectDir = new File('../vitamio')
