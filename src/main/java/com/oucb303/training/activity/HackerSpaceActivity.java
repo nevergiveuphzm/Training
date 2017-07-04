@@ -37,7 +37,7 @@ public class HackerSpaceActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void initView() {
-        tvTitle.setText("创客空间");
+        tvTitle.setText("创课空间");
         ivCreate.setOnClickListener(this);
         ivDiv.setOnClickListener(this);
         llCancel.setOnClickListener(this);

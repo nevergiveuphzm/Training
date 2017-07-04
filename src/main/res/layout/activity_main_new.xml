@@ -88,7 +88,7 @@
                 android:drawableLeft="@drawable/main_05_sports"
                 android:text="运动能力"
                 android:layout_gravity="center"
-                android:textSize="23sp"
+                android:textSize="@dimen/btn_font_size"
                 android:textColor="#FFFFFF"
                 android:background="#00000000"/>
 
@@ -115,7 +115,7 @@
                 android:drawableLeft="@drawable/main_06_sport_technique"
                 android:text="运动技术"
                 android:layout_gravity="center"
-                android:textSize="23sp"
+                android:textSize="@dimen/btn_font_size"
                 android:textColor="#FFFFFF"
                 android:background="#00000000"/>
 
@@ -143,7 +143,7 @@
                 android:layout_marginTop="16dp"
                 android:text="组合练习"
                 android:layout_gravity="center"
-                android:textSize="23sp"
+                android:textSize="@dimen/btn_font_size"
                 android:textColor="#FFFFFF"
                 android:background="#00000000"/>
 
@@ -171,7 +171,7 @@
                 android:layout_marginTop="14dp"
                 android:text="应用工具"
                 android:layout_gravity="center"
-                android:textSize="23sp"
+                android:textSize="@dimen/btn_font_size"
                 android:textColor="#FFFFFF"
                 android:background="#00000000"/>
 
@@ -198,7 +198,7 @@
                 android:drawableLeft="@drawable/main_chuangkekongjian"
                 android:text="创课空间"
                 android:layout_gravity="center"
-                android:textSize="23sp"
+                android:textSize="@dimen/btn_font_size"
                 android:textColor="#FFFFFF"
                 android:background="#00000000"/>
 
@@ -225,7 +225,7 @@
                 android:drawableLeft="@drawable/main_xitongshezhi"
                 android:text="系统设置"
                 android:layout_gravity="center"
-                android:textSize="23sp"
+                android:textSize="@dimen/btn_font_size"
                 android:textColor="#FFFFFF"
                 android:background="#00000000"/>
 

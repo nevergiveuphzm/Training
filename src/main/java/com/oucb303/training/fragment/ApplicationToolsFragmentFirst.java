@@ -14,7 +14,14 @@ import android.widget.Toast;
 
 
 import com.oucb303.training.R;
+import com.oucb303.training.activity.GroupResistActivity;
 import com.oucb303.training.activity.HackerSpaceActivity;
+import com.oucb303.training.activity.RandomTimeActivity;
+import com.oucb303.training.activity.RandomTimesModuleActivity;
+import com.oucb303.training.activity.SitUpsActivity;
+import com.oucb303.training.activity.TimeKeeperActivity;
+import com.oucb303.training.activity.TimingModuleActivity;
+import com.oucb303.training.adpter.TimingModuleAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,32 +71,48 @@ public class ApplicationToolsFragmentFirst extends Fragment implements AdapterVi
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent;
         switch (position) {
             case 0:
                 Toast.makeText(getActivity(), "交替", Toast.LENGTH_SHORT)
                         .show();
+                intent = new Intent();
+                intent.setClass(getActivity(), SitUpsActivity.class);
+                startActivity(intent);
                 break;
             case 1:
                 Toast.makeText(getActivity(), "计时", Toast.LENGTH_SHORT)
                         .show();
+                intent = new Intent();
+                intent.setClass(getActivity(), TimeKeeperActivity.class);
+                startActivity(intent);
                 break;
             case 2:
                 Toast.makeText(getActivity(), "限时", Toast.LENGTH_SHORT)
                         .show();
+                intent = new Intent();
+                intent.setClass(getActivity(), TimingModuleActivity.class);
+                startActivity(intent);
                 break;
             case 3:
                 Toast.makeText(getActivity(), "次数随机", Toast.LENGTH_SHORT)
                         .show();
+                intent = new Intent();
+                intent.setClass(getActivity(), RandomTimesModuleActivity.class);
+                startActivity(intent);
                 break;
             case 4:
                 Toast.makeText(getActivity(), "时间随机", Toast.LENGTH_SHORT)
                         .show();
+                intent = new Intent();
+                intent.setClass(getActivity(), RandomTimeActivity.class);
+                startActivity(intent);
                 break;
             case 5:
                 Toast.makeText(getActivity(), "分组对抗", Toast.LENGTH_SHORT)
                         .show();
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), HackerSpaceActivity.class);
+                intent = new Intent();
+                intent.setClass(getActivity(), GroupResistActivity.class);
                 startActivity(intent);
                 break;
             default:

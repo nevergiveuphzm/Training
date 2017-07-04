@@ -15,6 +15,12 @@ import android.widget.Toast;
 
 import com.oucb303.training.R;
 import com.oucb303.training.activity.ApplicationToolsActivity;
+import com.oucb303.training.activity.BadmintonActivity;
+import com.oucb303.training.activity.BoldCautiousActivity;
+import com.oucb303.training.activity.DribblingGameActivity;
+import com.oucb303.training.activity.GroupConfrontationActivity;
+import com.oucb303.training.activity.NavigationActivity;
+import com.oucb303.training.entity.DribblingGame;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,26 +70,38 @@ public class CombinedFragment extends Fragment implements AdapterView.OnItemClic
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent;
         switch (position) {
             case 0:
                 Toast.makeText(getActivity(), "胆大心细", Toast.LENGTH_SHORT)
                         .show();
+                intent = new Intent();
+                intent.setClass(getActivity(), BoldCautiousActivity.class);
+                startActivity(intent);
                 break;
             case 1:
                 Toast.makeText(getActivity(), "羽毛球步法练习", Toast.LENGTH_SHORT)
                         .show();
+                intent = new Intent();
+                intent.setClass(getActivity(), BadmintonActivity.class);
+                startActivity(intent);
                 break;
             case 2:
-                Toast.makeText(getActivity(), "定向越野", Toast.LENGTH_SHORT)
+                Toast.makeText(getActivity(), "定向越野,正在研发中。。。", Toast.LENGTH_SHORT)
                         .show();
                 break;
             case 3:
                 Toast.makeText(getActivity(), "多人混战", Toast.LENGTH_SHORT)
                         .show();
+                intent = new Intent();
+                intent.setClass(getActivity(), DribblingGameActivity.class);
+                startActivity(intent);
                 break;
             case 4:
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), ApplicationToolsActivity.class);
+                Toast.makeText(getActivity(), "双人对抗", Toast.LENGTH_SHORT)
+                        .show();
+                intent = new Intent();
+                intent.setClass(getActivity(), GroupConfrontationActivity.class);
                 startActivity(intent);
                 break;
             default:

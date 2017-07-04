@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.oucb303.training.R;
 import com.oucb303.training.device.Device;
+import com.oucb303.training.model.DeviceAndPower;
 import com.oucb303.training.model.DeviceInfo;
 
 import java.util.ArrayList;
@@ -24,9 +25,18 @@ public class PowerAdapter extends BaseAdapter
 {
     private LayoutInflater inflater = null;
 
+    //设备灯列表
+    List<DeviceAndPower> currentList = new ArrayList<>();
+    char[] deviceNum = {'A','B','C','D','E','F','G','H'};
     public PowerAdapter(Context context)
     {
         this.inflater = LayoutInflater.from(context);
+        for (int i = 0;i<deviceNum.length;i++){
+            DeviceAndPower dev = new DeviceAndPower();
+            dev.setDeviceNum(deviceNum[i]);
+            dev.setPower(0);
+            currentList.add(dev);
+        }
     }
 
 
@@ -35,9 +45,9 @@ public class PowerAdapter extends BaseAdapter
     {
         if (Device.DEVICE_LIST == null)
             return 0;
-//        if (Device.DEVICE_LIST.size() <= 8)
-//           return Device.DEVICE_LIST.size();
-//        else
+        if (Device.DEVICE_LIST.size() <= 8)
+           return Device.DEVICE_LIST.size();
+        else
             return 8;
 //        return Device.DEVICE_LIST.size();
     }

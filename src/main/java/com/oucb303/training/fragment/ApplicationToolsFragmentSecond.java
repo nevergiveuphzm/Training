@@ -1,5 +1,6 @@
 package com.oucb303.training.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 
 import com.oucb303.training.R;
+import com.oucb303.training.activity.WireNetConfrontationActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,10 +63,14 @@ public class ApplicationToolsFragmentSecond extends Fragment implements AdapterV
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent;
         switch (position) {
             case 0:
                 Toast.makeText(getActivity(), "隔网对抗", Toast.LENGTH_SHORT)
                         .show();
+                intent = new Intent();
+                intent.setClass(getActivity(), WireNetConfrontationActivity.class);
+                startActivity(intent);
                 break;
             default:
                 break;

@@ -26,6 +26,7 @@ import com.oucb303.training.R;
 import com.oucb303.training.adpter.PowerAdapter;
 import com.oucb303.training.adpter.PowerSecondAdapter;
 import com.oucb303.training.device.Device;
+import com.oucb303.training.model.DeviceAndPower;
 import com.oucb303.training.model.DeviceInfo;
 import com.oucb303.training.model.PowerInfoComparetor;
 import com.oucb303.training.threads.ReceiveThread;
@@ -130,6 +131,10 @@ public class MainNewActivity extends AppCompatActivity {
         filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
         filter.setPriority(500);//设置权限
         this.registerReceiver(mUsbReceiver, filter);
+
+
+
+
 
         powerAdapter = new PowerAdapter(this);
         lvBattery.setAdapter(powerAdapter);
@@ -302,9 +307,6 @@ public class MainNewActivity extends AppCompatActivity {
     public void readPowerData(String data){
         if (isLeave)
             return;
-        //设备灯列表
-        List<DeviceInfo> currentList = new ArrayList<>();
-
         //DeviceInfo存储设备编号，电量，短地址
         List<DeviceInfo> powerInfos = DataAnalyzeUtils.analyzePowerData(data);
         Collections.sort(powerInfos,new PowerInfoComparetor());
@@ -316,7 +318,7 @@ public class MainNewActivity extends AppCompatActivity {
             //获取电量信息
             Device.DEVICE_LIST.addAll(powerInfos);
 
-            currentList.addAll(powerInfos);
+//            currentList.addAll();
             //遍历current，如果没有此设备，加入
 //            for (int i = 0;i<currentList.size();i++){
 //                if (currentList.get(i).getDeviceNum() != )

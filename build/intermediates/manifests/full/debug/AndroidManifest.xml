@@ -165,51 +165,8 @@
         <activity android:name="com.oucb303.training.activity.HackerSpaceActivity" >
         </activity>
 
-        <!-- <activity android:name=".activity.CrossActivity"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="CrossActivity.class"/> -->
-        <!-- <category android:name="android.intent.category.DEFAULT" /> -->
-        <!-- </intent-filter> -->
-        <!-- </activity> -->
-        <!-- <activity android:name=".activity.DuckActivity"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="DuckActivity.class"/> -->
-        <!-- <category android:name="android.intent.category.DEFAULT" /> -->
-        <!-- </intent-filter> -->
-        <!-- </activity> -->
-        <!-- <activity android:name=".activity.SpillNetsActivity"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="SpillNetsActivity.class"/> -->
-        <!-- <category android:name="android.intent.category.DEFAULT" /> -->
-        <!-- </intent-filter> -->
-        <!-- </activity> -->
-        <!-- <activity android:name=".activity.SitAndReachActivity"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="SitAndReachActivity.class"/> -->
-        <!-- <category android:name="android.intent.category.DEFAULT" /> -->
-        <!-- </intent-filter> -->
-        <!-- </activity> -->
-        <!-- <activity android:name=".activity.PassThroughTunnelsActivity"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="PassThroughTunnelsActivity.class"/> -->
-        <!-- <category android:name="android.intent.category.DEFAULT" /> -->
-        <!-- </intent-filter> -->
-        <!-- </activity> -->
-        <!-- <activity android:name=".activity.RhythmicActivity"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="RhythmicActivity.class"/> -->
-        <!-- <category android:name="android.intent.category.DEFAULT" /> -->
-        <!-- </intent-filter> -->
-        <!-- </activity> -->
+        <!--  -->
 
-
-        <!-- &lt;!&ndash;运动技术&ndash;&gt; -->
-        <!-- <activity android:name=".activity.ShuttleRunActivity1"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="ShuttleRunActivity1.class"/> -->
-        <!-- <category android:name="android.intent.category.DEFAULT" /> -->
-        <!-- </intent-filter> -->
-        <!-- </activity> -->
         <activity
             android:name="io.vov.vitamio.activity.InitActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation"

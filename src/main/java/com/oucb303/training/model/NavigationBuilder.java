@@ -179,10 +179,11 @@ public class NavigationBuilder implements View.OnClickListener, AdapterView.OnIt
             str = targetString2[position1][position2];
         }
         if (str.equals(""))
-            Toast.makeText(context, category.getCenterNameStringIds()[position1][position2], Toast.LENGTH_SHORT).show();
+            Toast.makeText(context,"正在研发中。。。" , Toast.LENGTH_SHORT).show();
         else{
             intent.setAction(str);
             context.startActivity(intent);
         }
     }
+//    category.getCenterNameStringIds()[position1][position2]
 }
