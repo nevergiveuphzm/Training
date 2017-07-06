@@ -122,10 +122,17 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
     ImageView imgBlinkModeSlow;
     @Bind(R.id.img_blink_mode_fast)
     ImageView imgBlinkModeFast;
-
+    @Bind(R.id.img_level_sub)
+    ImageView imgLevelsub;
+    @Bind(R.id.img_level_add)
+    ImageView imgLevelAdd;
+    @Bind(R.id.bar_level)
+    SeekBar barLevel;
+    @Bind(R.id.tv_level)
+    TextView tvLevel;
 
     private Device device;
-    private int level;
+    private int level=2;
     private int maxGroupNum;//做多分组数目
     private int goupNum;//分组数量
     private int trainingTime;//训练时间 单位毫秒
@@ -183,7 +190,7 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_large_recess);
         ButterKnife.bind(this);
-        level = getIntent().getIntExtra("level", 1);
+//        level = getIntent().getIntExtra("level", 1);
 
         initView();
         device = new Device(this);
@@ -265,6 +272,14 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
         }
         barTrainingTime.setProgress(level);
 
+        //初始化训练强度拖动条
+        barLevel.setOnSeekBarChangeListener(new MySeekBarListener(barTrainingTime,tvLevel, 2));
+        imgLevelsub.setOnTouchListener(new AddOrSubBtnClickListener(barLevel, 0));
+        imgLevelAdd.setOnTouchListener(new AddOrSubBtnClickListener(barLevel, 1));
+        //训练时间拖动条初始化
+        barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 10));
+        imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
+        imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
 
         //初始化左侧分组listView
         groupListViewAdapter = new GroupListViewAdapter(LargeRecessActivity.this, groupSize);

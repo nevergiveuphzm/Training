@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_device_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="共0个设备"
+
+        android:textSize="24sp"/>
+
+    <com.oucb303.training.widget.HorizontalListView
+        android:id="@+id/lv_battery"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="#F0F0F0"
+        android:dividerHeight="5dp"/>
+
+
+            <!--<ListView-->
+                <!--android:id="@+id/lv_battery"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:scrollbars="none"/>-->
+
+
+
+
+</LinearLayout>

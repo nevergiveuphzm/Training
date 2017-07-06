@@ -9,5 +9,7 @@
     <dimen name="param_level3_font_size">20sp</dimen>
     <dimen name="param_level4_font_size">16sp</dimen>
 
+    <dimen name="btn_font_size">20sp</dimen>
+
     <dimen name="slidingmenu_offset">1000dp</dimen>
 </resources>

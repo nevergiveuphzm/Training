@@ -1,6 +1,7 @@
 package com.oucb303.training.adpter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +11,10 @@ import android.widget.TextView;
 
 import com.oucb303.training.R;
 import com.oucb303.training.device.Device;
+import com.oucb303.training.model.DeviceAndPower;
 import com.oucb303.training.model.DeviceInfo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,19 +25,28 @@ import java.util.List;
 public class PowerAdapter extends BaseAdapter
 {
     private LayoutInflater inflater = null;
+    private int num;
 
-    public PowerAdapter(Context context)
-    {
+    private List<DeviceInfo> currentList = new ArrayList<>();
+
+    public PowerAdapter(Context context){
         this.inflater = LayoutInflater.from(context);
     }
 
+    public PowerAdapter(Context context,int num)
+    {
+        this.inflater = LayoutInflater.from(context);
+        this.num = num;
+    }
+
+    public void setCurrentList(List<DeviceInfo> currentList) {
+        this.currentList = currentList;
+    }
 
     @Override
     public int getCount()
     {
-        if (Device.DEVICE_LIST == null)
-            return 0;
-        return Device.DEVICE_LIST.size();
+        return num;
     }
 
     @Override
@@ -54,50 +66,37 @@ public class PowerAdapter extends BaseAdapter
     {
         View view1 = inflater.inflate(R.layout.item_power, null);
         TextView tvDeviceNum = (TextView) view1.findViewById(R.id.tv_device_num);
-        TextView tvPower = (TextView) view1.findViewById(R.id.tv_power);
+
         ImageView imgPower = (ImageView) view1.findViewById(R.id.img_power);
 
-        DeviceInfo info = Device.DEVICE_LIST.get(i);
+//        DeviceInfo info = Device.DEVICE_LIST.get(i);
 
-        tvDeviceNum.setText("设备" + info.getDeviceNum());
-//        if (info.getPower() == 0)
-//            tvPower.setText("5%");
-//        else
-//            tvPower.setText(info.getPower() + "0%");
+        DeviceInfo info = currentList.get(i);
+        tvDeviceNum.setText("" + info.getDeviceNum()+"   ");
+
         switch (info.getPower())
         {
             case 0:
-                imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim8);
+                imgPower.setImageResource(R.drawable.stat_power_empyt);
+                tvDeviceNum.setTextColor(Color.argb(200, 105, 105, 105));
                 break;
             case 1:
-                imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim15);
-                break;
             case 2:
-                imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim25);
-                break;
             case 3:
-                imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim35);
+                imgPower.setImageResource(R.drawable.stat_power_01);
                 break;
             case 4:
-                imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim45);
-                break;
             case 5:
-                imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim55);
-                break;
             case 6:
-                imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim65);
+                imgPower.setImageResource(R.drawable.stat_power_03);
                 break;
             case 7:
-                imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim75);
-                break;
             case 8:
-                imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim85);
-                break;
             case 9:
-                imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim95);
+                imgPower.setImageResource(R.drawable.stat_power_04);
                 break;
             case 10:
-                imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim100);
+                imgPower.setImageResource(R.drawable.stat_power_full);
                 break;
         }
         return view1;

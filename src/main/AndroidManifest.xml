@@ -22,7 +22,25 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity">
+        <!--<activity android:name=".activity.MainActivity">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN"/>-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--</intent-filter>-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.hardware.usb.action.USB_ACCESSORY_ATTACHED"/>-->
+            <!--</intent-filter>-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"/>-->
+            <!--</intent-filter>-->
+
+            <!--<meta-data-->
+                <!--android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"-->
+                <!--android:resource="@xml/device_filter"/>-->
+        <!--</activity>-->
+
+        <activity android:name=".activity.MainNewActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -39,25 +57,55 @@
                 android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
                 android:resource="@xml/device_filter"/>
         </activity>
-        <activity android:name=".activity.RandomTrainingActivity"/>
+
+        <activity android:name=".activity.RandomTrainingActivity">
+            <intent-filter>
+                <action android:name="RandomTrainingActivity.class"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name=".activity.BaseTrainingActivity"/>
         <activity
             android:name=".activity.SequenceTrainingActivity"
             android:windowSoftInputMode="stateUnchanged|adjustPan"/>
         <activity android:name=".activity.TrainingListActivity"/>
         <activity android:name=".activity.ShuttleRunActivity"/>
-        <activity android:name=".activity.ShuttleRunActivity1"/>
-        <activity android:name=".activity.LargeRecessActivity"/>
+        <activity android:name=".activity.ShuttleRunActivity1">
+            <intent-filter>
+                <action android:name="ShuttleRunActivity1.class"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.LargeRecessActivity">
+            <intent-filter>
+                <action android:name="LargeRecessActivity.class"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name=".activity.DetailsActivity"/>
         <activity android:name=".activity.VideoActivity"/>
-        <activity android:name=".activity.SitUpsActivity"/>
-        <activity android:name=".activity.EightSecondRunActivity"/>
+        <activity android:name=".activity.SitUpsActivity">
+            <intent-filter>
+                <action android:name="SitUpsActivity.class"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.EightSecondRunActivity">
+            <intent-filter>
+                <action android:name="EightSecondRunActivity.class"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name=".activity.BoldCautiousActivity"/>
         <activity
             android:name=".activity.TestActivity"
             android:windowSoftInputMode="stateVisible|adjustResize">
         </activity>
         <activity android:name=".activity.JumpHighActivity">
+            <intent-filter>
+                <action android:name="JumpHighActivity.class"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity android:name=".activity.GroupConfrontationActivity">
         </activity>
@@ -68,8 +116,16 @@
         <activity android:name=".activity.SequenceRunningActivity">
         </activity>
         <activity android:name=".activity.DribblingGameActivity">
+            <intent-filter>
+                <action android:name="DribblingGameActivity.class"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity android:name=".activity.WireNetConfrontationActivity">
+            <intent-filter>
+                <action android:name="WireNetConfrontationActivity.class"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity android:name=".activity.HelpActivity">
         </activity>
@@ -93,6 +149,17 @@
         </activity>
         <activity android:name=".activity.BadmintonActivity">
         </activity>
+        <activity android:name=".activity.NavigationActivity">
+        </activity>
+        <activity android:name=".activity.CombinedTrainingActivity">
+        </activity>
+        <activity android:name=".activity.ApplicationToolsActivity">
+        </activity>
+        <activity android:name=".activity.HackerSpaceActivity">
+        </activity>
+
+
+
     </application>
 
 </manifest>

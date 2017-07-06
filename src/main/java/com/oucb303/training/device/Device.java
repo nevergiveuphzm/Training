@@ -22,7 +22,7 @@ public class Device
     //设备灯列表
     public static List<DeviceInfo> DEVICE_LIST = new ArrayList<>();
 
-    public static int BLOCK_TIME = 100;
+    public static int BLOCK_TIME = 20;
 
     public FT_Device ftDev;
     private D2xxManager ftdid2xx;
@@ -256,6 +256,8 @@ public class Device
     {
         Timer.sleep(BLOCK_TIME);
         Log.d(Constant.LOG_TAG, "send message:" + data);
+        if (ftDev == null)
+            return;
 
         if (ftDev.isOpen() == false)
         {

@@ -99,6 +99,14 @@ public class JumpHighActivity extends AppCompatActivity {
     ListView lvScores;
     @Bind(R.id.img_save)
     ImageView imgSave;
+    @Bind(R.id.img_level_sub)
+    ImageView imgLevelsub;
+    @Bind(R.id.img_level_add)
+    ImageView imgLevelAdd;
+    @Bind(R.id.bar_level)
+    SeekBar barLevel;
+    @Bind(R.id.tv_level)
+    TextView tvLevel;
 
     private final int TIME_RECEIVE = 1, UPDATE_SCORES = 2;
     @Bind(R.id.btn_on)
@@ -129,7 +137,7 @@ public class JumpHighActivity extends AppCompatActivity {
     private boolean trainingFlag = false;
 
     private int colors[];
-    private int level;
+    private int level=2;
 
     private Context context;
 
@@ -191,7 +199,8 @@ public class JumpHighActivity extends AppCompatActivity {
         setContentView(R.layout.activity_jump_high);
         ButterKnife.bind(this);
         context = this;
-        level = getIntent().getIntExtra("level", 1);
+//        level = getIntent().getIntExtra("level", 1);
+//        level=2;
         initView();
         device = new Device(this);
         device.createDeviceList(this);
@@ -238,23 +247,26 @@ public class JumpHighActivity extends AppCompatActivity {
                 return false;
             }
         });
-
+        //初始化训练强度拖动条
+        barLevel.setOnSeekBarChangeListener(new MySeekBarListener(barTrainingTime,tvLevel, 2));
+        imgLevelsub.setOnTouchListener(new AddOrSubBtnClickListener(barLevel, 0));
+        imgLevelAdd.setOnTouchListener(new AddOrSubBtnClickListener(barLevel, 1));
         //初始化训练时间拖动条
         barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 10));
         imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
         imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
 
-        switch (level) {
-            case 1:
-                level = 2;
-                break;
-            case 2:
-                level = 4;
-                break;
-            case 3:
-                level = 10;
-                break;
-        }
+//        switch (level) {
+//            case 1:
+//                level = 2;
+//                break;
+//            case 2:
+//                level = 4;
+//                break;
+//            case 3:
+//                level = 10;
+//                break;
+//        }
 
         barTrainingTime.setProgress(level);
 
