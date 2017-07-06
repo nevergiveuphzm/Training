@@ -26,7 +26,7 @@ public class MotorTechnique implements Category {
                                 {""},
                                 {"DribblingGameActivity.class",""},
                                 {""},
-                                {""}
+                                {"WireNetConfrontationActivity.class"}
     };
     //中部的背景图片
     int[] centerImgIds = {R.drawable.technique_run_bg,R.drawable.technique_jump_bg,R.drawable.technique_throw_bg,R.drawable.technique_basketball_bg,R.drawable.technique_football_bg,R.drawable.technique_volleyball_bg};

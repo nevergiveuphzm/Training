@@ -256,6 +256,8 @@ public class Device
     {
         Timer.sleep(BLOCK_TIME);
         Log.d(Constant.LOG_TAG, "send message:" + data);
+        if (ftDev == null)
+            return;
 
         if (ftDev.isOpen() == false)
         {

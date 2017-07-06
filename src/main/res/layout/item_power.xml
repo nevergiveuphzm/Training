@@ -3,18 +3,18 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout_power1"
-    android:layout_width="match_parent"
+    android:layout_width="195px"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
     <TextView
         android:layout_marginLeft="40dp"
         android:id="@+id/tv_device_num"
-        android:layout_width="wrap_content"
+        android:layout_width="30dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="A"
-        android:textColor="@color/white"
+        android:textColor="@color/grey3"
         android:textSize="16sp"/>
 
     <LinearLayout
@@ -26,26 +26,17 @@
         <ImageView
             android:id="@+id/img_power"
             android:layout_width="26dp"
-            android:layout_height="26dp"
+            android:layout_height="15dp"
+            android:layout_marginTop="4.5dp"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/stat_sys_battery_charge_anim100"/>
-
-        <TextView
-            android:visibility="gone"
-            android:id="@+id/tv_power"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_marginTop="1dp"
-            android:text="10%"
-            android:textColor="@color/white"
-            android:textSize="18sp"/>
+            android:background="@drawable/stat_power_empyt"/>
 
         <View
             android:layout_width="30dp"
             android:layout_height="0dp"
             android:layout_weight="2"/>
     </LinearLayout>
+
 
 </LinearLayout>
 

@@ -296,7 +296,7 @@
                             android:layout_weight="0.7"
                             android:text="设备个数"
                             android:gravity="center"
-                            android:textSize="25sp"/>
+                            android:textSize="20sp"/>
 
                         <Spinner
                             android:id="@+id/sp_dev_num"
@@ -315,7 +315,7 @@
                             android:layout_weight="1"
                             android:layout_marginLeft="5dp"
 
-                            android:textSize="25sp" />
+                            android:textSize="20sp" />
 
                         <Spinner
                             android:id="@+id/sp_light_num"
@@ -343,7 +343,7 @@
                             android:layout_height="wrap_content"
                             android:text="设备编号: "
 
-                            android:textSize="@dimen/param_level1_font_size"/>
+                            android:textSize="20sp"/>
 
                         <TextView
                             android:id="@+id/tv_device_list"
@@ -351,7 +351,7 @@
                             android:layout_height="wrap_content"
                             android:text="A B C D"
 
-                            android:textSize="@dimen/param_level1_font_size"/>
+                            android:textSize="20sp"/>
 
 
 
@@ -370,7 +370,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="0.10"
                             android:text="训练分组"
-                            android:textSize="25sp"/>
+                            android:textSize="20sp"/>
 
                         <Spinner
                             android:id="@+id/sp_group_num"

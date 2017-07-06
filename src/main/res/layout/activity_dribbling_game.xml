@@ -26,12 +26,12 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="280dp"
+                    android:layout_height="300dp"
                     android:orientation="vertical">
                     <LinearLayout
                         android:id="@+id/ll_level"
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
+                        android:layout_height="75dp"
                         android:orientation="vertical">
 
                         <LinearLayout

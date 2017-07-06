@@ -31,32 +31,38 @@
 
     <LinearLayout
         android:layout_width="1000dp"
-        android:layout_height="70dp"
+        android:layout_height="80dp"
         android:background="@drawable/main_power"
         android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center_horizontal|center_vertical">
 
-        <com.oucb303.training.widget.HorizontalListView
-            android:id="@+id/lv_battery"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
+        <!--<com.oucb303.training.widget.HorizontalListView-->
+            <!--android:id="@+id/lv_battery"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:divider="#F0F0F0"-->
+            <!--android:dividerHeight="5dp" />-->
 
-            android:divider="#F0F0F0"
-            android:dividerHeight="5dp" />
-
-        <com.oucb303.training.widget.HorizontalListView
-            android:id="@+id/lv_battery_second"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-
-            android:divider="#F0F0F0"
-            android:dividerHeight="5dp"
-            android:visibility="gone"/>
+        <!--<com.oucb303.training.widget.HorizontalListView-->
+            <!--android:id="@+id/lv_battery_second"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:divider="#F0F0F0"-->
+            <!--android:dividerHeight="5dp"-->
+            <!--android:visibility="visible"/>-->
+        <GridView
+            android:id="@+id/gv_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:horizontalSpacing="0dp"
+            android:numColumns="8">
+        </GridView>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="25dp"
+        android:layout_height="15dp"
         android:orientation="vertical"
         >
 
@@ -83,6 +89,7 @@
                 android:background="@drawable/main_sports" />
 
             <Button
+                android:id="@+id/btn_kinetism_1"
                 android:layout_width="175dp"
                 android:layout_height="63dp"
                 android:drawableLeft="@drawable/main_05_sports"
@@ -110,6 +117,7 @@
                 android:background="@drawable/main_06" />
 
             <Button
+                android:id="@+id/btn_technique_1"
                 android:layout_width="175dp"
                 android:layout_height="63dp"
                 android:drawableLeft="@drawable/main_06_sport_technique"
@@ -137,6 +145,7 @@
                 android:background="@drawable/main_07" />
 
             <Button
+                android:id="@+id/btn_combined_train_1"
                 android:layout_width="170dp"
                 android:layout_height="63dp"
                 android:drawableLeft="@drawable/main_zuhelianxi"
@@ -165,6 +174,7 @@
                 android:background="@drawable/main_08" />
 
             <Button
+                android:id="@+id/btn_app_tools_1"
                 android:layout_width="170dp"
                 android:layout_height="63dp"
                 android:drawableLeft="@drawable/main_yingyonggongju"
@@ -193,6 +203,7 @@
                 android:background="@drawable/main_09" />
 
             <Button
+                android:id="@+id/btn_hacker_space_1"
                 android:layout_width="170dp"
                 android:layout_height="63dp"
                 android:drawableLeft="@drawable/main_chuangkekongjian"
@@ -220,6 +231,7 @@
                 android:background="@drawable/main_10" />
 
             <Button
+                android:id="@+id/btn_setting_1"
                 android:layout_width="170dp"
                 android:layout_height="63dp"
                 android:drawableLeft="@drawable/main_xitongshezhi"

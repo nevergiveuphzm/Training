@@ -30,13 +30,13 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="350dp"
+                    android:layout_height="360dp"
                     android:orientation="vertical"
                     android:weightSum="1">
                     <LinearLayout
                         android:id="@id/ll_level"
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
+                        android:layout_height="75dp"
                         android:orientation="vertical">
 
                         <LinearLayout
@@ -97,7 +97,7 @@
                     <LinearLayout
                         android:id="@+id/ll_training_time"
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
+                        android:layout_height="75dp"
                         android:orientation="vertical">
 
                         <LinearLayout

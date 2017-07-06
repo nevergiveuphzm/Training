@@ -81,17 +81,17 @@ public class ApplicationToolsFragmentFirst extends Fragment implements AdapterVi
                 startActivity(intent);
                 break;
             case 1:
-                Toast.makeText(getActivity(), "计时", Toast.LENGTH_SHORT)
-                        .show();
-                intent = new Intent();
-                intent.setClass(getActivity(), TimeKeeperActivity.class);
-                startActivity(intent);
-                break;
-            case 2:
                 Toast.makeText(getActivity(), "限时", Toast.LENGTH_SHORT)
                         .show();
                 intent = new Intent();
                 intent.setClass(getActivity(), TimingModuleActivity.class);
+                startActivity(intent);
+                break;
+            case 2:
+                Toast.makeText(getActivity(), "计时", Toast.LENGTH_SHORT)
+                        .show();
+                intent = new Intent();
+                intent.setClass(getActivity(), TimeKeeperActivity.class);
                 startActivity(intent);
                 break;
             case 3:

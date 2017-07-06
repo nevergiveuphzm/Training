@@ -122,6 +122,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.WireNetConfrontationActivity">
+            <intent-filter>
+                <action android:name="WireNetConfrontationActivity.class"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity android:name=".activity.HelpActivity">
         </activity>
