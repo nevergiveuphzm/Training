@@ -146,7 +146,7 @@ public class MainNewActivity extends AppCompatActivity {
         for (int i = 0; i < deviceNumA.length; i++) {
             DeviceInfo dev = new DeviceInfo();
             dev.setDeviceNum(deviceNumA[i]);
-            dev.setPower(0);
+            dev.setPower(-1);
             dev.setAddress("");
             currentListA.add(dev);
         }

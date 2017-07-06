@@ -91,10 +91,10 @@ public class CombinedFragment extends Fragment implements AdapterView.OnItemClic
                         .show();
                 break;
             case 3:
-                Toast.makeText(getActivity(), "多人混战", Toast.LENGTH_SHORT)
-                        .show();
+                Toast.makeText(getActivity(), "多人混战", Toast.LENGTH_SHORT).show();
                 intent = new Intent();
                 intent.setClass(getActivity(), DribblingGameActivity.class);
+                intent.putExtra("level",0);
                 startActivity(intent);
                 break;
             case 4:

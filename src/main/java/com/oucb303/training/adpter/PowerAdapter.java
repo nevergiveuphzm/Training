@@ -76,10 +76,11 @@ public class PowerAdapter extends BaseAdapter
 
         switch (info.getPower())
         {
-            case 0:
+            case -1:
                 imgPower.setImageResource(R.drawable.stat_power_empyt);
                 tvDeviceNum.setTextColor(Color.argb(200, 105, 105, 105));
                 break;
+            case 0:
             case 1:
             case 2:
             case 3:

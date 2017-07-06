@@ -227,7 +227,7 @@ public class Device
                 {
                     sendOrder(Device.DEVICE_LIST.get(groupSize * k + t).getDeviceNum(),
                             //灯的颜色
-                            Order.LightColor.values()[k % 3 + 1],
+                            Order.LightColor.values()[k % 7 + 1],
                             //声音模式
                             Order.VoiceMode.NONE,
                             //闪烁模式

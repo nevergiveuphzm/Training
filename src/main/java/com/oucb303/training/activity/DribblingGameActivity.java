@@ -168,7 +168,7 @@ public class DribblingGameActivity extends AppCompatActivity {
     private ArrayList<Integer> listRand = new ArrayList<>();
 
 
-    private int level=2;
+    private int level;
 
     private Handler handler = new Handler() {
         //处理接收过来的数据的方法
@@ -251,10 +251,11 @@ public class DribblingGameActivity extends AppCompatActivity {
     public void initView() {
         imgSave.setVisibility(View.VISIBLE);
         imgHelp.setVisibility(View.VISIBLE);
-        if (level == 4){
+        if (level == 0){
             lLevel.setVisibility(View.GONE);
             tvTitle.setText("多人混战");
         } else{
+
             tvTitle.setText("运球比赛");
             lLevel.setVisibility(View.VISIBLE);
         }
