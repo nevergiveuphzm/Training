@@ -149,9 +149,6 @@
         </activity>
         <activity android:name=".activity.BadmintonActivity">
         </activity>
-
-
-<!--******************************************************************************************-->
         <activity android:name=".activity.NavigationActivity">
         </activity>
         <activity android:name=".activity.CombinedTrainingActivity">
@@ -161,7 +158,7 @@
         <activity android:name=".activity.HackerSpaceActivity">
         </activity>
 
-        <!---->
+
 
     </application>
 

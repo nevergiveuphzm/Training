@@ -80,7 +80,7 @@ public class TestActivity extends AppCompatActivity
 
     private String[] colors = {"000无", "001蓝", "010红", "011绿","100紫","101青","110黄","111白"};
     private String[] voices = {"00无", "01短响", "10连续响1s", "11连续响2s"};
-    private String[] blinks = {"00无", "10慢闪", "01快闪", "11先闪后灭"};
+    private String[] blinks = {"00无", "01慢闪", "10快闪", "11先闪后灭"};
     private String[] lights = {"000无", "001外圈灯亮", "010里圈灯亮", "011全部亮", "100关灯"};
     private String[] actionModes = {"000无", "001红外", "010震动", "011全部", "100关闭"};
 
