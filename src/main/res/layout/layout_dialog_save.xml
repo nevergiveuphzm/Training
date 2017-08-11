@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dialog_save"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/bg_lightset">
+            <ListView
+                android:id="@+id/lv_student"
+                android:layout_width="match_parent"
+                android:layout_height="450dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginTop="50dp"
+                android:background="@color/grey"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginTop="500dp"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <Button
+                    android:id="@+id/btn_save"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:background="@drawable/bg_result_save"
+                    />
+                <Button
+                    android:id="@+id/btn_select"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:layout_marginLeft="50dp"
+                    android:background="@drawable/bg_result_select"/>
+                <Button
+                    android:id="@+id/btn_delete"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:layout_marginLeft="50dp"
+                    android:background="@drawable/bg_result_empty"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="450dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="150dp"
+
+            android:background="@drawable/bg_img_save_result"
+            android:id="@+id/relativeLayout">
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_close_save"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginLeft="110dp"
+
+            android:background="@drawable/btn_close_set"
+            android:layout_alignBottom="@+id/relativeLayout"
+            android:layout_toRightOf="@+id/relativeLayout"
+            android:layout_toEndOf="@+id/relativeLayout">
+
+        </Button>
+    </RelativeLayout>
+
+</LinearLayout>
+

@@ -1,11 +1,14 @@
 package com.oucb303.training.activity;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -35,6 +38,8 @@ import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.threads.Timer;
 import com.oucb303.training.utils.Constant;
 import com.oucb303.training.utils.DataAnalyzeUtils;
+import com.oucb303.training.utils.DialogUtils;
+import com.oucb303.training.utils.OperateUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -59,18 +64,18 @@ public class SitUpsActivity extends AppCompatActivity {
     SeekBar barTrainingTime;
     @Bind(R.id.img_training_time_add)
     ImageView imgTrainingTimeAdd;
-    @Bind(R.id.img_action_mode_touch)
-    ImageView imgActionModeTouch;
-    @Bind(R.id.img_action_mode_light)
-    ImageView imgActionModeLight;
-    @Bind(R.id.img_action_mode_together)
-    ImageView imgActionModeTogether;
-    @Bind(R.id.img_light_mode_center)
-    ImageView imgLightModeCenter;
-    @Bind(R.id.img_light_mode_all)
-    ImageView imgLightModeAll;
-    @Bind(R.id.img_light_mode_beside)
-    ImageView imgLightModeBeside;
+//    @Bind(R.id.img_action_mode_touch)
+//    ImageView imgActionModeTouch;
+//    @Bind(R.id.img_action_mode_light)
+//    ImageView imgActionModeLight;
+//    @Bind(R.id.img_action_mode_together)
+//    ImageView imgActionModeTogether;
+//    @Bind(R.id.img_light_mode_center)
+//    ImageView imgLightModeCenter;
+//    @Bind(R.id.img_light_mode_all)
+//    ImageView imgLightModeAll;
+//    @Bind(R.id.img_light_mode_beside)
+//    ImageView imgLightModeBeside;
     @Bind(R.id.tv_total_time)
     TextView tvTotalTime;
     @Bind(R.id.btn_begin)
@@ -79,51 +84,51 @@ public class SitUpsActivity extends AppCompatActivity {
     Spinner spGroupNum;
     @Bind(R.id.lv_group)
     ListView lvGroup;
-    @Bind(R.id.sv_container)
-    ScrollView svContainer;
+//    @Bind(R.id.sv_container)
+//    ScrollView svContainer;
     @Bind(R.id.lv_times)
     ListView lvTimes;
-    @Bind(R.id.img_light_color_blue)
-    ImageView imgLightColorBlue;
-    @Bind(R.id.img_light_color_red)
-    ImageView imgLightColorRed;
-    @Bind(R.id.img_light_color_blue_red)
-    ImageView imgLightColorBlueRed;
-    @Bind(R.id.cb_voice)
+//    @Bind(R.id.img_light_color_blue)
+//    ImageView imgLightColorBlue;
+//    @Bind(R.id.img_light_color_red)
+//    ImageView imgLightColorRed;
+//    @Bind(R.id.img_light_color_blue_red)
+//    ImageView imgLightColorBlueRed;
+//    @Bind(R.id.cb_voice)
     android.widget.CheckBox cbVoice;
+    @Bind(R.id.img_set)
+    ImageView imgSet;
     @Bind(R.id.img_help)
     ImageView imgHelp;
-    @Bind(R.id.img_save)
-    ImageView imgSave;
     @Bind(R.id.btn_on)
     Button btnOn;
     @Bind(R.id.btn_off)
     Button btnOff;
     @Bind(R.id.layout_cancel)
     LinearLayout layoutCancel;
-    @Bind(R.id.lightMode_checkBox)
-    LinearLayout lightModecheckBox;
-    @Bind(R.id.img_level_sub)
-    ImageView imgLevelsub;
-    @Bind(R.id.img_level_add)
-    ImageView imgLevelAdd;
-    @Bind(R.id.bar_level)
-    SeekBar barLevel;
-    @Bind(R.id.tv_level)
-    TextView tvLevel;
-    @Bind(R.id.ll_level)
-    LinearLayout lLevel;
+//    @Bind(R.id.lightMode_checkBox)
+//    LinearLayout lightModecheckBox;
+//    @Bind(R.id.img_level_sub)
+//    ImageView imgLevelsub;
+//    @Bind(R.id.img_level_add)
+//    ImageView imgLevelAdd;
+//    @Bind(R.id.bar_level)
+//    SeekBar barLevel;
+//    @Bind(R.id.tv_level)
+//    TextView tvLevel;
+//    @Bind(R.id.ll_level)
+//    LinearLayout lLevel;
 
-    @Bind(R.id.blinkMode_checkBox)
-    LinearLayout blinkModecheckBox;
-    @Bind(R.id.ll_params)
-    LinearLayout llParams;
-    @Bind(R.id.img_blink_mode_none)
-    ImageView imgBlinkModeNone;
-    @Bind(R.id.img_blink_mode_slow)
-    ImageView imgBlinkModeSlow;
-    @Bind(R.id.img_blink_mode_fast)
-    ImageView imgBlinkModeFast;
+//    @Bind(R.id.blinkMode_checkBox)
+//    LinearLayout blinkModecheckBox;
+//    @Bind(R.id.ll_params)
+//    LinearLayout llParams;
+//    @Bind(R.id.img_blink_mode_none)
+//    ImageView imgBlinkModeNone;
+//    @Bind(R.id.img_blink_mode_slow)
+//    ImageView imgBlinkModeSlow;
+//    @Bind(R.id.img_blink_mode_fast)
+//    ImageView imgBlinkModeFast;
 
     private Device device;
     private CheckBox actionModeCheckBox, lightModeCheckBox, lightColorCheckBox, blinkModeCheckBox;
@@ -147,7 +152,7 @@ public class SitUpsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sit_ups);
+        setContentView(R.layout.activity_situps);
         ButterKnife.bind(this);
         level = getIntent().getIntExtra("level", 1);
         initView();
@@ -171,7 +176,7 @@ public class SitUpsActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case Timer.TIMER_FLAG:
-                    tvTotalTime.setText(msg.obj.toString());
+                    tvTotalTime.setText("训练总时间："+msg.obj.toString());
                     if (timer.time >= trainingTime) {
                         stopTraining();
                         return;
@@ -193,30 +198,30 @@ public class SitUpsActivity extends AppCompatActivity {
     private void initView() {
         if (level == 4) {
             tvTitle.setText("交替活动");
-            lightModecheckBox.setVisibility(View.GONE);
-            lLevel.setVisibility(View.GONE);
+//            lightModecheckBox.setVisibility(View.GONE);
+//            lLevel.setVisibility(View.GONE);
         } else{
             tvTitle.setText("仰卧起坐训练");
-            lLevel.setVisibility(View.VISIBLE);
+//            lLevel.setVisibility(View.VISIBLE);
         }
 
         imgHelp.setVisibility(View.VISIBLE);
-        imgSave.setVisibility(View.VISIBLE);
+//        imgSave.setVisibility(View.VISIBLE);
         ///初始化分组listView
         groupListViewAdapter = new GroupListViewAdapter(SitUpsActivity.this, groupSize);
         lvGroup.setAdapter(groupListViewAdapter);
         //解决listView 与scrollView的滑动冲突
-        lvGroup.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                //从listView 抬起时将控制权还给scrollview
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP)
-                    svContainer.requestDisallowInterceptTouchEvent(false);
-                else
-                    svContainer.requestDisallowInterceptTouchEvent(true);
-                return false;
-            }
-        });
+//        lvGroup.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                //从listView 抬起时将控制权还给scrollview
+//                if (motionEvent.getAction() == MotionEvent.ACTION_UP)
+//                    svContainer.requestDisallowInterceptTouchEvent(false);
+//                else
+//                    svContainer.requestDisallowInterceptTouchEvent(true);
+//                return false;
+//            }
+//        });
 
         //设备排序
         Collections.sort(Device.DEVICE_LIST, new PowerInfoComparetor());
@@ -236,9 +241,9 @@ public class SitUpsActivity extends AppCompatActivity {
             }
         });
         //初始化训练强度拖动条
-        barLevel.setOnSeekBarChangeListener(new MySeekBarListener(barTrainingTime,tvLevel, 2));
-        imgLevelsub.setOnTouchListener(new AddOrSubBtnClickListener(barLevel, 0));
-        imgLevelAdd.setOnTouchListener(new AddOrSubBtnClickListener(barLevel, 1));
+//        barLevel.setOnSeekBarChangeListener(new MySeekBarListener(barTrainingTime,tvLevel, 2));
+//        imgLevelsub.setOnTouchListener(new AddOrSubBtnClickListener(barLevel, 0));
+//        imgLevelAdd.setOnTouchListener(new AddOrSubBtnClickListener(barLevel, 1));
         //训练时间拖动条初始化
         barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 10));
         imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
@@ -257,23 +262,6 @@ public class SitUpsActivity extends AppCompatActivity {
         Log.d(Constant.LOG_TAG, level + "ddd");
         barTrainingTime.setProgress(level);
 
-        //设定感应模式checkBox组合的点击事件
-        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
-        actionModeCheckBox = new CheckBox(1, views);
-        new CheckBoxClickListener(actionModeCheckBox);
-        //设定灯光模式checkBox组合的点击事件
-        ImageView[] views1 = new ImageView[]{imgLightModeBeside, imgLightModeCenter, imgLightModeAll,};
-        lightModeCheckBox = new CheckBox(1, views1);
-        new CheckBoxClickListener(lightModeCheckBox);
-        //设定灯光颜色checkBox组合的点击事件
-        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
-        lightColorCheckBox = new CheckBox(1, views2);
-        new CheckBoxClickListener(lightColorCheckBox);
-        //设定闪烁模式checkbox组合的点击事件
-        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast};
-        blinkModeCheckBox = new CheckBox(1, views3);
-        new CheckBoxClickListener(blinkModeCheckBox);
-
         //初始化右侧listview
         sitUpsTimeListAdapter = new SitUpsTimeListAdapter(this);
         lvTimes.setAdapter(sitUpsTimeListAdapter);
@@ -282,12 +270,17 @@ public class SitUpsActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        imgSave.setEnabled(false);
+//        imgSave.setEnabled(false);
     }
 
-    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help, R.id.btn_on, R.id.btn_off, R.id.img_save})
+    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.btn_stop,R.id.img_help, R.id.btn_on, R.id.btn_off, R.id.img_save_new,R.id.img_set})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.img_set:
+                Dialog dialog = createLightSetDialog();
+                OperateUtils.setScreenWidth(this, dialog, 0.95, 0.7);
+                dialog.show();
+                break;
             case R.id.layout_cancel:
                 this.finish();
                 device.turnOffAllTheLight();
@@ -304,10 +297,13 @@ public class SitUpsActivity extends AppCompatActivity {
                 else
                     startTraining();
                 break;
+            case R.id.btn_stop:
+                stopTraining();
+                break;
             case R.id.img_help:
-                Intent intent = new Intent(this, HelpActivity.class);
-                intent.putExtra("flag", 3);
-                startActivity(intent);
+                Dialog dialog_help = DialogUtils.createHelpDialog(SitUpsActivity.this);
+                OperateUtils.setScreenWidth(this, dialog_help, 0.95, 0.7);
+                dialog_help.show();
                 break;
             case R.id.btn_on:
                 //groupNum组数，groupSize：每组设备个数，1：类型
@@ -316,29 +312,31 @@ public class SitUpsActivity extends AppCompatActivity {
             case R.id.btn_off:
                 device.turnOffAllTheLight();
                 break;
-            case R.id.img_save:
-                Intent it = new Intent(this, SaveActivity.class);
-                Bundle bundle = new Bundle();
-                //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐、交替活动 ...
-                if (level == 4) {
-                    bundle.putString("trainingName", "交替活动");
-                } else {
-                    bundle.putString("trainingName", "仰卧起坐");
-                }
-                bundle.putString("trainingCategory", "3");
-                //训练总时间
-                bundle.putInt("trainingTime", trainingTime);
-                //次数
-                bundle.putIntArray("scores", scores);
-                it.putExtras(bundle);
-                startActivity(it);
+            case R.id.img_save_new:
+                Dialog dialog_save = DialogUtils.createSaveDialog(SitUpsActivity.this);
+                OperateUtils.setScreenWidth(this, dialog_save, 0.95, 0.6);
+                dialog_save.show();
+//                Intent it = new Intent(this, SaveActivity.class);
+//                Bundle bundle = new Bundle();
+//                //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐、交替活动 ...
+//                if (level == 4) {
+//                    bundle.putString("trainingName", "交替活动");
+//                } else {
+//                    bundle.putString("trainingName", "仰卧起坐");
+//                }
+//                bundle.putString("trainingCategory", "3");
+//                //训练总时间
+//                bundle.putInt("trainingTime", trainingTime);
+//                //次数
+//                bundle.putIntArray("scores", scores);
+//                it.putExtras(bundle);
+//                startActivity(it);
                 break;
         }
     }
 
     private void startTraining() {
-        btnBegin.setText("停止");
-        imgSave.setEnabled(true);
+//        imgSave.setEnabled(true);
         isTraining = true;
         scores = new int[groupNum];
         sitUpsTimeListAdapter.setScores(scores);
@@ -363,7 +361,6 @@ public class SitUpsActivity extends AppCompatActivity {
 
     private void stopTraining() {
         isTraining = false;
-        btnBegin.setText("开始");
         //结束时间线程
         timer.stopTimer();
         device.turnOffAllTheLight();
@@ -404,7 +401,7 @@ public class SitUpsActivity extends AppCompatActivity {
 
     public void sendOrder(char deviceNum) {
         device.sendOrder(deviceNum, Order.LightColor.values()[lightColorCheckBox.getCheckId()],
-                Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
+                Order.VoiceMode.values()[cbVoice.isChecked()?1:0],
                 Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
                 Order.LightModel.OUTER,
                 Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
@@ -421,5 +418,50 @@ public class SitUpsActivity extends AppCompatActivity {
             }
         }
         return position / groupSize;
+    }
+    public  Dialog createLightSetDialog(){
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View v = inflater.inflate(R.layout.layout_dialog_lightset, null);// 得到加载view
+        LinearLayout layout = (LinearLayout) v.findViewById(R.id.dialog_light_set);
+        ImageView imgActionModeTouch = (ImageView) layout.findViewById(R.id.img_action_mode_touch);
+        ImageView imgActionModeLight = (ImageView)layout.findViewById(R.id.img_action_mode_light);
+        ImageView imgActionModeTogether = (ImageView) layout.findViewById(R.id.img_action_mode_together);
+        ImageView imgLightColorBlue = (ImageView) layout.findViewById(R.id.img_light_color_blue);
+        ImageView imgLightColorRed = (ImageView) layout.findViewById(R.id.img_light_color_red);
+        ImageView imgLightColorBlueRed = (ImageView) layout.findViewById(R.id.img_light_color_blue_red);
+        ImageView imgBlinkModeNone = (ImageView) layout.findViewById(R.id.img_blink_mode_none);
+        ImageView imgBlinkModeSlow = (ImageView) layout.findViewById(R.id.img_blink_mode_slow);
+        ImageView imgBlinkModeFast = (ImageView) layout.findViewById(R.id.img_blink_mode_fast);
+        cbVoice = (android.widget.CheckBox)layout.findViewById(R.id.cb_voice);
+        Button btnOk = (Button)layout.findViewById(R.id.btn_ok);
+        Button btnCloseSet = (Button)layout.findViewById(R.id.btn_close_set);
+        final Dialog dialog = new Dialog(this,R.style.dialog_rank);
+        dialog.setContentView(layout);
+        //设定感应模式checkBox组合的点击事件
+        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
+        actionModeCheckBox = new CheckBox(1, views);
+        new CheckBoxClickListener(actionModeCheckBox);
+        //设定灯光颜色checkBox组合的点击事件
+        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
+        lightColorCheckBox = new CheckBox(1, views2);
+        new CheckBoxClickListener(lightColorCheckBox);
+        //设定闪烁模式checkbox组合的点击事件
+        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast};
+        blinkModeCheckBox = new CheckBox(1, views3);
+        new CheckBoxClickListener(blinkModeCheckBox);
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        btnCloseSet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        return dialog;
     }
 }
