@@ -194,7 +194,7 @@ public class RandomTrainingActivity extends Activity {
     private int totalNum;
     private char lastTurnOnLight;
     private long endTime, allTime;
-    private int level;
+    private int level =1;
 
 
 
@@ -289,7 +289,7 @@ public class RandomTrainingActivity extends Activity {
     }
 
     public void initView() {
-        tvTitle.setText("随机训练");
+        tvTitle.setText("换物跑");
         imgHelp.setVisibility(View.VISIBLE);
         imgSave.setVisibility(View.VISIBLE);
         timeAdapter = new RandomTimeAdapter(this, timeList);
@@ -311,7 +311,7 @@ public class RandomTrainingActivity extends Activity {
             imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
             imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
         }
-        if (level != 0) {
+        if (level == 0) {
             tvTitle.setText("换物跑");
             lLevel.setVisibility(View.VISIBLE);
             //初始化训练强度拖动条

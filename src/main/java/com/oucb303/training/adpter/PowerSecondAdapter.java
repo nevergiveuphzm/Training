@@ -105,12 +105,12 @@ public class PowerSecondAdapter extends BaseAdapter {
 //                imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim100);
 //                break;
 //        }
-        if (info.getPower() == 0){
-            imgPower.setImageResource(R.drawable.stat_power_empyt);
-            tvDeviceNum.setTextColor(Color.argb(200, 105, 105, 105));
-        }else {
-            imgPower.setImageResource(R.drawable.stat_power_full);
-        }
+//        if (info.getPower() == 0){
+//            imgPower.setImageResource(R.drawable.stat_power_empyt);
+//            tvDeviceNum.setTextColor(Color.argb(200, 105, 105, 105));
+//        }else {
+//            imgPower.setImageResource(R.drawable.stat_power_full);
+//        }
         return view1;
     }
 }

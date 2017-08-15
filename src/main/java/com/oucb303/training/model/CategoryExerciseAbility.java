@@ -28,6 +28,8 @@ public class CategoryExerciseAbility implements Category
             {R.string.navigation_climbing_item0, R.string.navigation_climbing_item1, R.string.navigation_climbing_item2},
             {R.string.navigation_rhythm_item0}
     };
+
+
     String[][] targetString = {{"ShuttleRunActivity1.class","LargeRecessActivity.class","RandomTrainingActivity.class","",""},
             {"JumpHighActivity.class",""},
             {""},

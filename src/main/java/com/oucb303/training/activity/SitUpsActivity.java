@@ -141,7 +141,7 @@ public class SitUpsActivity extends AppCompatActivity {
     //训练成绩
     private int[] scores;
 
-    private int level=2;
+    private int type;
 
 
     @Override
@@ -149,7 +149,7 @@ public class SitUpsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sit_ups);
         ButterKnife.bind(this);
-        level = getIntent().getIntExtra("level", 1);
+        type = getIntent().getIntExtra("type", 1);//当获取不到值的时候是type= 1
         initView();
         device = new Device(this);
         device.createDeviceList(this);
@@ -191,7 +191,7 @@ public class SitUpsActivity extends AppCompatActivity {
 
 
     private void initView() {
-        if (level == 4) {
+        if (type == 0) {
             tvTitle.setText("交替活动");
             lightModecheckBox.setVisibility(View.GONE);
             lLevel.setVisibility(View.GONE);
@@ -254,8 +254,8 @@ public class SitUpsActivity extends AppCompatActivity {
 //                level = 10;
 //                break;
 //        }
-        Log.d(Constant.LOG_TAG, level + "ddd");
-        barTrainingTime.setProgress(level);
+//        Log.d(Constant.LOG_TAG, level + "ddd");
+//        barTrainingTime.setProgress(level);
 
         //设定感应模式checkBox组合的点击事件
         ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
@@ -320,7 +320,7 @@ public class SitUpsActivity extends AppCompatActivity {
                 Intent it = new Intent(this, SaveActivity.class);
                 Bundle bundle = new Bundle();
                 //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐、交替活动 ...
-                if (level == 4) {
+                if (type == 0) {
                     bundle.putString("trainingName", "交替活动");
                 } else {
                     bundle.putString("trainingName", "仰卧起坐");

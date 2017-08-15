@@ -428,7 +428,7 @@ public class JumpHighActivity extends AppCompatActivity {
         for (int i = 0; i < groupNum * groupSize; i++) {
             int color = lightColorCheckBox.getCheckId();
             device.sendOrder(Device.DEVICE_LIST.get(i).getDeviceNum(),
-                    Order.LightColor.values()[color == 3 ? 1 : color],
+                    Order.LightColor.values()[color],
                     Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
                     Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
                     Order.LightModel.OUTER,

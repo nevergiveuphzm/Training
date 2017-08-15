@@ -2,6 +2,7 @@ package com.oucb303.training;
 
 import android.app.Application;
 
+import com.oucb303.training.device.Device;
 import com.oucb303.training.entity.DaoMaster;
 import com.oucb303.training.entity.DaoSession;
 
@@ -25,7 +26,7 @@ public class App extends Application
     public void onCreate()
     {
         super.onCreate();
-
+        Device.CONTEXT = getApplicationContext();
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, ENCRYPTED ?
                 "training-db-encrypted.db" : "training-db.db");
         Database db = ENCRYPTED ? helper.getEncryptedWritableDb("super-secret") : helper.getWritableDb();

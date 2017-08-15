@@ -225,6 +225,15 @@ public class GroupResistActivity extends AppCompatActivity {
         imgSave.setEnabled(false);
         imgSave.setVisibility(View.VISIBLE);
     }
+    @Override
+    public void onBackPressed() {
+        if (trainningFlag) {
+            Toast.makeText(GroupResistActivity.this, "请先停止训练后再退出!", Toast
+                    .LENGTH_SHORT).show();
+            return;
+        }
+        super.onBackPressed();
+    }
 
     @Override
     protected void onDestroy() {
@@ -354,6 +363,11 @@ public class GroupResistActivity extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_cancel:
+                if (trainningFlag) {
+                    Toast.makeText(GroupResistActivity.this, "请先停止训练后再退出!", Toast
+                            .LENGTH_SHORT).show();
+                    return;
+                }
                 this.finish();
                 device.turnOffAllTheLight();
                 break;

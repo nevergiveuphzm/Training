@@ -28,8 +28,7 @@
             android:layout_width="26dp"
             android:layout_height="15dp"
             android:layout_marginTop="4.5dp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/stat_power_empyt"/>
+            android:layout_gravity="center_vertical" />
 
         <View
             android:layout_width="30dp"

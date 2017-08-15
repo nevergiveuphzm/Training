@@ -21,6 +21,7 @@ public class Device
 {
     //设备灯列表
     public static List<DeviceInfo> DEVICE_LIST = new ArrayList<>();
+    public static Context CONTEXT;
 
     public static int BLOCK_TIME = 20;
 
@@ -255,9 +256,13 @@ public class Device
     private synchronized void sendMessage(String data)
     {
         Timer.sleep(BLOCK_TIME);
-        Log.d(Constant.LOG_TAG, "send message:" + data);
-        if (ftDev == null)
+
+        if (ftDev==null)
+        {
+            Toast.makeText(CONTEXT,"协调器松动，请检查",Toast.LENGTH_SHORT).show();
             return;
+        }
+        Log.d(Constant.LOG_TAG, "send message:" + data);
 
         if (ftDev.isOpen() == false)
         {

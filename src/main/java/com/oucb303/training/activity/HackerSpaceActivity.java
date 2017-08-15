@@ -1,5 +1,6 @@
 package com.oucb303.training.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -45,14 +46,19 @@ public class HackerSpaceActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onClick(View v) {
+        Intent intent = new Intent();
         switch (v.getId()){
             case R.id.iv_create:
                 Toast.makeText(HackerSpaceActivity.this, "创作课程", Toast.LENGTH_SHORT)
                         .show();
+                intent.setClass(HackerSpaceActivity.this,SequenceTrainingActivity.class);
+                startActivity(intent);
                 break;
             case R.id.iv_div:
                 Toast.makeText(HackerSpaceActivity.this, "DIY课程", Toast.LENGTH_SHORT)
                         .show();
+                intent.setClass(HackerSpaceActivity.this,SequenceChooseActivity.class);
+                startActivity(intent);
                 break;
             case R.id.layout_cancel:
                 finish();

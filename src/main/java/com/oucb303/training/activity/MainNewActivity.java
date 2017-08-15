@@ -77,6 +77,8 @@ public class MainNewActivity extends AppCompatActivity {
     Button btnHackerSpace1;
     @Bind(R.id.btn_setting_1)
     Button btnSetting1;
+    @Bind(R.id.btn_test)
+    Button btnTest;
 
 
     private Device device;
@@ -91,7 +93,7 @@ public class MainNewActivity extends AppCompatActivity {
 
     //设备灯列表
     List<DeviceInfo> currentListA = new ArrayList<>();
-    char[] deviceNumA = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H','I', 'J', 'K', 'L', 'M', 'N', 'O', 'P'};
+    char[] deviceNumA = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P'};
 
     Handler handler = new Handler() {
         @Override
@@ -134,6 +136,8 @@ public class MainNewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_new);
         ButterKnife.bind(this);
+        View v = findViewById(R.id.btn_test);//找到你要设透明背景的layout 的id
+        v.getBackground().setAlpha(100);//0~255透明度值
         device = new Device(this);
         //注册USB插入和拔出广播接收者
         IntentFilter filter = new IntentFilter();
@@ -151,10 +155,10 @@ public class MainNewActivity extends AppCompatActivity {
             currentListA.add(dev);
         }
 
-        num = ConfigParamUtils.getDefaultDeviceNum(MainNewActivity.this);
-            powerAdapter = new PowerAdapter(this,num);
-            powerAdapter.setCurrentList(currentListA);
-            gvItemName.setAdapter(powerAdapter);
+        num = ConfigParamUtils.getDefaultDeviceNum(MainNewActivity.this);//获取默认设备个数
+        powerAdapter = new PowerAdapter(this, num);
+        powerAdapter.setCurrentList(currentListA);
+        gvItemName.setAdapter(powerAdapter);
 
         VersionUtils.getAppVersion(this);//获取apk版本
     }
@@ -274,7 +278,7 @@ public class MainNewActivity extends AppCompatActivity {
 //        }).start();
     }
 
-    @OnClick({R.id.btn_kinetism, R.id.btn_technique, R.id.btn_combined_train, R.id.btn_hacker_space, R.id.btn_setting, R.id.btn_app_tools,
+    @OnClick({R.id.btn_kinetism, R.id.btn_technique, R.id.btn_combined_train, R.id.btn_hacker_space, R.id.btn_setting, R.id.btn_app_tools,R.id.btn_test,
             R.id.btn_kinetism_1, R.id.btn_technique_1, R.id.btn_combined_train_1, R.id.btn_app_tools_1, R.id.btn_hacker_space_1, R.id.btn_setting_1})
     public void onClick(View view) {
         Intent intent;
@@ -317,6 +321,13 @@ public class MainNewActivity extends AppCompatActivity {
                 intent.setClass(MainNewActivity.this, SettingActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.btn_test:
+                View v = findViewById(R.id.btn_test);//找到你要设透明背景的layout 的id
+                v.getBackground().setAlpha(200);//0~255透明度值
+                intent = new Intent();
+                intent.setClass(MainNewActivity.this,TestActivity.class);
+                startActivity(intent);
+                break;
         }
     }
 
@@ -332,7 +343,6 @@ public class MainNewActivity extends AppCompatActivity {
         //清空电量列表
         if (powerInfos != null && powerInfos.size() != 0) {
             Log.d(Constant.LOG_TAG, "清空列表");
-
             Device.DEVICE_LIST.clear();
             //获取电量信息
             Device.DEVICE_LIST.addAll(powerInfos);

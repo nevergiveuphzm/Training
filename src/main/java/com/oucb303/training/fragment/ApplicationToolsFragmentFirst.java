@@ -78,6 +78,7 @@ public class ApplicationToolsFragmentFirst extends Fragment implements AdapterVi
                         .show();
                 intent = new Intent();
                 intent.setClass(getActivity(), SitUpsActivity.class);
+                intent.putExtra("type",0);
                 startActivity(intent);
                 break;
             case 1:

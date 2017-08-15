@@ -219,7 +219,7 @@ public class DribblingGameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dribbling_game);
         ButterKnife.bind(this);
-        level = getIntent().getIntExtra("level", 0);
+        level = getIntent().getIntExtra("level", 0);//当获取不到值的时候，就是默认为0
         device = new Device(this);
         //更新设备连接列表
         device.createDeviceList(this);
@@ -240,6 +240,15 @@ public class DribblingGameActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        if (trainningFlag) {
+            Toast.makeText(this, "请先停止训练后再退出！", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         device.turnOffAllTheLight();
@@ -251,11 +260,10 @@ public class DribblingGameActivity extends AppCompatActivity {
     public void initView() {
         imgSave.setVisibility(View.VISIBLE);
         imgHelp.setVisibility(View.VISIBLE);
-        if (level == 0){
+        if (level == 1){
             lLevel.setVisibility(View.GONE);
             tvTitle.setText("多人混战");
         } else{
-
             tvTitle.setText("运球比赛");
             lLevel.setVisibility(View.VISIBLE);
         }
@@ -372,6 +380,10 @@ public class DribblingGameActivity extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_cancel:
+                if (trainningFlag) {
+                    Toast.makeText(this, "请先停止训练后再退出！", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 this.finish();
                 device.turnOffAllTheLight();
                 break;
@@ -484,7 +496,6 @@ public class DribblingGameActivity extends AppCompatActivity {
         trainningFlag = false;
         for (int i = 0; i < groupNum; i++)
             turnOffLight(Device.DEVICE_LIST.get(listRand.get(i)).getDeviceNum());
-
         ReceiveThread.stopThread();
         Timer.sleep(100);
         endingMovie();

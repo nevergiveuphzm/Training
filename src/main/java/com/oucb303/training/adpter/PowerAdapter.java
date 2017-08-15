@@ -77,27 +77,41 @@ public class PowerAdapter extends BaseAdapter
         switch (info.getPower())
         {
             case -1:
-                imgPower.setImageResource(R.drawable.stat_power_empyt);
+                imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim0);
                 tvDeviceNum.setTextColor(Color.argb(200, 105, 105, 105));
                 break;
             case 0:
+                imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim8);
+                break;
             case 1:
+                imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim15);
+                break;
             case 2:
+                imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim25);
+                break;
             case 3:
-                imgPower.setImageResource(R.drawable.stat_power_01);
+                imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim35);
                 break;
             case 4:
+                imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim45);
+                break;
             case 5:
+                imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim55);
+                break;
             case 6:
-                imgPower.setImageResource(R.drawable.stat_power_03);
+                imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim65);
                 break;
             case 7:
+                imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim75);
+                break;
             case 8:
+                imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim85);
+                break;
             case 9:
-                imgPower.setImageResource(R.drawable.stat_power_04);
+                imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim95);
                 break;
             case 10:
-                imgPower.setImageResource(R.drawable.stat_power_full);
+                imgPower.setImageResource(R.drawable.stat_sys_battery_charge_anim100);
                 break;
         }
         return view1;

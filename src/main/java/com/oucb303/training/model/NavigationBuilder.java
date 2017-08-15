@@ -120,55 +120,8 @@ public class NavigationBuilder implements View.OnClickListener, AdapterView.OnIt
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
     {
-//        if (type == 0){
-            switch (selectedCategory){
-                case 0:
-                    target(selectedCategory,i,type);
-                    break;
-                case 1:
-                    target(selectedCategory,i,type);
-                    break;
-                case 2:
-                    target(selectedCategory,i,type);
-                    break;
-                case 3:
-                    target(selectedCategory,i,type);
-                    break;
-                case 4:
-                    target(selectedCategory,i,type);
-                    break;
-                case 5:
-                    target(selectedCategory,i,type);
-                    break;
-                default:
-                    break;
-            }
-//        }
-//        else {
-//            switch (selectedCategory){
-//                case 0:
-//                    target(selectedCategory,i);
-//                    break;
-//                case 1:
-//                    target(selectedCategory,i);
-//                    break;
-//                case 2:
-//                    target(selectedCategory,i);
-//                    break;
-//                case 3:
-//                    target(selectedCategory,i);
-//                    break;
-//                case 4:
-//                    target(selectedCategory,i);
-//                    break;
-//                case 5:
-//                    target(selectedCategory,i);
-//                    break;
-//                default:
-//                    break;
-//            }
-//        }
-
+//
+            target(selectedCategory,i,type);
     }
     public void target(int position1,int position2,int type){
         Intent intent = new Intent();
