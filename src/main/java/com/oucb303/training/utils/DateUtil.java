@@ -20,6 +20,11 @@ public class DateUtil
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
 		return simpleDateFormat.format(date);
 	}
+	public static String getTimeIntToHms(int dateTime){
+		Date d = new Date(dateTime);
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+		return sdf.format(d);
+	}
 
 	public static Date stringToDate(String dateString)
 	{

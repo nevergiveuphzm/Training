@@ -49,24 +49,24 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="80dp"
+                    android:layout_marginLeft="55dp"
                     android:layout_marginTop="2dp"
                     android:text="训练时间:"
                     android:textColor="@color/white"
                     android:textSize="25sp" />
                 <TextView
                     android:id="@+id/tv_training_time"
-                    android:layout_width="40dp"
+                    android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="200dp"
                     android:layout_marginTop="2dp"
-                    android:text="0"
+                    android:text="1"
                     android:textColor="@color/white"
                     android:textSize="25sp" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="240dp"
+                    android:layout_marginLeft="245dp"
                     android:layout_marginTop="2dp"
                     android:text="分钟"
                     android:textColor="@color/white"
@@ -161,14 +161,14 @@
                         android:id="@+id/btn_on"
                         android:layout_width="80dp"
                         android:layout_height="50dp"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginLeft="10dp"
                         android:background="@drawable/img_openlight" />
 
                     <Button
                         android:id="@+id/btn_off"
                         android:layout_width="80dp"
                         android:layout_height="50dp"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginLeft="10dp"
                         android:background="@drawable/img_closelight" />
                 </LinearLayout>
 
@@ -235,7 +235,7 @@
                         android:id="@+id/tv_total_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="训练总时间:00:00:00"
+                        android:text="倒计时:00:00:00"
                         android:textSize="25sp" />
                 </LinearLayout>
             <LinearLayout
