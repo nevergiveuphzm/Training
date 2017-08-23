@@ -68,4 +68,6 @@
     <string name="technique_football_item0">运球与射门</string>
     <!--排类-->
     <string name="technique_volleyball_item0">拦网练习</string>
+    <!--保存中输入框hint内容-->
+    <string name="save_hint">   请输入学生编号</string>
 </resources>

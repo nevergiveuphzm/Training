@@ -45,4 +45,18 @@ public class OperateUtils {
 
     }
 
+    //设置占屏比
+    public static void setScreenWidth1(Activity activity,Activity newActivity,double height,double width) {
+
+        WindowManager m = activity.getWindowManager();
+        Display d = m.getDefaultDisplay(); // 为获取屏幕宽、高
+        android.view.WindowManager.LayoutParams p = newActivity.getWindow()
+                .getAttributes(); // 获取对话框当前的参数值
+
+        p.height = (int) (d.getHeight() * height); // 高度设置为屏幕的0.3
+        p.width = (int) (d.getWidth() * width); // 宽度设置为屏幕的0.5
+
+        newActivity.getWindow().setAttributes(p); // 设置生效
+    }
+
 }

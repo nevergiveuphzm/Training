@@ -120,7 +120,6 @@ public class NavigationBuilder implements View.OnClickListener, AdapterView.OnIt
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
     {
-//
             target(selectedCategory,i,type);
     }
     public void target(int position1,int position2,int type){

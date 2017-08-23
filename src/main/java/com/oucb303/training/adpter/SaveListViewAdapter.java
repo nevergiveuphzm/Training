@@ -50,11 +50,20 @@ public class SaveListViewAdapter extends BaseAdapter{
             holder.tv_groupNum = (TextView) view.findViewById(R.id.tv_groupNum);
             holder.et_studentNum = (EditText) view.findViewById(R.id.et_studentNum);
             view.setTag(holder);
-        }else {
 
+        }else {
             holder = (ViewHolder) view.getTag();
         }
-
+        final String strHint=mContext.getResources().getString(R.string.save_hint);
+        holder.et_studentNum.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (!b){
+                    ((TextView) view).setHint(strHint);
+                }else
+                    ((TextView) view).setHint("");
+            }
+        });
         holder.ref = position;
         holder.tv_groupNum.setText(mList.get(position));
         holder.et_studentNum.setText(arrTemp[position]);

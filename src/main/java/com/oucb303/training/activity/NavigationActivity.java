@@ -61,11 +61,6 @@ public class NavigationActivity extends AppCompatActivity
             NavigationBuilder categoryGroup2 = new NavigationBuilder(this, c2, gvItemName, tvCategoryName, hlvItems, llCenter,1);
             llCategory.addView(categoryGroup2.initCategory());
         }
-//        tvModuleName.setText(c1.getTitle());
-//        NavigationBuilder categoryGroup = new NavigationBuilder(this, c1, gvItemName, tvCategoryName, hlvItems, llCenter);
-
-        //动态添加布局
-//        llCategory.addView(categoryGroup.initCategory());
 
     }
 

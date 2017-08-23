@@ -21,7 +21,7 @@ public class MotorTechnique implements Category {
                             {R.string.technique_football_item0},
                             {R.string.technique_volleyball_item0}
     };
-    String[][] targetString = {{"EightSecondRunActivity.class","ShuttleRunActivity1.class",""},
+    String[][] targetString = {{"EightSecondRunActivity.class","ShuttleRunActivity1.class","DribblingGameActivity.class"},
                                 {"JumpHighActivity.class"},
                                 {""},
                                 {"DribblingGameActivity.class",""},

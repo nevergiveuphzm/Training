@@ -57,8 +57,11 @@
     <color name="font_default">#FF8B8B8B</color>
     <color name="ui_light_gray">#FFF2F2F2</color>
     <color name="ui_green">#FF16BB8E</color>
+    <color name="invisible_green">#238E23</color>
+    <color name="lime_green">#32CD32</color>
 
     <!--水平训练列表-->
     <color name="item_bg">#99cccc</color>
     <color name="item_select_bg">#33cc99</color>
+
 </resources>

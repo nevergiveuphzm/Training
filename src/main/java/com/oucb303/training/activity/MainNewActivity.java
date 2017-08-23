@@ -47,10 +47,6 @@ import butterknife.OnClick;
 public class MainNewActivity extends AppCompatActivity {
     @Bind(R.id.imageView)
     ImageView imageView;
-    //    @Bind(R.id.lv_battery)
-//    HorizontalListView lvBattery;
-//    @Bind(R.id.lv_battery_second)
-//    HorizontalListView lvBatterySecond;
     @Bind(R.id.btn_technique)
     Button btnTechnique;
     @Bind(R.id.btn_combined_train)

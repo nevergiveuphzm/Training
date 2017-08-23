@@ -5,30 +5,31 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center"
+        android:layout_width="850dp"
+        android:layout_height="80dp"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
         >
         <TextView
             android:id="@+id/tv_groupNum"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textSize="25sp"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100dp"
+            android:textSize="30sp"
+            android:textColor="@color/black"
             android:text="第一组"/>
         <EditText
             android:id="@+id/et_studentNum"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
             android:inputType="number"
             android:maxLength="11"
-            android:layout_weight="1"
             android:textSize="25sp"
-            android:hint="请输入学生编号"/>
+            android:layout_marginLeft="30dp"
+            android:hint="@string/save_hint"
+            android:gravity="center"
+            android:background="@drawable/save_input"/>
     </LinearLayout>
-
 
 
 </LinearLayout>

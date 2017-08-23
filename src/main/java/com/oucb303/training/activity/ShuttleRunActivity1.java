@@ -36,8 +36,16 @@ import com.oucb303.training.threads.Timer;
 import com.oucb303.training.utils.Constant;
 import com.oucb303.training.utils.DataAnalyzeUtils;
 
+import org.greenrobot.greendao.annotation.Entity;
+
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -125,6 +133,10 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
     private int[] completedTimes;
     //每组完成训练所用时间
     private int[] finishTimes;
+    //key : 组号 value： 时间
+    private Map<Integer,Integer> timeMap = new HashMap<Integer, Integer>();
+    //存放排序后的key值
+    private int[] keyId;
     //总的训练次数
     private int totalTrainingTimes;
     private Timer timer;
@@ -157,6 +169,8 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
                     }
                     break;
                 case UPDATE_TIMES:
+                    sortTime(timeMap);
+                    shuttleRunAdapter.setTimeMap(timeMap,keyId);
                     shuttleRunAdapter.notifyDataSetChanged();
                     break;
                 case STOP_TRAINING:
@@ -348,13 +362,22 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
         trainingBeginFlag = true;
 
         completedTimes = new int[groupNum];
+        keyId = new int[groupNum];
         for (int i = 0; i < groupNum; i++) {
             completedTimes[i] = -1;
+            keyId[i] = 0;
         }
 
         finishTimes = new int[groupNum];
+
+
+        for (int i=0;i<groupNum;i++){
+            timeMap.put(i,0);
+        }
+
         shuttleRunAdapter.setCompletedTimes(completedTimes);
         shuttleRunAdapter.setFinishTime(finishTimes);
+        shuttleRunAdapter.setTimeMap(timeMap,keyId);
         shuttleRunAdapter.notifyDataSetChanged();
 
         btnBegin.setText("停止");
@@ -426,8 +449,10 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
                     Log.d(Constant.LOG_TAG, info.getDeviceNum() + " groupId " + groupId);
                     completedTimes[groupId] += 1;
                     //该组训练结束
-                    if (completedTimes[groupId] == totalTrainingTimes)
+                    if (completedTimes[groupId] == totalTrainingTimes) {
                         finishTimes[groupId] = (int) (System.currentTimeMillis() - startTime);
+                        timeMap.put(groupId,finishTimes[groupId]);
+                    }
                     else
                         turnOnLight(info.getDeviceNum());
                 }
@@ -465,5 +490,22 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
             if (completedTimes[i] < totalTrainingTimes)
                 return false;
         return true;
+    }
+    public void sortTime(Map<Integer,Integer> timeMap){
+        List<Map.Entry<Integer,Integer>> list = new ArrayList<Map.Entry<Integer,Integer>>(timeMap.entrySet());
+        Collections.sort(list,new Comparator<Map.Entry<Integer,Integer>>() {
+            //升序排序
+            public int compare(Map.Entry<Integer,Integer> o1,
+                               Map.Entry<Integer,Integer> o2) {
+                return o1.getValue().compareTo(o2.getValue());
+            }
+        });
+        int i=0;
+        for(Map.Entry<Integer,Integer> mapping:list){
+            Log.i("============",""+mapping.getKey()+":"+mapping.getValue());
+//            System.out.println(mapping.getKey()+":"+mapping.getValue());
+            keyId[i]=mapping.getKey();
+            i++;
+        }
     }
 }

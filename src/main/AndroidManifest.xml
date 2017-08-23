@@ -70,12 +70,14 @@
             android:windowSoftInputMode="stateUnchanged|adjustPan"/>
         <activity android:name=".activity.TrainingListActivity"/>
         <activity android:name=".activity.ShuttleRunActivity"/>
+
         <activity android:name=".activity.ShuttleRunActivity1">
             <intent-filter>
                 <action android:name="ShuttleRunActivity1.class"/>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity android:name=".activity.LargeRecessActivity">
             <intent-filter>
                 <action android:name="LargeRecessActivity.class"/>
@@ -134,9 +136,12 @@
 
         <activity
             android:name=".activity.SaveActivity"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan"
 
+            android:theme="@style/SaveActivityDialogStyle">
         </activity>
+
+
         <activity android:name=".activity.TimingModuleActivity">
         </activity>
         <activity android:name=".activity.TimeKeeperActivity">

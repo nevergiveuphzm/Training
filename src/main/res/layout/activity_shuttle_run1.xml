@@ -620,7 +620,17 @@
                 android:id="@+id/lv_times"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:divider="#00000000"
+                android:dividerHeight="10dp"
+                android:layout_weight="1"
+                android:scrollbars="vertical"
+                android:scrollbarSize="7dp"
+                android:verticalScrollbarPosition="right"
+                android:scrollbarStyle="insideOverlay"
+                android:fadeScrollbars="true"
+                android:minHeight="3dp"
+                android:scrollbarThumbVertical="@drawable/listview_scrollbar_thumb"
+                android:scrollbarTrackVertical="@drawable/listview_scrollbar_track">
 
             </ListView>
 
