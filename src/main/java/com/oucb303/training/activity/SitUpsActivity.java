@@ -160,7 +160,10 @@ public class SitUpsActivity extends AppCompatActivity {
 
     private int type = 1;
 
-    private Dialog dialog_set;
+    private int level=2;
+    private Dialog set_dialog;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -189,11 +192,15 @@ public class SitUpsActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case Timer.TIMER_FLAG:
-                    tvTotalTime.setText("训练总时间：" + msg.obj.toString());
+//                    tvTotalTime.setText("训练总时间："+msg.obj.toString());
+
                     if (timer.time >= trainingTime) {
                         stopTraining();
                         return;
                     }
+                    break;
+                case Timer.TIMER_DOWN:
+                    tvTotalTime.setText("倒计时："+msg.obj.toString());
                     break;
                 case TIME_RECEIVE:
                     String data = msg.obj.toString();
@@ -205,6 +212,7 @@ public class SitUpsActivity extends AppCompatActivity {
                     sitUpsTimeListAdapter.setTimeMap(timeMap, keyId);
                     sitUpsTimeListAdapter.notifyDataSetChanged();
                     break;
+
             }
         }
     };
@@ -285,8 +293,10 @@ public class SitUpsActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
         imgSaveNew.setEnabled(false);
-        dialog_set = createLightSetDialog();
+//        imgSave.setEnabled(false);
+        set_dialog = createLightSetDialog();
     }
 
     @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.btn_stop, R.id.img_help, R.id.btn_on,
@@ -294,9 +304,9 @@ public class SitUpsActivity extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_set:
-                dialog_set = createLightSetDialog();
-                OperateUtils.setScreenWidth(this, dialog_set, 0.95, 0.7);
-                dialog_set.show();
+                set_dialog = createLightSetDialog();
+                OperateUtils.setScreenWidth(this, set_dialog, 0.95, 0.7);
+                set_dialog.show();
                 break;
             case R.id.layout_cancel:
                 this.finish();
