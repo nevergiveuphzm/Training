@@ -15,15 +15,15 @@ public class MotorTechnique implements Category {
     int[] categoryName = {R.string.technique_running,R.string.technique_jumping,R.string.technique_throwing,R.string.technique_basketball,R.string.technique_football,R.string.technique_volleyball};
     //中间具体项目
     int[][] itemText = {{R.string.technique_run_item0,R.string.technique_run_item1,R.string.technique_run_item2},
-                            {R.string.technique_jump_item0},
-                            {R.string.technique_throw_item0},
+                            {R.string.technique_jump_item0,R.string.technique_jump_item1},
+                            {R.string.technique_throw_item0,R.string.technique_throw_item1},
                             {R.string.technique_basketball_item0,R.string.technique_basketball_item1},
                             {R.string.technique_football_item0},
                             {R.string.technique_volleyball_item0}
     };
     String[][] targetString = {{"EightSecondRunActivity.class","ShuttleRunActivity1.class","DribblingGameActivity.class"},
-                                {"JumpHighActivity.class"},
-                                {""},
+                                {"JumpHighActivity.class","EnduranceActivity.class"},
+                                {"","ThrowingActivity.class"},
                                 {"DribblingGameActivity.class",""},
                                 {""},
                                 {"WireNetConfrontationActivity.class"}
@@ -32,8 +32,8 @@ public class MotorTechnique implements Category {
     int[] centerImgIds = {R.drawable.technique_run_bg,R.drawable.technique_jump_bg,R.drawable.technique_throw_bg,R.drawable.technique_basketball_bg,R.drawable.technique_football_bg,R.drawable.technique_volleyball_bg};
     //底部滚动栏图片
     int[][] itemImgIds = {{R.drawable.technique_run_item0,R.drawable.technique_run_item1,R.drawable.technique_run_item2},
-                            {R.drawable.technique_jump_item0},
-                            {R.drawable.technique_throw_item0},
+                            {R.drawable.technique_jump_item0,R.drawable.technique_jump_item0},
+                            {R.drawable.technique_throw_item0,R.drawable.technique_throw_item0},
                             {R.drawable.technique_basketball_item0,R.drawable.technique_basketball_item1},
                             {R.drawable.technique_football_item0},
                             {R.drawable.technique_volleyball_item0}

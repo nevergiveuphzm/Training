@@ -16,7 +16,7 @@ import java.text.DecimalFormat;
 public class Timer extends Thread
 {
     public final static int TIMER_FLAG = 0;
-    public final static int TIMER_DOWN = 4;
+    public final static int TIMER_DOWN = -1;
     public static void sleep(int value)
     {
         try

@@ -162,8 +162,24 @@
         </activity>
         <activity android:name=".activity.HackerSpaceActivity">
         </activity>
-
-
+        <activity android:name=".activity.EnduranceActivity">
+            <intent-filter>
+                <action android:name="EnduranceActivity.class"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.ThrowingActivity">
+            <intent-filter>
+                <action android:name="ThrowingActivity.class"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.CourbetteActivity">
+            <intent-filter>
+                <action android:name="CourbetteActivity.class"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
     </application>
 

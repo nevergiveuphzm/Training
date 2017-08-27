@@ -90,11 +90,15 @@ public class DialogUtils {
         dialog.setContentView(layout);
         return dialog;
     }
-    public static Dialog createHelpDialog(Context context){
+    public static Dialog createHelpDialog(Context context,List<Integer> list){
 
         LayoutInflater inflater = LayoutInflater.from(context);
         View v = inflater.inflate(R.layout.layout_dialog_help, null);// 得到加载view
         LinearLayout layout = (LinearLayout) v.findViewById(R.id.dialog_help);
+        TextView tvMethod = (TextView) v.findViewById(R.id.tv_method);
+        tvMethod.setText(list.get(0));
+        TextView tvStandard = (TextView) v.findViewById(R.id.tv_standard);
+        tvStandard.setText(list.get(1));
         final Dialog dialog = new Dialog(context,R.style.dialog_rank);
         dialog.setContentView(layout);
         Button btnClose = (Button)layout.findViewById(R.id.btn_close_help);

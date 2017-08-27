@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -159,7 +158,7 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
     //记录上一次第一组开的灯的编号
     private int light2 = 0;
     //每组设备灯亮起的时间
-    private Object[][] duration;
+    private int[][] duration;
     //超时线程
     private OverTimeThread overTimeThread;
     //此时超时的设备
@@ -205,7 +204,7 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
     };
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wirenetconfrontation);
         ButterKnife.bind(this);
@@ -427,7 +426,7 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
             scores[i] = 0;
         }
         //每组设备灯亮起的时间
-        duration = new Object[groupNum * everyNum][2];
+        duration = new int[groupNum * everyNum][2];
         overTimeDeviceNum = '\0';
 
         listRand1.clear();
@@ -454,7 +453,7 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
                         Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
 
                 //每组设备灯亮起的当前时间，只要亮了就将标志位置为1
-                duration[oddListRand.get(j).get(0)][0] = System.currentTimeMillis();
+                duration[oddListRand.get(j).get(0)][0] = (int)System.currentTimeMillis();
                 duration[oddListRand.get(j).get(0)][1] = 1;
 
                 //开那个灯就把这个灯给删掉
@@ -564,7 +563,7 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
                 Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                 Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
         Log.i("开的是哪个灯", "999999999999999" + Device.DEVICE_LIST.get(oddListRand.get(num).get(0)).getDeviceNum());
-        duration[oddListRand.get(num).get(0)][0] = System.currentTimeMillis();
+        duration[oddListRand.get(num).get(0)][0] = (int)System.currentTimeMillis();
         duration[oddListRand.get(num).get(0)][1] = 1;
         oddListRand.get(num).remove(0);
     }
@@ -592,7 +591,7 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
                 //如果随机list里不包含产生的这个随机数，则将产生的这个随机数加入到随机list中
                 if (!listRand1.contains(randomInt1)) {
                     listRand1.add(randomInt1);
-                    duration[randomInt1][0] = System.currentTimeMillis();
+                    duration[randomInt1][0] = (int)System.currentTimeMillis();
                     duration[randomInt1][1] = 0;
                 } else {
                     System.out.println("该数字已经被添加,不能重复添加i");
@@ -605,7 +604,7 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
                 //如果随机list里不包含产生的这个随机数，则将产生的这个随机数加入到随机list中
                 if (!listRand2.contains(randomInt2)) {
                     listRand2.add(randomInt2);
-                    duration[randomInt2][0] = System.currentTimeMillis();
+                    duration[randomInt2][0] = (int)System.currentTimeMillis();
                     duration[randomInt2][1] = 0;
                 } else {
                     System.out.println("该数字已经被添加,不能重复添加j");
@@ -628,7 +627,7 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
                 Order.LightModel.OUTER,
                 Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                 Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
-        duration[evenListRand.get(num).get(0)][0] = System.currentTimeMillis();
+        duration[evenListRand.get(num).get(0)][0] = (int)System.currentTimeMillis();
         duration[evenListRand.get(num).get(0)][1] = 1;
         Log.i("开的是哪个灯", "999999999999999" + Device.DEVICE_LIST.get(evenListRand.get(num).get(0)).getDeviceNum());
         evenListRand.get(num).remove(0);
@@ -680,7 +679,7 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
                         char deviceNum = Device.DEVICE_LIST.get(i).getDeviceNum();
                         overTimeDeviceNum = deviceNum;
                         Log.i("此时超时的是：", "" + deviceNum);
-                        duration[i][0] = System.currentTimeMillis();
+                        duration[i][0] = (int)System.currentTimeMillis();
                         duration[i][1] = 0;
                         //关灯
                         turnOffLight(deviceNum);
