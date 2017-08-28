@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import com.oucb303.training.R;
 import com.oucb303.training.adpter.RankingListViewAdapter;
+import com.oucb303.training.listener.CheckBoxClickListener;
+import com.oucb303.training.model.CheckBox;
 
 import java.util.List;
 
@@ -122,6 +124,7 @@ public class DialogUtils {
 //        });
 //        return dialog;
 //    }
+
     public static void close(Dialog dialog)
     {
         if (dialog != null)

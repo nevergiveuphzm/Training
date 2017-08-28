@@ -76,8 +76,8 @@ public class SitUpsTimeListAdapter extends BaseAdapter
         TextView tvFinishTimes = (TextView) view.findViewById(R.id.tv_group_finish_times);
         TextView tvNote = (TextView) view.findViewById(R.id.tv_total_time);
 
-//        tvGroupNum.setText((i + 1) + "组");
-//        tvFinishTimes.setText(scores[i] + "");
+        tvGroupNum.setText((i + 1) + "组");
+        tvFinishTimes.setText(scores[i] + "");
 
         imgGroupId.setScaleType(ImageView.ScaleType.FIT_CENTER);
         int[] imgId = new int[]{R.drawable.champion,R.drawable.silver,R.drawable.bronze,R.drawable.other};
@@ -104,11 +104,14 @@ public class SitUpsTimeListAdapter extends BaseAdapter
             imgGroupId.setLayoutParams(paramImg);
             imgGroupId.setImageResource(imgId[3]);
         }
-
         int Id = keyId[i];
-        tvGroupNum.setText((Id+1) +" 组");
-        tvFinishTimes.setText(timeMap.get(Id)+"");
-
+        if (timeMap.get(Id) != 0){
+            tvGroupNum.setText((Id+1) +" 组");
+            tvFinishTimes.setText(timeMap.get(Id)+"");
+        }else {
+            tvGroupNum.setText((i + 1) + "组");
+            tvFinishTimes.setText(0 + "");
+        }
         return view;
     }
     public void setTimeMap(Map<Integer, Integer> timeMap, int[] keyId) {

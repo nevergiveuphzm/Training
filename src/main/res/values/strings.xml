@@ -57,8 +57,10 @@
     <string name="technique_run_item0">八秒跑</string>
     <string name="technique_run_item1">50米往返跑</string>
     <string name="technique_run_item2">定时有氧跑</string>
+    <string name="technique_run_item3">高抬腿</string>
     <!--跳类-->
     <string name="technique_jump_item0">连续纵跳摸高跳</string>
+    <string name="technique_jump_item1">原地单双脚连续跳</string>
     <!--投类-->
     <string name="technique_throw_item0">实心球投掷</string>
     <!--蓝类-->

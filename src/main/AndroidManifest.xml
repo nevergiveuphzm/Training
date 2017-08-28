@@ -86,12 +86,14 @@
         </activity>
         <activity android:name=".activity.DetailsActivity"/>
         <activity android:name=".activity.VideoActivity"/>
+        <!--仰卧起坐，交替-->
         <activity android:name=".activity.SitUpsActivity">
             <intent-filter>
                 <action android:name="SitUpsActivity.class"/>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity android:name=".activity.EightSecondRunActivity">
             <intent-filter>
                 <action android:name="EightSecondRunActivity.class"/>
@@ -103,9 +105,16 @@
             android:name=".activity.TestActivity"
             android:windowSoftInputMode="stateVisible|adjustResize">
         </activity>
+        <!--跳类-->
         <activity android:name=".activity.JumpHighActivity">
             <intent-filter>
                 <action android:name="JumpHighActivity.class"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.SingleFootJumpActivity">
+            <intent-filter>
+                <action android:name="SingleFootJumpActivity.class"/>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -120,6 +129,20 @@
         <activity android:name=".activity.DribblingGameActivity">
             <intent-filter>
                 <action android:name="DribblingGameActivity.class"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!--定向跑-->
+        <activity android:name=".activity.OrientRunActivity">
+            <intent-filter>
+                <action android:name="OrientRunActivity.class"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!-- 高抬腿 -->
+        <activity android:name=".activity.HighKneeActivity">
+            <intent-filter>
+                <action android:name="HighKneeActivity.class"/>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

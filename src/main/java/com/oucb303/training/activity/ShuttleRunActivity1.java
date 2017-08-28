@@ -367,14 +367,10 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
             completedTimes[i] = -1;
             keyId[i] = 0;
         }
-
         finishTimes = new int[groupNum];
-
-
         for (int i=0;i<groupNum;i++){
             timeMap.put(i,0);
         }
-
         shuttleRunAdapter.setCompletedTimes(completedTimes);
         shuttleRunAdapter.setFinishTime(finishTimes);
         shuttleRunAdapter.setTimeMap(timeMap,keyId);

@@ -322,8 +322,6 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
         blinkModeCheckBox = new CheckBox(1, views3);
         new CheckBoxClickListener(blinkModeCheckBox);
     }
-
-
     //    position:用户当前点击列表项传过来的位置
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -352,7 +350,6 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
 //        });
 //        listDialog.show();
 //    }
-
 
     @OnClick({R.id.layout_cancel, R.id.img_help, R.id.btn_begin, R.id.img_save, R.id.btn_on, R.id.btn_off})
     public void onClick(View view) {

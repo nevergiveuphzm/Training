@@ -133,16 +133,6 @@ public class DribblingGameActivity extends AppCompatActivity {
     ImageView imgBlinkModeSlow;
     @Bind(R.id.img_blink_mode_fast)
     ImageView imgBlinkModeFast;
-    @Bind(R.id.img_level_sub)
-    ImageView imgLevelsub;
-    @Bind(R.id.img_level_add)
-    ImageView imgLevelAdd;
-    @Bind(R.id.bar_level)
-    SeekBar barLevel;
-    @Bind(R.id.tv_level)
-    TextView tvLevel;
-    @Bind(R.id.ll_level)
-    LinearLayout lLevel;
 
     private Device device;
     //所选设备个数，分组数
@@ -261,19 +251,19 @@ public class DribblingGameActivity extends AppCompatActivity {
         imgSave.setVisibility(View.VISIBLE);
         imgHelp.setVisibility(View.VISIBLE);
         if (level == 1){
-            lLevel.setVisibility(View.GONE);
+//            lLevel.setVisibility(View.GONE);
             tvTitle.setText("多人混战");
         } else{
             tvTitle.setText("运球比赛");
-            lLevel.setVisibility(View.VISIBLE);
+//            lLevel.setVisibility(View.VISIBLE);
         }
 
         dribblingGameAdapter = new DribblingGameAdapter(this);
         lvScores.setAdapter(dribblingGameAdapter);
         //初始化训练强度拖动条
-        barLevel.setOnSeekBarChangeListener(new MySeekBarListener(barTrainingTime,tvLevel, 2));
-        imgLevelsub.setOnTouchListener(new AddOrSubBtnClickListener(barLevel, 0));
-        imgLevelAdd.setOnTouchListener(new AddOrSubBtnClickListener(barLevel, 1));
+//        barLevel.setOnSeekBarChangeListener(new MySeekBarListener(barTrainingTime,tvLevel, 2));
+//        imgLevelsub.setOnTouchListener(new AddOrSubBtnClickListener(barLevel, 0));
+//        imgLevelAdd.setOnTouchListener(new AddOrSubBtnClickListener(barLevel, 1));
 //        if (level != 0) {
 //            switch (level) {
 //                case 1:

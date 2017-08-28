@@ -5,6 +5,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dip"
-        android:background="@color/blue"/>
+        android:background="@color/grey"/>
 
 </LinearLayout>

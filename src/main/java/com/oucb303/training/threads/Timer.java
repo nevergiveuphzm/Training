@@ -16,7 +16,7 @@ import java.text.DecimalFormat;
 public class Timer extends Thread
 {
     public final static int TIMER_FLAG = 0;
-    public final static int TIMER_DOWN = 4;
+    public final static int TIMER_DOWN = -1;
     public static void sleep(int value)
     {
         try
@@ -76,6 +76,7 @@ public class Timer extends Thread
             msg.what = TIMER_FLAG;
             msg.obj = res;
             handler.sendMessage(msg);
+
             //倒计时
             time_down = totalTime-time;
             int minute_down = time_down / (1000 * 60);

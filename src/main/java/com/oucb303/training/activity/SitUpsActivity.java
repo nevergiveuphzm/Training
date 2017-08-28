@@ -163,8 +163,6 @@ public class SitUpsActivity extends AppCompatActivity {
     private int level=2;
     private Dialog set_dialog;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -356,7 +354,6 @@ public class SitUpsActivity extends AppCompatActivity {
                 it.putExtras(bundle);
                 startActivity(it);
                 break;
-//
             case R.id.btn_result:
                 lvTimes.setVisibility(View.VISIBLE);
                 btnResult.setTextColor(this.getResources().getColor(R.color.ui_green));

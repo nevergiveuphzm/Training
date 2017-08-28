@@ -33,7 +33,7 @@
         android:id="@+id/tv_group_finish_times"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:text="第一组"
+        android:text="1111"
         android:textSize="20sp"/>
 
     <TextView
@@ -45,6 +45,5 @@
         android:layout_marginLeft="112dp"
         android:text="---"
         android:textSize="20sp"/>
-
 
 </LinearLayout>
