@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -132,7 +131,7 @@ public class OrientRunActivity extends AppCompatActivity {
     private int[] keyId;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_orient_run);
         ButterKnife.bind(this);
@@ -278,7 +277,10 @@ public class OrientRunActivity extends AppCompatActivity {
                     startTraining();
                 break;
             case R.id.img_help:
-                Dialog dialog_help = DialogUtils.createHelpDialog(OrientRunActivity.this);
+                List<Integer> list = new ArrayList<>();
+                list.add(R.string.orientrun_training_method);
+                list.add(R.string.orientrun_training_standard);
+                Dialog dialog_help = DialogUtils.createHelpDialog(OrientRunActivity.this,list);
                 OperateUtils.setScreenWidth(this, dialog_help, 0.95, 0.7);
                 dialog_help.show();
                 break;

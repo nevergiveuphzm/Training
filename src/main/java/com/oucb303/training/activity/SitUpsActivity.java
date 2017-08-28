@@ -326,7 +326,10 @@ public class SitUpsActivity extends AppCompatActivity {
                 stopTraining();
                 break;
             case R.id.img_help:
-                Dialog dialog_help = DialogUtils.createHelpDialog(SitUpsActivity.this);
+                List<Integer> list = new ArrayList<>();
+                list.add(R.string.situp_training_method);
+                list.add(R.string.situp_training_standard);
+                Dialog dialog_help = DialogUtils.createHelpDialog(SitUpsActivity.this,list);
                 OperateUtils.setScreenWidth(this, dialog_help, 0.95, 0.7);
                 dialog_help.show();
                 break;

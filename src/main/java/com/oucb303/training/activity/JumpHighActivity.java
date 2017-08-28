@@ -225,7 +225,7 @@ public class JumpHighActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        tvTitle.setText("纵跳摸高");
+        tvTitle.setText("原地纵跳摸高");
         imgHelp.setVisibility(View.VISIBLE);
         imgSave.setVisibility(View.VISIBLE);
         jumpHighAdapter = new JumpHighAdapter(this, scores);

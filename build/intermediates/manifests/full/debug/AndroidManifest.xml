@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.oucb303.training"
     android:versionCode="5"
-    android:versionName="3.1.0" >
+    android:versionName="3.1.2" >
 
     <uses-sdk
         android:minSdkVersion="15"
@@ -192,6 +192,27 @@
         <activity android:name="com.oucb303.training.activity.ApplicationToolsActivity" >
         </activity>
         <activity android:name="com.oucb303.training.activity.HackerSpaceActivity" >
+        </activity>
+        <activity android:name="com.oucb303.training.activity.EnduranceActivity" >
+            <intent-filter>
+                <action android:name="EnduranceActivity.class" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.oucb303.training.activity.ThrowingActivity" >
+            <intent-filter>
+                <action android:name="ThrowingActivity.class" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.oucb303.training.activity.CourbetteActivity" >
+            <intent-filter>
+                <action android:name="CourbetteActivity.class" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity
             android:name="io.vov.vitamio.activity.InitActivity"

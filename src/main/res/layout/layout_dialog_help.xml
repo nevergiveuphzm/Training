@@ -58,6 +58,7 @@
                         android:background="@drawable/img_operate_method" />
 
                     <TextView
+                        android:id="@+id/tv_method"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="     身体仰卧于地垫上，屈膝成90度左右，脚部平放在地上。平地上切勿把脚部固定（例如由同伴用手按住脚踝），否则大腿和髋部的屈肌便会加入工作，从而降低了腹部肌肉的工作量。"
@@ -70,6 +71,7 @@
                         android:background="@drawable/img_remake" />
 
                     <TextView
+                        android:id="@+id/tv_standard"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="     身体仰卧于地垫上，屈膝成90度左右，脚部平放在地上。平地上切勿把脚部固定（例如由同伴用手按住脚踝），否则大腿和髋部的屈肌便会加入工作，从而降低了腹部肌肉的工作量。"

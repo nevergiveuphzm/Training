@@ -37,6 +37,7 @@
     <string name="navigation_throwing_item0">打鸭子</string>
     <!--抛接-->
     <string name="navigation_juggling_item0">撒渔网</string>
+    <string name="navigation_juggling_item1">自抛自接</string>
     <!--攀爬-->
     <string name="navigation_climbing_item0">仰卧起坐</string>
     <string name="navigation_climbing_item1">坐位体前屈</string>
@@ -55,14 +56,18 @@
 
     <!--跑类-->
     <string name="technique_run_item0">八秒跑</string>
-    <string name="technique_run_item1">50米往返跑</string>
+    <string name="technique_run_item1">折返跑</string>
     <string name="technique_run_item2">定时有氧跑</string>
     <string name="technique_run_item3">高抬腿</string>
     <!--跳类-->
-    <string name="technique_jump_item0">连续纵跳摸高跳</string>
+
     <string name="technique_jump_item1">原地单双脚连续跳</string>
+
+    <string name="technique_jump_item0">原地纵跳摸高</string>
+    <string name="technique_jump_item2">滞空练习</string>
     <!--投类-->
     <string name="technique_throw_item0">实心球投掷</string>
+    <string name="technique_throw_item1">掷准练习</string>
     <!--蓝类-->
     <string name="technique_basketball_item0">运球比赛</string>
     <string name="technique_basketball_item1">突破与反突破</string>
@@ -72,4 +77,25 @@
     <string name="technique_volleyball_item0">拦网练习</string>
     <!--保存中输入框hint内容-->
     <string name="save_hint">   请输入学生编号</string>
+
+    <string name="endurance_training_method">&#160;&#160;&#160;&#160;提高下肢力量，空中身体控制力。根据学生实际摸高高度，横向摆放3个光标!</string>
+    <string name="endurance_training_standard"> &#160;&#160;&#160;&#160;单手拍灭2个或3个光标计分,固定时间内，按得分高低计算!</string>
+
+    <string name="courbette_training_method">&#160;&#160;&#160;&#160;增强空间感和手眼协调能力。在一定高度放置光标，练习者用手中器材通过自抛自接扫灭光标。</string>
+    <string name="courbette_training_standard"> &#160;&#160;&#160;&#160;固定时间内扫灭的次数!</string>
+
+    <string name="situp_training_method">&#160;&#160;&#160;&#160;身体仰卧于地垫上，屈膝成90度左右，脚部平放在地上。平地上切勿把脚部固定（例如由同伴用手按住脚踝），否则大腿和髋部的屈肌便会加入工作，从而降低了腹部肌肉的工作量。</string>
+    <string name="situp_training_standard">&#160;&#160;&#160;&#160;身体仰卧于地垫上，屈膝成90度左右，脚部平放在地上。平地上切勿把脚部固定（例如由同伴用手按住脚踝），否则大腿和髋部的屈肌便会加入工作，从而降低了腹部肌肉的工作量。</string>
+
+    <string name="throwing_training_method">&#160;&#160;&#160;&#160;锻炼手眼协调和手指手腕的精确操控能力，将加装感应板的光标固定在不低于练习者身高的墙上，间隔一定距离练习!</string>
+    <string name="throwing_training_standard"> &#160;&#160;&#160;&#160;打到感应板范围内则计分，固定投掷次数按得分计算!</string>
+
+    <string name="highknee_training_method">&#160;&#160;&#160;&#160;支撑腿直立，光标置于摆动腿屈膝抬平后脚尖正前方，提高学生跑步频率和下肢力量。</string>
+    <string name="highknee_training_standard">&#160;&#160;&#160;&#160;原地高抬腿练习，光标记录两腿交替1次的时间和完成固定次数的总时间,固定次数用时长短。</string>
+
+    <string name="orientrun_training_method">&#160;&#160;&#160;&#160;场地内随机摆放光标，位于锥形帽上方，提高速度、耐力，增强观察能力。</string>
+    <string name="orientrun_training_standard">&#160;&#160;&#160;&#160;根据灯亮顺序，迅速跑到光标位置用手扫灭光标（利用多种颜色分组比赛）,固定时间内，扫灭光标数量。</string>
+
+    <string name="singlefootjump_training_method">&#160;&#160;&#160;&#160;光标置于体侧踝关节高度，提高下肢爆发力和连续起跳能力。</string>
+    <string name="singlefootjump_training_standard">&#160;&#160;&#160;&#160;起跳并超过光标高度计数1次，固定时间内，扫灭光标数量。</string>
 </resources>
