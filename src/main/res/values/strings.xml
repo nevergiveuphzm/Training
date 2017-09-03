@@ -42,9 +42,10 @@
     <string name="navigation_climbing_item0">仰卧起坐</string>
     <string name="navigation_climbing_item1">坐位体前屈</string>
     <string name="navigation_climbing_item2">钻山洞</string>
+    <string name="navigation_climbing_item3">爬行</string>
     <!--韵律-->
     <string name="navigation_rhythm_item0">韵律操</string>
-
+    <string name="navigation_rhythm_item1">开合跳</string>
     <!--运动技术-->
     <string name="module_1">运动技术</string>
     <string name="technique_running">跑</string>
@@ -98,4 +99,7 @@
 
     <string name="singlefootjump_training_method">&#160;&#160;&#160;&#160;光标置于体侧踝关节高度，提高下肢爆发力和连续起跳能力。</string>
     <string name="singlefootjump_training_standard">&#160;&#160;&#160;&#160;起跳并超过光标高度计数1次，固定时间内，扫灭光标数量。</string>
+
+    <string name="crawl_training_method">&#160;&#160;&#160;&#160;增加四肢协调能力，在一定区域内随机摆放光标，爬行方式找寻并拍灭随机闪亮的光标。</string>
+    <string name="crawl_training_standard"> &#160;&#160;&#160;&#160;固定时间内扫灭的次数!</string>
 </resources>

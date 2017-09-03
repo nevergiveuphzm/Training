@@ -203,7 +203,24 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.JumpingJackActivity">
+            <intent-filter>
+                <action android:name="JumpingJackActivity.class"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.CrawlActivity">
+            <intent-filter>
+                <action android:name="CrawlActivity.class"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <service
+            android:name=".service.MusicService"
+            android:exported="true"
+            android:process=":remote">
 
+        </service>
     </application>
 
 </manifest>

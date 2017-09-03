@@ -25,8 +25,8 @@ public class CategoryExerciseAbility implements Category
             {R.string.navigation_jumping_item0, R.string.navigation_jumping_item1},
             {R.string.navigation_throwing_item0},
             {R.string.navigation_juggling_item0,R.string.navigation_juggling_item1},
-            {R.string.navigation_climbing_item0, R.string.navigation_climbing_item1, R.string.navigation_climbing_item2},
-            {R.string.navigation_rhythm_item0}
+            {R.string.navigation_climbing_item0, R.string.navigation_climbing_item1, R.string.navigation_climbing_item2,R.string.navigation_climbing_item3},
+            {R.string.navigation_rhythm_item0,R.string.navigation_rhythm_item1}
     };
 
 
@@ -34,8 +34,8 @@ public class CategoryExerciseAbility implements Category
             {"JumpHighActivity.class",""},
             {""},
             {"","CourbetteActivity.class"},
-            {"SitUpsActivity.class","",""},
-            {""}};
+            {"SitUpsActivity.class","","","CrawlActivity.class"},
+            {"","JumpingJackActivity.class"}};
 
     //中部的背景图片
     int[] centerImgIds = {R.mipmap.navigation_run_bg, R.mipmap.navigation_jumping_bg, R.mipmap.navigation_throwing_bg, R.mipmap.navigation_juggling_bg, R.mipmap.navigation_climbing_bg, R.mipmap.navigation_rhythm_bg};
@@ -45,9 +45,9 @@ public class CategoryExerciseAbility implements Category
             {R.drawable.navigation_running_item0, R.drawable.navigation_running_item1, R.drawable.navigation_running_item2, R.drawable.navigation_running_item3, R.drawable.navigation_running_item4, R.drawable.navigation_running_item5},
             {R.drawable.navigation_jumping_item0, R.drawable.navigation_jumping_item1},
             {R.drawable.navigation_throwing_item0},
-            {R.drawable.navigation_juggling_item0,R.drawable.navigation_juggling_item1},
-            {R.drawable.navigation_climbing_item0, R.drawable.navigation_climbing_item1, R.drawable.navigation_climbing_item2},
-            {R.drawable.navigation_rhythm_item0}
+            {R.drawable.navigation_juggling_item0,R.drawable.navigation_juggling_item0},
+            {R.drawable.navigation_climbing_item0, R.drawable.navigation_climbing_item1, R.drawable.navigation_climbing_item2,R.drawable.navigation_climbing_item3},
+            {R.drawable.navigation_rhythm_item0,R.drawable.navigation_rhythm_item1}
     };
 
     @Override

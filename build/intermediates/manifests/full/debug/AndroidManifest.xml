@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.oucb303.training"
     android:versionCode="5"
-    android:versionName="3.1.2" >
+    android:versionName="3.2.2" >
 
     <uses-sdk
         android:minSdkVersion="15"
@@ -214,6 +214,27 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name="com.oucb303.training.activity.JumpingJackActivity" >
+            <intent-filter>
+                <action android:name="JumpingJackActivity.class" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.oucb303.training.activity.CrawlActivity" >
+            <intent-filter>
+                <action android:name="CrawlActivity.class" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name="com.oucb303.training.service.MusicService"
+            android:exported="true"
+            android:process=":remote" >
+        </service>
+
         <activity
             android:name="io.vov.vitamio.activity.InitActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation"

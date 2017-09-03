@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.hardware.usb.UsbManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -214,11 +215,11 @@ public class MainNewActivity extends AppCompatActivity {
      */
     public void initView() {
         //屏蔽或放开测试按钮
-//        SharedPreferences sp = getSharedPreferences("Training", MODE_PRIVATE);
-//        if (sp.getBoolean("flag_btnTest_visible", false))
-//            btnTest.setVisibility(View.VISIBLE);
-//        else
-//            btnTest.setVisibility(View.GONE);
+        SharedPreferences sp = getSharedPreferences("Training", MODE_PRIVATE);
+        if (sp.getBoolean("flag_btnTest_visible", false))
+            btnTest.setVisibility(View.VISIBLE);
+        else
+            btnTest.setVisibility(View.GONE);
         //Switch控件
 //        swBracelet.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
 //        {
