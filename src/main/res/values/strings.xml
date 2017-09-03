@@ -42,9 +42,10 @@
     <string name="navigation_climbing_item0">仰卧起坐</string>
     <string name="navigation_climbing_item1">坐位体前屈</string>
     <string name="navigation_climbing_item2">钻山洞</string>
+    <string name="navigation_climbing_item3">爬行</string>
     <!--韵律-->
     <string name="navigation_rhythm_item0">韵律操</string>
-
+    <string name="navigation_rhythm_item1">开合跳</string>
     <!--运动技术-->
     <string name="module_1">运动技术</string>
     <string name="technique_running">跑</string>
@@ -85,4 +86,7 @@
 
     <string name="throwing_training_method">&#160;&#160;&#160;&#160;锻炼手眼协调和手指手腕的精确操控能力，将加装感应板的光标固定在不低于练习者身高的墙上，间隔一定距离练习!</string>
     <string name="throwing_training_standard"> &#160;&#160;&#160;&#160;打到感应板范围内则计分，固定投掷次数按得分计算!</string>
+
+    <string name="crawl_training_method">&#160;&#160;&#160;&#160;增加四肢协调能力，在一定区域内随机摆放光标，爬行方式找寻并拍灭随机闪亮的光标。</string>
+    <string name="crawl_training_standard"> &#160;&#160;&#160;&#160;固定时间内扫灭的次数!</string>
 </resources>
