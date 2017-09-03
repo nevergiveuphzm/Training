@@ -24,7 +24,7 @@ public class MotorTechnique implements Category {
                             {R.string.technique_volleyball_item0}
     };
 
-    String[][] targetString = {{"EightSecondRunActivity.class","ShuttleRunActivity1.class","OrientRunActivity.class.class","HighKneeActivity.class"},
+    String[][] targetString = {{"EightSecondRunActivity.class","ShuttleRunActivity1.class","OrientRunActivity.class","HighKneeActivity.class"},
                                 {"JumpHighActivity.class","SingleFootJumpActivity.class","EnduranceActivity.class"},
                                 {"","ThrowingActivity.class"},
                                 {"DribblingGameActivity.class",""},
@@ -35,9 +35,9 @@ public class MotorTechnique implements Category {
     int[] centerImgIds = {R.drawable.technique_run_bg,R.drawable.technique_jump_bg,R.drawable.technique_throw_bg,R.drawable.technique_basketball_bg,R.drawable.technique_football_bg,R.drawable.technique_volleyball_bg};
     //底部滚动栏图片
 
-    int[][] itemImgIds = {{R.drawable.technique_run_item0,R.drawable.technique_run_item1,R.drawable.technique_run_item2,R.drawable.technique_run_item0},
-                            {R.drawable.technique_jump_item0,R.drawable.technique_jump_item0,R.drawable.technique_jump_item0},
-                            {R.drawable.technique_throw_item0,R.drawable.technique_throw_item0},
+    int[][] itemImgIds = {{R.drawable.technique_run_item0,R.drawable.technique_run_item1,R.drawable.technique_run_item2,R.drawable.technique_run_item3},
+                            {R.drawable.technique_jump_item0,R.drawable.technique_jump_item1,R.drawable.technique_jump_item2},
+                            {R.drawable.technique_throw_item0,R.drawable.technique_throw_item1},
                             {R.drawable.technique_basketball_item0,R.drawable.technique_basketball_item1},
                             {R.drawable.technique_football_item0},
                             {R.drawable.technique_volleyball_item0}

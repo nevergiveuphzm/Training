@@ -57,7 +57,7 @@
     <!--跑类-->
     <string name="technique_run_item0">八秒跑</string>
     <string name="technique_run_item1">折返跑</string>
-    <string name="technique_run_item2">定时有氧跑</string>
+    <string name="technique_run_item2">定向跑</string>
     <string name="technique_run_item3">高抬腿</string>
     <!--跳类-->
 

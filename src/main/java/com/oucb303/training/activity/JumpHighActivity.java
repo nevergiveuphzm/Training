@@ -191,8 +191,6 @@ public class JumpHighActivity extends AppCompatActivity {
             }
         }
     };
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -456,6 +454,7 @@ public class JumpHighActivity extends AppCompatActivity {
         List<TimeInfo> infos = DataAnalyzeUtils.analyzeTimeData(data);
         for (TimeInfo info : infos) {
             int groupId = findGroupId(info.getDeviceNum());
+            //最先毁灭灯的时间，一次性灭灯的编号
             JumpHighTrainingInfo traningInfo = groupTrainingInfos.get(groupId);
 
             if (traningInfo.deviceList.size() == 0) {

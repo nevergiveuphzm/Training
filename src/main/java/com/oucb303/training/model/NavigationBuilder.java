@@ -3,6 +3,12 @@ package com.oucb303.training.model;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +28,7 @@ import com.oucb303.training.adpter.ItemNameGVAdapter;
 import com.oucb303.training.adpter.NavigationItemsHLVAdapter;
 import com.oucb303.training.widget.HorizontalListView;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -112,7 +119,9 @@ public class NavigationBuilder implements View.OnClickListener, AdapterView.OnIt
         }
         gvAdapter.changeContent(chooseId);
         hlvAdapter.changeContent(chooseId);
+
         linearLayout.setBackgroundResource(category.getCenterImgIds()[chooseId]);
+
         tvCategoryName.setText(category.getCategoryNamesId()[chooseId]);
     }
 

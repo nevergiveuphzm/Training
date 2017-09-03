@@ -66,8 +66,6 @@ public class HighKneeActivity extends AppCompatActivity {
     SeekBar barTrainingTimes;
     @Bind(R.id.img_training_time_add)
     ImageView imgTrainingTimeAdd;
-    @Bind(R.id.tv_total_time)
-    TextView tvTotalTime;
     @Bind(R.id.btn_begin)
     Button btnBegin;
     @Bind(R.id.sp_group_num)
@@ -323,10 +321,11 @@ public class HighKneeActivity extends AppCompatActivity {
         //开启接受时间线程
         new ReceiveThread(handler, device.ftDev, ReceiveThread.TIME_RECEIVE_THREAD, TIME_RECEIVE).start();
 
-        //亮每组设备的第一个灯
+        //开每组第一个灯的红外先不开灯
         for (int i = 0; i < groupNum; i++) {
+//            Log.i("~~~~~~~~~~~~~~","~~~~~~~~~~~~~~~~~~~~~");
+//            sendInfraredOrder(Device.DEVICE_LIST.get(i*2).getDeviceNum());
             sendOrder(Device.DEVICE_LIST.get(i * 2).getDeviceNum());
-//            finishOneTime[i] = (int) System.currentTimeMillis();
         }
         timer = new Timer(handler, trainingTime);
         timer.setBeginTime(startTime);
@@ -363,6 +362,8 @@ public class HighKneeActivity extends AppCompatActivity {
                 for (TimeInfo info : infos) {
                     int groupId = findDeviceGroupId(info.getDeviceNum());
                     scores[groupId] += 0.5;
+                    //关当前解析的灯的红外，开当前解析的灯
+//                    sendOrder(info.getDeviceNum());
                     Log.d("getDeviceNum----------", "" + info.getDeviceNum());
                     Log.d("groupID---------------", "" + groupId);
                     char next = Device.DEVICE_LIST.get(groupId * groupSize).getDeviceNum();
@@ -375,9 +376,11 @@ public class HighKneeActivity extends AppCompatActivity {
                         finishTime[groupId] = (int) (System.currentTimeMillis() - startTime);
                         timeMap.put(groupId,finishTime[groupId]);
                     }
-                    else
+                    else{
+                        //开同一组的下一个红外，关下一个灯
+//                        sendInfraredOrder(next);
                         sendOrder(next);
-//                    sendOrder(next);
+                    }
                 }
                 Message msg = Message.obtain();
                 msg.obj = "";
@@ -394,6 +397,16 @@ public class HighKneeActivity extends AppCompatActivity {
         }).start();
     }
 
+    //发射开红外关灯命令
+//    public void sendInfraredOrder(char deviceNum){
+//        device.sendOrder(deviceNum,Order.LightColor.BLUE,
+//                Order.VoiceMode.NONE,Order.BlinkModel.NONE,
+//                Order.LightModel.TURN_OFF,
+//                Order.ActionModel.LIGHT,
+//                Order.EndVoice.NONE
+//                );
+//    }
+
     public void sendOrder(char deviceNum) {
         device.sendOrder(deviceNum, Order.LightColor.values()[lightColorCheckBox.getCheckId()],
                 Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
@@ -401,6 +414,12 @@ public class HighKneeActivity extends AppCompatActivity {
                 Order.LightModel.OUTER,
                 Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                 Order.EndVoice.NONE);
+//        device.sendOrder(deviceNum, Order.LightColor.values()[lightColorCheckBox.getCheckId()],
+//                Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
+//                Order.BlinkModel.values()[blinkModeCheckBox.getCheckId() - 1],
+//                Order.LightModel.OUTER,
+//                Order.ActionModel.TURN_OFF,
+//                Order.EndVoice.NONE);
     }
 
     //查找设备属于第几组

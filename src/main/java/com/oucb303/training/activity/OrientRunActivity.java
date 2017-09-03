@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.oucb303.training.R;
 import com.oucb303.training.adpter.DGroupListViewAdapter;
 import com.oucb303.training.adpter.DribblingGameAdapter;
+import com.oucb303.training.adpter.OrientRunAdapter;
 import com.oucb303.training.device.Device;
 import com.oucb303.training.device.Order;
 import com.oucb303.training.listener.AddOrSubBtnClickListener;
@@ -51,6 +52,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
+ * 定向跑
  * Created by HP on 2017/8/23.
  */
 public class OrientRunActivity extends AppCompatActivity {
@@ -103,7 +105,7 @@ public class OrientRunActivity extends AppCompatActivity {
     //所选设备个数，分组数
     private int totalNum, groupNum;
     private DGroupListViewAdapter dGroupListViewAdapter;
-    private DribblingGameAdapter dribblingGameAdapter;
+    private OrientRunAdapter orientRunAdapter;
     //感应模式和灯光模式集合
     private CheckBox actionModeCheckBox, lightColorCheckBox, blinkModeCheckBox;
     private final int TIME_RECEIVE = 1;
@@ -175,8 +177,8 @@ public class OrientRunActivity extends AppCompatActivity {
 
     private void initView() {
         tvTitle.setText("定向跑");
-        dribblingGameAdapter = new DribblingGameAdapter(this);
-        lvScores.setAdapter(dribblingGameAdapter);
+
+        lvScores.setAdapter(orientRunAdapter);
         //初始化分组listview
         dGroupListViewAdapter = new DGroupListViewAdapter(OrientRunActivity.this);
         lvGroup.setAdapter(dGroupListViewAdapter);
@@ -195,8 +197,8 @@ public class OrientRunActivity extends AppCompatActivity {
             }
         });
         //初始化得分listview
-        dribblingGameAdapter = new DribblingGameAdapter(this);
-        lvScores.setAdapter(dribblingGameAdapter);
+        orientRunAdapter = new OrientRunAdapter(this);
+        lvScores.setAdapter(orientRunAdapter);
 
         //选择设备个数spinner
         String[] num = new String[Device.DEVICE_LIST.size()];
@@ -348,9 +350,9 @@ public class OrientRunActivity extends AppCompatActivity {
         for (int i = 0; i < groupNum; i++) {
             scores[i] = 0;
         }
-        dribblingGameAdapter.setScores(scores);
-        dribblingGameAdapter.setTimeMap(timeMap,keyId);
-        dribblingGameAdapter.notifyDataSetChanged();
+        orientRunAdapter.setScores(scores);
+        orientRunAdapter.setTimeMap(timeMap,keyId);
+        orientRunAdapter.notifyDataSetChanged();
         //创建随机队列
         createRandomNumber();
         Log.i("listRand-----------", "" + listRand.size());
@@ -573,8 +575,8 @@ public class OrientRunActivity extends AppCompatActivity {
                 //更新成绩
                 case UPDATE_SCORES:
                     sortTime(timeMap);
-                    dribblingGameAdapter.setTimeMap(timeMap, keyId);
-                    dribblingGameAdapter.notifyDataSetChanged();
+                    orientRunAdapter.setTimeMap(timeMap, keyId);
+                    orientRunAdapter.notifyDataSetChanged();
                     break;
                 case STOP_TRAINING:
                     stopTraining();

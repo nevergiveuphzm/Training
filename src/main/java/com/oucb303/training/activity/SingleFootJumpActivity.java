@@ -25,6 +25,7 @@ import com.oucb303.training.R;
 import com.oucb303.training.adpter.DribblingGameAdapter;
 import com.oucb303.training.adpter.GroupListViewAdapter;
 import com.oucb303.training.adpter.LargeRecessAdapter;
+import com.oucb303.training.adpter.OrientRunAdapter;
 import com.oucb303.training.device.Device;
 import com.oucb303.training.device.Order;
 import com.oucb303.training.listener.AddOrSubBtnClickListener;
@@ -102,7 +103,7 @@ public class SingleFootJumpActivity extends AppCompatActivity {
     private int groupNum;//当前选择的分组数
     private final int groupSize = 1;//每组所需设备个数为1
     private GroupListViewAdapter groupListViewAdapter;
-    private DribblingGameAdapter dribblingGameAdapter;
+    private OrientRunAdapter orientRunAdapter;
 
     private int[] scores;//记录每组的得分
     private int trainingTime;//训练时间 单位毫秒
@@ -146,8 +147,8 @@ public class SingleFootJumpActivity extends AppCompatActivity {
                 //更新完成次数
                 case UPDATE_TIMES:
                     sortTime(timeMap);
-                    dribblingGameAdapter.setTimeMap(timeMap,keyId);
-                    dribblingGameAdapter.notifyDataSetChanged();
+                    orientRunAdapter.setTimeMap(timeMap,keyId);
+                    orientRunAdapter.notifyDataSetChanged();
                     break;
             }
         }
@@ -226,8 +227,8 @@ public class SingleFootJumpActivity extends AppCompatActivity {
         });
 
         //初始化成绩的分listview
-        dribblingGameAdapter = new DribblingGameAdapter(this);
-        lvScores.setAdapter(dribblingGameAdapter);
+        orientRunAdapter = new OrientRunAdapter(this);
+        lvScores.setAdapter(orientRunAdapter);
     }
 
     @OnClick({R.id.layout_cancel,R.id.btn_on,R.id.btn_off,R.id.btn_begin,R.id.btn_stop,R.id.img_help,R.id.img_save_new,R.id.img_set})
@@ -297,9 +298,9 @@ public class SingleFootJumpActivity extends AppCompatActivity {
         }
         keyId = new int[groupNum];
 
-        dribblingGameAdapter.setScores(scores);
-        dribblingGameAdapter.setTimeMap(timeMap,keyId);
-        dribblingGameAdapter.notifyDataSetChanged();
+        orientRunAdapter.setScores(scores);
+        orientRunAdapter.setTimeMap(timeMap,keyId);
+        orientRunAdapter.notifyDataSetChanged();
         //训练时间
         trainingTime = (int) (new Double(tvTrainingTime.getText().toString()) * 60 * 1000);
         //清除串口数据

@@ -38,14 +38,14 @@ public class CategoryExerciseAbility implements Category
             {""}};
 
     //中部的背景图片
-    int[] centerImgIds = {R.drawable.navigation_run_bg, R.drawable.navigation_jumping_bg, R.drawable.navigation_throwing_bg, R.drawable.navigation_juggling_bg, R.drawable.navigation_climbing_bg, R.drawable.navigation_rhythm_bg};
+    int[] centerImgIds = {R.mipmap.navigation_run_bg, R.mipmap.navigation_jumping_bg, R.mipmap.navigation_throwing_bg, R.mipmap.navigation_juggling_bg, R.mipmap.navigation_climbing_bg, R.mipmap.navigation_rhythm_bg};
 
     //底部滚动栏图片
     int[][] itemImgIds = {
             {R.drawable.navigation_running_item0, R.drawable.navigation_running_item1, R.drawable.navigation_running_item2, R.drawable.navigation_running_item3, R.drawable.navigation_running_item4, R.drawable.navigation_running_item5},
             {R.drawable.navigation_jumping_item0, R.drawable.navigation_jumping_item1},
             {R.drawable.navigation_throwing_item0},
-            {R.drawable.navigation_juggling_item0,R.drawable.navigation_juggling_item0},
+            {R.drawable.navigation_juggling_item0,R.drawable.navigation_juggling_item1},
             {R.drawable.navigation_climbing_item0, R.drawable.navigation_climbing_item1, R.drawable.navigation_climbing_item2},
             {R.drawable.navigation_rhythm_item0}
     };
