@@ -4,11 +4,13 @@
     android:id="@+id/dialog_light_set"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+     >
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -429,7 +431,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-
+            <LinearLayout
+                android:layout_marginLeft="80dp"
+                android:layout_marginTop="400dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -444,7 +451,28 @@
                     android:layout_marginLeft="15dp"
                     android:textColor="@color/font_lightdark"
                     android:textSize="25sp"/>
-
+                </LinearLayout>
+             <LinearLayout
+                android:layout_marginLeft="80dp"
+                android:layout_marginTop="400dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="伴随声音"
+                    android:textSize="25sp"/>
+                <CheckBox
+                    android:id="@+id/cb_endvoice"
+                    style="@style/custom_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="15dp"
+                    android:textColor="@color/font_lightdark"
+                    android:textSize="25sp"/>
             </LinearLayout>
             <Button
                 android:id="@+id/btn_ok"

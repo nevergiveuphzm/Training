@@ -110,8 +110,7 @@
         <activity android:name="com.oucb303.training.activity.BoldCautiousActivity" />
         <activity
             android:name="com.oucb303.training.activity.TestActivity"
-            android:windowSoftInputMode="stateVisible|adjustResize" >
-        </activity>
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <!-- 跳类 -->
         <activity android:name="com.oucb303.training.activity.JumpHighActivity" >
             <intent-filter>
@@ -127,14 +126,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="com.oucb303.training.activity.GroupConfrontationActivity" >
-        </activity>
-        <activity android:name="com.oucb303.training.activity.SettingActivity" >
-        </activity>
-        <activity android:name="com.oucb303.training.activity.AboutSafLightActivity" >
-        </activity>
-        <activity android:name="com.oucb303.training.activity.SequenceRunningActivity" >
-        </activity>
+        <activity android:name="com.oucb303.training.activity.GroupConfrontationActivity" />
+        <activity android:name="com.oucb303.training.activity.SettingActivity" />
+        <activity android:name="com.oucb303.training.activity.AboutSafLightActivity" />
+        <activity android:name="com.oucb303.training.activity.SequenceRunningActivity" />
         <activity android:name="com.oucb303.training.activity.DribblingGameActivity" >
             <intent-filter>
                 <action android:name="DribblingGameActivity.class" />
@@ -165,34 +160,23 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="com.oucb303.training.activity.HelpActivity" >
-        </activity>
+        <activity android:name="com.oucb303.training.activity.HelpActivity" />
         <activity android:name="com.oucb303.training.activity.SequenceChooseActivity" />
         <activity
             android:name="com.oucb303.training.activity.SaveActivity"
             android:theme="@style/SaveActivityDialogStyle"
-            android:windowSoftInputMode="adjustPan" >
-        </activity>
-        <activity android:name="com.oucb303.training.activity.TimingModuleActivity" >
-        </activity>
-        <activity android:name="com.oucb303.training.activity.TimeKeeperActivity" >
-        </activity>
-        <activity android:name="com.oucb303.training.activity.RandomTimesModuleActivity" >
-        </activity>
-        <activity android:name="com.oucb303.training.activity.RandomTimeActivity" >
-        </activity>
-        <activity android:name="com.oucb303.training.activity.GroupResistActivity" >
-        </activity>
-        <activity android:name="com.oucb303.training.activity.BadmintonActivity" >
-        </activity>
-        <activity android:name="com.oucb303.training.activity.NavigationActivity" >
-        </activity>
-        <activity android:name="com.oucb303.training.activity.CombinedTrainingActivity" >
-        </activity>
-        <activity android:name="com.oucb303.training.activity.ApplicationToolsActivity" >
-        </activity>
-        <activity android:name="com.oucb303.training.activity.HackerSpaceActivity" >
-        </activity>
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name="com.oucb303.training.activity.TimingModuleActivity" />
+        <activity android:name="com.oucb303.training.activity.TimeKeeperActivity" />
+        <activity android:name="com.oucb303.training.activity.RandomTimesModuleActivity" />
+        <activity android:name="com.oucb303.training.activity.RandomTimeActivity" />
+        <activity android:name="com.oucb303.training.activity.GroupResistActivity" />
+        <activity android:name="com.oucb303.training.activity.Main2Activity" />
+        <activity android:name="com.oucb303.training.activity.BadmintonActivity" />
+        <activity android:name="com.oucb303.training.activity.NavigationActivity" />
+        <activity android:name="com.oucb303.training.activity.CombinedTrainingActivity" />
+        <activity android:name="com.oucb303.training.activity.ApplicationToolsActivity" />
+        <activity android:name="com.oucb303.training.activity.HackerSpaceActivity" />
         <activity android:name="com.oucb303.training.activity.EnduranceActivity" >
             <intent-filter>
                 <action android:name="EnduranceActivity.class" />
@@ -232,9 +216,9 @@
         <service
             android:name="com.oucb303.training.service.MusicService"
             android:exported="true"
-            android:process=":remote" >
-        </service>
+            android:process=":remote" />
 
+        <activity android:name="com.oucb303.training.activity.Main2Activity" />
         <activity
             android:name="io.vov.vitamio.activity.InitActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation"

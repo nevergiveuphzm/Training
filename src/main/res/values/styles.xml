@@ -7,7 +7,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-    <style name="dialog" parent="android:style/Theme.Dialog">
+    <style name="dialog1" parent="android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@drawable/fill_content</item>
@@ -53,5 +53,11 @@
         <item name="android:windowIsTranslucent">true</item>
         <!--是否有标题栏-->
         <item name="android:windowNoTitle">false</item>
+    </style>
+
+    <style name="dialog" parent="android:Theme.Dialog">
+        <item name="android:windowIsFloating">true</item><!--表示浮在屏幕上的，如果在这里使用了，整个layout就会在 屏幕中心，相当于浮在屏幕上，所以这个只适用于dialog-->
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item><!--除去title-->
     </style>
 </resources>

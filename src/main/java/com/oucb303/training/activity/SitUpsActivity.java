@@ -24,6 +24,7 @@ import com.oucb303.training.adpter.GroupListViewAdapter;
 import com.oucb303.training.adpter.SitUpsTimeListAdapter;
 import com.oucb303.training.device.Device;
 import com.oucb303.training.device.Order;
+import com.oucb303.training.dialugue.CustomDialog;
 import com.oucb303.training.listener.AddOrSubBtnClickListener;
 import com.oucb303.training.listener.CheckBoxClickListener;
 import com.oucb303.training.listener.MySeekBarListener;
@@ -139,7 +140,6 @@ public class SitUpsActivity extends AppCompatActivity {
 //    ImageView imgBlinkModeFast;
 
     private Device device;
-    private CheckBox actionModeCheckBox, lightModeCheckBox, lightColorCheckBox, blinkModeCheckBox;
     private final int TIME_RECEIVE = 1, POWER_RECEIVER = 2, UPDATE_DATA = 3;
     //训练时间  单位毫秒
     private int trainingTime;
@@ -157,7 +157,8 @@ public class SitUpsActivity extends AppCompatActivity {
     private Map<Integer, Integer> timeMap = new HashMap<Integer, Integer>();
     //存放排序后的key值
     private int[] keyId;
-
+    //设置返回数据
+    int[] Setting_return_data = new int[5];
     private int type = 1;
 
     private int level=2;
@@ -294,7 +295,10 @@ public class SitUpsActivity extends AppCompatActivity {
 
         imgSaveNew.setEnabled(false);
 //        imgSave.setEnabled(false);
-        set_dialog = createLightSetDialog();
+        for(int i=0;i<3;i++)
+          Setting_return_data[i]=1;
+        Setting_return_data[4]=0;
+        Setting_return_data[3]=0;
     }
 
     @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.btn_stop, R.id.img_help, R.id.btn_on,
@@ -302,9 +306,25 @@ public class SitUpsActivity extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_set:
-                set_dialog = createLightSetDialog();
-                OperateUtils.setScreenWidth(this, set_dialog, 0.95, 0.7);
-                set_dialog.show();
+                CustomDialog dialog = new  CustomDialog(SitUpsActivity.this,"From btn 2",new CustomDialog.ICustomDialogEventListener() {
+                    @Override
+                    public void customDialogEvent(int id) {
+                       // TextView imageView = (TextView)findViewById(R.id.main_image);
+
+                        int aaa = id;
+                        String a  =String.valueOf(aaa);
+                        for(int i=0;i<5;i++){
+                            Setting_return_data[i] = aaa % 10;
+                            aaa = aaa/10;
+                            Log.i("----------",i+"   "+Setting_return_data[i]+"");
+                            //imageView.append(Setting_shuju[i]+"   ");
+                        }
+                    }
+                },R.style.dialog_rank);
+
+                dialog.show();
+                OperateUtils operateUtils = new OperateUtils();
+                operateUtils.setScreenWidth(SitUpsActivity.this,dialog,0.97,0.8);
                 break;
             case R.id.layout_cancel:
                 this.finish();
@@ -444,11 +464,11 @@ public class SitUpsActivity extends AppCompatActivity {
     }
 
     public void sendOrder(char deviceNum) {
-        device.sendOrder(deviceNum, Order.LightColor.values()[lightColorCheckBox.getCheckId()],
-                Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                Order.BlinkModel.values()[blinkModeCheckBox.getCheckId() - 1],
+        device.sendOrder(deviceNum, Order.LightColor.values()[Setting_return_data[2]],
+                Order.VoiceMode.values()[Setting_return_data[4]],
+                Order.BlinkModel.values()[Setting_return_data[1]],
                 Order.LightModel.OUTER,
-                Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
+                Order.ActionModel.values()[Setting_return_data[2]],
                 Order.EndVoice.NONE);
     }
 
@@ -483,53 +503,5 @@ public class SitUpsActivity extends AppCompatActivity {
         }
     }
 
-    public Dialog createLightSetDialog() {
 
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View v = inflater.inflate(R.layout.layout_dialog_lightset, null);// 得到加载view
-
-        LinearLayout layout = (LinearLayout) v.findViewById(R.id.dialog_light_set);
-        ImageView imgActionModeTouch = (ImageView) layout.findViewById(R.id.img_action_mode_touch);
-        ImageView imgActionModeLight = (ImageView) layout.findViewById(R.id.img_action_mode_light);
-        ImageView imgActionModeTogether = (ImageView) layout.findViewById(R.id.img_action_mode_together);
-        ImageView imgLightColorBlue = (ImageView) layout.findViewById(R.id.img_light_color_blue);
-        ImageView imgLightColorRed = (ImageView) layout.findViewById(R.id.img_light_color_red);
-        ImageView imgLightColorBlueRed = (ImageView) layout.findViewById(R.id.img_light_color_blue_red);
-        ImageView imgBlinkModeNone = (ImageView) layout.findViewById(R.id.img_blink_mode_none);
-        ImageView imgBlinkModeSlow = (ImageView) layout.findViewById(R.id.img_blink_mode_slow);
-        ImageView imgBlinkModeFast = (ImageView) layout.findViewById(R.id.img_blink_mode_fast);
-        cbVoice = (android.widget.CheckBox) layout.findViewById(R.id.cb_voice);
-        Button btnOk = (Button) layout.findViewById(R.id.btn_ok);
-        Button btnCloseSet = (Button) layout.findViewById(R.id.btn_close_set);
-        final Dialog dialog = new Dialog(this, R.style.dialog_rank);
-
-        dialog.setContentView(layout);
-
-        //设定感应模式checkBox组合的点击事件
-        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
-        actionModeCheckBox = new CheckBox(1, views);
-        new CheckBoxClickListener(actionModeCheckBox);
-        //设定灯光颜色checkBox组合的点击事件
-        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
-        lightColorCheckBox = new CheckBox(1, views2);
-        new CheckBoxClickListener(lightColorCheckBox);
-        //设定闪烁模式checkbox组合的点击事件
-        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast};
-        blinkModeCheckBox = new CheckBox(1, views3);
-        new CheckBoxClickListener(blinkModeCheckBox);
-
-        btnOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        btnCloseSet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        return dialog;
-    }
 }

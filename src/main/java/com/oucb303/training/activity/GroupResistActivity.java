@@ -1,5 +1,6 @@
 package com.oucb303.training.activity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -37,6 +39,7 @@ import com.oucb303.training.model.TimeInfo;
 import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.threads.Timer;
 import com.oucb303.training.utils.DataAnalyzeUtils;
+import com.oucb303.training.utils.OperateUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -60,8 +63,8 @@ public class GroupResistActivity extends AppCompatActivity {
     TextView tvTitle;
     @Bind(R.id.img_help)
     ImageView imgHelp;
-    @Bind(R.id.img_save)
-    ImageView imgSave;
+    @Bind(R.id.img_save_new)
+    ImageView imgSaveNew;
     @Bind(R.id.tv_training_time)
     TextView tvTrainingTime;
     @Bind(R.id.img_training_time_sub)
@@ -130,7 +133,7 @@ public class GroupResistActivity extends AppCompatActivity {
     private int level;
     private Device device;
     private Context context;
-
+    private Dialog set_dialog;
     private GroupResistAdapter groupResistAdapter;
     private DGroupListViewAdapter dGroupListViewAdapter;
     //当前所选设备总个数
@@ -222,8 +225,8 @@ public class GroupResistActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        imgSave.setEnabled(false);
-        imgSave.setVisibility(View.VISIBLE);
+        imgSaveNew.setEnabled(false);
+        imgSaveNew.setVisibility(View.VISIBLE);
     }
     @Override
     public void onBackPressed() {
@@ -359,9 +362,14 @@ public class GroupResistActivity extends AppCompatActivity {
         lvScores.setAdapter(groupResistAdapter);
     }
 
-    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help, R.id.btn_on, R.id.btn_off, R.id.img_save})
+    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help, R.id.btn_on, R.id.btn_off, R.id.img_save_new,R.id.img_set})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.img_set:
+                set_dialog = createLightSetDialog();
+                OperateUtils.setScreenWidth(this, set_dialog, 0.95, 0.7);
+                set_dialog.show();
+                break;
             case R.id.layout_cancel:
                 if (trainningFlag) {
                     Toast.makeText(GroupResistActivity.this, "请先停止训练后再退出!", Toast
@@ -399,7 +407,7 @@ public class GroupResistActivity extends AppCompatActivity {
             case R.id.btn_off:
                 device.turnOffAllTheLight();
                 break;
-            case R.id.img_save:
+            case R.id.img_save_new:
                 Intent it = new Intent(this, SaveActivity.class);
                 Bundle bundle = new Bundle();
                 //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 5:运球比赛、多人混战、分组对抗 ...
@@ -636,7 +644,7 @@ public class GroupResistActivity extends AppCompatActivity {
         timer.stopTimer();
         btnBegin.setText("开始");
         btnBegin.setEnabled(false);
-        imgSave.setEnabled(true);
+        imgSaveNew.setEnabled(true);
         trainningFlag = false;
 
         if (overTimeThread != null)
@@ -693,4 +701,51 @@ public class GroupResistActivity extends AppCompatActivity {
         }
     }
 
+
+    public Dialog createLightSetDialog() {
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View v = inflater.inflate(R.layout.layout_dialog_group, null);// 得到加载view
+
+        LinearLayout layout = (LinearLayout) v.findViewById(R.id.dialog_light_set);
+        ImageView imgActionModeTouch = (ImageView) layout.findViewById(R.id.img_action_mode_touch);
+        ImageView imgActionModeLight = (ImageView) layout.findViewById(R.id.img_action_mode_light);
+        ImageView imgActionModeTogether = (ImageView) layout.findViewById(R.id.img_action_mode_together);
+        ImageView imgBlinkModeNone = (ImageView) layout.findViewById(R.id.img_blink_mode_none);
+        ImageView imgBlinkModeSlow = (ImageView) layout.findViewById(R.id.img_blink_mode_slow);
+        ImageView imgBlinkModeFast = (ImageView) layout.findViewById(R.id.img_blink_mode_fast);
+        cbVoice = (android.widget.CheckBox) layout.findViewById(R.id.cb_voice);
+        Button btnOk = (Button) layout.findViewById(R.id.btn_ok);
+        Button btnCloseSet = (Button) layout.findViewById(R.id.btn_close_set);
+        final Dialog dialog = new Dialog(this, R.style.dialog_rank);
+
+        dialog.setContentView(layout);
+
+        //设定感应模式checkBox组合的点击事件
+        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
+        actionModeCheckBox = new CheckBox(1, views);
+        new CheckBoxClickListener(actionModeCheckBox);
+        //设定灯光  颜色checkBox组合的点击事件
+
+
+
+        //设定闪烁模式checkbox组合的点击事件
+        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast};
+        blinkModeCheckBox = new CheckBox(1, views3);
+        new CheckBoxClickListener(blinkModeCheckBox);
+
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        btnCloseSet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        return dialog;
+    }
 }
