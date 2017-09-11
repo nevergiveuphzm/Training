@@ -1,11 +1,13 @@
 package com.oucb303.training.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -35,6 +37,7 @@ import com.oucb303.training.model.TimeInfo;
 import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.threads.Timer;
 import com.oucb303.training.utils.DataAnalyzeUtils;
+import com.oucb303.training.utils.OperateUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -85,32 +88,32 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
     Button btnOff;
     @Bind(R.id.sp_light_num)
     Spinner spLightNum;
-    @Bind(R.id.img_action_mode_light)
-    ImageView imgActionModeLight;
-    @Bind(R.id.img_action_mode_touch)
-    ImageView imgActionModeTouch;
-    @Bind(R.id.img_action_mode_together)
-    ImageView imgActionModeTogether;
-    @Bind(R.id.img_blink_mode_none)
-    ImageView imgBlinkModeNone;
-    @Bind(R.id.img_blink_mode_slow)
-    ImageView imgBlinkModeSlow;
-    @Bind(R.id.img_blink_mode_fast)
-    ImageView imgBlinkModeFast;
-    @Bind(R.id.img_light_color_blue)
-    ImageView imgLightColorBlue;
-    @Bind(R.id.img_light_color_red)
-    ImageView imgLightColorRed;
-    @Bind(R.id.img_light_color_green)
-    ImageView imgLightColorGreen;
-    @Bind(R.id.cb_voice)
+//    @Bind(R.id.img_action_mode_light)
+//    ImageView imgActionModeLight;
+//    @Bind(R.id.img_action_mode_touch)
+//    ImageView imgActionModeTouch;
+//    @Bind(R.id.img_action_mode_together)
+//    ImageView imgActionModeTogether;
+//    @Bind(R.id.img_blink_mode_none)
+//    ImageView imgBlinkModeNone;
+//    @Bind(R.id.img_blink_mode_slow)
+//    ImageView imgBlinkModeSlow;
+//    @Bind(R.id.img_blink_mode_fast)
+//    ImageView imgBlinkModeFast;
+//    @Bind(R.id.img_light_color_blue)
+//    ImageView imgLightColorBlue;
+//    @Bind(R.id.img_light_color_red)
+//    ImageView imgLightColorRed;
+//    @Bind(R.id.img_light_color_green)
+//    ImageView imgLightColorGreen;
+//    @Bind(R.id.cb_voice)
     android.widget.CheckBox cbVoice;
-    @Bind(R.id.cb_end_voice)
+//    @Bind(R.id.cb_end_voice)
     android.widget.CheckBox cbEndVoice;
-    @Bind(R.id.cb_over_time_voice)
-    android.widget.CheckBox cbOverTimeVoice;
-    @Bind(R.id.ll_params)
-    LinearLayout llParams;
+//    @Bind(R.id.cb_over_time_voice)
+//    android.widget.CheckBox cbOverTimeVoice;
+//    @Bind(R.id.ll_params)
+//    LinearLayout llParams;
     @Bind(R.id.tv_current_times)
     TextView tvCurrentTimes;
     @Bind(R.id.tv_lost_times)
@@ -123,10 +126,10 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
     Button btnBegin;
     @Bind(R.id.lv_group)
     ListView lvGroup;
-    @Bind(R.id.sv_container)
-    ScrollView svContainer;
-    @Bind(R.id.img_save)
-    ImageView imgSave;
+//    @Bind(R.id.sv_container)
+//    ScrollView svContainer;
+    @Bind(R.id.img_save_new)
+    ImageView imgSaveNew;
     private Device device;
     //所选择的设备个数，分组数，每组设备个数，每组每次亮灯个数
     private int totalNum, groupNum, everyNum, lightNum;
@@ -134,7 +137,7 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
     private WireNetConfrontationAdapter wireNetConfrontationAdapter;
     private int level;
     //感应模式，闪烁模式，灯光颜色
-    private CheckBox actionModeCheckBox, lightModeCheckBox, blinkModeCheckBox;
+    private CheckBox actionModeCheckBox, lightModeCheckBox, blinkModeCheckBox,lightColorCheckBox;
     //是否训练标志
     private boolean trainningFlag = false;
     //训练总时间,超时时间  单位是毫秒
@@ -163,6 +166,7 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
     private OverTimeThread overTimeThread;
     //此时超时的设备
     private char overTimeDeviceNum;
+    private Dialog set_dialog;
 
     Handler handler = new Handler() {
         @Override
@@ -206,7 +210,7 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wirenetconfrontation);
+        setContentView(R.layout.activity_wirenetconfrontation1);
         ButterKnife.bind(this);
         level = getIntent().getIntExtra("level", 1);
 
@@ -222,10 +226,16 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
         }
         initView();
     }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        imgSaveNew.setEnabled(false);
+        set_dialog = createLightSetDialog();
+    }
 
     public void initView() {
         tvTitle.setText("隔网对抗");
-        imgSave.setVisibility(View.VISIBLE);
+        imgSaveNew.setVisibility(View.VISIBLE);
         //设备排序
         Collections.sort(Device.DEVICE_LIST, new PowerInfoComparetor());
 
@@ -322,31 +332,31 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
             Toast.makeText(this, "设备个数不足，不能运行!", Toast.LENGTH_SHORT).show();
 
         //解决listView 与scrollView的滑动冲突
-        lvGroup.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent motionEvent) {
-                //从listView 抬起时将控制权还给scrollview
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP)
-                    svContainer.requestDisallowInterceptTouchEvent(false);
-                else
-                    //requestDisallowInterceptTouchEvent（true）方法是用来子View告诉父容器不要拦截我们的事件的
-                    svContainer.requestDisallowInterceptTouchEvent(true);
-                return false;
-            }
-        });
+//        lvGroup.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent motionEvent) {
+//                //从listView 抬起时将控制权还给scrollview
+//                if (motionEvent.getAction() == MotionEvent.ACTION_UP)
+//                    svContainer.requestDisallowInterceptTouchEvent(false);
+//                else
+//                    //requestDisallowInterceptTouchEvent（true）方法是用来子View告诉父容器不要拦截我们的事件的
+//                    svContainer.requestDisallowInterceptTouchEvent(true);
+//                return false;
+//            }
+//        });
 
         //感应模式
-        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
-        actionModeCheckBox = new CheckBox(1, views);
-        new CheckBoxClickListener(actionModeCheckBox);
-        //闪烁模式
-        ImageView[] views1 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast};
-        blinkModeCheckBox = new CheckBox(1, views1);
-        new CheckBoxClickListener(blinkModeCheckBox);
-        //灯光颜色
-        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorGreen};
-        lightModeCheckBox = new CheckBox(1, views2);
-        new CheckBoxClickListener(lightModeCheckBox);
+//        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
+//        actionModeCheckBox = new CheckBox(1, views);
+//        new CheckBoxClickListener(actionModeCheckBox);
+//        //闪烁模式
+//        ImageView[] views1 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast};
+//        blinkModeCheckBox = new CheckBox(1, views1);
+//        new CheckBoxClickListener(blinkModeCheckBox);
+//        //灯光颜色
+//        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorGreen};
+//        lightModeCheckBox = new CheckBox(1, views2);
+//        new CheckBoxClickListener(lightModeCheckBox);
 
         //初始化右侧成绩listview
         wireNetConfrontationAdapter = new WireNetConfrontationAdapter(this);
@@ -368,9 +378,14 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
             device.disconnect();
     }
 
-    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help, R.id.btn_on, R.id.btn_off, R.id.img_save})
+    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help, R.id.btn_on, R.id.btn_off, R.id.img_save_new,R.id.btn_stop,R.id.img_set})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.img_set:
+                set_dialog = createLightSetDialog();
+                OperateUtils.setScreenWidth(this, set_dialog, 0.95, 0.7);
+                set_dialog.show();
+                break;
             case R.id.layout_cancel:
                 this.finish();
                 device.turnOffAllTheLight();
@@ -388,13 +403,15 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
                 else
                     startTraining();
                 break;
+            case R.id.btn_stop:
+                stopTraining();
             case R.id.btn_on:
                 device.turnOnButton(groupNum, everyNum, 1);
                 break;
             case R.id.btn_off:
                 device.turnOffAllTheLight();
                 break;
-            case R.id.img_save:
+            case R.id.img_save_new:
                 Intent intent = new Intent(this, SaveActivity.class);
                 Bundle bundle = new Bundle();
                 //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 5:运球比赛、多人混战、分组对抗 ...
@@ -417,7 +434,7 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
     }
 
     public void startTraining() {
-        btnBegin.setText("停止");
+
         trainningFlag = true;
         Log.i("分组数是：", "---------" + groupNum);
         //初始化
@@ -439,18 +456,14 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
         wireNetConfrontationAdapter.notifyDataSetChanged();
         //创建随机队列
         createRandomNumber(groupNum);
+        Log.i("奇数组的随机队列都有什么？", "=======" + oddListRand.size() + "\n");
         for (int i = 0; i < oddListRand.size(); i++) {
             Log.i("奇数组的随机队列都有什么？", "=======" + oddListRand.get(i) + "\n");
         }
         for (int j = 0; j < oddListRand.size(); j++) {
             for (int i = 0; i < lightNum; i++) {//第一次开奇数组的灯
-                device.sendOrder(Device.DEVICE_LIST.get(oddListRand.get(j).get(0)).getDeviceNum(),
-                        Order.LightColor.values()[1],
-                        Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                        Order.BlinkModel.values()[blinkModeCheckBox.getCheckId() - 1],
-                        Order.LightModel.OUTER,
-                        Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                        Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
+                Log.i("111111111111111111111",oddListRand.get(j).get(0)+"");
+                sendOrder(Device.DEVICE_LIST.get(oddListRand.get(j).get(0)).getDeviceNum());
 
                 //每组设备灯亮起的当前时间，只要亮了就将标志位置为1
                 duration[oddListRand.get(j).get(0)][0] = (int)System.currentTimeMillis();
@@ -555,13 +568,7 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
         for (int i = 0; i < oddListRand.size(); i++) {
             Log.i("oddListRand:--《》《》《》-", "--《》《》《》------" + oddListRand);
         }
-        device.sendOrder(Device.DEVICE_LIST.get(oddListRand.get(num).get(0)).getDeviceNum(),
-                Order.LightColor.values()[1],
-                Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                Order.BlinkModel.values()[blinkModeCheckBox.getCheckId() - 1],
-                Order.LightModel.OUTER,
-                Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
+       sendOrder(Device.DEVICE_LIST.get(oddListRand.get(num).get(0)).getDeviceNum());
         Log.i("开的是哪个灯", "999999999999999" + Device.DEVICE_LIST.get(oddListRand.get(num).get(0)).getDeviceNum());
         duration[oddListRand.get(num).get(0)][0] = (int)System.currentTimeMillis();
         duration[oddListRand.get(num).get(0)][1] = 1;
@@ -620,13 +627,7 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
 //            @Override
 //            public void run() {
 //                Timer.sleep(2000);
-        device.sendOrder(Device.DEVICE_LIST.get(evenListRand.get(num).get(0)).getDeviceNum(),
-                Order.LightColor.values()[1],
-                Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                Order.BlinkModel.values()[blinkModeCheckBox.getCheckId() - 1],
-                Order.LightModel.OUTER,
-                Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
+      sendOrder(Device.DEVICE_LIST.get(evenListRand.get(num).get(0)).getDeviceNum());
         duration[evenListRand.get(num).get(0)][0] = (int)System.currentTimeMillis();
         duration[evenListRand.get(num).get(0)][1] = 1;
         Log.i("开的是哪个灯", "999999999999999" + Device.DEVICE_LIST.get(evenListRand.get(num).get(0)).getDeviceNum());
@@ -634,11 +635,18 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
 //            }
 //        }).start();
     }
-
+    public void sendOrder(char deviceNum) {
+        device.sendOrder(deviceNum, Order.LightColor.values()[1],
+                Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
+                Order.BlinkModel.values()[blinkModeCheckBox.getCheckId() - 1],
+                Order.LightModel.OUTER,
+                Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
+                Order.EndVoice.NONE);
+    }
     //停止训练
     private void stopTraining() {
         timer.stopTimer();
-        btnBegin.setText("开始");
+
         btnBegin.setEnabled(false);
         trainningFlag = false;
         if (overTimeThread != null)
@@ -650,13 +658,7 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
     }
 
     private void turnOffLight(final char deviceNum) {
-        device.sendOrder(deviceNum,
-                Order.LightColor.NONE,
-                Order.VoiceMode.NONE,
-                Order.BlinkModel.NONE,
-                Order.LightModel.TURN_OFF,
-                Order.ActionModel.TURN_OFF,
-                Order.EndVoice.NONE);
+   sendOrder(deviceNum);
     }
 
     class OverTimeThread extends Thread {
@@ -705,5 +707,54 @@ public class WireNetConfrontationActivity extends AppCompatActivity {
                 Timer.sleep(100);
             }
         }
+    }
+    public Dialog createLightSetDialog() {
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View v = inflater.inflate(R.layout.layout_dialog_lightset, null);// 得到加载view
+
+        LinearLayout layout = (LinearLayout) v.findViewById(R.id.dialog_light_set);
+        ImageView imgActionModeTouch = (ImageView) layout.findViewById(R.id.img_action_mode_touch);
+        ImageView imgActionModeLight = (ImageView) layout.findViewById(R.id.img_action_mode_light);
+        ImageView imgActionModeTogether = (ImageView) layout.findViewById(R.id.img_action_mode_together);
+        ImageView imgLightColorBlue = (ImageView) layout.findViewById(R.id.img_light_color_blue);
+        ImageView imgLightColorRed = (ImageView) layout.findViewById(R.id.img_light_color_red);
+        ImageView imgLightColorBlueRed = (ImageView) layout.findViewById(R.id.img_light_color_blue_red);
+        ImageView imgBlinkModeNone = (ImageView) layout.findViewById(R.id.img_blink_mode_none);
+        ImageView imgBlinkModeSlow = (ImageView) layout.findViewById(R.id.img_blink_mode_slow);
+        ImageView imgBlinkModeFast = (ImageView) layout.findViewById(R.id.img_blink_mode_fast);
+        cbVoice = (android.widget.CheckBox) layout.findViewById(R.id.cb_voice);
+        Button btnOk = (Button) layout.findViewById(R.id.btn_ok);
+        Button btnCloseSet = (Button) layout.findViewById(R.id.btn_close_set);
+        final Dialog dialog = new Dialog(this, R.style.dialog_rank);
+
+        dialog.setContentView(layout);
+
+        //设定感应模式checkBox组合的点击事件
+        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
+        actionModeCheckBox = new CheckBox(1, views);
+        new CheckBoxClickListener(actionModeCheckBox);
+        //设定灯光颜色checkBox组合的点击事件
+        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
+        lightColorCheckBox = new CheckBox(1, views2);
+        new CheckBoxClickListener(lightColorCheckBox);
+        //设定闪烁模式checkbox组合的点击事件
+        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast};
+        blinkModeCheckBox = new CheckBox(1, views3);
+        new CheckBoxClickListener(blinkModeCheckBox);
+
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        btnCloseSet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        return dialog;
     }
 }
