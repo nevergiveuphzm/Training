@@ -194,7 +194,9 @@ public class EnduranceActivity extends AppCompatActivity{
                         stopTraining();
                     }
                     break;
-
+                case Timer.TIMER_DOWN:
+                    tvTotalTime.setText("倒计时："+msg.obj.toString());
+                    break;
                 case TIME_RECEIVE://接收到设备返回的时间
                     if (data.length() < 7)
                         return;
@@ -252,22 +254,6 @@ public class EnduranceActivity extends AppCompatActivity{
         ///初始化分组listView
         groupListViewAdapter = new GroupListViewAdapter(EnduranceActivity.this, groupSize);
         lvGroup.setAdapter(groupListViewAdapter);
-        //解决listView 与scrollView的滑动冲突
-   /*     lvGroup.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                //从listView 抬起时将控制权还给scrollview
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP)
-                    svContainer.requestDisallowInterceptTouchEvent(false);
-                else
-                    svContainer.requestDisallowInterceptTouchEvent(true);
-                return false;
-            }
-        });*/
-        //初始化训练强度拖动条
-//        barLevel.setOnSeekBarChangeListener(new MySeekBarListener(barTrainingTime,tvLevel, 2));
-//        imgLevelsub.setOnTouchListener(new AddOrSubBtnClickListener(barLevel, 0));
-//        imgLevelAdd.setOnTouchListener(new AddOrSubBtnClickListener(barLevel, 1));
         //初始化训练时间拖动条
         barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 10));
         imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
@@ -280,21 +266,6 @@ public class EnduranceActivity extends AppCompatActivity{
         String[] lightNum = new String[maxGroupSize];
         for (int i = 0; i < lightNum.length; i++)
             lightNum[i] = (i + 1) + "个";
-
-//        spDevNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(this, spDevNum, lightNum) {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                groupSize = i + 1;
-//                Log.d("groupNum",""+groupNum);
-
-//                if (Device.DEVICE_LIST.size() / groupSize < groupNum) {
-////                    Toast.makeText(JumpHighActivity.this, "当前设备数量为" + Device.DEVICE_LIST.size() + ",不能分成" + groupNum + "组!",
-////                            Toast.LENGTH_LONG).show();
-//                    spGroupNum.setSelection(0);
-//                    groupNum = 0;
-//                }
-
-
                 int totalGroupNum = Device.DEVICE_LIST.size() / groupSize;
                 String[] trainGroupNum = new String[totalGroupNum + 1];
                 trainGroupNum[0] = "";
@@ -304,15 +275,7 @@ public class EnduranceActivity extends AppCompatActivity{
                 ArrayAdapter<String> adapterGroupNum = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, trainGroupNum);
                 adapterGroupNum.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spGroupNum.setAdapter(adapterGroupNum);
-//                if (Device.DEVICE_LIST.size() / groupSize < groupNum) {
-//                    Toast.makeText(JumpHighActivity.this, "当前设备数量为" + Device.DEVICE_LIST.size() + ",不能分成" + i + "组!",
-//                            Toast.LENGTH_LONG).show();
-//                    spGroupNum.setSelection(0);
-//                    groupNum = 0;
-//                }
-//                groupListViewAdapter.setGroupNum(groupNum)
-//            }
-//        });
+
         spGroupNum.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
@@ -327,35 +290,7 @@ public class EnduranceActivity extends AppCompatActivity{
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-//        String[] trainGroupNum = new String[]
 
-
-//        spGroupNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(this, spGroupNum, new String[]{" ", "一组", "两组", "三组", "四组"}) {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                groupNum = i;
-//
-//                groupListViewAdapter.setGroupNum(groupNum);
-//                groupListViewAdapter.notifyDataSetChanged();
-//            }
-//        });
-
-        //设定感应模式checkBox组合的点击事件
-      /*  ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
-        actionModeCheckBox = new CheckBox(1, views);
-        new CheckBoxClickListener(actionModeCheckBox);
-        //设定灯光模式checkBox组合的点击事件
-//        ImageView[] views1 = new ImageView[]{imgLightModeBeside, imgLightModeCenter, imgLightModeAll,};
-//        lightModeCheckBox = new CheckBox(1, views1);
-//        new CheckBoxClickListener(lightModeCheckBox);
-        //设定灯光颜色checkBox组合的点击事件
-        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
-        lightColorCheckBox = new CheckBox(1, views2);
-        new CheckBoxClickListener(lightColorCheckBox);
-        //设定闪烁模式checkbox组合的点击事件
-        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast,};
-        blinkModeCheckBox = new CheckBox(1, views3);
-        new CheckBoxClickListener(blinkModeCheckBox);*/
     }
 
 
@@ -504,7 +439,7 @@ public class EnduranceActivity extends AppCompatActivity{
                 Order.BlinkModel.values()[blinkModeCheckBox.getCheckId() - 1],
                 Order.LightModel.OUTER,
                 Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                Order.EndVoice.NONE);
+                Order.EndVoice.values()[cbEndVoice.isChecked()?1:0]);
     }
 
 
@@ -555,6 +490,7 @@ public class EnduranceActivity extends AppCompatActivity{
         ImageView imgLightModeCenter=(ImageView)layout.findViewById(R.id.img_light_mode_center);
         ImageView imgLightModeAll=(ImageView)layout.findViewById(R.id.img_light_mode_all);
         cbVoice = (android.widget.CheckBox) layout.findViewById(R.id.cb_voice);
+        cbEndVoice =(android.widget.CheckBox) layout.findViewById(R.id.cb_endvoice);
         Button btnOk = (Button) layout.findViewById(R.id.btn_ok);
         Button btnCloseSet = (Button) layout.findViewById(R.id.btn_close_set);
         final Dialog dialog = new Dialog(this, R.style.dialog_rank);

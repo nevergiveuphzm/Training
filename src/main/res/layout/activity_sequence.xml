@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical"
+    tools:context=".activity.CombinedTrainingActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/layout_title_bar_newer" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rl_first"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_time"
+                android:orientation="vertical">
+
+            </RelativeLayout>
+
+            <RelativeLayout
+
+                android:layout_width="360dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="130dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_traintime">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="55dp"
+                    android:layout_marginTop="2dp"
+                    android:text="延迟时间:"
+                    android:textColor="@color/white"
+                    android:textSize="25sp" />
+                <TextView
+                    android:id="@+id/tv_delay_time"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="200dp"
+                    android:layout_marginTop="2dp"
+                    android:text="1"
+                    android:textColor="@color/white"
+                    android:textSize="25sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="245dp"
+                    android:layout_marginTop="2dp"
+                    android:text="秒"
+                    android:textColor="@color/white"
+                    android:textSize="25sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="560dp"
+                android:layout_height="55dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="90dp">
+
+                <ImageView
+                    android:id="@+id/img_delay_time_sub"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/img_sub" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="52dp"
+                    android:layout_marginTop="5dp"
+                    android:text="0"
+                    android:textColor="@color/black"
+                    android:textSize="30sp" />
+
+                <SeekBar
+                    android:id="@+id/bar_delay_time"
+                    style="@style/Widget.SeekBar.Normal"
+                    android:layout_width="380dp"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="80dp"
+                    android:layout_marginTop="10dip"
+                    android:max="20"
+                    android:progress="2"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="465dp"
+                    android:layout_marginTop="5dp"
+                    android:text="10"
+                    android:textColor="@color/black"
+                    android:textSize="30sp" />
+
+
+                <ImageView
+                    android:id="@+id/img_delay_time_add"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="510dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/img_plus" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_second"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="220dp"
+                android:background="@drawable/bg_time"
+                android:orientation="vertical">
+
+            </RelativeLayout>
+
+            <RelativeLayout
+
+                android:layout_width="360dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="130dp"
+                android:layout_marginTop="200dp"
+                android:background="@drawable/bg_traintime">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="55dp"
+                    android:layout_marginTop="2dp"
+                    android:text="超时时间:"
+                    android:textColor="@color/white"
+                    android:textSize="25sp" />
+                <TextView
+                    android:id="@+id/tv_over_time"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="200dp"
+                    android:layout_marginTop="2dp"
+                    android:text="1"
+                    android:textColor="@color/white"
+                    android:textSize="25sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="245dp"
+                    android:layout_marginTop="2dp"
+                    android:text="秒"
+                    android:textColor="@color/white"
+                    android:textSize="25sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="560dp"
+                android:layout_height="55dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="290dp">
+
+                <ImageView
+                    android:id="@+id/img_over_time_sub"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/img_sub" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="52dp"
+                    android:layout_marginTop="5dp"
+                    android:text="0"
+                    android:textColor="@color/black"
+                    android:textSize="30sp" />
+
+                <SeekBar
+                    android:id="@+id/bar_over_time"
+                    style="@style/Widget.SeekBar.Normal"
+                    android:layout_width="380dp"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="80dp"
+                    android:layout_marginTop="10dip"
+                    android:max="20"
+                    android:progress="2"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="465dp"
+                    android:layout_marginTop="5dp"
+                    android:text="10"
+                    android:textColor="@color/black"
+                    android:textSize="30sp" />
+
+
+                <ImageView
+                    android:id="@+id/img_over_time_add"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="510dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/img_plus" />
+
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/rl_third"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:orientation="vertical"
+                android:layout_marginTop="200dp"
+                android:layout_below="@id/rl_first">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:gravity="center"
+                    >
+
+                    <Button
+                        android:id="@+id/btn_random"
+                        android:layout_width="match_parent"
+                        android:layout_height="90dp"
+                        android:text="随机生成序列"
+                        android:textColor="@color/white"
+                        android:textSize="35sp"
+                        android:background="@drawable/img_random"
+                        />
+                    <Button
+                        android:id="@+id/btn_save"
+                        android:layout_width="wrap_content"
+                        android:layout_height="90dp"
+                        android:text="保存"
+                        android:textColor="@color/white"
+                        android:textSize="35sp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/img_random_save"
+                        />
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <include layout="@layout/layout_line_vertical"></include>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:layout_margin="20dp"
+                android:id="@+id/relativeLayout3">
+
+                <com.oucb303.training.widget.SequenceSetListview
+                    android:id="@+id/lv_sequenceSet"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:divider="#00000000"
+                    android:dividerHeight="5dp"/>
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

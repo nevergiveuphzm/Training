@@ -114,31 +114,6 @@ public class SitUpsActivity extends AppCompatActivity {
     @Bind(R.id.btn_history_result)
     Button btnHistoryResult;
 
-
-//    @Bind(R.id.lightMode_checkBox)
-//    LinearLayout lightModecheckBox;
-//    @Bind(R.id.img_level_sub)
-//    ImageView imgLevelsub;
-//    @Bind(R.id.img_level_add)
-//    ImageView imgLevelAdd;
-//    @Bind(R.id.bar_level)
-//    SeekBar barLevel;
-//    @Bind(R.id.tv_level)
-//    TextView tvLevel;
-//    @Bind(R.id.ll_level)
-//    LinearLayout lLevel;
-
-//    @Bind(R.id.blinkMode_checkBox)
-//    LinearLayout blinkModecheckBox;
-//    @Bind(R.id.ll_params)
-//    LinearLayout llParams;
-//    @Bind(R.id.img_blink_mode_none)
-//    ImageView imgBlinkModeNone;
-//    @Bind(R.id.img_blink_mode_slow)
-//    ImageView imgBlinkModeSlow;
-//    @Bind(R.id.img_blink_mode_fast)
-//    ImageView imgBlinkModeFast;
-
     private Device device;
     private final int TIME_RECEIVE = 1, POWER_RECEIVER = 2, UPDATE_DATA = 3;
     //训练时间  单位毫秒

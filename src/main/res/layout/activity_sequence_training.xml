@@ -83,7 +83,7 @@
                             android:orientation="horizontal">
 
                             <ImageView
-                                android:id="@+id/iv_delaytime_sub"
+                                android:id="@+id/img_delay_time_sub"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
@@ -631,7 +631,6 @@
 
 
                     </LinearLayout>
-
 
                 </LinearLayout>
 

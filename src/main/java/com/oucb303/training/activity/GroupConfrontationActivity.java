@@ -58,19 +58,6 @@ public class GroupConfrontationActivity extends AppCompatActivity {
 
     private final int TIME_RECEIVE = 1;
 
-
-
-    @Bind(R.id.img_action_mode_touch)
-    ImageView imgActionModeTouch;
-    @Bind(R.id.img_action_mode_together)
-    ImageView imgActionModeTogether;
-    @Bind(R.id.img_light_mode_beside)
-    ImageView imgLightModeBeside;
-    @Bind(R.id.img_light_mode_center)
-    ImageView imgLightModeCenter;
-    @Bind(R.id.img_light_mode_all)
-    ImageView imgLightModeAll;
-    @Bind(R.id.cb_voice)
     android.widget.CheckBox cbVoice;
     @Bind(R.id.btn_begin)
     Button btnBegin;
@@ -80,13 +67,6 @@ public class GroupConfrontationActivity extends AppCompatActivity {
     HorizontalListView hlvGroup2;
     @Bind(R.id.img_help)
     ImageView imgHelp;
-    @Bind(R.id.img_blink_mode_none)
-    ImageView imgBlinkModeNone;
-    @Bind(R.id.img_blink_mode_slow)
-    ImageView imgBlinkModeSlow;
-    @Bind(R.id.img_blink_mode_fast)
-    ImageView imgBlinkModeFast;
-
 
     private Device device;
     private GroupListViewAdapter groupListViewAdapter;

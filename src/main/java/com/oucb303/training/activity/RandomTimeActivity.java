@@ -56,6 +56,15 @@ import butterknife.OnClick;
  */
 public class RandomTimeActivity extends AppCompatActivity {
 
+    //接收到电量信息标志
+    private final int POWER_RECEIVE = 1;
+    //接收到灭灯时间标志
+    private final int TIME_RECEIVE = 2;
+    //停止训练标志
+    private final int STOP_TRAINING = 3;
+    //更新时间运行次数等信息
+    private final int LOST_TIME = 4;
+    private final int UPDATE_TIMES = 5;
     @Bind(R.id.bt_distance_cancel)
     ImageView btDistanceCancel;
     @Bind(R.id.layout_cancel)
@@ -156,7 +165,6 @@ public class RandomTimeActivity extends AppCompatActivity {
     ImageView imgBlinkModeSlow;
     @Bind(R.id.img_blink_mode_fast)
     ImageView imgBlinkModeFast;
-
     private int level;
     private Device device;
     //当前选用的设备个数
@@ -192,27 +200,8 @@ public class RandomTimeActivity extends AppCompatActivity {
     private int groupSize, groupNum = 1;
     //感应模式和灯光模式集合
     private CheckBox actionModeCheckBox, lightModeCheckBox, lightColorCheckBox, blinkModeCheckBox;
-
-
     private ArrayAdapter<String> adapterDeviceNum;
     private Context context;
-    private RandomTimesModuleAdapter randomTimesModuleAdapter;
-
-    //接收到电量信息标志
-    private final int POWER_RECEIVE = 1;
-    //接收到灭灯时间标志
-    private final int TIME_RECEIVE = 2;
-    //停止训练标志
-    private final int STOP_TRAINING = 3;
-    //更新时间运行次数等信息
-    private final int LOST_TIME = 4;
-    private final int UPDATE_TIMES = 5;
-    //存放随机数的list
-    private List<List<Integer>> listRands = new ArrayList<>();
-    private int[] everyGroupTotalTime;
-    private GroupListViewAdapter groupListViewAdapter;
-    private int colorNum = 0;//颜色数
-
     Handler timerHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -227,7 +216,12 @@ public class RandomTimeActivity extends AppCompatActivity {
             }
         }
     };
-
+    private RandomTimesModuleAdapter randomTimesModuleAdapter;
+    //存放随机数的list
+    private List<List<Integer>> listRands = new ArrayList<>();
+    private int[] everyGroupTotalTime;
+    private GroupListViewAdapter groupListViewAdapter;
+    private int colorNum = 0;//颜色数
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -439,8 +433,8 @@ public class RandomTimeActivity extends AppCompatActivity {
         ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
         lightColorCheckBox = new CheckBox(1, views2);
         new CheckBoxClickListener(lightColorCheckBox);
-        ImageView[] view3 = new ImageView[]{imgBlinkModeNone,imgBlinkModeSlow,imgBlinkModeFast};
-        blinkModeCheckBox = new CheckBox(1,view3);
+        ImageView[] view3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast};
+        blinkModeCheckBox = new CheckBox(1, view3);
         new CheckBoxClickListener(blinkModeCheckBox);
     }
 
@@ -536,7 +530,7 @@ public class RandomTimeActivity extends AppCompatActivity {
                 device.sendOrder(Device.DEVICE_LIST.get(listRands.get(j).get(i)).getDeviceNum(),
                         Order.LightColor.values()[color],
                         Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                        Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
+                        Order.BlinkModel.values()[blinkModeCheckBox.getCheckId() - 1],
                         Order.LightModel.values()[1],
                         Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                         Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
@@ -642,11 +636,9 @@ public class RandomTimeActivity extends AppCompatActivity {
             timeList.add(info);
             if (!trainingFlag)
                 break outterLoop;
-            if (currentTimes[groupId] < totalTimes) {
+            if (timer.time < trainingTime) {
                 turnOnLight(groupId, everyId, info.getDeviceNum());
             }
-
-
         }
     }
 
@@ -702,7 +694,7 @@ public class RandomTimeActivity extends AppCompatActivity {
                 device.sendOrder(Device.DEVICE_LIST.get(listRands.get(listNumGroup[0]).get(finalListNum)).getDeviceNum(),
                         Order.LightColor.values()[color],
                         Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                        Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
+                        Order.BlinkModel.values()[blinkModeCheckBox.getCheckId() - 1],
                         Order.LightModel.values()[1],
                         Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                         Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
@@ -771,7 +763,7 @@ public class RandomTimeActivity extends AppCompatActivity {
                             Log.i("此时超时的是：", "" + deviceNum);
                             duration[j][i] = 0;
                             turnOffLight(deviceNum);
-                            if (currentTimes[j] < totalTimes)
+                            if (timer.time < trainingTime)
                                 turnOnLight(j, i, deviceNum);
                             lostTimes++;
 //                            currentTimes[j]++;

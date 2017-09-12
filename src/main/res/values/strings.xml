@@ -107,4 +107,12 @@
     <string name="largeRecess_training_standard"> &#160;&#160;&#160;&#160;固定时间内扫灭的次数!</string>
 
     <string name="light_1">1+1+1+1</string>
+
+    <string name="timekeeper_training_method">&#160;&#160;&#160;&#160;</string>
+    <string name="timekeeper_training_standard"> &#160;&#160;&#160;&#160;</string>
+
+    <!--分组对抗-->
+    <string name="groupresist_training_method">&#160;&#160;&#160;&#160;</string>
+    <string name="groupresist_training_standard"> &#160;&#160;&#160;&#160;</string>
+
 </resources>

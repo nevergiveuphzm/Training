@@ -30,8 +30,10 @@ public class CategoryExerciseAbility implements Category
     };
 
 
-    String[][] targetString = {{"ShuttleRunActivity1.class","LargeRecessActivity.class","RandomTrainingActivity.class"},
-            {"JumpHighActivity.class"},
+
+
+    String[][] targetString = {{"ShuttleRunActivity1.class","LargeRecessActivity.class","RandomTrainingActivity.class","","",""},
+            {"JumpHighActivity.class",""},
             {""},
             {"CourbetteActivity.class"},
             {"SitUpsActivity.class","CrawlActivity.class"},

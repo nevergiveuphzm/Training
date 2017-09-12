@@ -21,7 +21,7 @@
 
             <TextView
                 android:id="@+id/tv_add"
-                android:layout_width="70dp"
+                android:layout_width="100dp"
                 android:layout_height="70dp"
                 android:layout_margin="5dp"
                 android:background="@drawable/grass_green_round_stroke_no_padding_bg"
@@ -81,22 +81,22 @@
     <LinearLayout
         android:id="@+id/ll_last"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="110dp"
+        android:background="@color/white"
         android:orientation="vertical"
         android:visibility="gone">
 
         <TextView
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_width="400dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="40dp"
             android:gravity="center_horizontal"
-            android:text="添加序列"
+            android:background="@drawable/add_sequence"
             android:textColor="#FF333333"
             android:textSize="35sp">
 
         </TextView>
-
-
     </LinearLayout>
 
 </LinearLayout>

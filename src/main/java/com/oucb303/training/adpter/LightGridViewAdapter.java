@@ -67,9 +67,9 @@ public class LightGridViewAdapter extends BaseAdapter
         }
         //如果被选中，选择亮图片
         if (list_light.get(position).isChecked())
-            holder.ll_image.setBackgroundResource(R.drawable.light_blue);
+            holder.ll_image.setBackgroundResource(R.drawable.light_green);
         else
-            holder.ll_image.setBackgroundResource(R.drawable.iv_circle);
+            holder.ll_image.setBackgroundResource(R.drawable.lostfocus_light);
 
         char num = 'A';
         if (list_light.get(position).getNum() <= 26)

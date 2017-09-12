@@ -15,13 +15,11 @@ import android.widget.Toast;
 
 import com.oucb303.training.R;
 import com.oucb303.training.activity.GroupResistActivity;
-import com.oucb303.training.activity.HackerSpaceActivity;
 import com.oucb303.training.activity.RandomTimeActivity;
 import com.oucb303.training.activity.RandomTimesModuleActivity;
 import com.oucb303.training.activity.SitUpsActivity;
 import com.oucb303.training.activity.TimeKeeperActivity;
 import com.oucb303.training.activity.TimingModuleActivity;
-import com.oucb303.training.adpter.TimingModuleAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;

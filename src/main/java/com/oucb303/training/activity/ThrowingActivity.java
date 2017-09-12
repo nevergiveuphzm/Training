@@ -78,36 +78,15 @@ public class ThrowingActivity extends AppCompatActivity {
     android.widget.CheckBox cbVoice;
     @Bind(R.id.img_set)
     ImageView imgSet;
-    //    @Bind(R.id.img_action_mode_touch)
-//  ImageView imgActionModeTouch;
-//@Bind(R.id.img_action_mode_light)
-//    ImageView imgActionModeLight;
-//    @Bind(R.id.img_action_mode_together)
-//    ImageView imgActionModeTogether;
     @Bind(R.id.btn_begin)
     Button btnBegin;
     @Bind(R.id.tv_total_time)
     TextView tvTotalTime;
-    //@Bind(R.id.cb_voice)
-    //android.widget.CheckBox cbVoice;
-    //@Bind(R.id.cb_end_voice)
-    // android.widget.CheckBox cbEndVoice;
-    // @Bind(R.id.img_light_color_blue)
-    //ImageView imgLightColorBlue;
-    //@Bind(R.id.img_light_color_red)
-    //ImageView imgLightColorRed;
-    //@Bind(R.id.img_light_color_blue_red)
-    //ImageView imgLightColorBlueRed;
+     android.widget.CheckBox cbEndVoice;
     @Bind(R.id.btn_on)
     Button btnOn;
     @Bind(R.id.btn_off)
     Button btnOff;
-    // @Bind(R.id.img_blink_mode_none)
-    //ImageView imgBlinkModeNone;
-    //@Bind(R.id.img_blink_mode_slow)
-    //ImageView imgBlinkModeSlow;
-    //@Bind(R.id.img_blink_mode_fast)
-    //ImageView imgBlinkModeFast;
 
     @Bind(R.id.bar_training_time)
     SeekBar barTrainingTime;
@@ -248,70 +227,22 @@ public class ThrowingActivity extends AppCompatActivity {
             }
         });
 
-        //初始化训练强度下拉框
-//        final String[] trainingOptions = new String[10];
-//        for (int i = 1; i <= 10; i++) {
-//            trainingOptions[i - 1] = "50米 * " + i * 2;
-//        }
-
-//        spTrainingTimes.setOnItemSelectedListener(new SpinnerItemSelectedListener(ThrowingActivity.this, spTrainingTimes, trainingOptions) {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         //总的训练次数
         totalTrainingTimes =Integer.valueOf(tvTrainingTime.getText().toString());
-//            }
-//        });
+
         //训练时间拖动条初始化
         barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 50));
         imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
         imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
-//        switch (level) {
-//            case 1:
-//                level = 0;
-//                break;
-//            case 2:
-//                level = 3;
-//                break;
-//            case 3:
-//                level = 7;
-//                break;
-//        }
-//        spTrainingTimes.setSelection(level);
 
         //初始化分组listview
         groupListViewAdapter = new GroupListViewAdapter(ThrowingActivity.this, groupSize);
         lvGroup.setAdapter(groupListViewAdapter);
 
-        //解决listView 与scrollView的滑动冲突
-        //lvGroup.setOnTouchListener(new View.OnTouchListener() {
-        //    @Override
-        //    public boolean onTouch(View v, MotionEvent motionEvent) {
-        //从listView 抬起时将控制权还给scrollview
-        //        if (motionEvent.getAction() == MotionEvent.ACTION_UP)
-        //            svContainer.requestDisallowInterceptTouchEvent(false);
-        //        else
-        //requestDisallowInterceptTouchEvent（true）方法是用来子View告诉父容器不要拦截我们的事件的
-        //            svContainer.requestDisallowInterceptTouchEvent(true);
-        //        return false;}
-        //});
-
         //初始化时间listview
         shuttleRunAdapter = new ShuttleRunAdapter1(this);
         lvTimes.setAdapter(shuttleRunAdapter);
 
-
-        //设定checkbox组合的点击事件
-        //ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
-        //actionModeCheckBox = new CheckBox(1, views);
-        //new CheckBoxClickListener(actionModeCheckBox);
-        //设定闪烁模式checkBox组合的点击事件
-        //ImageView[] views1 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast};
-        //blinkModeCheckBox = new CheckBox(1, views1);
-        //new CheckBoxClickListener(blinkModeCheckBox);
-        //设定灯光颜色checkBox组合的点击事件
-        //ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
-        //lightColorCheckBox = new CheckBox(1, views2);
-        //new CheckBoxClickListener(lightColorCheckBox);
     }
 
 
@@ -397,7 +328,6 @@ public class ThrowingActivity extends AppCompatActivity {
         shuttleRunAdapter.setTimeMap(timeMap,keyId);
         shuttleRunAdapter.notifyDataSetChanged();
 
-        btnBegin.setText("停止");
         //清除串口数据
         new ReceiveThread(handler, device.ftDev, ReceiveThread.CLEAR_DATA_THREAD, 0).start();
 
@@ -408,11 +338,11 @@ public class ThrowingActivity extends AppCompatActivity {
         for (int i = 0; i < groupNum; i++) {
             device.sendOrder(Device.DEVICE_LIST.get(i).getDeviceNum(),
                     Order.LightColor.values()[lightColorCheckBox.getCheckId()],
-                    Order.VoiceMode.values()[1],
+                    Order.VoiceMode.values()[cbVoice.isChecked()?1:0],
                     Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
                     Order.LightModel.OUTER,
                     Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                    Order.EndVoice.values()[1]);
+                    Order.EndVoice.values()[cbEndVoice.isChecked()?1:0]);
         }
 
         //获得当前的系统时间
@@ -425,7 +355,6 @@ public class ThrowingActivity extends AppCompatActivity {
     //结束训 练
     public void stopTraining() {
         trainingBeginFlag = false;
-        btnBegin.setText("开始");
         imgSaveNew.setEnabled(true);
         //停止接收线程
         ReceiveThread.stopThread();
@@ -443,11 +372,11 @@ public class ThrowingActivity extends AppCompatActivity {
                     return;
                 device.sendOrder(deviceNum,
                         Order.LightColor.values()[lightColorCheckBox.getCheckId()],
-                        Order.VoiceMode.values()[1],
+                        Order.VoiceMode.values()[cbVoice.isChecked()?1:0],
                         Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
                         Order.LightModel.OUTER,
                         Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                        Order.EndVoice.values()[1]);
+                        Order.EndVoice.values()[cbEndVoice.isChecked()?1:0]);
             }
         }).start();
     }
@@ -543,6 +472,7 @@ public class ThrowingActivity extends AppCompatActivity {
         ImageView imgBlinkModeSlow = (ImageView) layout.findViewById(R.id.img_blink_mode_slow);
         ImageView imgBlinkModeFast = (ImageView) layout.findViewById(R.id.img_blink_mode_fast);
         cbVoice = (android.widget.CheckBox) layout.findViewById(R.id.cb_voice);
+        cbEndVoice = (android.widget.CheckBox) layout.findViewById(R.id.cb_endvoice);
         Button btnOk = (Button) layout.findViewById(R.id.btn_ok);
         Button btnCloseSet = (Button) layout.findViewById(R.id.btn_close_set);
         final Dialog dialog = new Dialog(this, R.style.dialog_rank);

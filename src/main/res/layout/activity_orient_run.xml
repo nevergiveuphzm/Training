@@ -172,8 +172,8 @@
                         android:textSize="23sp"
                         android:id="@+id/tv_delay_time"
                         android:layout_alignParentTop="true"
-                        android:layout_marginLeft="270dp"
-                        android:layout_marginStart="270dp" />
+                        android:layout_marginLeft="285dp"
+                        android:layout_marginStart="285dp" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -280,8 +280,8 @@
                         android:textSize="23sp"
                         android:id="@+id/tv_over_time"
                         android:layout_alignParentTop="true"
-                        android:layout_marginLeft="270dp"
-                        android:layout_marginStart="270dp" />
+                        android:layout_marginLeft="285dp"
+                        android:layout_marginStart="285dp" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

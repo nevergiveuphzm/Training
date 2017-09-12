@@ -62,7 +62,7 @@ public class ConfrontationAdapter extends BaseAdapter
         else if (info.lightFlag == 1)
         {
             if (groupId == 0)
-                llLight.setBackgroundResource(R.drawable.light_blue);
+                llLight.setBackgroundResource(R.drawable.light_green);
             else
                 llLight.setBackgroundResource(R.drawable.light_red);
         } else if (info.lightFlag == 2)

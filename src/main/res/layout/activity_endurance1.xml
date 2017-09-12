@@ -266,7 +266,7 @@
                         android:id="@+id/tv_total_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="总时间:00:00:00"
+                        android:text="倒计时:00:00:00"
                         android:textSize="25sp" />
                 </LinearLayout>
                 <LinearLayout
@@ -311,7 +311,12 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical">
-
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_score"
+            android:layout_margin="20dp"
+            />
             <RelativeLayout
 
                 android:id="@+id/relativeLayout2"
@@ -355,7 +360,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="110dp"
+                    android:layout_marginLeft="80dp"
                     android:text="组号"
                     android:textSize="25sp" />
 

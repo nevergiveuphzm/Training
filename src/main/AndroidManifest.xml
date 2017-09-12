@@ -163,7 +163,6 @@
         <activity android:name=".activity.TimeKeeperActivity" />
         <activity android:name=".activity.RandomTimesModuleActivity" />
         <activity android:name=".activity.RandomTimeActivity" />
-        <activity android:name=".activity.GroupResistActivity" />
         <activity android:name=".activity.BadmintonActivity" />
         <activity android:name=".activity.NavigationActivity" />
         <activity android:name=".activity.CombinedTrainingActivity" />
@@ -193,6 +192,13 @@
         <activity android:name=".activity.JumpingJackActivity">
             <intent-filter>
                 <action android:name="JumpingJackActivity.class" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.GroupResistActivity">
+            <intent-filter>
+                <action android:name="GroupResistActivity.class" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
