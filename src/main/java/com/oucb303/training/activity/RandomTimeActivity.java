@@ -9,6 +9,7 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -73,7 +74,7 @@ public class RandomTimeActivity extends AppCompatActivity {
     TextView tvTitle;
     @Bind(R.id.img_help)
     ImageView imgHelp;
-    @Bind(R.id.img_save)
+    @Bind(R.id.img_save_new)
     ImageView imgSave;
     @Bind(R.id.tv_training_time)
     TextView tvTrainingTime;
@@ -85,16 +86,18 @@ public class RandomTimeActivity extends AppCompatActivity {
     ImageView imgTrainingTimeAdd;
     @Bind(R.id.training_time)
     LinearLayout TrainingTime;
-    @Bind(R.id.tv_training_times)
-    TextView tvTrainingTimes;
-    @Bind(R.id.img_training_times_sub)
-    ImageView imgTrainingTimesSub;
-    @Bind(R.id.bar_training_times)
-    SeekBar barTrainingTimes;
-    @Bind(R.id.img_training_times_add)
-    ImageView imgTrainingTimesAdd;
-    @Bind(R.id.training_times)
-    LinearLayout TrainingTimes;
+//    @Bind(R.id.tv_training_times)
+//    TextView tvTrainingTimes;
+//    @Bind(R.id.img_training_times_sub)
+//    ImageView imgTrainingTimesSub;
+//    @Bind(R.id.bar_training_times)
+//    SeekBar barTrainingTimes;
+//    @Bind(R.id.img_training_times_add)
+//    ImageView imgTrainingTimesAdd;
+//    @Bind(R.id.training_times)
+//    LinearLayout TrainingTimes;
+    @Bind(R.id.tv_timeDown)
+    TextView tvTimeDown;
     @Bind(R.id.tv_delay_time)
     TextView tvDelayTime;
     @Bind(R.id.img_delay_time_sub)
@@ -121,26 +124,26 @@ public class RandomTimeActivity extends AppCompatActivity {
     Button btnOff;
     @Bind(R.id.tv_device_list)
     TextView tvDeviceList;
-    @Bind(R.id.img_action_mode_light)
-    ImageView imgActionModeLight;
-    @Bind(R.id.img_action_mode_touch)
-    ImageView imgActionModeTouch;
-    @Bind(R.id.img_action_mode_together)
-    ImageView imgActionModeTogether;
-    @Bind(R.id.img_light_color_blue)
-    ImageView imgLightColorBlue;
-    @Bind(R.id.img_light_color_red)
-    ImageView imgLightColorRed;
-    @Bind(R.id.img_light_color_blue_red)
-    ImageView imgLightColorBlueRed;
-    @Bind(R.id.cb_voice)
+//    @Bind(R.id.img_action_mode_light)
+//    ImageView imgActionModeLight;
+//    @Bind(R.id.img_action_mode_touch)
+//    ImageView imgActionModeTouch;
+//    @Bind(R.id.img_action_mode_together)
+//    ImageView imgActionModeTogether;
+//    @Bind(R.id.img_light_color_blue)
+//    ImageView imgLightColorBlue;
+//    @Bind(R.id.img_light_color_red)
+//    ImageView imgLightColorRed;
+//    @Bind(R.id.img_light_color_blue_red)
+//    ImageView imgLightColorBlueRed;
+//    @Bind(R.id.cb_voice)
     android.widget.CheckBox cbVoice;
-    @Bind(R.id.cb_end_voice)
+//    @Bind(R.id.cb_end_voice)
     android.widget.CheckBox cbEndVoice;
-    @Bind(R.id.cb_over_time_voice)
-    android.widget.CheckBox cbOverTimeVoice;
-    @Bind(R.id.ll_params)
-    LinearLayout llParams;
+//    @Bind(R.id.cb_over_time_voice)
+//    android.widget.CheckBox cbOverTimeVoice;
+//    @Bind(R.id.ll_params)
+//    LinearLayout llParams;
     @Bind(R.id.tv_current_times)
     TextView tvCurrentTimes;
     @Bind(R.id.tv_lost_times)
@@ -157,14 +160,14 @@ public class RandomTimeActivity extends AppCompatActivity {
     Spinner spGroupNum;
     @Bind(R.id.lv_group)
     ListView lvGroup;
-    @Bind(R.id.sp_color)
-    Spinner spColor;//灯的颜色
-    @Bind(R.id.img_blink_mode_none)
-    ImageView imgBlinkModeNone;
-    @Bind(R.id.img_blink_mode_slow)
-    ImageView imgBlinkModeSlow;
-    @Bind(R.id.img_blink_mode_fast)
-    ImageView imgBlinkModeFast;
+//    @Bind(R.id.sp_color)
+//    Spinner spColor;//灯的颜色
+//    @Bind(R.id.img_blink_mode_none)
+//    ImageView imgBlinkModeNone;
+//    @Bind(R.id.img_blink_mode_slow)
+//    ImageView imgBlinkModeSlow;
+//    @Bind(R.id.img_blink_mode_fast)
+//    ImageView imgBlinkModeFast;
     private int level;
     private Device device;
     //当前选用的设备个数
@@ -198,34 +201,47 @@ public class RandomTimeActivity extends AppCompatActivity {
     //每组设备灯亮起的时间
     private long[][] duration;
     private int groupSize, groupNum = 1;
+    private Dialog set_dialog;
     //感应模式和灯光模式集合
     private CheckBox actionModeCheckBox, lightModeCheckBox, lightColorCheckBox, blinkModeCheckBox;
     private ArrayAdapter<String> adapterDeviceNum;
     private Context context;
-    Handler timerHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            if (msg.what == timer.TIMER_FLAG) {
-                //如果是时间随机，并且当前时间减去开始时间的时间差超过训练总时间
-                if (timer.time >= trainingTime) {
-                    timer.stopTimer();
-                    stopTraining();
-                }
-                //开始到现在持续的时间
-                tvTotalTime.setText(msg.obj.toString());
-            }
-        }
-    };
+//    Handler timerHandler = new Handler() {
+//        @Override
+//        public void handleMessage(Message msg) {
+//            if (msg.what == timer.TIMER_FLAG) {
+//                //如果是时间随机，并且当前时间减去开始时间的时间差超过训练总时间
+//                if (timer.time >= trainingTime) {
+//                    timer.stopTimer();
+//                    stopTraining();
+//                }
+//                //开始到现在持续的时间
+//                tvTotalTime.setText(msg.obj.toString());
+//            }
+//        }
+//    };
     private RandomTimesModuleAdapter randomTimesModuleAdapter;
     //存放随机数的list
     private List<List<Integer>> listRands = new ArrayList<>();
     private int[] everyGroupTotalTime;
     private GroupListViewAdapter groupListViewAdapter;
-    private int colorNum = 0;//颜色数
+    private int colorNum = 1;//颜色数
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
+                case Timer.TIMER_FLAG:
+                    //如果是时间随机，并且当前时间减去开始时间的时间差超过训练总时间
+                    if (timer.time >= trainingTime) {
+                        timer.stopTimer();
+                        stopTraining();
+                    }
+                    //开始到现在持续的时间
+                    tvTotalTime.setText(msg.obj.toString());
+                    break;
+                case Timer.TIMER_DOWN:
+                    tvTimeDown.setText("倒计时："+msg.obj.toString());
+                    break;
                 //接收到返回的时间
                 case TIME_RECEIVE:
                     String data = msg.obj.toString();
@@ -259,7 +275,7 @@ public class RandomTimeActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //填充屏幕的UI
-        setContentView(R.layout.activity_random_train);
+        setContentView(R.layout.activity_random_train_new);
         //返回xml中定义的视图或组件的ID
         ButterKnife.bind(this);
 
@@ -283,6 +299,7 @@ public class RandomTimeActivity extends AppCompatActivity {
         super.onStart();
         imgSave.setEnabled(false);
         imgSave.setVisibility(View.VISIBLE);
+        set_dialog = createSetDialog();
     }
 
     @Override
@@ -312,7 +329,7 @@ public class RandomTimeActivity extends AppCompatActivity {
         //设备排序
         Collections.sort(Device.DEVICE_LIST, new PowerInfoComparetor());
 
-        TrainingTimes.setVisibility(View.GONE);
+//        TrainingTimes.setVisibility(View.GONE);
         TrainingTime.setVisibility(View.VISIBLE);
 
         barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 30));
@@ -322,7 +339,7 @@ public class RandomTimeActivity extends AppCompatActivity {
 
         //设置延时和超时的 seekbar 拖动事件的监听器
         barDelayTime.setOnSeekBarChangeListener(new MySeekBarListener(tvDelayTime, 10));
-        barOverTime.setOnSeekBarChangeListener(new MySeekBarListener(tvOverTime, 28, 2));
+        barOverTime.setOnSeekBarChangeListener(new MySeekBarListener(tvOverTime, 30, 0));
         //设置加减按钮的监听事件
         imgDelayTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 1));
         imgDelayTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 0));
@@ -387,58 +404,58 @@ public class RandomTimeActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 everyLightNum = i + 1;
-                String[] allColors = {"蓝色", "蓝红", "蓝红紫"};
-                String[] spColors = new String[Math.min(everyLightNum, 3)];
-                for (int j = 0; j < spColors.length; j++) {
-                    spColors[j] = allColors[j];
-                }
-                ArrayAdapter<String> adapterColor = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, spColors);
-                adapterColor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spColor.setAdapter(adapterColor);
+//                String[] allColors = {"蓝色", "蓝红", "蓝红紫"};
+//                String[] spColors = new String[Math.min(everyLightNum, 3)];
+//                for (int j = 0; j < spColors.length; j++) {
+//                    spColors[j] = allColors[j];
+//                }
+//                ArrayAdapter<String> adapterColor = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, spColors);
+//                adapterColor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                spColor.setAdapter(adapterColor);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-        //灯的颜色
-        spColor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                colorNum = position + 1;
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+//        //灯的颜色
+//        spColor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                colorNum = position + 1;
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
         //设定感应模式checkBox组合的点击事件
-        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
-        actionModeCheckBox = new CheckBox(1, views);
-        new CheckBoxClickListener(actionModeCheckBox) {
-            @Override
-            public void doOtherThings(int checkedId) {
-                super.doOtherThings(checkedId);
-                //触碰或全部
-                if (checkedId == 2 || checkedId == 3) {
-                    if (barDelayTime.getProgress() < 2)
-                        barDelayTime.setProgress(2);
-                } else {
-                    imgDelayTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 0));
-                }
-            }
-        };
-        //设定灯光颜色checkBox组合的点击事件
-        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
-        lightColorCheckBox = new CheckBox(1, views2);
-        new CheckBoxClickListener(lightColorCheckBox);
-        ImageView[] view3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast};
-        blinkModeCheckBox = new CheckBox(1, view3);
-        new CheckBoxClickListener(blinkModeCheckBox);
+//        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
+//        actionModeCheckBox = new CheckBox(1, views);
+//        new CheckBoxClickListener(actionModeCheckBox) {
+//            @Override
+//            public void doOtherThings(int checkedId) {
+//                super.doOtherThings(checkedId);
+//                //触碰或全部
+//                if (checkedId == 2 || checkedId == 3) {
+//                    if (barDelayTime.getProgress() < 2)
+//                        barDelayTime.setProgress(2);
+//                } else {
+//                    imgDelayTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 0));
+//                }
+//            }
+//        };
+//        //设定灯光颜色checkBox组合的点击事件
+//        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
+//        lightColorCheckBox = new CheckBox(1, views2);
+//        new CheckBoxClickListener(lightColorCheckBox);
+//        ImageView[] view3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast};
+//        blinkModeCheckBox = new CheckBox(1, view3);
+//        new CheckBoxClickListener(blinkModeCheckBox);
     }
 
-    @OnClick({R.id.btn_begin, R.id.layout_cancel, R.id.img_help, R.id.btn_on, R.id.btn_off, R.id.img_save})
+    @OnClick({R.id.btn_stop,R.id.img_set,R.id.btn_begin, R.id.layout_cancel, R.id.img_help, R.id.btn_on, R.id.btn_off, R.id.img_save_new})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_begin:
@@ -460,7 +477,7 @@ public class RandomTimeActivity extends AppCompatActivity {
             case R.id.btn_off:
                 device.turnOffAllTheLight();
                 break;
-            case R.id.img_save:
+            case R.id.img_save_new:
                 Intent it = new Intent(this, SaveActivity.class);
                 Bundle bundle = new Bundle();
                 //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 4:换物跑、时间随机、次数随机 ...
@@ -479,15 +496,23 @@ public class RandomTimeActivity extends AppCompatActivity {
                 it.putExtras(bundle);
                 startActivity(it);
                 break;
+            case R.id.img_set:
+                set_dialog = createSetDialog();
+                OperateUtils.setScreenWidth(this, set_dialog, 0.95, 0.7);
+                set_dialog.show();
+                break;
+            case R.id.btn_stop:
+                stopTraining();
+                break;
         }
     }
 
     //开始训练
     public void startTraining() {
         trainingFlag = true;
-        btnBegin.setText("停止");
+//        btnBegin.setText("停止");
         //运行的总次数
-        totalTimes = new Integer(tvTrainingTimes.getText().toString().trim());
+//        totalTimes = new Integer(tvTrainingTimes.getText().toString().trim());
         //延迟时间
         delayTime = (int) ((new Double(tvDelayTime.getText().toString().trim())) * 1000);
         //超时时间
@@ -552,7 +577,7 @@ public class RandomTimeActivity extends AppCompatActivity {
 
         //开启计时线程
         beginTime = System.currentTimeMillis();
-        timer = new Timer(timerHandler, trainingTime);
+        timer = new Timer(handler, trainingTime);
         timer.setBeginTime(beginTime);
         timer.start();
     }
@@ -560,7 +585,6 @@ public class RandomTimeActivity extends AppCompatActivity {
     //停止训练
     public void stopTraining() {
         trainingFlag = false;
-        btnBegin.setText("开始");
         btnBegin.setEnabled(false);
         imgSave.setEnabled(true);
         if (overTimeThread != null)
@@ -713,7 +737,7 @@ public class RandomTimeActivity extends AppCompatActivity {
     public void turnOffLight(char deviceNum) {
         device.sendOrder(deviceNum,
                 Order.LightColor.NONE,
-                Order.VoiceMode.values()[cbOverTimeVoice.isChecked() ? 1 : 0],
+                Order.VoiceMode.values()[0],
                 Order.BlinkModel.NONE,
                 Order.LightModel.TURN_OFF,
                 Order.ActionModel.TURN_OFF,
@@ -777,5 +801,54 @@ public class RandomTimeActivity extends AppCompatActivity {
 
             }
         }
+    }
+    public Dialog createSetDialog(){
+        LayoutInflater inflater = LayoutInflater.from(this);//获取实例
+        View v = inflater.inflate(R.layout.layout_dialog_lightset,null);//加载布局
+        LinearLayout layout = (LinearLayout) v.findViewById(R.id.dialog_light_set);
+
+        ImageView imgActionModeTouch = (ImageView) layout.findViewById(R.id.img_action_mode_touch);
+        ImageView imgActionModeLight = (ImageView) layout.findViewById(R.id.img_action_mode_light);
+        ImageView imgActionModeTogether = (ImageView) layout.findViewById(R.id.img_action_mode_together);
+        ImageView imgLightColorBlue = (ImageView) layout.findViewById(R.id.img_light_color_blue);
+        ImageView imgLightColorRed = (ImageView) layout.findViewById(R.id.img_light_color_red);
+        ImageView imgLightColorBlueRed = (ImageView) layout.findViewById(R.id.img_light_color_blue_red);
+        ImageView imgBlinkModeNone = (ImageView) layout.findViewById(R.id.img_blink_mode_none);
+        ImageView imgBlinkModeSlow = (ImageView) layout.findViewById(R.id.img_blink_mode_slow);
+        ImageView imgBlinkModeFast = (ImageView) layout.findViewById(R.id.img_blink_mode_fast);
+        cbVoice = (android.widget.CheckBox) layout.findViewById(R.id.cb_voice);
+        cbEndVoice = (android.widget.CheckBox) layout.findViewById(R.id.cb_endvoice);
+        Button btnOk = (Button) layout.findViewById(R.id.btn_ok);
+        Button btnCloseSet = (Button) layout.findViewById(R.id.btn_close_set);
+
+        final Dialog dialog = new Dialog(this, R.style.dialog_rank);
+
+        dialog.setContentView(layout);
+        //设定感应模式checkBox组合的点击事件
+        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
+        actionModeCheckBox = new CheckBox(1, views);
+        new CheckBoxClickListener(actionModeCheckBox);
+        //设定灯光颜色checkBox组合的点击事件
+        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
+        lightColorCheckBox = new CheckBox(1, views2);
+        new CheckBoxClickListener(lightColorCheckBox);
+        //设定闪烁模式checkbox组合的点击事件
+        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast};
+        blinkModeCheckBox = new CheckBox(1, views3);
+        new CheckBoxClickListener(blinkModeCheckBox);
+
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        btnCloseSet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        return dialog;
     }
 }

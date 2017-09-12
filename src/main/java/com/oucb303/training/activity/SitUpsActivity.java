@@ -270,10 +270,12 @@ public class SitUpsActivity extends AppCompatActivity {
 
         imgSaveNew.setEnabled(false);
 //        imgSave.setEnabled(false);
-        for(int i=0;i<3;i++)
-          Setting_return_data[i]=1;
-        Setting_return_data[4]=0;
+
+        Setting_return_data[0]=1;
+        Setting_return_data[1]=1;
+        Setting_return_data[2]=0;
         Setting_return_data[3]=0;
+        Setting_return_data[4]=0;
     }
 
     @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.btn_stop, R.id.img_help, R.id.btn_on,
@@ -299,7 +301,7 @@ public class SitUpsActivity extends AppCompatActivity {
 
                 dialog.show();
                 OperateUtils operateUtils = new OperateUtils();
-                operateUtils.setScreenWidth(SitUpsActivity.this,dialog,0.97,0.8);
+                operateUtils.setScreenWidth(SitUpsActivity.this,dialog, 0.95, 0.7);
                 break;
             case R.id.layout_cancel:
                 this.finish();
@@ -439,12 +441,12 @@ public class SitUpsActivity extends AppCompatActivity {
     }
 
     public void sendOrder(char deviceNum) {
-        device.sendOrder(deviceNum, Order.LightColor.values()[Setting_return_data[2]],
-                Order.VoiceMode.values()[Setting_return_data[4]],
-                Order.BlinkModel.values()[Setting_return_data[1]],
+        device.sendOrder(deviceNum, Order.LightColor.values()[Setting_return_data[1]],
+                Order.VoiceMode.values()[Setting_return_data[3]],
+                Order.BlinkModel.values()[Setting_return_data[2]],
                 Order.LightModel.OUTER,
-                Order.ActionModel.values()[Setting_return_data[2]],
-                Order.EndVoice.NONE);
+                Order.ActionModel.values()[Setting_return_data[0]],
+                Order.EndVoice.values()[Setting_return_data[4]]);
     }
 
     //查找设备属于第几组
