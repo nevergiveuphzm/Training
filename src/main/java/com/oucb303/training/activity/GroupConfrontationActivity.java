@@ -55,9 +55,21 @@ public class GroupConfrontationActivity extends AppCompatActivity {
     ListView lvGroup;
     @Bind(R.id.sp_group_device_num)
     Spinner spGroupDeviceNum;
+    @Bind(R.id.tv_down_time)
+    TextView tvDownTime;
 
-    private final int TIME_RECEIVE = 1;
-
+//    @Bind(R.id.img_action_mode_light)
+//    ImageView imgActionModeLight;
+//    @Bind(R.id.img_action_mode_touch)
+//    ImageView imgActionModeTouch;
+//    @Bind(R.id.img_action_mode_together)
+//    ImageView imgActionModeTogether;
+//    @Bind(R.id.img_light_mode_beside)
+//    ImageView imgLightModeBeside;
+//    @Bind(R.id.img_light_mode_center)
+//    ImageView imgLightModeCenter;
+//    @Bind(R.id.img_light_mode_all)
+//    ImageView imgLightModeAll;
     android.widget.CheckBox cbVoice;
     @Bind(R.id.btn_begin)
     Button btnBegin;
@@ -67,13 +79,21 @@ public class GroupConfrontationActivity extends AppCompatActivity {
     HorizontalListView hlvGroup2;
     @Bind(R.id.img_help)
     ImageView imgHelp;
+    @Bind(R.id.img_set)
+    ImageView imgSet;
+//    @Bind(R.id.img_blink_mode_none)
+//    ImageView imgBlinkModeNone;
+//    @Bind(R.id.img_blink_mode_slow)
+//    ImageView imgBlinkModeSlow;
+//    @Bind(R.id.img_blink_mode_fast)
+//    ImageView imgBlinkModeFast;
 
+    private final int TIME_RECEIVE = 1;
     private Device device;
     private GroupListViewAdapter groupListViewAdapter;
     //感应模式和灯光模式集合
-    private CheckBox actionModeCheckBox, lightModeCheckBox,blinkModeCheckBox;
-    //设置的弹窗
-    private Dialog set_dialog;
+    private CheckBox actionModeCheckBox, lightModeCheckBox,lightColorCheckBox,blinkModeCheckBox;
+
     //每组设备个数
     private int groupSize;
     // 训练是否正在进行的标志
@@ -84,6 +104,7 @@ public class GroupConfrontationActivity extends AppCompatActivity {
     private ConfrontationAdapter groupOneAdapter, groupTwoAdapter;
     private Timer timer;
     private int delay = 1000;
+    private Dialog set_dialog;
 
     private Handler handler = new Handler() {
         @Override
@@ -118,8 +139,6 @@ public class GroupConfrontationActivity extends AppCompatActivity {
         }
     };
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,6 +165,11 @@ public class GroupConfrontationActivity extends AppCompatActivity {
         if (device.devCount > 0)
             device.disconnect();
     }
+    protected void onStart() {
+        super.onStart();
+        set_dialog = createLightSetDialog();
+    }
+
 
     private void initView() {
         tvTitle.setText("双人对抗");
@@ -175,12 +199,10 @@ public class GroupConfrontationActivity extends AppCompatActivity {
                 groupListViewAdapter.notifyDataSetChanged();
             }
         });
-
-
     }
 
 
-    @OnClick({R.id.layout_cancel, R.id.img_help, R.id.btn_begin,R.id.img_set})
+    @OnClick({R.id.img_set,R.id.layout_cancel, R.id.img_help, R.id.btn_begin})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_set:
@@ -310,7 +332,7 @@ public class GroupConfrontationActivity extends AppCompatActivity {
         else
             device.sendOrder(Device.DEVICE_LIST.get(position).getDeviceNum(),
                     Order.LightColor.values()[color],
-                    Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
+                    Order.VoiceMode.values()[1],
                     Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
                     Order.LightModel.OUTER,
                     Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
@@ -410,24 +432,22 @@ public class GroupConfrontationActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        //imgSaveNew.setEnabled(false);
-//        imgSave.setEnabled(false);
-        set_dialog = createLightSetDialog();
-    }
-
     public Dialog createLightSetDialog() {
 
         LayoutInflater inflater = LayoutInflater.from(this);
-        View v = inflater.inflate(R.layout.layout_dialog_group, null);// 得到加载view
+        View v = inflater.inflate(R.layout.layout_dialog_lightset, null);// 得到加载view
 
         LinearLayout layout = (LinearLayout) v.findViewById(R.id.dialog_light_set);
         ImageView imgActionModeTouch = (ImageView) layout.findViewById(R.id.img_action_mode_touch);
-        ImageView imgActionModeTogether = (ImageView) layout.findViewById(R.id.img_action_mode_together);
         ImageView imgActionModeLight = (ImageView) layout.findViewById(R.id.img_action_mode_light);
+        ImageView imgActionModeTogether = (ImageView) layout.findViewById(R.id.img_action_mode_together);
+        ImageView imgLightColorBlue = (ImageView) layout.findViewById(R.id.img_light_color_blue);
+        ImageView imgLightColorRed = (ImageView) layout.findViewById(R.id.img_light_color_red);
+        ImageView imgLightColorBlueRed = (ImageView) layout.findViewById(R.id.img_light_color_blue_red);
+
+//        ImageView imgLightModeBeside=(ImageView) layout.findViewById(R.id.img_light_mode_beside);
+//        ImageView imgLightModeCenter=(ImageView) layout.findViewById(R.id.img_light_mode_center);
+//        ImageView imgLightModeAll=(ImageView) layout.findViewById(R.id.img_light_mode_all);
 
         ImageView imgBlinkModeNone = (ImageView) layout.findViewById(R.id.img_blink_mode_none);
         ImageView imgBlinkModeSlow = (ImageView) layout.findViewById(R.id.img_blink_mode_slow);
@@ -443,7 +463,14 @@ public class GroupConfrontationActivity extends AppCompatActivity {
         ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
         actionModeCheckBox = new CheckBox(1, views);
         new CheckBoxClickListener(actionModeCheckBox);
-
+//        //设定灯光模式checkBox组合的点击事件
+//        ImageView[] views1 = new ImageView[]{imgLightModeBeside, imgLightModeCenter, imgLightModeAll};
+//        lightModeCheckBox = new CheckBox(1, views1);
+//        new CheckBoxClickListener(lightModeCheckBox);
+        //设定灯光颜色checkBox组合的点击事件
+        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
+        lightColorCheckBox = new CheckBox(1, views2);
+        new CheckBoxClickListener(lightColorCheckBox);
         //设定闪烁模式checkbox组合的点击事件
         ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast};
         blinkModeCheckBox = new CheckBox(1, views3);
