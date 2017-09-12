@@ -32,7 +32,10 @@ public class MySeekBarListener implements SeekBar.OnSeekBarChangeListener
         this.mFlag = flag;
         this.mSeekbar=seekBar;
     }
-
+    public MySeekBarListener(SeekBar seekBar,TextView textView){
+        this.textView = textView;
+        this.mSeekbar=seekBar;
+    }
     public MySeekBarListener(TextView textView, int maxValue)
     {
         this.textView = textView;

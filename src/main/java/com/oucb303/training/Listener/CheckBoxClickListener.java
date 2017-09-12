@@ -51,9 +51,9 @@ public class CheckBoxClickListener implements View.OnClickListener
         for (int i = 0; i < checkBox.getViews().length; i++)
         {
             if ((i + 1) == checkBox.getCheckId())
-                checkBox.getViews()[i].setImageResource(R.drawable.btn_checkbox);
+                checkBox.getViews()[i].setImageResource(R.drawable.btn_checkbox_checked_new);
             else
-                checkBox.getViews()[i].setImageResource(R.drawable.btn_uncheckbox);
+                checkBox.getViews()[i].setImageResource(R.drawable.btn_checkbox_unchecked);
         }
     }
 }

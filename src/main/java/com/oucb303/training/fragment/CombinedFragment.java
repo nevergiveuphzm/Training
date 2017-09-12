@@ -33,9 +33,8 @@ import java.util.HashMap;
 public class CombinedFragment extends Fragment implements AdapterView.OnItemClickListener{
 
     GridView gvFirst;
-    private int[] images = { R.drawable.iv_combined_first, R.drawable.iv_combined_seventh,
-            R.drawable.iv_combined_eighth, R.drawable.iv_combined_forth, R.drawable.iv_combined_ninth };
-    private String[] text = { "胆大心细", "羽毛球步法练习", "定向越野", "多人混战", "双人对抗"};
+    private int[] images = { R.drawable.iv_combined_first, R.drawable.iv_combined_seventh, R.drawable.iv_combined_forth, R.drawable.iv_combined_ninth };
+    private String[] text = { "胆大心细", "羽毛球步法练习", "多人混战", "双人对抗"};
 
     @Nullable
     @Override
@@ -50,7 +49,7 @@ public class CombinedFragment extends Fragment implements AdapterView.OnItemClic
         ArrayList<HashMap<String, Object>> imagelist = new ArrayList<HashMap<String, Object>>();
         // 使用HashMap将图片添加到一个数组中，注意一定要是HashMap<String,Object>类型的，因为装到map中的图片要是资源ID，而不是图片本身
         // 如果是用findViewById(R.drawable.image)这样把真正的图片取出来了，放到map中是无法正常显示的
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 4; i++) {
             HashMap<String, Object> map = new HashMap<String, Object>();
             map.put("images", images[i]);
             map.put("text", text[i]);
@@ -73,33 +72,22 @@ public class CombinedFragment extends Fragment implements AdapterView.OnItemClic
         Intent intent;
         switch (position) {
             case 0:
-                Toast.makeText(getActivity(), "胆大心细", Toast.LENGTH_SHORT)
-                        .show();
                 intent = new Intent();
                 intent.setClass(getActivity(), BoldCautiousActivity.class);
                 startActivity(intent);
                 break;
             case 1:
-                Toast.makeText(getActivity(), "羽毛球步法练习", Toast.LENGTH_SHORT)
-                        .show();
                 intent = new Intent();
                 intent.setClass(getActivity(), BadmintonActivity.class);
                 startActivity(intent);
                 break;
             case 2:
-                Toast.makeText(getActivity(), "定向越野,正在研发中。。。", Toast.LENGTH_SHORT)
-                        .show();
-                break;
-            case 3:
-                Toast.makeText(getActivity(), "多人混战", Toast.LENGTH_SHORT).show();
                 intent = new Intent();
                 intent.setClass(getActivity(), DribblingGameActivity.class);
                 intent.putExtra("level",1);
                 startActivity(intent);
                 break;
-            case 4:
-                Toast.makeText(getActivity(), "双人对抗", Toast.LENGTH_SHORT)
-                        .show();
+            case 3:
                 intent = new Intent();
                 intent.setClass(getActivity(), GroupConfrontationActivity.class);
                 startActivity(intent);

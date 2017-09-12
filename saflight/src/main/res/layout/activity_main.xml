@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#ffffff">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
+        android:background="@drawable/main_02">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="113dp"
+            android:src="@drawable/main_03"
+            android:layout_marginRight="50dp"
+            android:layout_marginEnd="10dp"
+            android:layout_toLeftOf="@+id/imageView"
+            android:layout_alignTop="@+id/imageView" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="113dp"
+            android:src="@drawable/main_04"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/imageView"
+            android:layout_marginRight="30dp"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="1000dp"
+        android:layout_height="70dp"
+        android:background="@drawable/main_power"
+        android:orientation="vertical">
+
+        <!--<TextView-->
+        <!--android:id="@+id/tv_device_count"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--android:text="共0个设备"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:textSize="24sp"/>-->
+
+        <com.oucb303.training.widget.HorizontalListView
+            android:id="@+id/lv_battery"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:divider="#F0F0F0"
+            android:dividerHeight="5dp"/>
+
+        <com.oucb303.training.widget.HorizontalListView
+            android:id="@+id/lv_battery_second"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:divider="#F0F0F0"
+            android:dividerHeight="5dp"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="25dp"
+        android:orientation="vertical"
+        >
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="205dp"
+            android:layout_height="407dp"
+            android:layout_marginLeft="11dp"
+            android:background="@drawable/main_05"
+            android:layout_marginBottom="70dp"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/btn_kinetism"
+                android:layout_width="205dp"
+                android:layout_height="320dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/main_sports" />
+
+            <Button
+                android:layout_width="175dp"
+                android:layout_height="63dp"
+                android:drawableLeft="@drawable/main_05_sports"
+                android:text="运动能力"
+                android:layout_gravity="center"
+                android:textSize="23sp"
+                android:textColor="#FFFFFF"
+                android:background="#00000000"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="205dp"
+            android:layout_height="407dp"
+            android:layout_marginLeft="3dp"
+            android:background="@drawable/main_05"
+            android:layout_marginBottom="70dp"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/btn_technique"
+                android:layout_width="204dp"
+                android:layout_height="320dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/main_06" />
+
+            <Button
+                android:layout_width="175dp"
+                android:layout_height="63dp"
+                android:drawableLeft="@drawable/main_06_sport_technique"
+                android:text="运动技术"
+                android:layout_gravity="center"
+                android:textSize="23sp"
+                android:textColor="#FFFFFF"
+                android:background="#00000000"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="205dp"
+            android:layout_height="407dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/main_05"
+            android:layout_marginBottom="80dp"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/btn_"
+                android:layout_width="184dp"
+                android:layout_height="300dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="9dp"
+                android:background="@drawable/main_07" />
+
+            <Button
+                android:layout_width="170dp"
+                android:layout_height="63dp"
+                android:drawableLeft="@drawable/main_zuhelianxi"
+                android:layout_marginTop="16dp"
+                android:text="组合练习"
+                android:layout_gravity="center"
+                android:textSize="23sp"
+                android:textColor="#FFFFFF"
+                android:background="#00000000"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="205dp"
+            android:layout_height="407dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/main_05"
+            android:layout_marginBottom="80dp"
+            android:orientation="vertical">
+            <Button
+                android:layout_width="184dp"
+                android:layout_height="300dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="9dp"
+                android:background="@drawable/main_08" />
+
+            <Button
+                android:layout_width="170dp"
+                android:layout_height="63dp"
+                android:drawableLeft="@drawable/main_yingyonggongju"
+                android:layout_marginTop="14dp"
+                android:text="应用工具"
+                android:layout_gravity="center"
+                android:textSize="23sp"
+                android:textColor="#FFFFFF"
+                android:background="#00000000"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="205dp"
+            android:layout_height="407dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/main_05"
+            android:layout_marginBottom="80dp"
+            android:orientation="vertical">
+            <Button
+                android:layout_width="204dp"
+                android:layout_height="320dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/main_09" />
+
+            <Button
+                android:layout_width="170dp"
+                android:layout_height="63dp"
+                android:drawableLeft="@drawable/main_chuangkekongjian"
+                android:text="创课空间"
+                android:layout_gravity="center"
+                android:textSize="23sp"
+                android:textColor="#FFFFFF"
+                android:background="#00000000"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="205dp"
+            android:layout_height="407dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/main_05"
+            android:layout_marginBottom="80dp"
+            android:orientation="vertical">
+            <Button
+                android:layout_width="204dp"
+                android:layout_height="320dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/main_10" />
+
+            <Button
+                android:layout_width="170dp"
+                android:layout_height="63dp"
+                android:drawableLeft="@drawable/main_xitongshezhi"
+                android:text="系统设置"
+                android:layout_gravity="center"
+                android:textSize="23sp"
+                android:textColor="#FFFFFF"
+                android:background="#00000000"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>
+

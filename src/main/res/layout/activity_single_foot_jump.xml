@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical"
+    tools:context=".activity.CombinedTrainingActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <include layout="@layout/layout_title_bar_newer" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="695dp"
+        android:orientation="horizontal">
+
+        <ScrollView
+            android:scrollbars="none"
+            android:id="@+id/sv_container"
+            android:layout_width="0dp"
+            android:layout_height="625dp"
+            android:layout_weight="1">
+
+            <RelativeLayout
+                android:layout_width="640dp"
+                android:layout_height="645dp"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/rl_first"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bg_time"
+                    android:orientation="vertical">
+
+                </RelativeLayout>
+                <RelativeLayout
+
+                    android:layout_width="360dp"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="130dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_traintime">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="55dp"
+                        android:layout_marginTop="2dp"
+                        android:text="训练时间:"
+                        android:textColor="@color/white"
+                        android:textSize="25sp" />
+                    <TextView
+                        android:id="@+id/tv_training_time"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="200dp"
+                        android:layout_marginTop="2dp"
+                        android:text="1"
+                        android:textColor="@color/white"
+                        android:textSize="25sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="245dp"
+                        android:layout_marginTop="2dp"
+                        android:text="分钟"
+                        android:textColor="@color/white"
+                        android:textSize="25sp" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="560dp"
+                    android:layout_height="55dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="70dp">
+
+                    <ImageView
+                        android:id="@+id/img_training_time_sub"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="5dp"
+                        android:src="@drawable/img_sub" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="52dp"
+                        android:layout_marginTop="5dp"
+                        android:text="0"
+                        android:textColor="@color/black"
+                        android:textSize="30sp" />
+
+                    <SeekBar
+                        android:id="@+id/bar_training_time"
+                        style="@style/Widget.SeekBar.Normal"
+                        android:layout_width="380dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="80dp"
+                        android:layout_marginTop="10dip"
+                        android:max="20"
+                        android:progress="2"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="465dp"
+                        android:layout_marginTop="5dp"
+                        android:text="10"
+                        android:textColor="@color/black"
+                        android:textSize="30sp" />
+
+
+                    <ImageView
+                        android:id="@+id/img_training_time_add"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_marginLeft="510dp"
+                        android:layout_marginTop="5dp"
+                        android:src="@drawable/img_plus" />
+
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/r1_third"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="301dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/bg_groupdevide"
+                    android:layout_below="@id/rl_first">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:text="训练分组"
+                            android:textSize="28sp" />
+
+
+                        <Spinner
+                            android:id="@+id/sp_group_num"
+                            android:layout_width="240dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:background="@drawable/spinner">
+
+                        </Spinner>
+
+                        <Button
+                            android:id="@+id/btn_on"
+                            android:layout_width="80dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="10dp"
+                            android:background="@drawable/img_openlight" />
+
+                        <Button
+                            android:id="@+id/btn_off"
+                            android:layout_width="80dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="10dp"
+                            android:background="@drawable/img_closelight" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:background="@color/grey" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="70dp"
+                            android:text="组别"
+                            android:textSize="25sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="140dp"
+                            android:text="设备"
+                            android:textSize="25sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="170dp"
+                            android:text="备注"
+                            android:textSize="25sp" />
+                    </LinearLayout>
+
+                    <ListView
+                        android:id="@+id/lv_group"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scrollbars="none"></ListView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/rl_forth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/r1_third"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/bg_downtime"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_down_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="倒计时:00:00:00"
+                            android:textSize="25sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center">
+                        <Button
+                            android:id="@+id/btn_begin"
+                            android:layout_width="160dp"
+                            android:layout_height="60dp"
+                            android:layout_marginLeft="0dp"
+                            android:background="@drawable/img_situpbegin"
+                            />
+                        <Button
+                            android:id="@+id/btn_pause"
+                            android:layout_width="160dp"
+                            android:layout_height="60dp"
+                            android:layout_marginLeft="50dp"
+                            android:layout_marginRight="50dp"
+                            android:background="@drawable/img_situppause"
+                            />
+                        <Button
+                            android:id="@+id/btn_stop"
+                            android:layout_width="160dp"
+                            android:layout_height="60dp"
+                            android:layout_marginLeft="0dp"
+                            android:background="@drawable/img_situpstop"
+                            />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+        </ScrollView>
+        <!--#############################################################################################-->
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="610dp"
+            android:layout_weight="1"
+            android:layout_margin="20dp"
+            android:background="@drawable/bg_score">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="17dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:text="总时间:"
+                    android:textSize="18sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:id="@+id/tv_total_time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:text="---"/>
+
+            </LinearLayout>
+
+            <include layout="@layout/layout_line_horizontal"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="17dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:text="组号"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:text="得分"
+                    android:textSize="18sp"/>
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/lv_scores"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="48dp"
+                android:divider="#00000000">
+
+            </ListView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

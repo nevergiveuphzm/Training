@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">saflight</string>
+
+    <string name="module_0">运动能力</string>
+    <!--运动能力-->
+    <string name="navigation_running">奔跑</string>
+    <string name="navigation_jumping">跳跃</string>
+    <string name="navigation_throwing">投掷</string>
+    <string name="navigation_juggling">抛接</string>
+    <string name="navigation_climbing">攀爬</string>
+    <string name="navigation_rhythm">韵律</string>
+
+
+    <!--奔跑类-->
+    <string name="navigation_running_item0">折返跑</string>
+    <string name="navigation_running_item1">大课间活动</string>
+    <string name="navigation_running_item2">换物跑</string>
+    <string name="navigation_running_item3">八字跑</string>
+    <string name="navigation_running_item4">绕杆跑</string>
+    <string name="navigation_running_item5">老鹰捉小鸡</string>
+    <!--跳跃类-->
+    <string name="navigation_jumping_item0">纵跳摸高</string>
+    <string name="navigation_jumping_item1">十字象限跳</string>
+    <!--投掷-->
+    <string name="navigation_throwing_item0">打鸭子</string>
+    <!--抛接-->
+    <string name="navigation_juggling_item0">撒渔网</string>
+    <!--攀爬-->
+    <string name="navigation_climbing_item0">仰卧起坐</string>
+    <string name="navigation_climbing_item1">坐位体前屈</string>
+    <string name="navigation_climbing_item2">钻山洞</string>
+    <!--韵律-->
+    <string name="navigation_rhythm_item0">韵律操</string>
+
+
+</resources>

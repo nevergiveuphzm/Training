@@ -1,19 +1,19 @@
 package com.oucb303.training.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.MotionEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -35,6 +35,8 @@ import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.threads.Timer;
 import com.oucb303.training.utils.Constant;
 import com.oucb303.training.utils.DataAnalyzeUtils;
+import com.oucb303.training.utils.DialogUtils;
+import com.oucb303.training.utils.OperateUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -62,8 +64,8 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
     TextView tvTitle;
     @Bind(R.id.img_help)
     ImageView imgHelp;
-    @Bind(R.id.img_save)
-    ImageView imgSave;
+    @Bind(R.id.img_save_new)
+    ImageView imgSaveNew;
     @Bind(R.id.tv_training_time)
     TextView tvTrainingTime;
     @Bind(R.id.img_training_time_sub)
@@ -78,32 +80,34 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
     Spinner spGroupNum;
     @Bind(R.id.lv_group)
     ListView lvGroup;
-    @Bind(R.id.img_action_mode_light)
-    ImageView imgActionModeLight;
-    @Bind(R.id.img_action_mode_touch)
-    ImageView imgActionModeTouch;
-    @Bind(R.id.img_action_mode_together)
-    ImageView imgActionModeTogether;
-    @Bind(R.id.img_light_mode_beside)
-    ImageView imgLightModeBeside;
-    @Bind(R.id.img_light_mode_center)
-    ImageView imgLightModeCenter;
-    @Bind(R.id.img_light_mode_all)
-    ImageView imgLightModeAll;
-    @Bind(R.id.img_light_color_blue)
-    ImageView imgLightColorBlue;
-    @Bind(R.id.img_light_color_red)
-    ImageView imgLightColorRed;
-    @Bind(R.id.img_light_color_blue_red)
-    ImageView imgLightColorBlueRed;
-    @Bind(R.id.cb_voice)
+    //    @Bind(R.id.img_action_mode_light)
+//    ImageView imgActionModeLight;
+//    @Bind(R.id.img_action_mode_touch)
+//    ImageView imgActionModeTouch;
+//    @Bind(R.id.img_action_mode_together)
+//    ImageView imgActionModeTogether;
+//    @Bind(R.id.img_light_mode_beside)
+//    ImageView imgLightModeBeside;
+//    @Bind(R.id.img_light_mode_center)
+//    ImageView imgLightModeCenter;
+//    @Bind(R.id.img_light_mode_all)
+//    ImageView imgLightModeAll;
+//    @Bind(R.id.img_light_color_blue)
+//    ImageView imgLightColorBlue;
+//    @Bind(R.id.img_light_color_red)
+//    ImageView imgLightColorRed;
+//    @Bind(R.id.img_light_color_blue_red)
+//    ImageView imgLightColorBlueRed;
+//    @Bind(R.id.cb_voice)
     android.widget.CheckBox cbVoice;
-    @Bind(R.id.cb_end_voice)
+//    @Bind(R.id.cb_end_voice)
     android.widget.CheckBox cbEndVoice;
-    @Bind(R.id.ll_params)
-    LinearLayout llParams;
-    @Bind(R.id.sv_container)
-    ScrollView svContainer;
+//    @Bind(R.id.ll_params)
+//    LinearLayout llParams;
+//    @Bind(R.id.sv_container)
+//    ScrollView svContainer;
+    @Bind(R.id.img_set)
+    ImageView imgSet;
     @Bind(R.id.tv_total_time)
     TextView tvTotalTime;
     @Bind(R.id.lv_times)
@@ -116,20 +120,20 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
     Button btnOff;
     @Bind(R.id.tv_maxTime)
     TextView tvMaxTime;
-    @Bind(R.id.img_blink_mode_none)
-    ImageView imgBlinkModeNone;
-    @Bind(R.id.img_blink_mode_slow)
-    ImageView imgBlinkModeSlow;
-    @Bind(R.id.img_blink_mode_fast)
-    ImageView imgBlinkModeFast;
-    @Bind(R.id.img_level_sub)
-    ImageView imgLevelsub;
-    @Bind(R.id.img_level_add)
-    ImageView imgLevelAdd;
-    @Bind(R.id.bar_level)
-    SeekBar barLevel;
-    @Bind(R.id.tv_level)
-    TextView tvLevel;
+//    @Bind(R.id.img_blink_mode_none)
+//    ImageView imgBlinkModeNone;
+//    @Bind(R.id.img_blink_mode_slow)
+//    ImageView imgBlinkModeSlow;
+//    @Bind(R.id.img_blink_mode_fast)
+//    ImageView imgBlinkModeFast;
+//    @Bind(R.id.img_level_sub)
+//    ImageView imgLevelsub;
+//    @Bind(R.id.img_level_add)
+//    ImageView imgLevelAdd;
+//    @Bind(R.id.bar_level)
+//    SeekBar barLevel;
+//    @Bind(R.id.tv_level)
+//    TextView tvLevel;
 
     private Device device;
     private int level=2;
@@ -155,6 +159,7 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
     private final int POWER_RECEIVE = 2;
     private final int UPDATE_TIMES = 3;
     private final int STOP_TRAINING = 4;
+    private Dialog set_dialog;
 
 
     private Handler handler = new Handler() {
@@ -170,6 +175,9 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
                         stopTraining();
                         return;
                     }
+                    break;
+                case Timer.TIMER_DOWN:
+                    tvTotalTime.setText("倒计时："+msg.obj.toString());
                     break;
                 //接收到返回的时间
                 case TIME_RECEIVE:
@@ -190,7 +198,7 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_large_recess);
         ButterKnife.bind(this);
-//        level = getIntent().getIntExtra("level", 1);
+        level = getIntent().getIntExtra("level", 1);
 
         initView();
         device = new Device(this);
@@ -206,7 +214,8 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
     @Override
     protected void onStart() {
         super.onStart();
-        imgSave.setEnabled(false);
+        imgSaveNew.setEnabled(false);
+        set_dialog = createLightSetDialog();
     }
 
     @Override
@@ -218,7 +227,7 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
     private void initView() {
         tvTitle.setText("大课间活动");
         imgHelp.setVisibility(View.VISIBLE);
-        imgSave.setVisibility(View.VISIBLE);
+        imgSaveNew.setVisibility(View.VISIBLE);
 
         //设备排序
         Collections.sort(Device.DEVICE_LIST, new PowerInfoComparetor());
@@ -273,9 +282,9 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
         barTrainingTime.setProgress(level);
 
         //初始化训练强度拖动条
-        barLevel.setOnSeekBarChangeListener(new MySeekBarListener(barTrainingTime,tvLevel, 2));
-        imgLevelsub.setOnTouchListener(new AddOrSubBtnClickListener(barLevel, 0));
-        imgLevelAdd.setOnTouchListener(new AddOrSubBtnClickListener(barLevel, 1));
+//        barLevel.setOnSeekBarChangeListener(new MySeekBarListener(barTrainingTime,tvLevel, 2));
+//        imgLevelsub.setOnTouchListener(new AddOrSubBtnClickListener(barLevel, 0));
+//        imgLevelAdd.setOnTouchListener(new AddOrSubBtnClickListener(barLevel, 1));
         //训练时间拖动条初始化
         barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 10));
         imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
@@ -286,18 +295,18 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
         lvGroup.setAdapter(groupListViewAdapter);
 
         //解决listView 与scrollView的滑动冲突
-        lvGroup.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent motionEvent) {
-                //从listView 抬起时将控制权还给scrollview
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP)
-                    svContainer.requestDisallowInterceptTouchEvent(false);
-                else
-                    //requestDisallowInterceptTouchEvent（true）方法是用来子View告诉父容器不要拦截我们的事件的
-                    svContainer.requestDisallowInterceptTouchEvent(true);
-                return false;
-            }
-        });
+//        lvGroup.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent motionEvent) {
+//                //从listView 抬起时将控制权还给scrollview
+//                if (motionEvent.getAction() == MotionEvent.ACTION_UP)
+//                    svContainer.requestDisallowInterceptTouchEvent(false);
+//                else
+//                    //requestDisallowInterceptTouchEvent（true）方法是用来子View告诉父容器不要拦截我们的事件的
+//                    svContainer.requestDisallowInterceptTouchEvent(true);
+//                return false;
+//            }
+//        });
 
         //初始化右侧listView
         largeRecessAdapter = new LargeRecessAdapter(this);
@@ -305,22 +314,22 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
         lvTimes.setOnItemClickListener(this);
 
 
-        //设定感应模式的checkbox组合的点击事件
-        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
-        actionModeCheckBox = new CheckBox(1, views);
-        new CheckBoxClickListener(actionModeCheckBox);
-        //设定灯光模式的checkbox组合的点击事件
-        ImageView[] views1 = new ImageView[]{imgLightModeBeside, imgLightModeCenter, imgLightModeAll};
-        lightModeCheckBox = new CheckBox(1, views1);
-        new CheckBoxClickListener(lightModeCheckBox);
-        //设定灯光颜色checkBox组合的点击事件
-        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
-        lightColorCheckBox = new CheckBox(1, views2);
-        new CheckBoxClickListener(lightColorCheckBox);
-        //设定闪烁模式checkbox组合的点击事件
-        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast,};
-        blinkModeCheckBox = new CheckBox(1, views3);
-        new CheckBoxClickListener(blinkModeCheckBox);
+//        //设定感应模式的checkbox组合的点击事件
+//        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
+//        actionModeCheckBox = new CheckBox(1, views);
+//        new CheckBoxClickListener(actionModeCheckBox);
+//        //设定灯光模式的checkbox组合的点击事件
+//        ImageView[] views1 = new ImageView[]{imgLightModeBeside, imgLightModeCenter, imgLightModeAll};
+//        lightModeCheckBox = new CheckBox(1, views1);
+//        new CheckBoxClickListener(lightModeCheckBox);
+//        //设定灯光颜色checkBox组合的点击事件
+//        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
+//        lightColorCheckBox = new CheckBox(1, views2);
+//        new CheckBoxClickListener(lightColorCheckBox);
+//        //设定闪烁模式checkbox组合的点击事件
+//        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast,};
+//        blinkModeCheckBox = new CheckBox(1, views3);
+//        new CheckBoxClickListener(blinkModeCheckBox);
     }
 
 
@@ -354,19 +363,27 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
 //    }
 
 
-    @OnClick({R.id.layout_cancel, R.id.img_help, R.id.btn_begin, R.id.img_save, R.id.btn_on, R.id.btn_off})
+    @OnClick({R.id.img_set,R.id.layout_cancel, R.id.img_help, R.id.btn_begin, R.id.btn_stop,R.id.img_save_new, R.id.btn_on, R.id.btn_off})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.img_set:
+                set_dialog = createLightSetDialog();
+                OperateUtils.setScreenWidth(this, set_dialog, 0.95, 0.7);
+                set_dialog.show();
+                break;
             case R.id.layout_cancel:
                 this.finish();
                 device.turnOffAllTheLight();
                 break;
             case R.id.img_help:
-                Intent intent = new Intent(this, HelpActivity.class);
-                intent.putExtra("flag", 9);
-                startActivity(intent);
+                List<Integer> list = new ArrayList<>();
+                list.add(R.string.situp_training_method);
+                list.add(R.string.situp_training_standard);
+                Dialog dialog_help = DialogUtils.createHelpDialog(LargeRecessActivity.this,list);
+                OperateUtils.setScreenWidth(this, dialog_help, 0.95, 0.7);
+                dialog_help.show();
                 break;
-            case R.id.img_save:
+            case R.id.img_save_new:
                 Intent it = new Intent(this, SaveActivity.class);
                 Bundle bundle = new Bundle();
                 //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 6:大课间跑圈，八秒钟跑 ...
@@ -391,6 +408,9 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
                     stopTraining();
                 else
                     starTraining();
+                break;
+            case R.id.btn_stop:
+                stopTraining();
                 break;
             case R.id.btn_on:
                 //goupNum组数，1：每组设备个数，0：类型
@@ -419,7 +439,6 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
         largeRecessAdapter.setCompletedTimes(completedTimes);
         largeRecessAdapter.notifyDataSetChanged();
 
-        btnBegin.setText("停止");
         //训练时间
         trainingTime = (int) (new Double(tvTrainingTime.getText().toString()) * 60 * 1000);
         //清除串口数据
@@ -430,11 +449,11 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
         for (int i = 0; i < goupNum; i++) {
             device.sendOrder(Device.DEVICE_LIST.get(i).getDeviceNum(),
                     Order.LightColor.values()[lightColorCheckBox.getCheckId()],
-                    Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
+                    Order.VoiceMode.values()[cbVoice.isChecked()? 1:0],
                     Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
                     Order.LightModel.OUTER,
                     Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                    Order.EndVoice.NONE);
+                    Order.EndVoice.values()[cbEndVoice.isChecked()?1:0]);
         }
         timer = new Timer(handler, trainingTime);
         timer.setBeginTime(System.currentTimeMillis());
@@ -444,8 +463,7 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
     //结束训练
     public void stopTraining() {
         isTraining = false;
-        btnBegin.setText("开始");
-        imgSave.setEnabled(true);
+        imgSaveNew.setEnabled(true);
         //结束时间线程
         timer.stopTimer();
         //结束接收返回时间线程
@@ -462,11 +480,11 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
                     return;
                 device.sendOrder(deviceNum,
                         Order.LightColor.values()[lightColorCheckBox.getCheckId()],
-                        Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
+                        Order.VoiceMode.values()[cbVoice.isChecked()?1:0],
                         Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
                         Order.LightModel.OUTER,
                         Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                        Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
+                        Order.EndVoice.values()[cbEndVoice.isChecked()?1:0]);
             }
         }).start();
     }
@@ -519,5 +537,56 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
             }
         }
         return position;
+    }
+
+    public Dialog createLightSetDialog() {
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View v = inflater.inflate(R.layout.layout_dialog_lightset, null);// 得到加载view
+
+        LinearLayout layout = (LinearLayout) v.findViewById(R.id.dialog_light_set);
+        ImageView imgActionModeTouch = (ImageView) layout.findViewById(R.id.img_action_mode_touch);
+        ImageView imgActionModeLight = (ImageView) layout.findViewById(R.id.img_action_mode_light);
+        ImageView imgActionModeTogether = (ImageView) layout.findViewById(R.id.img_action_mode_together);
+        ImageView imgLightColorBlue = (ImageView) layout.findViewById(R.id.img_light_color_blue);
+        ImageView imgLightColorRed = (ImageView) layout.findViewById(R.id.img_light_color_red);
+        ImageView imgLightColorBlueRed = (ImageView) layout.findViewById(R.id.img_light_color_blue_red);
+        ImageView imgBlinkModeNone = (ImageView) layout.findViewById(R.id.img_blink_mode_none);
+        ImageView imgBlinkModeSlow = (ImageView) layout.findViewById(R.id.img_blink_mode_slow);
+        ImageView imgBlinkModeFast = (ImageView) layout.findViewById(R.id.img_blink_mode_fast);
+        cbVoice = (android.widget.CheckBox) layout.findViewById(R.id.cb_voice);
+        cbEndVoice = (android.widget.CheckBox)layout.findViewById(R.id.cb_endvoice);
+        Button btnOk = (Button) layout.findViewById(R.id.btn_ok);
+        Button btnCloseSet = (Button) layout.findViewById(R.id.btn_close_set);
+        final Dialog dialog = new Dialog(this, R.style.dialog_rank);
+
+        dialog.setContentView(layout);
+
+        //设定感应模式checkBox组合的点击事件
+        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
+        actionModeCheckBox = new CheckBox(1, views);
+        new CheckBoxClickListener(actionModeCheckBox);
+        //设定灯光颜色checkBox组合的点击事件
+        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
+        lightColorCheckBox = new CheckBox(1, views2);
+        new CheckBoxClickListener(lightColorCheckBox);
+        //设定闪烁模式checkbox组合的点击事件
+        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast};
+        blinkModeCheckBox = new CheckBox(1, views3);
+        new CheckBoxClickListener(blinkModeCheckBox);
+
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        btnCloseSet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        return dialog;
     }
 }

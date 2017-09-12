@@ -1,5 +1,6 @@
 package com.oucb303.training.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -7,6 +8,7 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -34,6 +36,7 @@ import com.oucb303.training.model.TimeInfo;
 import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.threads.Timer;
 import com.oucb303.training.utils.DataAnalyzeUtils;
+import com.oucb303.training.utils.OperateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,8 +53,8 @@ import butterknife.OnClick;
 public class DribblingGameActivity extends AppCompatActivity {
 
 
-    @Bind(R.id.bt_distance_cancel)
-    ImageView btDistanceCancel;
+    //@Bind(R.id.bt_distance_cancel)
+    //ImageView btDistanceCancel;
     @Bind(R.id.layout_cancel)
     LinearLayout layoutCancel;
     @Bind(R.id.tv_title)
@@ -64,28 +67,26 @@ public class DribblingGameActivity extends AppCompatActivity {
     SeekBar barTrainingTime;
     @Bind(R.id.img_training_time_add)
     ImageView imgTrainingTimeAdd;
-    @Bind(R.id.training_subgroups)
-    Spinner trainingSubgroups;
+    @Bind(R.id.sp_group_num)
+    Spinner spgroupnum;
     @Bind(R.id.lv_group)
     ListView lvGroup;
-    @Bind(R.id.img_action_mode_light)
-    ImageView imgActionModeLight;
-    @Bind(R.id.img_action_mode_touch)
-    ImageView imgActionModeTouch;
-    @Bind(R.id.img_action_mode_together)
-    ImageView imgActionModeTogether;
-    @Bind(R.id.img_light_mode_beside)
-    ImageView imgLightModeBeside;
-    @Bind(R.id.img_light_mode_center)
-    ImageView imgLightModeCenter;
-    @Bind(R.id.img_light_mode_allr)
-    ImageView imgLightModeAllr;
-    @Bind(R.id.cb_voice)
+    //@Bind(R.id.img_action_mode_light)
+    //ImageView imgActionModeLight;
+    //@Bind(R.id.img_action_mode_touch)
+    //ImageView imgActionModeTouch;
+    //@Bind(R.id.img_action_mode_together)
+    //ImageView imgActionModeTogether;
+    //@Bind(R.id.img_light_mode_beside)
+    //ImageView imgLightModeBeside;
+    //@Bind(R.id.img_light_mode_center)
+    //ImageView imgLightModeCenter;
+    //@Bind(R.id.img_light_mode_allr)
+    //ImageView imgLightModeAllr;
     android.widget.CheckBox cbVoice;
-    @Bind(R.id.cb_end_voice)
-    android.widget.CheckBox cbEndVoice;
-    @Bind(R.id.ll_params)
-    LinearLayout llParams;
+   // android.widget.CheckBox cbEndVoice;
+    //@Bind(R.id.ll_params)
+    //LinearLayout llParams;
     @Bind(R.id.sv_container)
     ScrollView svContainer;
     @Bind(R.id.tv_total_time)
@@ -105,8 +106,10 @@ public class DribblingGameActivity extends AppCompatActivity {
     TextView tvDeviceList;
     @Bind(R.id.img_help)
     ImageView imgHelp;
-    @Bind(R.id.img_save)
-    ImageView imgSave;
+    @Bind(R.id.img_set)
+    ImageView imgSet;
+    @Bind(R.id.img_save_new)
+    ImageView imgSaveNew;
     @Bind(R.id.tv_delay_time)
     TextView tvDelayTime;
     @Bind(R.id.img_delay_time_sub)
@@ -127,30 +130,18 @@ public class DribblingGameActivity extends AppCompatActivity {
     Button btnOn;
     @Bind(R.id.btn_off)
     Button btnOff;
-    @Bind(R.id.img_blink_mode_none)
-    ImageView imgBlinkModeNone;
-    @Bind(R.id.img_blink_mode_slow)
-    ImageView imgBlinkModeSlow;
-    @Bind(R.id.img_blink_mode_fast)
-    ImageView imgBlinkModeFast;
-    @Bind(R.id.img_level_sub)
-    ImageView imgLevelsub;
-    @Bind(R.id.img_level_add)
-    ImageView imgLevelAdd;
-    @Bind(R.id.bar_level)
-    SeekBar barLevel;
-    @Bind(R.id.tv_level)
-    TextView tvLevel;
-    @Bind(R.id.ll_level)
-    LinearLayout lLevel;
+    //@Bind(R.id.img_blink_mode_none)
+    //ImageView imgBlinkModeNone;
+    //@Bind(R.id.img_blink_mode_slow)
+    //ImageView imgBlinkModeSlow;
+    //@Bind(R.id.img_blink_mode_fast)
+    //ImageView imgBlinkModeFast;
 
     private Device device;
     //所选设备个数，分组数
     private int totalNum, groupNum;
     private DGroupListViewAdapter dGroupListViewAdapter;
     private DribblingGameAdapter dribblingGameAdapter;
-    //感应模式和灯光模式集合
-    private CheckBox actionModeCheckBox, lightModeCheckBox,blinkModeCheckBox;
     //是否训练标志
     private boolean trainningFlag = false;
     //计时器
@@ -166,7 +157,9 @@ public class DribblingGameActivity extends AppCompatActivity {
     //训练开始时间
     private long startTime;
     private ArrayList<Integer> listRand = new ArrayList<>();
-
+    //感应模式和灯光模式集合
+    private CheckBox actionModeCheckBox, lightColorCheckBox,blinkModeCheckBox;
+    private Dialog set_dialog;
 
     private int level;
 
@@ -236,7 +229,8 @@ public class DribblingGameActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        imgSave.setEnabled(false);
+        imgSaveNew.setEnabled(false);
+        set_dialog = createLightSetDialog();
     }
 
     @Override
@@ -258,22 +252,22 @@ public class DribblingGameActivity extends AppCompatActivity {
     }
 
     public void initView() {
-        imgSave.setVisibility(View.VISIBLE);
+        imgSaveNew.setVisibility(View.VISIBLE);
         imgHelp.setVisibility(View.VISIBLE);
         if (level == 1){
-            lLevel.setVisibility(View.GONE);
+//            lLevel.setVisibility(View.GONE);
             tvTitle.setText("多人混战");
         } else{
             tvTitle.setText("运球比赛");
-            lLevel.setVisibility(View.VISIBLE);
+//            lLevel.setVisibility(View.VISIBLE);
         }
 
         dribblingGameAdapter = new DribblingGameAdapter(this);
         lvScores.setAdapter(dribblingGameAdapter);
         //初始化训练强度拖动条
-        barLevel.setOnSeekBarChangeListener(new MySeekBarListener(barTrainingTime,tvLevel, 2));
-        imgLevelsub.setOnTouchListener(new AddOrSubBtnClickListener(barLevel, 0));
-        imgLevelAdd.setOnTouchListener(new AddOrSubBtnClickListener(barLevel, 1));
+//        barLevel.setOnSeekBarChangeListener(new MySeekBarListener(barTrainingTime,tvLevel, 2));
+//        imgLevelsub.setOnTouchListener(new AddOrSubBtnClickListener(barLevel, 0));
+//        imgLevelAdd.setOnTouchListener(new AddOrSubBtnClickListener(barLevel, 1));
 //        if (level != 0) {
 //            switch (level) {
 //                case 1:
@@ -332,14 +326,14 @@ public class DribblingGameActivity extends AppCompatActivity {
 
         //训练分组spinner
         String[] groupCount = new String[]{" ", "一组", "两组", "三组"};
-        trainingSubgroups.setOnItemSelectedListener(new SpinnerItemSelectedListener(this, trainingSubgroups, groupCount) {
+        spgroupnum.setOnItemSelectedListener(new SpinnerItemSelectedListener(this, spgroupnum, groupCount) {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 groupNum = i;
                 if (totalNum < groupNum) {
                     Toast.makeText(DribblingGameActivity.this, "当前设备数量为" + Device.DEVICE_LIST.size() + ",不能分成" + i + "组!",
                             Toast.LENGTH_LONG).show();
-                    trainingSubgroups.setSelection(0);
+                    spgroupnum.setSelection(0);
                     groupNum = 0;
                 }
                 dGroupListViewAdapter.setGroupNum(groupNum);
@@ -361,24 +355,16 @@ public class DribblingGameActivity extends AppCompatActivity {
         barOverTime.setOnSeekBarChangeListener(new MySeekBarListener(tvOverTime, 28, 2));
         imgOverTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barOverTime, 1));
         imgOverTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barOverTime, 0));
-
-        //设定感应模式checkBox组合的点击事件
-        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
-        actionModeCheckBox = new CheckBox(1, views);
-        new CheckBoxClickListener(actionModeCheckBox);
-        //设定灯光模式checkBox组合的点击事件
-        ImageView[] views1 = new ImageView[]{imgLightModeBeside, imgLightModeCenter, imgLightModeAllr};
-        lightModeCheckBox = new CheckBox(1, views1);
-        new CheckBoxClickListener(lightModeCheckBox);
-        //设定闪烁模式checkBox组合的点击事件
-        ImageView[] views2 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast};
-        blinkModeCheckBox = new CheckBox(1, views2);
-        new CheckBoxClickListener(blinkModeCheckBox);
     }
 
-    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help, R.id.btn_on, R.id.btn_off, R.id.img_save})
+    @OnClick({R.id.img_set,R.id.layout_cancel, R.id.btn_begin, R.id.img_help, R.id.btn_on, R.id.btn_off, R.id.img_save_new})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.img_set:
+                set_dialog = createLightSetDialog();
+                OperateUtils.setScreenWidth(this, set_dialog, 0.95, 0.7);
+                set_dialog.show();
+                break;
             case R.id.layout_cancel:
                 if (trainningFlag) {
                     Toast.makeText(this, "请先停止训练后再退出！", Toast.LENGTH_SHORT).show();
@@ -398,14 +384,14 @@ public class DribblingGameActivity extends AppCompatActivity {
                 if (trainningFlag)
                     stopTraining();
                 else
-                    startTraining();
+                    starTraining();
                 break;
             case R.id.img_help:
                 Intent intent = new Intent(this, HelpActivity.class);
                 if (level == 4)
-                    intent.putExtra("flag", 6);
-                else
                     intent.putExtra("flag", 5);
+                else
+                    intent.putExtra("flag", 6);
                 startActivity(intent);
                 break;
             case R.id.btn_on:
@@ -416,7 +402,7 @@ public class DribblingGameActivity extends AppCompatActivity {
                 for (int i = 0; i < totalNum; i++)
                     turnOffLight(Device.DEVICE_LIST.get(i).getDeviceNum());
                 break;
-            case R.id.img_save:
+            case R.id.img_save_new:
                 Intent it = new Intent(this, SaveActivity.class);
                 Bundle bundle = new Bundle();
                 //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 5:运球比赛、多人混战 ...
@@ -439,7 +425,7 @@ public class DribblingGameActivity extends AppCompatActivity {
     }
 
     //开始训练
-    public void startTraining() {
+    public void starTraining() {
         btnBegin.setText("停止");
         trainningFlag = true;
         //trainingTime是总时间
@@ -464,11 +450,11 @@ public class DribblingGameActivity extends AppCompatActivity {
         for (int i = 0; i < listRand.size(); i++) {
             device.sendOrder(Device.DEVICE_LIST.get(listRand.get(i)).getDeviceNum(),
                     Order.LightColor.values()[i + 1],
-                    Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
+                    Order.VoiceMode.values()[0],
                     Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
                     Order.LightModel.OUTER,
                     Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                    Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
+                    Order.EndVoice.values()[0]);
             //每次开灯的设备编号
             deviceNums[i] = Device.DEVICE_LIST.get(listRand.get(i)).getDeviceNum();
             //每组设备灯亮起的当前时间
@@ -491,7 +477,7 @@ public class DribblingGameActivity extends AppCompatActivity {
     public void stopTraining() {
         timer.stopTimer();
         btnBegin.setText("开始");
-        imgSave.setEnabled(true);
+        imgSaveNew.setEnabled(true);
         btnBegin.setEnabled(false);
         trainningFlag = false;
         for (int i = 0; i < groupNum; i++)
@@ -548,11 +534,11 @@ public class DribblingGameActivity extends AppCompatActivity {
                     return;
                 device.sendOrder(Device.DEVICE_LIST.get(listRand.get(groupId)).getDeviceNum(),
                         Order.LightColor.values()[groupId + 1],
-                        Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
+                        Order.VoiceMode.values()[0],
                         Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
                         Order.LightModel.OUTER,
                         Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                        Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
+                        Order.EndVoice.values()[0]);
                 duration[groupId] = System.currentTimeMillis();
             }
         }).start();
@@ -623,5 +609,53 @@ public class DribblingGameActivity extends AppCompatActivity {
             temp++;
         }
 
+    }
+    private Dialog createLightSetDialog() {
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View v = inflater.inflate(R.layout.layout_dialog_lightset, null);// 得到加载view
+
+        LinearLayout layout = (LinearLayout) v.findViewById(R.id.dialog_light_set);
+        ImageView imgActionModeTouch = (ImageView) layout.findViewById(R.id.img_action_mode_touch);
+        ImageView imgActionModeLight = (ImageView) layout.findViewById(R.id.img_action_mode_light);
+        ImageView imgActionModeTogether = (ImageView) layout.findViewById(R.id.img_action_mode_together);
+        ImageView imgLightColorBlue = (ImageView) layout.findViewById(R.id.img_light_color_blue);
+        ImageView imgLightColorRed = (ImageView) layout.findViewById(R.id.img_light_color_red);
+        ImageView imgLightColorBlueRed = (ImageView) layout.findViewById(R.id.img_light_color_blue_red);
+        ImageView imgBlinkModeNone = (ImageView) layout.findViewById(R.id.img_blink_mode_none);
+        ImageView imgBlinkModeSlow = (ImageView) layout.findViewById(R.id.img_blink_mode_slow);
+        ImageView imgBlinkModeFast = (ImageView) layout.findViewById(R.id.img_blink_mode_fast);
+        cbVoice = (android.widget.CheckBox) layout.findViewById(R.id.cb_voice);
+        Button btnOk = (Button) layout.findViewById(R.id.btn_ok);
+        Button btnCloseSet = (Button) layout.findViewById(R.id.btn_close_set);
+        final Dialog dialog = new Dialog(this, R.style.dialog_rank);
+
+        dialog.setContentView(layout);
+
+        //设定感应模式checkBox组合的点击事件
+        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
+        actionModeCheckBox = new CheckBox(1, views);
+        new CheckBoxClickListener(actionModeCheckBox);
+        //设定灯光颜色checkBox组合的点击事件
+        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
+        lightColorCheckBox = new CheckBox(1, views2);
+        new CheckBoxClickListener(lightColorCheckBox);
+        //设定闪烁模式checkbox组合的点击事件
+        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast};
+        blinkModeCheckBox = new CheckBox(1, views3);
+        new CheckBoxClickListener(blinkModeCheckBox);
+
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        btnCloseSet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        return dialog;
     }
 }

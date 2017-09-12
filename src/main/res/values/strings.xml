@@ -57,11 +57,15 @@
 
     <!--跑类-->
     <string name="technique_run_item0">八秒跑</string>
-    <string name="technique_run_item1">50米往返跑</string>
-    <string name="technique_run_item2">定时有氧跑</string>
+    <string name="technique_run_item1">折返跑</string>
+    <string name="technique_run_item2">定向跑</string>
+    <string name="technique_run_item3">高抬腿</string>
     <!--跳类-->
+
+    <string name="technique_jump_item1">原地单双脚连续跳</string>
+
     <string name="technique_jump_item0">原地纵跳摸高</string>
-    <string name="technique_jump_item1">滞空练习</string>
+    <string name="technique_jump_item2">滞空练习</string>
     <!--投类-->
     <string name="technique_throw_item0">实心球投掷</string>
     <string name="technique_throw_item1">掷准练习</string>
@@ -87,6 +91,20 @@
     <string name="throwing_training_method">&#160;&#160;&#160;&#160;锻炼手眼协调和手指手腕的精确操控能力，将加装感应板的光标固定在不低于练习者身高的墙上，间隔一定距离练习!</string>
     <string name="throwing_training_standard"> &#160;&#160;&#160;&#160;打到感应板范围内则计分，固定投掷次数按得分计算!</string>
 
+    <string name="highknee_training_method">&#160;&#160;&#160;&#160;支撑腿直立，光标置于摆动腿屈膝抬平后脚尖正前方，提高学生跑步频率和下肢力量。</string>
+    <string name="highknee_training_standard">&#160;&#160;&#160;&#160;原地高抬腿练习，光标记录两腿交替1次的时间和完成固定次数的总时间,固定次数用时长短。</string>
+
+    <string name="orientrun_training_method">&#160;&#160;&#160;&#160;场地内随机摆放光标，位于锥形帽上方，提高速度、耐力，增强观察能力。</string>
+    <string name="orientrun_training_standard">&#160;&#160;&#160;&#160;根据灯亮顺序，迅速跑到光标位置用手扫灭光标（利用多种颜色分组比赛）,固定时间内，扫灭光标数量。</string>
+
+    <string name="singlefootjump_training_method">&#160;&#160;&#160;&#160;光标置于体侧踝关节高度，提高下肢爆发力和连续起跳能力。</string>
+    <string name="singlefootjump_training_standard">&#160;&#160;&#160;&#160;起跳并超过光标高度计数1次，固定时间内，扫灭光标数量。</string>
+
     <string name="crawl_training_method">&#160;&#160;&#160;&#160;增加四肢协调能力，在一定区域内随机摆放光标，爬行方式找寻并拍灭随机闪亮的光标。</string>
     <string name="crawl_training_standard"> &#160;&#160;&#160;&#160;固定时间内扫灭的次数!</string>
+    <!--大课间跑圈-->
+    <string name="largeRecess_training_method">&#160;&#160;&#160;&#160;增加四肢协调能力，在一定区域内随机摆放光标，爬行方式找寻并拍灭随机闪亮的光标。</string>
+    <string name="largeRecess_training_standard"> &#160;&#160;&#160;&#160;固定时间内扫灭的次数!</string>
+
+    <string name="light_1">1+1+1+1</string>
 </resources>

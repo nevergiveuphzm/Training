@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_item_list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.b303.saflight.activity.NavigationActivity">
+
+    <!--Actionbar-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="125px"
+        android:background="@drawable/navigation_actionbar_bg"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ll_back"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/navigation_back"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="返回"
+                android:textColor="@color/colorWhite"
+                android:textSize="23dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_category"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="7"
+            android:orientation="horizontal"
+            android:paddingLeft="40dp"
+            android:paddingTop="3px">
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:background="@drawable/navigation_actionbar_bg"
+            android:gravity="center_horizontal|center_vertical">
+
+            <TextView
+                android:id="@+id/tv_module_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="运动能力"
+                android:textColor="@color/colorWhite"
+                android:textSize="35dip"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_center"
+        android:layout_width="match_parent"
+        android:layout_height="680px"
+        android:background="@drawable/navigation_run_bg">
+
+        <LinearLayout
+            android:layout_width="576px"
+            android:layout_height="match_parent"
+            android:background="@drawable/navigation_center_left_bg">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="60dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="56px"
+                    android:layout_height="63px"
+                    android:src="@drawable/navigation_logo_decrator"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="138px"
+                        android:layout_height="67px"
+                        android:src="@drawable/navigation_logo"/>
+
+                    <TextView
+                        android:id="@+id/tv_category_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:autoLink="all"
+                        android:text="奔跑"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="35sp"/>
+
+                    <GridView
+                        android:id="@+id/gv_item_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:horizontalSpacing="0dp"
+                        android:numColumns="2">
+
+                    </GridView>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="297px"
+        android:background="@drawable/navigation_listview_bg"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+        <com.b303.saflight.widget.HorizontalListView
+            android:id="@+id/hlv_items"
+            android:layout_width="match_parent"
+            android:layout_height="226px">
+
+        </com.b303.saflight.widget.HorizontalListView>
+
+    </LinearLayout>
+
+
+</LinearLayout>

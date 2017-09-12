@@ -76,6 +76,7 @@ public class Timer extends Thread
             msg.what = TIMER_FLAG;
             msg.obj = res;
             handler.sendMessage(msg);
+
             //倒计时
             time_down = totalTime-time;
             int minute_down = time_down / (1000 * 60);

@@ -1,15 +1,18 @@
 package com.oucb303.training.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -29,6 +32,7 @@ import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.threads.Timer;
 import com.oucb303.training.utils.Constant;
 import com.oucb303.training.utils.DataAnalyzeUtils;
+import com.oucb303.training.utils.OperateUtils;
 import com.oucb303.training.widget.HorizontalListView;
 
 import java.util.ArrayList;
@@ -53,8 +57,9 @@ public class GroupConfrontationActivity extends AppCompatActivity {
     Spinner spGroupDeviceNum;
 
     private final int TIME_RECEIVE = 1;
-    @Bind(R.id.img_action_mode_light)
-    ImageView imgActionModeLight;
+
+
+
     @Bind(R.id.img_action_mode_touch)
     ImageView imgActionModeTouch;
     @Bind(R.id.img_action_mode_together)
@@ -87,7 +92,8 @@ public class GroupConfrontationActivity extends AppCompatActivity {
     private GroupListViewAdapter groupListViewAdapter;
     //感应模式和灯光模式集合
     private CheckBox actionModeCheckBox, lightModeCheckBox,blinkModeCheckBox;
-
+    //设置的弹窗
+    private Dialog set_dialog;
     //每组设备个数
     private int groupSize;
     // 训练是否正在进行的标志
@@ -131,6 +137,8 @@ public class GroupConfrontationActivity extends AppCompatActivity {
             }
         }
     };
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -188,25 +196,18 @@ public class GroupConfrontationActivity extends AppCompatActivity {
             }
         });
 
-        //设定感应模式checkBox组合的点击事件
-        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
-        actionModeCheckBox = new CheckBox(1, views);
-        new CheckBoxClickListener(actionModeCheckBox);
-        //设定灯光模式checkBox组合的点击事件
-        ImageView[] views1 = new ImageView[]{imgLightModeBeside, imgLightModeCenter, imgLightModeAll};
-        lightModeCheckBox = new CheckBox(1, views1);
-        new CheckBoxClickListener(lightModeCheckBox);
 
-        //设定闪烁模式checkbox组合的点击事件
-        ImageView[] views2 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast,};
-        blinkModeCheckBox = new CheckBox(1, views2);
-        new CheckBoxClickListener(blinkModeCheckBox);
     }
 
 
-    @OnClick({R.id.layout_cancel, R.id.img_help, R.id.btn_begin})
+    @OnClick({R.id.layout_cancel, R.id.img_help, R.id.btn_begin,R.id.img_set})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.img_set:
+                set_dialog = createLightSetDialog();
+                OperateUtils.setScreenWidth(this, set_dialog, 0.95, 0.7);
+                set_dialog.show();
+                break;
             case R.id.layout_cancel:
                 this.finish();
                 device.turnOffAllTheLight();
@@ -427,6 +428,60 @@ public class GroupConfrontationActivity extends AppCompatActivity {
         public int time;
         public DeviceInfo deviceInfo;
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        //imgSaveNew.setEnabled(false);
+//        imgSave.setEnabled(false);
+        set_dialog = createLightSetDialog();
+    }
+
+    public Dialog createLightSetDialog() {
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View v = inflater.inflate(R.layout.layout_dialog_group, null);// 得到加载view
+
+        LinearLayout layout = (LinearLayout) v.findViewById(R.id.dialog_light_set);
+        ImageView imgActionModeTouch = (ImageView) layout.findViewById(R.id.img_action_mode_touch);
+        ImageView imgActionModeTogether = (ImageView) layout.findViewById(R.id.img_action_mode_together);
+        ImageView imgActionModeLight = (ImageView) layout.findViewById(R.id.img_action_mode_light);
+
+        ImageView imgBlinkModeNone = (ImageView) layout.findViewById(R.id.img_blink_mode_none);
+        ImageView imgBlinkModeSlow = (ImageView) layout.findViewById(R.id.img_blink_mode_slow);
+        ImageView imgBlinkModeFast = (ImageView) layout.findViewById(R.id.img_blink_mode_fast);
+        cbVoice = (android.widget.CheckBox) layout.findViewById(R.id.cb_voice);
+        Button btnOk = (Button) layout.findViewById(R.id.btn_ok);
+        Button btnCloseSet = (Button) layout.findViewById(R.id.btn_close_set);
+        final Dialog dialog = new Dialog(this, R.style.dialog_rank);
+
+        dialog.setContentView(layout);
+
+        //设定感应模式checkBox组合的点击事件
+        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
+        actionModeCheckBox = new CheckBox(1, views);
+        new CheckBoxClickListener(actionModeCheckBox);
+
+        //设定闪烁模式checkbox组合的点击事件
+        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast};
+        blinkModeCheckBox = new CheckBox(1, views3);
+        new CheckBoxClickListener(blinkModeCheckBox);
+
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        btnCloseSet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        return dialog;
     }
 
 }

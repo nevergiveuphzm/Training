@@ -228,7 +228,6 @@ public class RandomTimesModuleActivity extends AppCompatActivity {
                     String data = msg.obj.toString();
                     //返回数据不为空
                     if (data != null && data.length() >= 4) {
-//                        analyseData(data);
                         analyseDatas(data);
                         if (randomTimesModuleAdapter != null) {
                             randomTimesModuleAdapter.notifyDataSetChanged();

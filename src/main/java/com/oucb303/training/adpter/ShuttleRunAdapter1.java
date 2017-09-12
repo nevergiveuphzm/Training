@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -69,7 +71,6 @@ public class ShuttleRunAdapter1 extends BaseAdapter
     {
 //            list_time.add(position,finishTime[position]);
 //            Log.i("finish_time里面有什么",""+finishTime[position]);
-        int count = 0;
         if (view == null)
             view = LayoutInflater.from(context).inflate(R.layout.item_shuttle_run_group_time1, null);
         TextView tvGroupId = (TextView) view.findViewById(R.id.tv_group_id);
@@ -137,20 +138,6 @@ public class ShuttleRunAdapter1 extends BaseAdapter
 
         return view;
     }
-
-//    public List<Integer> dosort() {
-//
-//        Collections.sort(list_time, comparator);
-//        return list_time;
-//    }
-//    public Comparator<Integer> comparator = new Comparator<Integer>() {
-////        private final Collator collator = Collator.getInstance();
-//
-//        @Override
-//        public int compare(Integer t1, Integer t2) {
-//            return t1-t2;
-//        }
-//    };
 
     public void setFinishTime(int[] finishTime)
     {

@@ -4,7 +4,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/layout_title_bar"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/layout_title_bar_newer" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -480,7 +485,7 @@
                                 android:layout_marginLeft="10dp"
                                 android:background="@drawable/button_color_grey"
                                 android:clickable="true"
-                                android:src="@drawable/btn_checkbox"/>
+                                android:src="@drawable/btn_checkbox_checked"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -505,7 +510,7 @@
                                 android:layout_marginLeft="10dp"
                                 android:background="@drawable/button_color_grey"
                                 android:clickable="true"
-                                android:src="@drawable/btn_uncheckbox"/>
+                                android:src="@drawable/btn_checkbox_unchecked"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -530,7 +535,7 @@
                                 android:layout_marginLeft="10dp"
                                 android:background="@drawable/button_color_grey"
                                 android:clickable="true"
-                                android:src="@drawable/btn_uncheckbox"/>
+                                android:src="@drawable/btn_checkbox_unchecked"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -578,7 +583,7 @@
                                 android:layout_marginLeft="10dp"
                                 android:background="@drawable/button_color_grey"
                                 android:clickable="true"
-                                android:src="@drawable/btn_checkbox"/>
+                                android:src="@drawable/btn_checkbox_checked"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -603,7 +608,7 @@
                                 android:layout_marginLeft="10dp"
                                 android:background="@drawable/button_color_grey"
                                 android:clickable="true"
-                                android:src="@drawable/btn_uncheckbox"/>
+                                android:src="@drawable/btn_checkbox_unchecked"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -628,7 +633,7 @@
                                 android:layout_marginLeft="10dp"
                                 android:background="@drawable/button_color_grey"
                                 android:clickable="true"
-                                android:src="@drawable/btn_uncheckbox"/>
+                                android:src="@drawable/btn_checkbox_unchecked"/>
 
                             <TextView
                                 android:layout_width="wrap_content"

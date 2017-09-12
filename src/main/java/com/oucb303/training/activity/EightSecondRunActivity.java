@@ -1,5 +1,6 @@
 package com.oucb303.training.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -7,6 +8,7 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -28,6 +30,8 @@ import com.oucb303.training.model.TimeInfo;
 import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.threads.Timer;
 import com.oucb303.training.utils.DataAnalyzeUtils;
+import com.oucb303.training.utils.DialogUtils;
+import com.oucb303.training.utils.OperateUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,23 +47,22 @@ import butterknife.OnClick;
  */
 public class EightSecondRunActivity extends AppCompatActivity {
 
-    ;
-    @Bind(R.id.cb_voice)
+    //@Bind(R.id.cb_voice)
     android.widget.CheckBox cbVoice;
-    @Bind(R.id.cb_end_voice)
+   // @Bind(R.id.cb_end_voice)
     android.widget.CheckBox cbEndVoice;
-    @Bind(R.id.cb_over_time_voice)
-    android.widget.CheckBox cbOverTimeVoice;
-    @Bind(R.id.bt_distance_cancel)
-    ImageView btDistanceCancel;
+   // @Bind(R.id.cb_over_time_voice)
+    //android.widget.CheckBox cbOverTimeVoice;
+    //@Bind(R.id.bt_distance_cancel)
+    //ImageView btDistanceCancel;
     @Bind(R.id.layout_cancel)
     LinearLayout layoutCancel;
     @Bind(R.id.tv_title)
     TextView tvTitle;
     @Bind(R.id.img_help)
     ImageView imgHelp;
-    @Bind(R.id.img_save)
-    ImageView imgSave;
+    @Bind(R.id.img_save_new)
+    ImageView imgSaveNew;
     @Bind(R.id.sp_dev_num)
     Spinner spDevNum;
     @Bind(R.id.btn_on)
@@ -68,38 +71,38 @@ public class EightSecondRunActivity extends AppCompatActivity {
     Button btnOff;
     @Bind(R.id.tv_device_list)
     TextView tvDeviceList;
-    @Bind(R.id.img_action_mode_light)
-    ImageView imgActionModeLight;
-    @Bind(R.id.img_action_mode_touch)
-    ImageView imgActionModeTouch;
-    @Bind(R.id.img_action_mode_together)
-    ImageView imgActionModeTogether;
-    @Bind(R.id.img_light_mode_beside)
-    ImageView imgLightModeBeside;
-    @Bind(R.id.img_light_mode_center)
-    ImageView imgLightModeCenter;
-    @Bind(R.id.img_light_mode_all)
-    ImageView imgLightModeAll;
-    @Bind(R.id.img_light_color_blue)
-    ImageView imgLightColorBlue;
-    @Bind(R.id.img_light_color_red)
-    ImageView imgLightColorRed;
-    @Bind(R.id.img_light_color_blue_red)
-    ImageView imgLightColorBlueRed;
-    @Bind(R.id.ll_params)
-    LinearLayout llParams;
-    @Bind(R.id.tv_total_time)
-    TextView tvTotalTime;
+//    @Bind(R.id.img_action_mode_light)
+//    ImageView imgActionModeLight;
+//    @Bind(R.id.img_action_mode_touch)
+//    ImageView imgActionModeTouch;
+//    @Bind(R.id.img_action_mode_together)
+//    ImageView imgActionModeTogether;
+    //@Bind(R.id.img_light_mode_beside)
+    //ImageView imgLightModeBeside;
+    //@Bind(R.id.img_light_mode_center)
+    //ImageView imgLightModeCenter;
+    //@Bind(R.id.img_light_mode_all)
+    //ImageView imgLightModeAll;
+    //@Bind(R.id.img_light_color_blue)
+    //ImageView imgLightColorBlue;
+    //@Bind(R.id.img_light_color_red)
+    //ImageView imgLightColorRed;
+    //@Bind(R.id.img_light_color_blue_red)
+    //ImageView imgLightColorBlueRed;
+    //@Bind(R.id.ll_params)
+    //LinearLayout llParams;
+    @Bind(R.id.tv_down_time)
+    TextView tvDownTime;
     @Bind(R.id.lv_times)
     ListView lvTimes;
     @Bind(R.id.btn_begin)
     Button btnBegin;
-    @Bind(R.id.img_blink_mode_none)
-    ImageView imgBlinkModeNone;
-    @Bind(R.id.img_blink_mode_slow)
-    ImageView imgBlinkModeSlow;
-    @Bind(R.id.img_blink_mode_fast)
-    ImageView imgBlinkModeFast;
+    //@Bind(R.id.img_blink_mode_none)
+    //ImageView imgBlinkModeNone;
+    //@Bind(R.id.img_blink_mode_slow)
+    //ImageView imgBlinkModeSlow;
+    //@Bind(R.id.img_blink_mode_fast)
+    //ImageView imgBlinkModeFast;
 
 
     private int level;
@@ -129,6 +132,7 @@ public class EightSecondRunActivity extends AppCompatActivity {
     private long beginTime;
     //设备编号列表
     private List<Character> deviceNumList = new ArrayList<>();
+    private Dialog set_dialog;
 
 
     Handler handler = new Handler() {
@@ -137,7 +141,6 @@ public class EightSecondRunActivity extends AppCompatActivity {
             switch (msg.what) {
                 case Timer.TIMER_FLAG:
                     String time = msg.obj.toString();
-                    tvTotalTime.setText(time);
                     //如果超时
                     if (timer.time >= 8000) {
                         stopTraining();
@@ -160,6 +163,8 @@ public class EightSecondRunActivity extends AppCompatActivity {
                         return;
                     }
                     break;
+                case Timer.TIMER_DOWN:
+                    tvDownTime.setText("倒计时："+msg.obj.toString());
                 case TIME_RECEIVE:
                     String data = msg.obj.toString();
                     //返回数据不为空
@@ -168,7 +173,7 @@ public class EightSecondRunActivity extends AppCompatActivity {
                         timeList.addAll(DataAnalyzeUtils.analyzeTimeData(data));
                         if (eightSecondRunAdapter != null) {
                             eightSecondRunAdapter.notifyDataSetChanged();
-                            lvTimes.setSelection(timeList.size() - 1);
+                           // lvTimes.setSelection(timeList.size() - 1);
                         }
                         isTrainingOver();
                     }
@@ -203,6 +208,8 @@ public class EightSecondRunActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        imgSaveNew.setEnabled(false);
+        set_dialog = createLightSetDialog();
     }
 
     @Override
@@ -216,13 +223,13 @@ public class EightSecondRunActivity extends AppCompatActivity {
     public void initView() {
         tvTitle.setText("八秒钟跑");
         imgHelp.setVisibility(View.VISIBLE);
-        imgSave.setVisibility(View.VISIBLE);
+        imgSaveNew.setVisibility(View.VISIBLE);
         //设备排序
         Collections.sort(Device.DEVICE_LIST, new PowerInfoComparetor());
         //选择设备个数spinner
         String[] num = new String[Device.DEVICE_LIST.size()];
         for (int i = 0; i < num.length; i++) {
-            num[i] = (i + 1) + "个";
+            num[i] = (i + 1) + "组";
         }
         spDevNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(this, spDevNum, num) {
             @Override
@@ -237,41 +244,33 @@ public class EightSecondRunActivity extends AppCompatActivity {
                 tvDeviceList.setText(str);
             }
         });
-        //设定感应模式的checkbox组合的点击事件
-        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
-        actionModeCheckBox = new CheckBox(1, views);
-        new CheckBoxClickListener(actionModeCheckBox);
-        //设定灯光模式的checkbox组合的点击事件
-        ImageView[] views1 = new ImageView[]{imgLightModeBeside, imgLightModeCenter, imgLightModeAll};
-        lightModeCheckBox = new CheckBox(1, views1);
-        new CheckBoxClickListener(lightModeCheckBox);
-        //设定灯光颜色checkBox组合的点击事件
-        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
-        lightColorCheckBox = new CheckBox(1, views2);
-        new CheckBoxClickListener(lightColorCheckBox);
-        //设定闪烁模式checkbox组合的点击事件
-        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast,};
-        blinkModeCheckBox = new CheckBox(1, views3);
-        new CheckBoxClickListener(blinkModeCheckBox);
 
         //初始化右侧listView
         eightSecondRunAdapter = new EightSecondRunAdapter(this, timeList);
         lvTimes.setAdapter(eightSecondRunAdapter);
     }
 
-    @OnClick({R.id.layout_cancel, R.id.img_help, R.id.btn_begin, R.id.img_save, R.id.btn_on, R.id.btn_off})
+    @OnClick({ R.id.img_set, R.id.layout_cancel, R.id.btn_stop,R.id.img_help, R.id.btn_begin, R.id.img_save_new, R.id.btn_on, R.id.btn_off})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.img_set:
+                set_dialog = createLightSetDialog();
+                OperateUtils.setScreenWidth(this, set_dialog, 0.95, 0.7);
+                set_dialog.show();
+                break;
             case R.id.layout_cancel:
                 this.finish();
                 device.turnOffAllTheLight();
                 break;
             case R.id.img_help:
-                Intent intent = new Intent(this, HelpActivity.class);
-                intent.putExtra("flag", 10);
-                startActivity(intent);
+                List<Integer> list = new ArrayList<>();
+                list.add(R.string.situp_training_method);
+                list.add(R.string.situp_training_standard);
+                Dialog dialog_help = DialogUtils.createHelpDialog(EightSecondRunActivity.this,list);
+                OperateUtils.setScreenWidth(this, dialog_help, 0.95, 0.7);
+                dialog_help.show();
                 break;
-            case R.id.img_save:
+            case R.id.img_save_new:
                 Intent it = new Intent(this, SaveActivity.class);
                 Bundle bundle = new Bundle();
                 //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 6:大课间跑圈、八秒钟跑 ...
@@ -298,6 +297,9 @@ public class EightSecondRunActivity extends AppCompatActivity {
                 else
                     startTraining();
                 break;
+            case R.id.btn_stop:
+                stopTraining();
+                break;
             case R.id.btn_on:
                 //totalNum组数，1：每组设备个数，0：类型
                 device.turnOnButton(totalNum, 1, 0);
@@ -311,7 +313,6 @@ public class EightSecondRunActivity extends AppCompatActivity {
     public void startTraining() {
         //训练开始
         trainingFlag = true;
-        btnBegin.setText("停止");
         deviceNumList.clear();
         timeList.clear();
         eightSecondRunAdapter.notifyDataSetChanged();
@@ -325,7 +326,7 @@ public class EightSecondRunActivity extends AppCompatActivity {
                     Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
                     Order.LightModel.OUTER,
                     Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                    Order.EndVoice.NONE);
+                    Order.EndVoice.values()[cbEndVoice.isChecked()?1:0]);
             deviceNumList.add(Device.DEVICE_LIST.get(i).getDeviceNum());
             Log.d("deviceNumList---------", "" + deviceNumList);
         }
@@ -340,8 +341,8 @@ public class EightSecondRunActivity extends AppCompatActivity {
 
     public void stopTraining() {
         trainingFlag = false;
-        btnBegin.setText("开始");
         btnBegin.setEnabled(false);
+        imgSaveNew.setEnabled(true);
         if (timer != null)
             timer.stopTimer();
         device.turnOffAllTheLight();
@@ -361,5 +362,54 @@ public class EightSecondRunActivity extends AppCompatActivity {
             stopTraining();
         }
 
+    }
+    private Dialog createLightSetDialog() {
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View v = inflater.inflate(R.layout.layout_dialog_lightset, null);// 得到加载view
+
+        LinearLayout layout = (LinearLayout) v.findViewById(R.id.dialog_light_set);
+        ImageView imgActionModeTouch = (ImageView) layout.findViewById(R.id.img_action_mode_touch);
+        ImageView imgActionModeLight = (ImageView) layout.findViewById(R.id.img_action_mode_light);
+        ImageView imgActionModeTogether = (ImageView) layout.findViewById(R.id.img_action_mode_together);
+        ImageView imgLightColorBlue = (ImageView) layout.findViewById(R.id.img_light_color_blue);
+        ImageView imgLightColorRed = (ImageView) layout.findViewById(R.id.img_light_color_red);
+        ImageView imgLightColorBlueRed = (ImageView) layout.findViewById(R.id.img_light_color_blue_red);
+        ImageView imgBlinkModeNone = (ImageView) layout.findViewById(R.id.img_blink_mode_none);
+        ImageView imgBlinkModeSlow = (ImageView) layout.findViewById(R.id.img_blink_mode_slow);
+        ImageView imgBlinkModeFast = (ImageView) layout.findViewById(R.id.img_blink_mode_fast);
+        cbVoice = (android.widget.CheckBox) layout.findViewById(R.id.cb_voice);
+        cbEndVoice = (android.widget.CheckBox) layout.findViewById(R.id.cb_endvoice);
+        Button btnOk = (Button) layout.findViewById(R.id.btn_ok);
+        Button btnCloseSet = (Button) layout.findViewById(R.id.btn_close_set);
+        final Dialog dialog = new Dialog(this, R.style.dialog_rank);
+
+        dialog.setContentView(layout);
+
+        //设定感应模式checkBox组合的点击事件
+        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
+        actionModeCheckBox = new CheckBox(1, views);
+        new CheckBoxClickListener(actionModeCheckBox);
+        //设定灯光颜色checkBox组合的点击事件
+        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
+        lightColorCheckBox = new CheckBox(1, views2);
+        new CheckBoxClickListener(lightColorCheckBox);
+        //设定闪烁模式checkbox组合的点击事件
+        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast};
+        blinkModeCheckBox = new CheckBox(1, views3);
+        new CheckBoxClickListener(blinkModeCheckBox);
+
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        btnCloseSet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        return dialog;
     }
 }

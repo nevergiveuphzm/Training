@@ -51,10 +51,10 @@ public class ApplicationToolsActivity extends AppCompatActivity implements View.
         tvTitle.setText("应用工具");
         //创建fragment
         ApplicationToolsFragmentFirst fragment_first = new ApplicationToolsFragmentFirst();
-        ApplicationToolsFragmentSecond fragment_second = new ApplicationToolsFragmentSecond();
+//        ApplicationToolsFragmentSecond fragment_second = new ApplicationToolsFragmentSecond();
         fragmentList = new ArrayList<>();
         fragmentList.add(fragment_first);
-        fragmentList.add(fragment_second);
+//        fragmentList.add(fragment_second);
         combinedFragmentAdapter = new CombinedFragmentAdapter(getSupportFragmentManager(),fragmentList);
         vpCombined.setAdapter(combinedFragmentAdapter);
         llLeft.setOnClickListener(this);
@@ -66,10 +66,10 @@ public class ApplicationToolsActivity extends AppCompatActivity implements View.
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.ll_left:
-                vpCombined.setCurrentItem(0,true);
+//                vpCombined.setCurrentItem(0,true);
                 break;
             case R.id.ll_right:
-                vpCombined.setCurrentItem(1,true);
+//                vpCombined.setCurrentItem(1,true);
                 break;
             case R.id.layout_cancel:
                 finish();
