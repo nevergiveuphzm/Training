@@ -112,7 +112,7 @@ public class GroupResistActivity extends AppCompatActivity {
     TextView tvTotalTime;
     @Bind(R.id.lv_scores)
     ListView lvScores;
-    android.widget.CheckBox cbVoice;
+    android.widget.CheckBox cbVoice,cbEndVoice;
     //--------------------------------------------------------------------------------------------------
     private int level;
     private Device device;
@@ -514,7 +514,7 @@ public class GroupResistActivity extends AppCompatActivity {
                         Order.BlinkModel.values()[blinkModeCheckBox.getCheckId() - 1],
                         Order.LightModel.OUTER,
                         Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                        Order.EndVoice.NONE);
+                        Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
 
                 deviceNums[i][j] = Device.DEVICE_LIST.get(listRand.get(position)).getDeviceNum();
 
@@ -578,7 +578,7 @@ public class GroupResistActivity extends AppCompatActivity {
                             Order.BlinkModel.values()[blinkModeCheckBox.getCheckId() - 1],
                             Order.LightModel.OUTER,
                             Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                            Order.EndVoice.NONE);
+                            Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
 
                     deviceNums[i][j] = Device.DEVICE_LIST.get(listRand.get(position)).getDeviceNum();
                     position++;
@@ -655,7 +655,7 @@ public class GroupResistActivity extends AppCompatActivity {
                         Order.BlinkModel.values()[blinkModeCheckBox.getCheckId() - 1],
                         Order.LightModel.OUTER,
                         Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                        Order.EndVoice.NONE);
+                        Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
 
                 //记录这个灯亮起的时间编号
 //                overTimeMap.put(Device.DEVICE_LIST.get(listRand.get(finalListNum)).getDeviceNum(),(int)System.currentTimeMillis());

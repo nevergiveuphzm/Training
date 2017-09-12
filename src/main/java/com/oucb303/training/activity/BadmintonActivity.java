@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,11 +31,13 @@ import com.oucb303.training.threads.Timer;
 import com.oucb303.training.utils.Constant;
 import com.oucb303.training.utils.DataAnalyzeUtils;
 import com.oucb303.training.utils.DataUtils;
+import com.oucb303.training.utils.DialogUtils;
 import com.oucb303.training.utils.OperateUtils;
 import com.oucb303.training.utils.RandomUtils;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -46,21 +47,24 @@ import butterknife.OnClick;
  * Created by baichangcai on 2017/4/19.
  * 羽毛球步法训练
  */
-public class BadmintonActivity extends Activity{
-    @Bind(R.id.bt_distance_cancel)
-    ImageView btDistanceCancel;
-    @Bind(R.id.layout_cancel)
-    LinearLayout layoutCancel;
+public class BadmintonActivity extends Activity {
+
+    android.widget.CheckBox cbVoice;
+    android.widget.CheckBox cbEndVoice;
     @Bind(R.id.tv_title)
     TextView tvTitle;
-    @Bind(R.id.tv_training_times)
-    TextView tvTrainingTimes;
-    @Bind(R.id.img_training_times_sub)
-    ImageView imgTrainingTimesSub;
-    @Bind(R.id.bar_training_times)
-    SeekBar barTrainingTimes;
-    @Bind(R.id.img_training_times_add)
-    ImageView imgTrainingTimesAdd;
+    @Bind(R.id.img_help)
+    ImageView imgHelp;
+    @Bind(R.id.img_save_new)
+    ImageView imgSaveNew;
+    @Bind(R.id.tv_training_time)
+    TextView tvTrainingTime;
+    @Bind(R.id.img_training_time_sub)
+    ImageView imgTrainingTimeSub;
+    @Bind(R.id.bar_training_time)
+    SeekBar barTrainingTime;
+    @Bind(R.id.img_training_time_add)
+    ImageView imgTrainingTimeAdd;
     @Bind(R.id.tv_delay_time)
     TextView tvDelayTime;
     @Bind(R.id.img_delay_time_sub)
@@ -77,24 +81,8 @@ public class BadmintonActivity extends Activity{
     SeekBar barOverTime;
     @Bind(R.id.img_over_time_add)
     ImageView imgOverTimeAdd;
-//    @Bind(R.id.img_action_mode_touch)
-//    ImageView imgActionModeTouch;
-//    @Bind(R.id.img_action_mode_light)
-//    ImageView imgActionModeLight;
-//    @Bind(R.id.img_action_mode_together)
-//    ImageView imgActionModeTogether;
-//    @Bind(R.id.img_light_mode_center)
-//    ImageView imgLightModeCenter;
-//    @Bind(R.id.img_light_mode_all)
-//    ImageView imgLightModeAll;
-//    @Bind(R.id.img_light_mode_beside)
-//    ImageView imgLightModeBeside;
-    @Bind(R.id.btn_begin)
-    Button btnBegin;
-//    @Bind(R.id.ll_params)
-//    LinearLayout llParams;
-    @Bind(R.id.lv_times)
-    ListView lvTimes;
+    @Bind(R.id.tv_down_time)
+    TextView tvDownTime;
     @Bind(R.id.tv_current_times)
     TextView tvCurrentTimes;
     @Bind(R.id.tv_lost_times)
@@ -103,49 +91,12 @@ public class BadmintonActivity extends Activity{
     TextView tvAverageTime;
     @Bind(R.id.tv_total_time)
     TextView tvTotalTime;
-    @Bind(R.id.tv_training_time)
-    TextView tvTrainingTime;
-    @Bind(R.id.img_training_time_sub)
-    ImageView imgTrainingTimeSub;
-    @Bind(R.id.bar_training_time)
-    SeekBar barTrainingTime;
-    @Bind(R.id.img_training_time_add)
-    ImageView imgTrainingTimeAdd;
-    @Bind(R.id.rl_first)
-    RelativeLayout relativeLayout1;
-    @Bind(R.id.rl_first1)
-    RelativeLayout relativeLayout2;
-    @Bind(R.id.relativeLayout9)
-    RelativeLayout relativeLayout9;
-    @Bind(R.id.relativeLayout10)
-    RelativeLayout relativeLayout10;
-//   @Bind(R.id.ll_training_time)
-//   LinearLayout llTrainingTime;
-//    @Bind(R.id.ll_training_times)
-//    LinearLayout llTrainingTimes;
-    @Bind(R.id.img_help)
-    ImageView imgHelp;
-    @Bind(R.id.img_save_new)
-    ImageView imgSaveNew;
-//    @Bind(R.id.cb_voice)
-    android.widget.CheckBox cbVoice;
-//    @Bind(R.id.img_light_color_blue)
-//    ImageView imgLightColorBlue;
-//    @Bind(R.id.img_light_color_red)
-//    ImageView imgLightColorRed;
-//    @Bind(R.id.img_light_color_blue_red)
-//    ImageView imgLightColorBlueRed;
-//    @Bind(R.id.cb_end_voice)
-   android.widget.CheckBox cbEndVoice;
-//    @Bind(R.id.cb_over_time_voice)
-   android.widget.CheckBox cbOverTimeVoice;
-    @Bind(R.id.img_set)
-    ImageView imgSet;
-
+    @Bind(R.id.lv_times)
+    ListView lvTimes;
 
 
     //感应模式和灯光模式集合
-    private CheckBox actionModeCheckBox, lightModeCheckBox, lightColorCheckBox,blinkModeCheckBox;
+    private CheckBox actionModeCheckBox, lightModeCheckBox, lightColorCheckBox, blinkModeCheckBox;
     //接收到电量信息标志
     private final int POWER_RECEIVE = 1;
     //接收到灭灯时间标志
@@ -157,7 +108,7 @@ public class BadmintonActivity extends Activity{
     private final int UPDATE_TIMES = 5;
 
     //随机模式 0:次数随机  1:时间随机
-    private int randomMode;
+    private int randomMode = 1;
 
     private Device device;//device里有设备灯列表，设备数量
     //运行的总次数、当前运行的次数、遗漏次数、训练的总时间
@@ -222,6 +173,9 @@ public class BadmintonActivity extends Activity{
                         isTrainingOver();
                     }
                     break;
+                case Timer.TIMER_DOWN:
+                    tvDownTime.setText(msg.obj.toString());
+                    break;
                 case STOP_TRAINING:
                     stopTraining();
                     break;
@@ -236,12 +190,12 @@ public class BadmintonActivity extends Activity{
             }
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_badminton1);
         ButterKnife.bind(this);
-        randomMode = getIntent().getIntExtra("randomMode", 0);
         level = getIntent().getIntExtra("level", 0);
         initView();
         device = new Device(BadmintonActivity.this);
@@ -291,9 +245,9 @@ public class BadmintonActivity extends Activity{
 //            relativeLayout1.setVisibility(View.GONE);
 //            llTrainingTimes.setVisibility(View.VISIBLE);
 //            llTrainingTime.setVisibility(View.GONE);
-            barTrainingTimes.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTimes, 500));
-            imgTrainingTimesSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTimes, 0));
-            imgTrainingTimesAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTimes, 1));
+//            barTrainingTimes.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTimes, 500));
+//            imgTrainingTimesSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTimes, 0));
+//            imgTrainingTimesAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTimes, 1));
         } else {
             //时间随机
 //            relativeLayout2.setVisibility(View.GONE);
@@ -316,7 +270,7 @@ public class BadmintonActivity extends Activity{
                     level = 100;
                     break;
             }
-            barTrainingTimes.setProgress(level);
+//            barTrainingTimes.setProgress(level);
         }
         //设置seekbar 拖动事件的监听器
         barDelayTime.setOnSeekBarChangeListener(new MySeekBarListener(tvDelayTime, 10));
@@ -326,7 +280,6 @@ public class BadmintonActivity extends Activity{
         imgDelayTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 1));
         imgOverTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barOverTime, 0));
         imgOverTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barOverTime, 1));
-
 
         //设定感应模式checkBox组合的点击事件
 //        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
@@ -355,7 +308,7 @@ public class BadmintonActivity extends Activity{
 //        new CheckBoxClickListener(lightColorCheckBox);
     }
 
-    @OnClick({R.id.btn_begin, R.id.layout_cancel, R.id.img_help,R.id.img_save_new,R.id.btn_stop,R.id.img_set})
+    @OnClick({R.id.btn_begin, R.id.layout_cancel, R.id.img_help, R.id.img_save_new, R.id.btn_stop, R.id.img_set})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_set:
@@ -377,9 +330,12 @@ public class BadmintonActivity extends Activity{
                 device.turnOffAllTheLight();
                 break;
             case R.id.img_help:
-                Intent intent = new Intent(this, HelpActivity.class);
-                intent.putExtra("flag", 12);
-                startActivity(intent);
+                List<Integer> list = new ArrayList<>();
+            list.add(R.string.badminton_training_method);
+            list.add(R.string.badminton_training_standard);
+            Dialog dialog_help = DialogUtils.createHelpDialog(BadmintonActivity.this,list);
+            OperateUtils.setScreenWidth(this, dialog_help, 0.95, 0.7);
+            dialog_help.show();
                 break;
             case R.id.btn_stop:
                 stopTraining();
@@ -389,17 +345,17 @@ public class BadmintonActivity extends Activity{
                 Bundle bundle = new Bundle();
                 //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 6:大课间跑圈，八秒钟跑,羽毛球训练 ...
                 bundle.putString("trainingCategory", "6");
-                bundle.putString("trainingName","羽毛球训练");//项目名称
+                bundle.putString("trainingName", "羽毛球训练");//项目名称
                 bundle.putInt("totalTimes", totalTimes);//总次数
-                bundle.putInt("deviceNum",12);//设备个数
+                bundle.putInt("deviceNum", 12);//设备个数
                 int[] scores = new int[totalTimes];
-                for(int i=0;i<timeList.size();i++){
+                for (int i = 0; i < timeList.size(); i++) {
                     scores[i] = timeList.get(i).getTime();
                 }
                 scores[0] = DataUtils.getAvg(scores);
                 bundle.putIntArray("scores", scores);//得分
-                bundle.putInt("totalTime",DataUtils.getSum(scores));//训练总时间
-                bundle.putInt("groupNum",1);//分组数
+                bundle.putInt("totalTime", DataUtils.getSum(scores));//训练总时间
+                bundle.putInt("groupNum", 1);//分组数
                 it.putExtras(bundle);
                 startActivity(it);
                 break;
@@ -418,10 +374,8 @@ public class BadmintonActivity extends Activity{
     public void startTraining() {
         //训练开始
         trainingFlag = true;
-
-
         //运行的总次数
-        totalTimes = new Integer(tvTrainingTimes.getText().toString().trim());
+//        totalTimes = new Integer(tvTrainingTimes.getText().toString().trim());
         //totalTimes = 10000;
         delayTime = (int) ((new Double(tvDelayTime.getText().toString().trim())) * 1000);
         overTime = new Integer(tvOverTime.getText().toString().trim()) * 1000;
@@ -472,9 +426,7 @@ public class BadmintonActivity extends Activity{
     //停止训练
     public void stopTraining() {
         trainingFlag = false;
-
         imgSaveNew.setEnabled(true);
-        btnBegin.setEnabled(false);
         if (overTimeThread != null)
             overTimeThread.stopThread();
         if (timer != null)
@@ -493,7 +445,6 @@ public class BadmintonActivity extends Activity{
         Timer.sleep(500);
         //结束接收返回灭灯时间线程
         ReceiveThread.stopThread();
-        btnBegin.setEnabled(true);
     }
 
     //开灯
@@ -505,30 +456,39 @@ public class BadmintonActivity extends Activity{
                     Timer.sleep(delayTime);
                 //获取到的是当前亮的灯编号
                 lastTurnOnLight = getLightNum();
-               sendOrder(RandomUtils.charChange(lastTurnOnLight));
+                sendOrder(RandomUtils.charChange(lastTurnOnLight));
                 Timer.sleep(20);
-             sendOrder(lastTurnOnLight);
+                sendOrder(lastTurnOnLight);
                 currentTimes++;
                 durationTime = 0;
             }
         }).start();
     }
+
     public void sendOrder(char deviceNum) {
-        device.sendOrder(deviceNum,  Order.LightColor.values()[lightColorCheckBox.getCheckId()],
+        device.sendOrder(deviceNum, Order.LightColor.values()[lightColorCheckBox.getCheckId()],
                 Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
                 Order.BlinkModel.NONE,
                 Order.LightModel.values()[lightModeCheckBox.getCheckId()],
+                Order.ActionModel.LIGHT,
+                Order.EndVoice.values()[cbEndVoice.isChecked() ? 1:0]);
+    }
+
+    //关闭上方指示灯
+    private void turnOffIndicatorLight() {
+//        sendOrder(RandomUtils.charChange(currentLight));
+        device.sendOrder(RandomUtils.charChange(currentLight), Order.LightColor.NONE,
+                Order.VoiceMode.NONE,
+                Order.BlinkModel.NONE,
+                Order.LightModel.NONE,
                 Order.ActionModel.NONE,
                 Order.EndVoice.NONE);
     }
-    //关闭上方指示灯
-    private void turnOffIndicatorLight(){
-     sendOrder(RandomUtils.charChange(currentLight));
-    }
+
     //关灯
     private void turnOffLight() {
         //device.turnOffLight(currentLight);
-       sendOrder(currentLight);
+        sendOrder(currentLight);
         Timer.sleep(20);
         sendOrder(RandomUtils.charChange(currentLight));
         TimeInfo info = new TimeInfo();
@@ -565,6 +525,7 @@ public class BadmintonActivity extends Activity{
             }
         }
     }
+
     public Dialog createLightSetDialog() {
 
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -580,10 +541,11 @@ public class BadmintonActivity extends Activity{
         ImageView imgBlinkModeNone = (ImageView) layout.findViewById(R.id.img_blink_mode_none);
         ImageView imgBlinkModeSlow = (ImageView) layout.findViewById(R.id.img_blink_mode_slow);
         ImageView imgBlinkModeFast = (ImageView) layout.findViewById(R.id.img_blink_mode_fast);
-        ImageView imgLightModeBeside=(ImageView)layout.findViewById(R.id.img_light_mode_beside);
-        ImageView imgLightModeCenter=(ImageView)layout.findViewById(R.id.img_light_mode_center);
-        ImageView imgLightModeAll=(ImageView)layout.findViewById(R.id.img_light_mode_all);
+        ImageView imgLightModeBeside = (ImageView) layout.findViewById(R.id.img_light_mode_beside);
+        ImageView imgLightModeCenter = (ImageView) layout.findViewById(R.id.img_light_mode_center);
+        ImageView imgLightModeAll = (ImageView) layout.findViewById(R.id.img_light_mode_all);
         cbVoice = (android.widget.CheckBox) layout.findViewById(R.id.cb_voice);
+        cbEndVoice = (android.widget.CheckBox) layout.findViewById(R.id.cb_endvoice);
         Button btnOk = (Button) layout.findViewById(R.id.btn_ok);
         Button btnCloseSet = (Button) layout.findViewById(R.id.btn_close_set);
         final Dialog dialog = new Dialog(this, R.style.dialog_rank);

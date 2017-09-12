@@ -103,7 +103,7 @@
     <string name="crawl_training_method">&#160;&#160;&#160;&#160;增加四肢协调能力，在一定区域内随机摆放光标，爬行方式找寻并拍灭随机闪亮的光标。</string>
     <string name="crawl_training_standard"> &#160;&#160;&#160;&#160;固定时间内扫灭的次数!</string>
     <!--大课间跑圈-->
-    <string name="largeRecess_training_method">&#160;&#160;&#160;&#160;增加四肢协调能力，在一定区域内随机摆放光标，爬行方式找寻并拍灭随机闪亮的光标。</string>
+    <string name="largeRecess_training_method">&#160;&#160;&#160;&#160;</string>
     <string name="largeRecess_training_standard"> &#160;&#160;&#160;&#160;固定时间内扫灭的次数!</string>
 
     <string name="light_1">1+1+1+1</string>
@@ -113,6 +113,10 @@
 
     <!--分组对抗-->
     <string name="groupresist_training_method">&#160;&#160;&#160;&#160;</string>
-    <string name="groupresist_training_standard"> &#160;&#160;&#160;&#160;</string>
+    <string name="groupresist_training_standard"> &#160;&#160;&#160;&#160;固定时间内扫灭的次数!</string>
+
+    <!--羽毛球步伐训练-->
+    <string name="badminton_training_method">&#160;&#160;&#160;&#160;挂在球网上的六个灯为指示灯，指示灯的位置对应球场上用于训练用的六个指示灯。\n运动员持羽毛球拍面向球网站在球场中心位置，当观察到指示灯亮起时，迅速移动到对应位置扑灭，然后回到中心位置进行下一次运动，知道结束</string>
+    <string name="badminton_training_standard"> &#160;&#160;&#160;&#160;固定时间内扫灭的次数!</string>
 
 </resources>

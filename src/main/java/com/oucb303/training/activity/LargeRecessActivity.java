@@ -312,24 +312,6 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
         largeRecessAdapter = new LargeRecessAdapter(this);
         lvTimes.setAdapter(largeRecessAdapter);
         lvTimes.setOnItemClickListener(this);
-
-
-//        //设定感应模式的checkbox组合的点击事件
-//        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
-//        actionModeCheckBox = new CheckBox(1, views);
-//        new CheckBoxClickListener(actionModeCheckBox);
-//        //设定灯光模式的checkbox组合的点击事件
-//        ImageView[] views1 = new ImageView[]{imgLightModeBeside, imgLightModeCenter, imgLightModeAll};
-//        lightModeCheckBox = new CheckBox(1, views1);
-//        new CheckBoxClickListener(lightModeCheckBox);
-//        //设定灯光颜色checkBox组合的点击事件
-//        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
-//        lightColorCheckBox = new CheckBox(1, views2);
-//        new CheckBoxClickListener(lightColorCheckBox);
-//        //设定闪烁模式checkbox组合的点击事件
-//        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast,};
-//        blinkModeCheckBox = new CheckBox(1, views3);
-//        new CheckBoxClickListener(blinkModeCheckBox);
     }
 
 

@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Training.iml" filepath="$PROJECT_DIR$/Training.iml" />
       <module fileurl="file://$PROJECT_DIR$/saflight/saflight.iml" filepath="$PROJECT_DIR$/saflight/saflight.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vitamio/vitamio.iml" filepath="$PROJECT_DIR$/vitamio/vitamio.iml" />
       <module fileurl="file://$PROJECT_DIR$/../vitamio/vitamio.iml" filepath="$PROJECT_DIR$/../vitamio/vitamio.iml" />
     </modules>
   </component>
