@@ -145,7 +145,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_marginLeft="10dip"
-                                android:text="100"
+                                android:text="0"
                                 android:textSize="@dimen/param_level1_font_size"/>
 
                             <TextView

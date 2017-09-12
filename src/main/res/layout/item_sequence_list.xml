@@ -9,35 +9,50 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tv_sequence_name"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center_vertical"
-            android:paddingLeft="10dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:paddingLeft="30dp"
             android:text="测试"
+            android:textColor="@color/black"
             android:textSize="@dimen/param_level3_font_size"/>
 
         <TextView
+            android:layout_weight="1"
             android:id="@+id/tv_sequence_create_time"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:gravity="right"
-            android:paddingRight="10dp"
-            android:text="2016-12-29 14:23:54"/>
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:layout_marginRight="5dp"
+            android:text="2016-12-29 14:23:54"
+            android:textSize="@dimen/param_level3_font_size"/>
 
     </LinearLayout>
 
     <TextView
+        android:layout_margin="15dp"
         android:id="@+id/tv_del"
-        android:layout_width="80dp"
+        android:layout_width="150dp"
         android:layout_height="match_parent"
-        android:background="@color/red"
+        android:background="@drawable/grass_green_round_stroke_no_padding_bg"
         android:gravity="center_horizontal|center_vertical"
         android:text="删除"
-        android:textColor="@color/white"
-        android:textSize="@dimen/param_level4_font_size"/>
+        android:textColor="@color/red"
+        android:textSize="20sp"/>
+    <!--<Button-->
+        <!--android:id="@+id/tv_del"-->
+        <!--android:layout_width="80dp"-->
+        <!--android:layout_height="100dp"-->
+        <!--android:background="@drawable/btn_ok"-->
+        <!--android:gravity="center_horizontal|center_vertical"-->
+        <!--android:text="删除"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:textSize="@dimen/param_level4_font_size"/>-->
 
 </LinearLayout>

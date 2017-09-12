@@ -1,13 +1,14 @@
 package com.oucb303.training.activity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -37,10 +38,14 @@ import com.oucb303.training.model.TimeInfo;
 import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.threads.Timer;
 import com.oucb303.training.utils.DataAnalyzeUtils;
+import com.oucb303.training.utils.OperateUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import butterknife.Bind;
@@ -52,16 +57,13 @@ import butterknife.OnClick;
  * 分组对抗基本模块
  */
 public class GroupResistActivity extends AppCompatActivity {
-    @Bind(R.id.bt_distance_cancel)
-    ImageView btDistanceCancel;
-    @Bind(R.id.layout_cancel)
-    LinearLayout layoutCancel;
+
     @Bind(R.id.tv_title)
     TextView tvTitle;
     @Bind(R.id.img_help)
     ImageView imgHelp;
-    @Bind(R.id.img_save)
-    ImageView imgSave;
+    @Bind(R.id.img_save_new)
+    ImageView imgSaveNew;
     @Bind(R.id.tv_training_time)
     TextView tvTrainingTime;
     @Bind(R.id.img_training_time_sub)
@@ -88,51 +90,39 @@ public class GroupResistActivity extends AppCompatActivity {
     ImageView imgOverTimeAdd;
     @Bind(R.id.sp_dev_num)
     Spinner spDevNum;
-    @Bind(R.id.sp_group_num)
-    Spinner spGroupNum;
     @Bind(R.id.tv_device_list)
     TextView tvDeviceList;
     @Bind(R.id.sp_light_num)
     Spinner spLightNum;
-    @Bind(R.id.lv_group)
-    ListView lvGroup;
-    @Bind(R.id.img_action_mode_light)
-    ImageView imgActionModeLight;
-    @Bind(R.id.img_action_mode_touch)
-    ImageView imgActionModeTouch;
-    @Bind(R.id.img_action_mode_together)
-    ImageView imgActionModeTogether;
-    @Bind(R.id.cb_voice)
-    android.widget.CheckBox cbVoice;
-    @Bind(R.id.cb_end_voice)
-    android.widget.CheckBox cbEndVoice;
+    @Bind(R.id.sp_group_num)
+    Spinner spGroupNum;
     @Bind(R.id.btn_on)
     Button btnOn;
     @Bind(R.id.btn_off)
     Button btnOff;
-    @Bind(R.id.ll_params)
-    LinearLayout llParams;
+    @Bind(R.id.lv_group)
+    ListView lvGroup;
+    @Bind(R.id.tv_down_time)
+    TextView tvDownTime;
+    @Bind(R.id.btn_begin)
+    Button btnBegin;
     @Bind(R.id.sv_container)
     ScrollView svContainer;
     @Bind(R.id.tv_total_time)
     TextView tvTotalTime;
     @Bind(R.id.lv_scores)
     ListView lvScores;
-    @Bind(R.id.btn_begin)
-    Button btnBegin;
-    @Bind(R.id.img_blink_mode_none)
-    ImageView imgBlinkModeNone;
-    @Bind(R.id.img_blink_mode_slow)
-    ImageView imgBlinkModeSlow;
-    @Bind(R.id.img_blink_mode_fast)
-    ImageView imgBlinkModeFast;
-
+    android.widget.CheckBox cbVoice;
+    //--------------------------------------------------------------------------------------------------
     private int level;
     private Device device;
     private Context context;
-
     private GroupResistAdapter groupResistAdapter;
     private DGroupListViewAdapter dGroupListViewAdapter;
+    //key : 组号 value： 成绩
+    private Map<Integer, Integer> timeMap = new HashMap<Integer, Integer>();
+    //存放排序后的key值
+    private int[] keyId;
     //当前所选设备总个数
     private int totalNum;
     //当前所选分组数
@@ -140,7 +130,7 @@ public class GroupResistActivity extends AppCompatActivity {
     //当前所选每组每次亮灯个数
     private int lightEveryNum;
     //感应模式和灯光模式集合
-    private CheckBox actionModeCheckBox,blinkModeCheckBox;
+    private CheckBox actionModeCheckBox, blinkModeCheckBox;
     //训练开始标志
     private boolean trainningFlag = false;
     //训练总时间,延迟时间,超时时间  单位是毫秒
@@ -149,9 +139,6 @@ public class GroupResistActivity extends AppCompatActivity {
     private int[] scores;
     //随机数存放序列
     private ArrayList<Integer> listRand = new ArrayList<>();
-    private final int TIME_RECEIVE = 1;
-    private final int UPDATE_SCORES = 2;
-    private final int STOP_TRAINING = 4;
     //训练开始时间
     private long startTime;
     //计时器
@@ -160,11 +147,13 @@ public class GroupResistActivity extends AppCompatActivity {
     private OverTimeThread overTimeThread;
     //行表示组号，列数表示每组每次开几个灯,存放的是设备编号
     private char[][] deviceNums;
+    private final int TIME_RECEIVE = 1;
+    private final int UPDATE_SCORES = 2;
+    private final int STOP_TRAINING = 4;
     //每组设备灯亮起的时间
 //    private Map<Character,Integer> overTimeMap;
     //每组设备灯亮起的时间
     private long[] duration;
-
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -175,6 +164,8 @@ public class GroupResistActivity extends AppCompatActivity {
             switch (msg.what) {
                 //更新成绩
                 case UPDATE_SCORES:
+                    sortTime(timeMap);
+                    groupResistAdapter.setTimeMap(timeMap, keyId);
                     groupResistAdapter.notifyDataSetChanged();
                     break;
                 //更新计时
@@ -196,16 +187,19 @@ public class GroupResistActivity extends AppCompatActivity {
                     if (data != null && data.length() > 7)
                         analyseData(data);
                     break;
+                case Timer.TIMER_DOWN:
+                    tvDownTime.setText("倒计时："+msg.obj.toString());
+                    break;
             }
         }
     };
+    private Dialog set_dialog;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_group_resist);
+        setContentView(R.layout.activity_group_resist_new);
         ButterKnife.bind(this);
-        level = getIntent().getIntExtra("level", 0);
         context = this;
 
         device = new Device(this);
@@ -222,9 +216,11 @@ public class GroupResistActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        imgSave.setEnabled(false);
-        imgSave.setVisibility(View.VISIBLE);
+        set_dialog = createLightSetDialog();
+        imgSaveNew.setEnabled(false);
+        imgSaveNew.setVisibility(View.VISIBLE);
     }
+
     @Override
     public void onBackPressed() {
         if (trainningFlag) {
@@ -244,6 +240,7 @@ public class GroupResistActivity extends AppCompatActivity {
 
     private void initView() {
         tvTitle.setText("分组对抗");
+        imgHelp.setVisibility(View.INVISIBLE);
 
         //设备排序
         Collections.sort(Device.DEVICE_LIST, new PowerInfoComparetor());
@@ -262,15 +259,15 @@ public class GroupResistActivity extends AppCompatActivity {
 
         imgOverTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barOverTime, 1));
         imgOverTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barOverTime, 0));
-        //设定感应模式checkBox组合的点击事件
-        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
-        actionModeCheckBox = new CheckBox(1, views);
-        new CheckBoxClickListener(actionModeCheckBox);
-
-        //设定闪烁模式checkbox组合的点击事件
-        ImageView[] views1 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast,};
-        blinkModeCheckBox = new CheckBox(1, views1);
-        new CheckBoxClickListener(blinkModeCheckBox);
+//        //设定感应模式checkBox组合的点击事件
+//        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
+//        actionModeCheckBox = new CheckBox(1, views);
+//        new CheckBoxClickListener(actionModeCheckBox);
+//
+//        //设定闪烁模式checkbox组合的点击事件
+//        ImageView[] views1 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast,};
+//        blinkModeCheckBox = new CheckBox(1, views1);
+//        new CheckBoxClickListener(blinkModeCheckBox);
 
         //选择设备个数spinner
         String[] num = new String[Device.DEVICE_LIST.size()];
@@ -359,7 +356,7 @@ public class GroupResistActivity extends AppCompatActivity {
         lvScores.setAdapter(groupResistAdapter);
     }
 
-    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help, R.id.btn_on, R.id.btn_off, R.id.img_save})
+    @OnClick({R.id.layout_cancel, R.id.btn_on, R.id.btn_off, R.id.img_save_new, R.id.btn_begin, R.id.btn_stop, R.id.img_set})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_cancel:
@@ -384,14 +381,17 @@ public class GroupResistActivity extends AppCompatActivity {
                 else
                     startTraining();
                 break;
-            case R.id.img_help:
-                Intent intent = new Intent(this, HelpActivity.class);
-                if (level == 4)
-                    intent.putExtra("flag", 6);
-                else
-                    intent.putExtra("flag", 5);
-                startActivity(intent);
+            case R.id.btn_stop:
+                stopTraining();
                 break;
+//            case R.id.img_help:
+//                List<Integer> list = new ArrayList<>();
+//            list.add(R.string.timekeeper_training_method);
+//            list.add(R.string.timekeeper_training_standard);
+//            Dialog dialog_help = DialogUtils.createHelpDialog(TimeKeeperActivity.this,list);
+//            OperateUtils.setScreenWidth(this, dialog_help, 0.95, 0.7);
+//            dialog_help.show();
+//                break;
             case R.id.btn_on:
                 //totalNum组数，lightEveryNum：每组设备个数，1：类型
                 device.turnOnButton(totalNum, 1, 0);
@@ -399,7 +399,7 @@ public class GroupResistActivity extends AppCompatActivity {
             case R.id.btn_off:
                 device.turnOffAllTheLight();
                 break;
-            case R.id.img_save:
+            case R.id.img_save_new:
                 Intent it = new Intent(this, SaveActivity.class);
                 Bundle bundle = new Bundle();
                 //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 5:运球比赛、多人混战、分组对抗 ...
@@ -414,14 +414,65 @@ public class GroupResistActivity extends AppCompatActivity {
                 it.putExtras(bundle);
                 startActivity(it);
                 break;
+            case R.id.img_set:
+                set_dialog = createLightSetDialog();
+                OperateUtils.setScreenWidth(this, set_dialog, 0.95, 0.7);
+                set_dialog.show();
+                break;
         }
+    }
+
+    private Dialog createLightSetDialog() {
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View v = inflater.inflate(R.layout.layout_dialog_lightset, null);// 得到加载view
+
+        LinearLayout layout = (LinearLayout) v.findViewById(R.id.dialog_light_set);
+        ImageView imgActionModeTouch = (ImageView) layout.findViewById(R.id.img_action_mode_touch);
+        ImageView imgActionModeLight = (ImageView) layout.findViewById(R.id.img_action_mode_light);
+        ImageView imgActionModeTogether = (ImageView) layout.findViewById(R.id.img_action_mode_together);
+        LinearLayout lightColor = (LinearLayout) layout.findViewById(R.id.light_color);
+//        ImageView imgLightColorBlue = (ImageView) layout.findViewById(R.id.img_light_color_blue);
+//        ImageView imgLightColorRed = (ImageView) layout.findViewById(R.id.img_light_color_red);
+//        ImageView imgLightColorBlueRed = (ImageView) layout.findViewById(R.id.img_light_color_blue_red);
+        ImageView imgBlinkModeNone = (ImageView) layout.findViewById(R.id.img_blink_mode_none);
+        ImageView imgBlinkModeSlow = (ImageView) layout.findViewById(R.id.img_blink_mode_slow);
+        ImageView imgBlinkModeFast = (ImageView) layout.findViewById(R.id.img_blink_mode_fast);
+        cbVoice = (android.widget.CheckBox) layout.findViewById(R.id.cb_voice);
+
+        lightColor.setVisibility(View.INVISIBLE);
+        Button btnOk = (Button) layout.findViewById(R.id.btn_ok);
+        Button btnCloseSet = (Button) layout.findViewById(R.id.btn_close_set);
+        final Dialog dialog = new Dialog(this, R.style.dialog_rank);
+
+        dialog.setContentView(layout);
+
+        //设定感应模式checkBox组合的点击事件
+        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
+        actionModeCheckBox = new CheckBox(1, views);
+        new CheckBoxClickListener(actionModeCheckBox);
+        //设定闪烁模式checkbox组合的点击事件
+        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast};
+        blinkModeCheckBox = new CheckBox(1, views3);
+        new CheckBoxClickListener(blinkModeCheckBox);
+
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        btnCloseSet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        return dialog;
     }
 
     //开始训练
     public void startTraining() {
         trainningFlag = true;
-        btnBegin.setText("停止");
-
         trainingTime = (int) (new Double(tvTrainingTime.getText().toString()) * 60 * 1000);
         delayTime = new Integer(tvDelayTime.getText().toString()) * 1000;
         overTime = new Integer(tvOverTime.getText().toString()) * 1000;
@@ -430,6 +481,10 @@ public class GroupResistActivity extends AppCompatActivity {
         for (int i = 0; i < groupNum; i++) {
             scores[i] = 0;
         }
+        for (int i = 0; i < groupNum; i++) {
+            timeMap.put(i, 0);
+        }
+        keyId = new int[groupNum];
         listRand.clear();
 
         deviceNums = new char[groupNum][lightEveryNum];
@@ -443,6 +498,7 @@ public class GroupResistActivity extends AppCompatActivity {
         duration = new long[groupNum * lightEveryNum];
 
         groupResistAdapter.setScores(scores);
+        groupResistAdapter.setTimeMap(timeMap,keyId);
         groupResistAdapter.notifyDataSetChanged();
         //创建随机队列
         createRandomNumber();
@@ -455,10 +511,10 @@ public class GroupResistActivity extends AppCompatActivity {
                 device.sendOrder(Device.DEVICE_LIST.get(listRand.get(position)).getDeviceNum(),
                         Order.LightColor.values()[t],
                         Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                        Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
+                        Order.BlinkModel.values()[blinkModeCheckBox.getCheckId() - 1],
                         Order.LightModel.OUTER,
                         Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                        Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
+                        Order.EndVoice.NONE);
 
                 deviceNums[i][j] = Device.DEVICE_LIST.get(listRand.get(position)).getDeviceNum();
 
@@ -519,15 +575,16 @@ public class GroupResistActivity extends AppCompatActivity {
                     device.sendOrder(Device.DEVICE_LIST.get(listRand.get(position)).getDeviceNum(),
                             Order.LightColor.values()[t],
                             Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                            Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
+                            Order.BlinkModel.values()[blinkModeCheckBox.getCheckId() - 1],
                             Order.LightModel.OUTER,
                             Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                            Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
+                            Order.EndVoice.NONE);
 
                     deviceNums[i][j] = Device.DEVICE_LIST.get(listRand.get(position)).getDeviceNum();
                     position++;
                 }
                 scores[i]++;
+                timeMap.put(i, scores[i]);
                 t++;
             }
         } else {
@@ -539,6 +596,7 @@ public class GroupResistActivity extends AppCompatActivity {
                 int everyId = Id[1];
                 Log.i("进来的是什么灯", "" + info + "--" + groupId + "---" + everyId);
                 scores[groupId]++;
+                timeMap.put(groupId, scores[groupId]);
                 turnOnLight(groupId, everyId, info.getDeviceNum());
             }
         }
@@ -594,10 +652,10 @@ public class GroupResistActivity extends AppCompatActivity {
                 device.sendOrder(Device.DEVICE_LIST.get(listRand.get(finalListNum)).getDeviceNum(),
                         Order.LightColor.values()[groupId + 1],
                         Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                        Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
+                        Order.BlinkModel.values()[blinkModeCheckBox.getCheckId() - 1],
                         Order.LightModel.OUTER,
                         Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                        Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
+                        Order.EndVoice.NONE);
 
                 //记录这个灯亮起的时间编号
 //                overTimeMap.put(Device.DEVICE_LIST.get(listRand.get(finalListNum)).getDeviceNum(),(int)System.currentTimeMillis());
@@ -630,13 +688,30 @@ public class GroupResistActivity extends AppCompatActivity {
         }
         return Id;
     }
+    //排序
+    public void sortTime(Map<Integer, Integer> timeMap) {
+        List<Map.Entry<Integer, Integer>> list = new ArrayList<Map.Entry<Integer, Integer>>(timeMap.entrySet());
+        Collections.sort(list, new Comparator<Map.Entry<Integer, Integer>>() {
+            //升序排序
+            public int compare(Map.Entry<Integer, Integer> o1,
+                               Map.Entry<Integer, Integer> o2) {
+                return o2.getValue().compareTo(o1.getValue());
+            }
+        });
+        int i = 0;
+        for (Map.Entry<Integer, Integer> mapping : list) {
+            Log.i("============", "" + mapping.getKey() + ":" + mapping.getValue());
+//            System.out.println(mapping.getKey()+":"+mapping.getValue());
+            keyId[i] = mapping.getKey();
+            i++;
+        }
+    }
 
     //停止训练
     public void stopTraining() {
         timer.stopTimer();
-        btnBegin.setText("开始");
         btnBegin.setEnabled(false);
-        imgSave.setEnabled(true);
+        imgSaveNew.setEnabled(true);
         trainningFlag = false;
 
         if (overTimeThread != null)

@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context="com.oucb303.training.activity.SequenceRunningActivity">
 
-    <include layout="@layout/layout_title_bar"/>
+    <include layout="@layout/layout_title_bar_newer"/>
 
     <LinearLayout
         android:layout_width="match_parent"

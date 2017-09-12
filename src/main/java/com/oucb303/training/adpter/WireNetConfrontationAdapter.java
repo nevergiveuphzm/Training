@@ -44,8 +44,8 @@ public class WireNetConfrontationAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         view = LayoutInflater.from(context).inflate(R.layout.item_dribbling_scores, null);
-        TextView tvGroupNum = (TextView) view.findViewById(R.id.tv_dribbling_num);
-        TextView tvLightNum = (TextView) view.findViewById(R.id.tv_light_num);
+        TextView tvGroupNum = (TextView) view.findViewById(R.id.tv_group_id);
+        TextView tvLightNum = (TextView) view.findViewById(R.id.tv_finish_times);
 
         tvGroupNum.setText("第"+ (i+1) + "组");
         tvLightNum.setText(scores[i] + "");

@@ -2,6 +2,7 @@ package com.oucb303.training.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +33,7 @@ import com.oucb303.training.model.CheckBox;
 import com.oucb303.training.model.Light;
 import com.oucb303.training.utils.ConfigParamUtils;
 import com.oucb303.training.utils.Constant;
+import com.oucb303.training.utils.OperateUtils;
 import com.oucb303.training.widget.SequenceSetListview;
 
 import java.util.ArrayList;
@@ -48,54 +51,37 @@ import butterknife.OnClick;
  * 设定序列  序列编程
  */
 public class SequenceTrainingActivity extends Activity {
+
+
+    @Bind(R.id.layout_cancel)
+    LinearLayout layoutCancel;
     @Bind(R.id.tv_title)
-    TextView tv_title;
+    TextView tvTitle;
+    @Bind(R.id.img_help)
+    ImageView imgHelp;
+    @Bind(R.id.img_save_new)
+    ImageView imgSaveNew;
     @Bind(R.id.tv_delay_time)
     TextView tvDelayTime;
-    @Bind(R.id.tv_over_time)
-    TextView tvOverTime;
-    @Bind(R.id.bar_over_time)
-    SeekBar barOverTime;
+    @Bind(R.id.img_delay_time_sub)
+    ImageView imgDelayTimeSub;
     @Bind(R.id.bar_delay_time)
     SeekBar barDelayTime;
-    ImageView imgDistanceAdd;
-    @Bind(R.id.iv_delaytime_sub)
-    ImageView imgDelayTimeSub;
     @Bind(R.id.img_delay_time_add)
     ImageView imgDelayTimeAdd;
+    @Bind(R.id.tv_over_time)
+    TextView tvOverTime;
     @Bind(R.id.img_over_time_sub)
     ImageView imgOverTimeSub;
+    @Bind(R.id.bar_over_time)
+    SeekBar barOverTime;
     @Bind(R.id.img_over_time_add)
     ImageView imgOverTimeAdd;
     @Bind(R.id.lv_sequenceSet)
     SequenceSetListview sequenceSetListview;
-    @Bind(R.id.img_action_mode_light)
-    ImageView imgActionModeLight;
-    @Bind(R.id.img_action_mode_touch)
-    ImageView imgActionModeTouch;
-    @Bind(R.id.img_action_mode_together)
-    ImageView imgActionModeTogether;
-    @Bind(R.id.img_light_mode_beside)
-    ImageView imgLightModeBeside;
-    @Bind(R.id.img_light_mode_center)
-    ImageView imgLightModeCenter;
-    @Bind(R.id.img_light_mode_all)
-    ImageView imgLightModeAll;
-    @Bind(R.id.img_light_color_blue)
-    ImageView imgLightColorBlue;
-    @Bind(R.id.img_light_color_red)
-    ImageView imgLightColorRed;
-    @Bind(R.id.img_light_color_blue_red)
-    ImageView imgLightColorBlueRed;
-
-
+    android.widget.CheckBox cbVoice;
     List<Light> list_light_noCheck;
-    @Bind(R.id.img_blink_mode_none)
-    ImageView imgBlinkModeNone;
-    @Bind(R.id.img_blink_mode_slow)
-    ImageView imgBlinkModeSlow;
-    @Bind(R.id.img_blink_mode_fast)
-    ImageView imgBlinkModeFast;
+
     private SequenceTrainingActivity sequenceSetActivity;
     private GridView gridView;//显示灯的网格布局
     private HorizonListViewAdapter horizonListViewAdapter;//横向ListView布局适配器
@@ -107,7 +93,7 @@ public class SequenceTrainingActivity extends Activity {
     private Light lights;//灯
     private Context mcontext;
     //感应模式和灯光模式集合
-    private CheckBox actionModeCheckBox, lightModeCheckBox, lightColorCheckBox,blinkModeCheckBox;
+    private CheckBox actionModeCheckBox, lightModeCheckBox, lightColorCheckBox, blinkModeCheckBox;
     //选中的灯
     private Point choseLight = new Point();
     private SequenceSer sequenceSer;
@@ -115,18 +101,19 @@ public class SequenceTrainingActivity extends Activity {
     private int scrolledX, scrolledY;
     //一套设备默认个数
     private int defaultDeviceNum;
+    private Dialog set_dialog;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sequence_training);
+        setContentView(R.layout.activity_sequence);
         ButterKnife.bind(this);
         sequenceSetActivity = this;
         mcontext = this.getApplicationContext();
         sequenceSer = new SequenceSer(((App) getApplication()).getDaoSession());
         //此Activity标题
-        tv_title.setText("序列编程");
+        tvTitle.setText("序列编程");
         //初始化右侧ListView
         initListView();
 
@@ -169,31 +156,39 @@ public class SequenceTrainingActivity extends Activity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        set_dialog = createLightSetDialog();
+    }
+
     private void initListView() {
+        imgHelp.setVisibility(View.INVISIBLE);
+        imgSaveNew.setVisibility(View.INVISIBLE);
         //设置seekbar 拖动事件的监听器
-        barDelayTime.setOnSeekBarChangeListener(new SequenceSeekBarChangeListener(tvDelayTime, 10,0));
-        barOverTime.setOnSeekBarChangeListener(new SequenceSeekBarChangeListener(tvOverTime, 98,2));
+        barDelayTime.setOnSeekBarChangeListener(new SequenceSeekBarChangeListener(tvDelayTime, 10, 0));
+        barOverTime.setOnSeekBarChangeListener(new SequenceSeekBarChangeListener(tvOverTime, 98, 2));
         //设置加减按钮的监听事件
         imgDelayTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 0));
         imgDelayTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 1));
         imgOverTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barOverTime, 0));
         imgOverTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barOverTime, 1));
-        //设定感应模式checkBox组合的点击事件
-        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
-        actionModeCheckBox = new CheckBox(1, views);
-        new SequenceCheckBoxListener(actionModeCheckBox, 0);
-        //设定灯光模式checkBox组合的点击事件
-        ImageView[] views1 = new ImageView[]{imgLightModeBeside, imgLightModeCenter, imgLightModeAll};
-        lightModeCheckBox = new CheckBox(1, views1);
-        new SequenceCheckBoxListener(lightModeCheckBox, 1);
-        //设定灯光颜色checkBox组合的点击事件
-        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
-        lightColorCheckBox = new CheckBox(1, views2);
-        new SequenceCheckBoxListener(lightColorCheckBox, 2);
-        //设定闪烁模式checkbox组合的点击事件
-        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast,};
-        blinkModeCheckBox = new CheckBox(1, views3);
-        new CheckBoxClickListener(blinkModeCheckBox);
+//        //设定感应模式checkBox组合的点击事件
+//        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
+//        actionModeCheckBox = new CheckBox(1, views);
+//        new SequenceCheckBoxListener(actionModeCheckBox, 0);
+//        //设定灯光模式checkBox组合的点击事件
+//        ImageView[] views1 = new ImageView[]{imgLightModeBeside, imgLightModeCenter, imgLightModeAll};
+//        lightModeCheckBox = new CheckBox(1, views1);
+//        new SequenceCheckBoxListener(lightModeCheckBox, 1);
+//        //设定灯光颜色checkBox组合的点击事件
+//        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
+//        lightColorCheckBox = new CheckBox(1, views2);
+//        new SequenceCheckBoxListener(lightColorCheckBox, 2);
+//        //设定闪烁模式checkbox组合的点击事件
+//        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast,};
+//        blinkModeCheckBox = new CheckBox(1, views3);
+//        new CheckBoxClickListener(blinkModeCheckBox);
 
         list_adepter.add(null);
         list_sequence.add(null);
@@ -215,6 +210,11 @@ public class SequenceTrainingActivity extends Activity {
             case R.id.layout_cancel:
                 finish();
                 break;
+//            case R.id.img_set:
+//                set_dialog = createLightSetDialog();
+//                OperateUtils.setScreenWidth(this, set_dialog, 0.95, 0.7);
+//                set_dialog.show();
+//                break;
             //保存
             case R.id.btn_save:
                 AlertDialog.Builder builder = new AlertDialog.Builder(sequenceSetActivity);
@@ -340,7 +340,7 @@ public class SequenceTrainingActivity extends Activity {
             list_adepter.get(xPosition).notifyDataSetChanged();
 
             barDelayTime.setProgress((int) (delayTime * 200 / 10));
-            int overTime = (light.getOverTime()-2);
+            int overTime = (light.getOverTime() - 2);
             Log.d(Constant.LOG_TAG, overTime + "");
             barOverTime.setProgress(overTime);
             //模拟点击事件
@@ -374,13 +374,17 @@ public class SequenceTrainingActivity extends Activity {
     private SequenceSettingListViewAdapter.AddLightClickListener addLightClickListener = new SequenceSettingListViewAdapter.AddLightClickListener() {
         @Override
         public void myOnClick(final int position, View v) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(sequenceSetActivity);
-            View view = LayoutInflater.from(mcontext).inflate(R.layout.dialog_addlight, null);
-            builder.setView(view);
+//            AlertDialog.Builder builder = new AlertDialog.Builder(sequenceSetActivity);
+//            View view = LayoutInflater.from(mcontext).inflate(R.layout.dialog_addlight1, null);
+//            builder.setView(view);
+            LayoutInflater inflater = LayoutInflater.from(sequenceSetActivity);
+            View view = inflater.inflate(R.layout.dialog_addlight, null);// 得到加载view
             gridView = (GridView) view.findViewById(R.id.gv_light);
             Button btn_sure = (Button) view.findViewById(R.id.btn_sure);
             Button btn_del = (Button) view.findViewById(R.id.btn_del);
             Button btn_cancel = (Button) view.findViewById(R.id.btn_cancel);
+            Button btnClose = (Button) view.findViewById(R.id.btn_close);
+
             final List<Light> list_light = (List<Light>) list_sequence.get(position).get("list_light");
             list_light_noCheck = new ArrayList<>();
             for (int i = 1; i <= defaultDeviceNum; i++) {
@@ -394,10 +398,18 @@ public class SequenceTrainingActivity extends Activity {
                     list_light_noCheck.get(list_light.get(j).getNum() - 1).setChecked(true);
                 }
             }
-
             lightGridViewAdapter = new LightGridViewAdapter(mcontext, list_light_noCheck, changeLightClickListener);
             gridView.setAdapter(lightGridViewAdapter);
-            final AlertDialog alertDialog = builder.create();
+//            final AlertDialog alertDialog = builder.create();
+            final Dialog alertDialog = new Dialog(sequenceSetActivity, R.style.dialog_rank);
+            alertDialog.setContentView(view);
+
+            btnClose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alertDialog.dismiss();
+                }
+            });
             //确定
             btn_sure.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -442,6 +454,7 @@ public class SequenceTrainingActivity extends Activity {
                 }
             });
             alertDialog.show();
+            OperateUtils.setScreenWidth(sequenceSetActivity, alertDialog, 0.95, 0.7);
         }
     };
 
@@ -454,18 +467,18 @@ public class SequenceTrainingActivity extends Activity {
         imgDelayTimeSub.setEnabled(state);
         imgOverTimeAdd.setEnabled(state);
         imgOverTimeSub.setEnabled(state);
-        imgActionModeLight.setEnabled(state);
-        imgActionModeTogether.setEnabled(state);
-        imgActionModeTouch.setEnabled(state);
-        imgLightModeAll.setEnabled(state);
-        imgLightModeBeside.setEnabled(state);
-        imgLightModeCenter.setEnabled(state);
+//        imgActionModeLight.setEnabled(state);
+//        imgActionModeTogether.setEnabled(state);
+//        imgActionModeTouch.setEnabled(state);
+//        imgLightModeAll.setEnabled(state);
+//        imgLightModeBeside.setEnabled(state);
+//        imgLightModeCenter.setEnabled(state);
     }
 
     //seekbar 更新事件监听器
     private class SequenceSeekBarChangeListener extends MySeekBarListener {
-        public SequenceSeekBarChangeListener(TextView textView, int maxValue,int minValue) {
-            super(textView, maxValue,minValue);
+        public SequenceSeekBarChangeListener(TextView textView, int maxValue, int minValue) {
+            super(textView, maxValue, minValue);
         }
 
         @Override
@@ -510,5 +523,55 @@ public class SequenceTrainingActivity extends Activity {
                     break;
             }
         }
+    }
+
+    public Dialog createLightSetDialog() {
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View v = inflater.inflate(R.layout.layout_dialog_lightset, null);// 得到加载view
+
+        LinearLayout layout = (LinearLayout) v.findViewById(R.id.dialog_light_set);
+        ImageView imgActionModeTouch = (ImageView) layout.findViewById(R.id.img_action_mode_touch);
+        ImageView imgActionModeLight = (ImageView) layout.findViewById(R.id.img_action_mode_light);
+        ImageView imgActionModeTogether = (ImageView) layout.findViewById(R.id.img_action_mode_together);
+        ImageView imgLightColorBlue = (ImageView) layout.findViewById(R.id.img_light_color_blue);
+        ImageView imgLightColorRed = (ImageView) layout.findViewById(R.id.img_light_color_red);
+        ImageView imgLightColorBlueRed = (ImageView) layout.findViewById(R.id.img_light_color_blue_red);
+        ImageView imgBlinkModeNone = (ImageView) layout.findViewById(R.id.img_blink_mode_none);
+        ImageView imgBlinkModeSlow = (ImageView) layout.findViewById(R.id.img_blink_mode_slow);
+        ImageView imgBlinkModeFast = (ImageView) layout.findViewById(R.id.img_blink_mode_fast);
+        cbVoice = (android.widget.CheckBox) layout.findViewById(R.id.cb_voice);
+        Button btnOk = (Button) layout.findViewById(R.id.btn_ok);
+        Button btnCloseSet = (Button) layout.findViewById(R.id.btn_close_set);
+        final Dialog dialog = new Dialog(this, R.style.dialog_rank);
+
+        dialog.setContentView(layout);
+
+        //设定感应模式checkBox组合的点击事件
+        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
+        actionModeCheckBox = new CheckBox(1, views);
+        new CheckBoxClickListener(actionModeCheckBox);
+        //设定灯光颜色checkBox组合的点击事件
+        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
+        lightColorCheckBox = new CheckBox(1, views2);
+        new CheckBoxClickListener(lightColorCheckBox);
+        //设定闪烁模式checkbox组合的点击事件
+        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast};
+        blinkModeCheckBox = new CheckBox(1, views3);
+        new CheckBoxClickListener(blinkModeCheckBox);
+
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        btnCloseSet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        return dialog;
     }
 }

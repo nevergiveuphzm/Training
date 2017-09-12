@@ -12,9 +12,9 @@
         android:id="@+id/tv_item_step"
         android:layout_width="100dp"
         android:layout_height="match_parent"
-        android:background="@color/gray"
         android:gravity="center_horizontal|center_vertical"
         android:text="步骤1"
+        android:background="@drawable/grass_green_round_stroke_no_padding_bg"
         android:textSize="@dimen/param_level4_font_size"/>
 
     <LinearLayout
@@ -23,6 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
         android:orientation="vertical">
 
 

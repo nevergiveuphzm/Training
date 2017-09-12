@@ -54,7 +54,7 @@ public class ApplicationToolsActivity extends AppCompatActivity implements View.
         ApplicationToolsFragmentSecond fragment_second = new ApplicationToolsFragmentSecond();
         fragmentList = new ArrayList<>();
         fragmentList.add(fragment_first);
-        fragmentList.add(fragment_second);
+//        fragmentList.add(fragment_second);
         combinedFragmentAdapter = new CombinedFragmentAdapter(getSupportFragmentManager(),fragmentList);
         vpCombined.setAdapter(combinedFragmentAdapter);
         llLeft.setOnClickListener(this);

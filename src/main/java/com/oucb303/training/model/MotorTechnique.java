@@ -21,7 +21,7 @@ public class MotorTechnique implements Category {
                             {R.string.technique_throw_item0,R.string.technique_throw_item1},
                             {R.string.technique_basketball_item0,R.string.technique_basketball_item1},
                             {R.string.technique_football_item0},
-                            {R.string.technique_volleyball_item0}
+                            {}
     };
 
     String[][] targetString = {{"EightSecondRunActivity.class","ShuttleRunActivity1.class","OrientRunActivity.class","HighKneeActivity.class"},
@@ -29,7 +29,7 @@ public class MotorTechnique implements Category {
                                 {"","ThrowingActivity.class"},
                                 {"DribblingGameActivity.class",""},
                                 {""},
-                                {"WireNetConfrontationActivity.class"}
+                                {""}
     };
     //中部的背景图片
     int[] centerImgIds = {R.drawable.technique_run_bg,R.drawable.technique_jump_bg,R.drawable.technique_throw_bg,R.drawable.technique_basketball_bg,R.drawable.technique_football_bg,R.drawable.technique_volleyball_bg};
@@ -40,7 +40,7 @@ public class MotorTechnique implements Category {
                             {R.drawable.technique_throw_item0,R.drawable.technique_throw_item1},
                             {R.drawable.technique_basketball_item0,R.drawable.technique_basketball_item1},
                             {R.drawable.technique_football_item0},
-                            {R.drawable.technique_volleyball_item0}
+                            {}
     };
     @Override
     public int[][] getTopImgIds() {

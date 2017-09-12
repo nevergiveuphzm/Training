@@ -1,93 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
+            android:layout_height="390dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/border"
+            android:id="@+id/relativeLayout4">
+            <GridView
+                android:id="@+id/gv_light"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="请选择灯的序号"
-                android:textColor="@color/black"
-                android:textSize="25sp"/>
+                android:columnWidth="70dp"
+                android:numColumns="8"
+                android:padding="10dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="50dp"
+                android:stretchMode="columnWidth">
+            </GridView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginTop="265dp"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <Button
+                    android:id="@+id/btn_sure"
+                    android:layout_width="200dp"
+                    android:layout_height="70dp"
+                    android:gravity="center"
+                    android:background="@drawable/light_confirm"
+                    />
+                <Button
+                    android:id="@+id/btn_del"
+                    android:layout_width="200dp"
+                    android:layout_height="70dp"
+                    android:gravity="center"
+                    android:layout_marginLeft="50dp"
+                    android:background="@drawable/light_delete"/>
+                <Button
+                    android:id="@+id/btn_cancel"
+                    android:layout_width="200dp"
+                    android:layout_height="70dp"
+                    android:gravity="center"
+                    android:layout_marginLeft="50dp"
+                    android:background="@drawable/light_cancel"/>
+            </LinearLayout>
+        </RelativeLayout>
 
-            <include layout="@layout/layout_line_horizontal"/>
+        <RelativeLayout
+            android:layout_width="450dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="218dp"
+            android:background="@drawable/light_choose_sequence"
+            android:id="@+id/relativeLayout"
+            android:layout_alignParentTop="true"
+            android:layout_alignLeft="@+id/relativeLayout4"
+            android:layout_alignStart="@+id/relativeLayout4"
+            android:layout_marginStart="218dp">
 
-        </LinearLayout>
+        </RelativeLayout>
 
-        <GridView
-            android:id="@+id/gv_light"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:columnWidth="70dp"
-            android:numColumns="8"
-            android:padding="10dp"
-            android:stretchMode="columnWidth">
-
-
-        </GridView>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"/>
-
-            <Button
-                android:id="@+id/btn_sure"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:text="确定"/>
-
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"/>
-
-
-            <Button
-                android:id="@+id/btn_del"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:text="删除"/>
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"/>
-
-            <Button
-                android:id="@+id/btn_cancel"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:text="取消"/>
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"/>
-        </LinearLayout>
-    </LinearLayout>
-
+        <Button
+            android:id="@+id/btn_close"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginLeft="145dp"
+            android:background="@drawable/btn_close_set"
+            android:layout_alignBottom="@+id/relativeLayout"
+            android:layout_toRightOf="@+id/relativeLayout"
+            android:layout_toEndOf="@+id/relativeLayout"/>
+    </RelativeLayout>
 
 </LinearLayout>
+
