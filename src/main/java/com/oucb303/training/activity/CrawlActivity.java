@@ -6,9 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -65,8 +65,8 @@ public class CrawlActivity extends AppCompatActivity{
     TextView tvTitle;
     @Bind(R.id.img_help)
     ImageView imgHelp;
-    @Bind(R.id.img_save)
-    ImageView imgSave;
+    @Bind(R.id.img_save_new)
+    ImageView imgSaveNew;
     @Bind(R.id.tv_training_time)
     TextView tvTrainingTime;
     @Bind(R.id.img_training_time_sub)
@@ -75,12 +75,15 @@ public class CrawlActivity extends AppCompatActivity{
     SeekBar barTrainingTime;
     @Bind(R.id.img_training_time_add)
     ImageView imgTrainingTimeAdd;
-    @Bind(R.id.training_time)
-    LinearLayout TrainingTime;
-    @Bind(R.id.tv_training_times)
-    TextView tvTrainingTimes;
-    @Bind(R.id.training_times)
-    LinearLayout TrainingTimes;
+//    @Bind(R.id.training_time)
+//    LinearLayout TrainingTime;
+
+
+
+//    @Bind(R.id.tv_training_times)
+//    TextView tvTrainingTimes;
+//    @Bind(R.id.training_times)
+//    LinearLayout TrainingTimes;
     @Bind(R.id.btn_on)
     Button btnOn;
     @Bind(R.id.sp_dev_num)
@@ -89,26 +92,26 @@ public class CrawlActivity extends AppCompatActivity{
     Button btnOff;
     @Bind(R.id.tv_device_list)
     TextView tvDeviceList;
-    @Bind(R.id.img_action_mode_light)
-    ImageView imgActionModeLight;
-    @Bind(R.id.img_action_mode_touch)
-    ImageView imgActionModeTouch;
-    @Bind(R.id.img_action_mode_together)
-    ImageView imgActionModeTogether;
-    @Bind(R.id.img_light_color_blue)
-    ImageView imgLightColorBlue;
-    @Bind(R.id.img_light_color_red)
-    ImageView imgLightColorRed;
-    @Bind(R.id.img_light_color_blue_red)
-    ImageView imgLightColorBlueRed;
-    @Bind(R.id.cb_voice)
+//    @Bind(R.id.img_action_mode_light)
+//    ImageView imgActionModeLight;
+//    @Bind(R.id.img_action_mode_touch)
+//    ImageView imgActionModeTouch;
+//    @Bind(R.id.img_action_mode_together)
+//    ImageView imgActionModeTogether;
+//    @Bind(R.id.img_light_color_blue)
+//    ImageView imgLightColorBlue;
+//    @Bind(R.id.img_light_color_red)
+//    ImageView imgLightColorRed;
+//    @Bind(R.id.img_light_color_blue_red)
+//    ImageView imgLightColorBlueRed;
+//    @Bind(R.id.cb_voice)
     android.widget.CheckBox cbVoice;
-    @Bind(R.id.cb_end_voice)
+//    @Bind(R.id.cb_end_voice)
     android.widget.CheckBox cbEndVoice;
-    @Bind(R.id.cb_over_time_voice)
+  //  @Bind(R.id.cb_over_time_voice)
     android.widget.CheckBox cbOverTimeVoice;
-    @Bind(R.id.ll_params)
-    LinearLayout llParams;
+//    @Bind(R.id.ll_params)
+//    LinearLayout llParams;
     @Bind(R.id.tv_current_times)
     TextView tvCurrentTimes;
     @Bind(R.id.tv_lost_times)
@@ -125,13 +128,15 @@ public class CrawlActivity extends AppCompatActivity{
     Spinner spGroupNum;
     @Bind(R.id.lv_group)
     ListView lvGroup;
-    @Bind(R.id.img_blink_mode_none)
-    ImageView imgBlinkModeNone;
-    @Bind(R.id.img_blink_mode_slow)
-    ImageView imgBlinkModeSlow;
-    @Bind(R.id.img_blink_mode_fast)
-    ImageView imgBlinkModeFast;
-@Bind(R.id.sv_container)
+    @Bind(R.id.img_set)
+    ImageView imgSet;
+//    @Bind(R.id.img_blink_mode_none)
+//    ImageView imgBlinkModeNone;
+//    @Bind(R.id.img_blink_mode_slow)
+//    ImageView imgBlinkModeSlow;
+//    @Bind(R.id.img_blink_mode_fast)
+//    ImageView imgBlinkModeFast;
+    @Bind(R.id.sv_container)
     ScrollView svContainer;
     private int level;
     private Device device;
@@ -186,6 +191,7 @@ public class CrawlActivity extends AppCompatActivity{
     private int[] everyGroupTotalTime;
     private GroupListViewAdapter groupListViewAdapter;
     private int colorNum = 1;//颜色数
+    private Dialog set_dialog;
 
     Handler timerHandler = new Handler() {
         @Override
@@ -236,14 +242,18 @@ public class CrawlActivity extends AppCompatActivity{
     };
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //填充屏幕的UI
-        setContentView(R.layout.activity_crawl);
+        setContentView(R.layout.activity_crawl1);
         //返回xml中定义的视图或组件的ID
         ButterKnife.bind(this);
 
         level = getIntent().getIntExtra("level", 0);
+
+
+
+
 
         context = this;
 
@@ -261,9 +271,10 @@ public class CrawlActivity extends AppCompatActivity{
     @Override
     protected void onStart() {
         super.onStart();
-        imgSave.setEnabled(false);
-        imgSave.setVisibility(View.VISIBLE);
+        imgSaveNew.setEnabled(false);
+        imgSaveNew.setVisibility(View.VISIBLE);
         imgHelp.setVisibility(View.VISIBLE);
+        set_dialog = createLightSetDialog();
     }
 
     @Override
@@ -293,10 +304,10 @@ public class CrawlActivity extends AppCompatActivity{
         //设备排序
         Collections.sort(Device.DEVICE_LIST, new PowerInfoComparetor());
 
-        TrainingTimes.setVisibility(View.GONE);
-        TrainingTime.setVisibility(View.VISIBLE);
+//        TrainingTimes.setVisibility(View.GONE);
+//        TrainingTime.setVisibility(View.VISIBLE);
 
-        barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 30));
+        barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 10));
         //0为减，1为加
         imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
         imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
@@ -344,17 +355,17 @@ public class CrawlActivity extends AppCompatActivity{
             }
         });
 
-        //设定感应模式checkBox组合的点击事件
-        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
-        actionModeCheckBox = new CheckBox(1, views);
-        //设定灯光颜色checkBox组合的点击事件
-        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
-        lightColorCheckBox = new CheckBox(1, views2);
-        new CheckBoxClickListener(lightColorCheckBox);
-        ImageView[] view3 = new ImageView[]{imgBlinkModeNone,imgBlinkModeSlow,imgBlinkModeFast};
-        blinkModeCheckBox = new CheckBox(1,view3);
-        new CheckBoxClickListener(blinkModeCheckBox);
-        //解决listView 与scrollView的滑动冲突
+//        //设定感应模式checkBox组合的点击事件
+//        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
+//        actionModeCheckBox = new CheckBox(1, views);
+//        //设定灯光颜色checkBox组合的点击事件
+//        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
+//        lightColorCheckBox = new CheckBox(1, views2);
+//        new CheckBoxClickListener(lightColorCheckBox);
+//        ImageView[] view3 = new ImageView[]{imgBlinkModeNone,imgBlinkModeSlow,imgBlinkModeFast};
+//        blinkModeCheckBox = new CheckBox(1,view3);
+//        new CheckBoxClickListener(blinkModeCheckBox);
+//        //解决listView 与scrollView的滑动冲突
         lvGroup.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -368,9 +379,14 @@ public class CrawlActivity extends AppCompatActivity{
         });
     }
 
-    @OnClick({R.id.btn_begin, R.id.layout_cancel, R.id.img_help, R.id.btn_on, R.id.btn_off, R.id.img_save})
+    @OnClick({R.id.btn_begin, R.id.layout_cancel, R.id.img_help, R.id.btn_on, R.id.btn_off, R.id.img_save_new,R.id.img_set})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.img_set:
+                set_dialog = createLightSetDialog();
+                OperateUtils.setScreenWidth(this, set_dialog, 0.95, 0.7);
+                set_dialog.show();
+                break;
             case R.id.btn_begin:
                 if (!device.checkDevice(this))
                     return;
@@ -390,7 +406,7 @@ public class CrawlActivity extends AppCompatActivity{
             case R.id.btn_off:
                 device.turnOffAllTheLight();
                 break;
-            case R.id.img_save:
+            case R.id.img_save_new:
                 Intent it = new Intent(this, SaveActivity.class);
                 Bundle bundle = new Bundle();
                 //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 4:换物跑、时间随机、次数随机 ...
@@ -423,9 +439,9 @@ public class CrawlActivity extends AppCompatActivity{
     //开始训练
     public void startTraining() {
         trainingFlag = true;
-        btnBegin.setText("停止");
+
         //运行的总次数
-        totalTimes = new Integer(tvTrainingTimes.getText().toString().trim());
+//        totalTimes = new Integer(tvTrainingTimes.getText().toString().trim());
         //训练总时间
         trainingTime = (int) ((new Double(tvTrainingTime.getText().toString().trim())) * 60 * 1000);
         //数据清空
@@ -463,11 +479,11 @@ public class CrawlActivity extends AppCompatActivity{
                 int color = random.nextInt(colorNum) + 1;
                 device.sendOrder(Device.DEVICE_LIST.get(listRands.get(j).get(i)).getDeviceNum(),
                         Order.LightColor.values()[color],
-                        Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
+                        Order.VoiceMode.values()[ 0],
                         Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
                         Order.LightModel.values()[1],
                         Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                        Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
+                        Order.EndVoice.values()[ 0]);
                 //每组设备灯亮起的当前时间
                 duration[j][i] = System.currentTimeMillis();
                 //每次开灯的设备编号
@@ -494,7 +510,7 @@ public class CrawlActivity extends AppCompatActivity{
         trainingFlag = false;
         btnBegin.setText("开始");
         btnBegin.setEnabled(false);
-        imgSave.setEnabled(true);
+        imgSaveNew.setEnabled(true);
         if (overTimeThread != null)
             overTimeThread.stopThread();
         if (timer != null)
@@ -711,5 +727,54 @@ public class CrawlActivity extends AppCompatActivity{
 
             }
         }
+    }
+    public Dialog createLightSetDialog() {
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View v = inflater.inflate(R.layout.layout_dialog_lightset, null);// 得到加载view
+
+        LinearLayout layout = (LinearLayout) v.findViewById(R.id.dialog_light_set);
+        ImageView imgActionModeTouch = (ImageView) layout.findViewById(R.id.img_action_mode_touch);
+        ImageView imgActionModeLight = (ImageView) layout.findViewById(R.id.img_action_mode_light);
+        ImageView imgActionModeTogether = (ImageView) layout.findViewById(R.id.img_action_mode_together);
+        ImageView imgLightColorBlue = (ImageView) layout.findViewById(R.id.img_light_color_blue);
+        ImageView imgLightColorRed = (ImageView) layout.findViewById(R.id.img_light_color_red);
+        ImageView imgLightColorBlueRed = (ImageView) layout.findViewById(R.id.img_light_color_blue_red);
+        ImageView imgBlinkModeNone = (ImageView) layout.findViewById(R.id.img_blink_mode_none);
+        ImageView imgBlinkModeSlow = (ImageView) layout.findViewById(R.id.img_blink_mode_slow);
+        ImageView imgBlinkModeFast = (ImageView) layout.findViewById(R.id.img_blink_mode_fast);
+        cbVoice = (android.widget.CheckBox) layout.findViewById(R.id.cb_voice);
+        Button btnOk = (Button) layout.findViewById(R.id.btn_ok);
+        Button btnCloseSet = (Button) layout.findViewById(R.id.btn_close_set);
+        final Dialog dialog = new Dialog(this, R.style.dialog_rank);
+
+        dialog.setContentView(layout);
+
+        //设定感应模式checkBox组合的点击事件
+        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
+        actionModeCheckBox = new CheckBox(1, views);
+        new CheckBoxClickListener(actionModeCheckBox);
+        //设定灯光颜色checkBox组合的点击事件
+        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
+        lightColorCheckBox = new CheckBox(1, views2);
+        new CheckBoxClickListener(lightColorCheckBox);
+        //设定闪烁模式checkbox组合的点击事件
+        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast};
+        blinkModeCheckBox = new CheckBox(1, views3);
+        new CheckBoxClickListener(blinkModeCheckBox);
+
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        btnCloseSet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        return dialog;
     }
 }

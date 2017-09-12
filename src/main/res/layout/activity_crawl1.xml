@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical"
+    tools:context=".activity.CombinedTrainingActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/layout_title_bar_newer" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ScrollView
+            android:id="@+id/sv_container"
+            android:layout_width="650dp"
+            android:layout_height="700dp">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="650dp"
+            android:orientation="vertical">
+
+
+
+            <RelativeLayout
+                android:id="@+id/rl_first"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_time"
+                android:orientation="vertical">
+
+            </RelativeLayout>
+
+            <RelativeLayout
+
+                android:layout_width="360dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="130dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_traintime">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="55dp"
+                    android:layout_marginTop="2dp"
+                    android:text="训练时间:"
+                    android:textColor="@color/white"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:id="@+id/tv_training_time"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="200dp"
+                    android:layout_marginTop="2dp"
+                    android:text="1"
+                    android:textColor="@color/white"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="245dp"
+                    android:layout_marginTop="2dp"
+                    android:text="分钟"
+                    android:textColor="@color/white"
+                    android:textSize="25sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="560dp"
+                android:layout_height="55dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="70dp">
+
+                <ImageView
+                    android:id="@+id/img_training_time_sub"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/img_sub" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="52dp"
+                    android:layout_marginTop="5dp"
+                    android:text="0"
+                    android:textColor="@color/black"
+                    android:textSize="30sp" />
+
+                <SeekBar
+                    android:id="@+id/bar_training_time"
+                    style="@style/Widget.SeekBar.Normal"
+                    android:layout_width="380dp"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="80dp"
+                    android:layout_marginTop="10dip"
+                    android:max="20"
+                    android:progress="2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="465dp"
+                    android:layout_marginTop="5dp"
+                    android:text="10"
+                    android:textColor="@color/black"
+                    android:textSize="30sp" />
+
+
+                <ImageView
+                    android:id="@+id/img_training_time_add"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="510dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/img_plus" />
+
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/rl_second"
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:layout_alignEnd="@+id/rl_first"
+                android:layout_alignLeft="@+id/rl_first"
+                android:layout_alignRight="@+id/rl_first"
+                android:layout_alignStart="@+id/rl_first"
+                android:layout_below="@+id/rl_first"
+                android:background="@drawable/bg_groupdevide"
+                android:orientation="vertical"
+                android:weightSum="1">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:text="每组设备数"
+                        android:textSize="25sp" />
+
+
+                    <Spinner
+                        android:id="@+id/sp_dev_num"
+                        android:layout_width="240dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:background="@drawable/spinner">
+
+                    </Spinner>
+
+                    <Button
+                        android:id="@+id/btn_on"
+                        android:layout_width="90dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="50dp"
+                        android:background="@drawable/img_openlight" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="17dp"
+                        android:text="训 练 分 组"
+                        android:textSize="25sp" />
+
+
+                    <Spinner
+                        android:id="@+id/sp_group_num"
+                        android:layout_width="240dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:background="@drawable/spinner">
+
+                    </Spinner>
+
+                    <Button
+                        android:id="@+id/btn_off"
+                        android:layout_width="90dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="50dp"
+                        android:background="@drawable/img_closelight" />
+
+
+                </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="设 备 编 号: "
+                    android:layout_marginLeft="17dp"
+                    android:textSize="@dimen/param_level1_font_size"/>
+
+                <TextView
+                    android:id="@+id/tv_device_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="A  B  C  D"
+                    android:textSize="@dimen/param_level1_font_size"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/grey" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="70dp"
+                        android:text="组别"
+                        android:textSize="25sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="140dp"
+                        android:text="设备"
+                        android:textSize="25sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="170dp"
+                        android:text="备注"
+                        android:textSize="25sp" />
+                </LinearLayout>
+
+                <ListView
+                    android:id="@+id/lv_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:scrollbars="none"
+                    android:layout_weight="0.66"></ListView>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_downtime"
+
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_total_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:text="总时间:00:00:00"
+                        android:textSize="25sp" />
+
+                </RelativeLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                   android:layout_marginTop="20dp"
+
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_begin"
+                        android:layout_width="160dp"
+                        android:layout_height="60dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/img_situpbegin" />
+
+                    <Button
+                        android:id="@+id/btn_pause"
+                        android:layout_width="160dp"
+                        android:layout_height="60dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:background="@drawable/img_situppause" />
+
+                    <Button
+                        android:id="@+id/btn_stop"
+                        android:layout_width="160dp"
+                        android:layout_height="60dp"
+                        android:layout_marginLeft="0dp"
+                        android:background="@drawable/img_situpstop" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+
+
+        </RelativeLayout>
+
+        </ScrollView>
+
+        //layout-right
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_score"
+                android:layout_margin="20dp"
+                android:id="@+id/relativeLayout3">
+
+            </RelativeLayout>
+
+            <RelativeLayout
+
+                android:id="@+id/relativeLayout2"
+                android:layout_width="450dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_scoretitle">
+
+
+                <Button
+                    android:id="@+id/btn_result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="#00000000"
+                    android:text="训练结果"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/ui_green"
+                    android:textSize="25sp" />
+
+
+                <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="290dp"-->
+                <!--android:layout_marginTop="2dp"-->
+                <!--android:text="历史成绩"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:textSize="25sp" />-->
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="80dp"
+                android:background="@drawable/bg_downtime"
+
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:text="平均时间："
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/tv_average_time"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="- - -"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="110dp"
+                    android:layout_height="match_parent"
+                    android:text="运行次数:"
+
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/tv_current_times"
+                    android:layout_width="90dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="25dp"
+                    android:text="- - -"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:text="遗漏次数："
+
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/tv_lost_times"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="25dp"
+                    android:text="- - -"
+                    android:textSize="20sp" />
+
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="180dp"
+                android:layout_marginLeft="40dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:text="序号"
+                    android:textSize="25sp"
+                    android:id="@+id/textView4" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="所用时间"
+                    android:textSize="25sp"
+                    android:layout_alignBaseline="@+id/textView4"
+                    android:layout_alignBottom="@+id/textView4"
+                    android:layout_toRightOf="@+id/textView4"
+                    android:layout_toEndOf="@+id/textView4"
+                    android:layout_marginLeft="84dp"
+                    android:layout_marginStart="84dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="备注"
+                    android:textSize="25sp"
+                    android:layout_marginLeft="340dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="编号"
+                    android:textSize="25sp"
+                    android:layout_marginLeft="480dp"/>
+            </RelativeLayout>
+            <ListView
+
+                android:id="@+id/lv_times"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignEnd="@+id/relativeLayout3"
+                android:layout_alignLeft="@+id/relativeLayout3"
+                android:layout_alignRight="@+id/relativeLayout3"
+                android:layout_alignStart="@+id/relativeLayout3"
+                android:layout_marginTop="240dp"
+                android:divider="#00000000"
+                android:fadeScrollbars="true"
+                android:scrollbarSize="7dp"
+                android:scrollbarStyle="insideOverlay"
+                android:scrollbarThumbVertical="@drawable/listview_scrollbar_thumb"
+                android:scrollbarTrackVertical="@drawable/listview_scrollbar_track"
+                android:scrollbars="vertical"
+                android:verticalScrollbarPosition="right"
+                android:layout_above="@+id/rl_third"
+                android:layout_marginLeft="20dp">
+
+            </ListView>
+
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

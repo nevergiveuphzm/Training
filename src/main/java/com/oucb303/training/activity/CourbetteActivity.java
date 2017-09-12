@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -68,8 +69,8 @@ public class CourbetteActivity extends AppCompatActivity implements AdapterView.
     TextView tvTitle;
     @Bind(R.id.img_help)
     ImageView imgHelp;
-    @Bind(R.id.img_save)
-    ImageView imgSave;
+    @Bind(R.id.img_save_new)
+    ImageView imgSaveNew;
     @Bind(R.id.tv_training_time)
     TextView tvTrainingTime;
     @Bind(R.id.img_training_time_sub)
@@ -78,38 +79,40 @@ public class CourbetteActivity extends AppCompatActivity implements AdapterView.
     SeekBar barTrainingTime;
     @Bind(R.id.img_training_time_add)
     ImageView imgTrainingTimeAdd;
-    @Bind(R.id.ll_training_time)
-    LinearLayout llTrainingTime;
+//    @Bind(R.id.ll_training_time)
+//    LinearLayout llTrainingTime;
     @Bind(R.id.sp_group_num)
     Spinner spGroupNum;
     @Bind(R.id.lv_group)
     ListView lvGroup;
-    @Bind(R.id.img_action_mode_light)
-    ImageView imgActionModeLight;
-    @Bind(R.id.img_action_mode_touch)
-    ImageView imgActionModeTouch;
-    @Bind(R.id.img_action_mode_together)
-    ImageView imgActionModeTogether;
-    @Bind(R.id.img_light_mode_beside)
-    ImageView imgLightModeBeside;
-    @Bind(R.id.img_light_mode_center)
-    ImageView imgLightModeCenter;
-    @Bind(R.id.img_light_mode_all)
-    ImageView imgLightModeAll;
-    @Bind(R.id.img_light_color_blue)
-    ImageView imgLightColorBlue;
-    @Bind(R.id.img_light_color_red)
-    ImageView imgLightColorRed;
-    @Bind(R.id.img_light_color_blue_red)
-    ImageView imgLightColorBlueRed;
-    @Bind(R.id.cb_voice)
+//    @Bind(R.id.img_action_mode_light)
+//    ImageView imgActionModeLight;
+//    @Bind(R.id.img_action_mode_touch)
+//    ImageView imgActionModeTouch;
+//    @Bind(R.id.img_action_mode_together)
+//    ImageView imgActionModeTogether;
+//    @Bind(R.id.img_light_mode_beside)
+//    ImageView imgLightModeBeside;
+//    @Bind(R.id.img_light_mode_center)
+//    ImageView imgLightModeCenter;
+//    @Bind(R.id.img_light_mode_all)
+//    ImageView imgLightModeAll;
+//    @Bind(R.id.img_light_color_blue)
+//    ImageView imgLightColorBlue;
+//    @Bind(R.id.img_light_color_red)
+//    ImageView imgLightColorRed;
+//    @Bind(R.id.img_light_color_blue_red)
+//    ImageView imgLightColorBlueRed;
+//    @Bind(R.id.cb_voice)
     android.widget.CheckBox cbVoice;
-    @Bind(R.id.cb_end_voice)
+//    @Bind(R.id.cb_end_voice)
     android.widget.CheckBox cbEndVoice;
-    @Bind(R.id.ll_params)
-    LinearLayout llParams;
-    @Bind(R.id.sv_container)
-    ScrollView svContainer;
+//    @Bind(R.id.ll_params)
+//    LinearLayout llParams;
+//    @Bind(R.id.sv_container)
+//    ScrollView svContainer;
+    @Bind(R.id.img_set)
+    ImageView imgSet;
     @Bind(R.id.tv_total_time)
     TextView tvTotalTime;
     @Bind(R.id.lv_times)
@@ -120,17 +123,19 @@ public class CourbetteActivity extends AppCompatActivity implements AdapterView.
     Button btnOn;
     @Bind(R.id.btn_off)
     Button btnOff;
-    @Bind(R.id.tv_maxTime)
-    TextView tvMaxTime;
-    @Bind(R.id.img_blink_mode_none)
-    ImageView imgBlinkModeNone;
-    @Bind(R.id.img_blink_mode_slow)
-    ImageView imgBlinkModeSlow;
-    @Bind(R.id.img_blink_mode_fast)
-    ImageView imgBlinkModeFast;
+    @Bind(R.id.btn_stop)
+    Button btnStop;
+//    @Bind(R.id.tv_maxTime)
+//    TextView tvMaxTime;
+//    @Bind(R.id.img_blink_mode_none)
+//    ImageView imgBlinkModeNone;
+//    @Bind(R.id.img_blink_mode_slow)
+//    ImageView imgBlinkModeSlow;
+//    @Bind(R.id.img_blink_mode_fast)
+//    ImageView imgBlinkModeFast;
 
 
-
+    private Dialog set_dialog;
     private Device device;
     private int level=2;
     private int maxGroupNum;//做多分组数目
@@ -188,7 +193,7 @@ public class CourbetteActivity extends AppCompatActivity implements AdapterView.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_courbette);
+        setContentView(R.layout.activity_courbette1);
         ButterKnife.bind(this);
         initView();
         device = new Device(this);
@@ -204,7 +209,8 @@ public class CourbetteActivity extends AppCompatActivity implements AdapterView.
     @Override
     protected void onStart() {
         super.onStart();
-        imgSave.setEnabled(false);
+        imgSaveNew.setEnabled(false);
+        set_dialog = createLightSetDialog();
     }
 
     @Override
@@ -216,7 +222,7 @@ public class CourbetteActivity extends AppCompatActivity implements AdapterView.
     private void initView() {
         tvTitle.setText(R.string.navigation_juggling_item1);
         imgHelp.setVisibility(View.VISIBLE);
-        imgSave.setVisibility(View.VISIBLE);
+        imgSaveNew.setVisibility(View.VISIBLE);
 
         //设备排序
         Collections.sort(Device.DEVICE_LIST, new PowerInfoComparetor());
@@ -241,37 +247,37 @@ public class CourbetteActivity extends AppCompatActivity implements AdapterView.
         });
 
 
-        switch (level) {
-            case 1:
-                level = 2;
-                //训练时间拖动条初始化
-                barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 10));
-                imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
-                imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
-                tvMaxTime.setText("10");
-
-                break;
-            case 2:
-                level = 4;
-                barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 20));
-                imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
-                imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
-                tvMaxTime.setText("20");
-
-                break;
-            case 3:
-                level = 5;
-                barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 30));
-                imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
-                imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
-                tvMaxTime.setText("30");
-
-                break;
-        }
+//        switch (level) {
+//            case 1:
+//                level = 2;
+//                //训练时间拖动条初始化
+//                barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 10));
+//                imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
+//                imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
+//                tvMaxTime.setText("10");
+//
+//                break;
+//            case 2:
+//                level = 4;
+//                barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 20));
+//                imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
+//                imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
+//                tvMaxTime.setText("20");
+//
+//                break;
+//            case 3:
+//                level = 5;
+//                barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 30));
+//                imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
+//                imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
+//                tvMaxTime.setText("30");
+//
+//                break;
+//        }
         barTrainingTime.setProgress(level);
 
         //训练时间拖动条初始化
-        barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 20));
+        barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 10));
         imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
         imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
 
@@ -280,18 +286,18 @@ public class CourbetteActivity extends AppCompatActivity implements AdapterView.
         lvGroup.setAdapter(groupListViewAdapter);
 
         //解决listView 与scrollView的滑动冲突
-        lvGroup.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent motionEvent) {
-                //从listView 抬起时将控制权还给scrollview
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP)
-                    svContainer.requestDisallowInterceptTouchEvent(false);
-                else
-                    //requestDisallowInterceptTouchEvent（true）方法是用来子View告诉父容器不要拦截我们的事件的
-                    svContainer.requestDisallowInterceptTouchEvent(true);
-                return false;
-            }
-        });
+//        lvGroup.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent motionEvent) {
+//                //从listView 抬起时将控制权还给scrollview
+//                if (motionEvent.getAction() == MotionEvent.ACTION_UP)
+//                    svContainer.requestDisallowInterceptTouchEvent(false);
+//                else
+//                    //requestDisallowInterceptTouchEvent（true）方法是用来子View告诉父容器不要拦截我们的事件的
+//                    svContainer.requestDisallowInterceptTouchEvent(true);
+//                return false;
+//            }
+//        });
 
         //初始化右侧listView
         largeRecessAdapter = new LargeRecessAdapter(this);
@@ -299,22 +305,22 @@ public class CourbetteActivity extends AppCompatActivity implements AdapterView.
         lvTimes.setOnItemClickListener(this);
 
 
-        //设定感应模式的checkbox组合的点击事件
-        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
-        actionModeCheckBox = new CheckBox(1, views);
-        new CheckBoxClickListener(actionModeCheckBox);
-        //设定灯光模式的checkbox组合的点击事件
-        ImageView[] views1 = new ImageView[]{imgLightModeBeside, imgLightModeCenter, imgLightModeAll};
-        lightModeCheckBox = new CheckBox(1, views1);
-        new CheckBoxClickListener(lightModeCheckBox);
-        //设定灯光颜色checkBox组合的点击事件
-        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
-        lightColorCheckBox = new CheckBox(1, views2);
-        new CheckBoxClickListener(lightColorCheckBox);
-        //设定闪烁模式checkbox组合的点击事件
-        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast,};
-        blinkModeCheckBox = new CheckBox(1, views3);
-        new CheckBoxClickListener(blinkModeCheckBox);
+//        //设定感应模式的checkbox组合的点击事件
+//        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
+//        actionModeCheckBox = new CheckBox(1, views);
+//        new CheckBoxClickListener(actionModeCheckBox);
+//        //设定灯光模式的checkbox组合的点击事件
+//        ImageView[] views1 = new ImageView[]{imgLightModeBeside, imgLightModeCenter, imgLightModeAll};
+//        lightModeCheckBox = new CheckBox(1, views1);
+//        new CheckBoxClickListener(lightModeCheckBox);
+//        //设定灯光颜色checkBox组合的点击事件
+//        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
+//        lightColorCheckBox = new CheckBox(1, views2);
+//        new CheckBoxClickListener(lightColorCheckBox);
+//        //设定闪烁模式checkbox组合的点击事件
+//        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast,};
+//        blinkModeCheckBox = new CheckBox(1, views3);
+//        new CheckBoxClickListener(blinkModeCheckBox);
     }
 
 
@@ -334,9 +340,14 @@ public class CourbetteActivity extends AppCompatActivity implements AdapterView.
     }
 
 
-    @OnClick({R.id.layout_cancel, R.id.img_help, R.id.btn_begin, R.id.img_save, R.id.btn_on, R.id.btn_off})
+    @OnClick({R.id.layout_cancel, R.id.img_help, R.id.btn_begin, R.id.img_save_new, R.id.btn_on, R.id.btn_off,R.id.img_set,R.id.btn_stop})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.img_set:
+                set_dialog = createLightSetDialog();
+                OperateUtils.setScreenWidth(this, set_dialog, 0.95, 0.7);
+                set_dialog.show();
+                break;
             case R.id.layout_cancel:
                 this.finish();
                 device.turnOffAllTheLight();
@@ -349,7 +360,7 @@ public class CourbetteActivity extends AppCompatActivity implements AdapterView.
                 OperateUtils.setScreenWidth(this, dialog_help, 0.95, 0.7);
                 dialog_help.show();
                 break;
-            case R.id.img_save:
+            case R.id.img_save_new:
                 Intent it = new Intent(this, SaveActivity.class);
                 Bundle bundle = new Bundle();
                 //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 6:大课间跑圈，八秒钟跑 ...
@@ -362,6 +373,9 @@ public class CourbetteActivity extends AppCompatActivity implements AdapterView.
                 bundle.putInt("groupNum", goupNum);//分组数
                 it.putExtras(bundle);
                 startActivity(it);
+                break;
+            case R.id.btn_stop:
+                stopTraining();
                 break;
             case R.id.btn_begin:
                 if (!device.checkDevice(CourbetteActivity.this))
@@ -402,7 +416,7 @@ public class CourbetteActivity extends AppCompatActivity implements AdapterView.
         largeRecessAdapter.setCompletedTimes(completedTimes);
         largeRecessAdapter.notifyDataSetChanged();
 
-        btnBegin.setText("停止");
+
         //训练时间
         trainingTime = (int) (new Double(tvTrainingTime.getText().toString()) * 60 * 1000);
         //清除串口数据
@@ -411,13 +425,7 @@ public class CourbetteActivity extends AppCompatActivity implements AdapterView.
         new ReceiveThread(handler, device.ftDev, ReceiveThread.TIME_RECEIVE_THREAD, TIME_RECEIVE).start();
         //开全灯
         for (int i = 0; i < goupNum; i++) {
-            device.sendOrder(Device.DEVICE_LIST.get(i).getDeviceNum(),
-                    Order.LightColor.values()[lightColorCheckBox.getCheckId()],
-                    Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                    Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
-                    Order.LightModel.OUTER,
-                    Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                    Order.EndVoice.NONE);
+          sendOrder(Device.DEVICE_LIST.get(i).getDeviceNum());
         }
         timer = new Timer(handler, trainingTime);
         timer.setBeginTime(System.currentTimeMillis());
@@ -427,8 +435,8 @@ public class CourbetteActivity extends AppCompatActivity implements AdapterView.
     //结束训练
     public void stopTraining() {
         isTraining = false;
-        btnBegin.setText("开始");
-        imgSave.setEnabled(true);
+
+        imgSaveNew.setEnabled(true);
         //结束时间线程
         timer.stopTimer();
         //结束接收返回时间线程
@@ -443,17 +451,19 @@ public class CourbetteActivity extends AppCompatActivity implements AdapterView.
                 Timer.sleep(500);
                 if (!isTraining)
                     return;
-                device.sendOrder(deviceNum,
-                        Order.LightColor.values()[lightColorCheckBox.getCheckId()],
-                        Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                        Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
-                        Order.LightModel.OUTER,
-                        Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                        Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
+               sendOrder(deviceNum);
             }
         }).start();
     }
 
+    public void sendOrder(char deviceNum) {
+        device.sendOrder(deviceNum, Order.LightColor.values()[lightColorCheckBox.getCheckId()],
+                Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
+                Order.BlinkModel.values()[blinkModeCheckBox.getCheckId() - 1],
+                Order.LightModel.OUTER,
+                Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
+                Order.EndVoice.NONE);
+    }
     //解析饭回来的数据,灭一次解析一次，如果同时灭多盏灯，就是解析一次,infos里存放同时灭灯个数
     public void analyzeTimeData(final String data) {
         if (!isTraining)
@@ -502,5 +512,60 @@ public class CourbetteActivity extends AppCompatActivity implements AdapterView.
             }
         }
         return position;
+    }
+    public Dialog createLightSetDialog() {
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View v = inflater.inflate(R.layout.layout_dialog_lightset, null);// 得到加载view
+
+        LinearLayout layout = (LinearLayout) v.findViewById(R.id.dialog_light_set);
+        ImageView imgActionModeTouch = (ImageView) layout.findViewById(R.id.img_action_mode_touch);
+        ImageView imgActionModeLight = (ImageView) layout.findViewById(R.id.img_action_mode_light);
+        ImageView imgActionModeTogether = (ImageView) layout.findViewById(R.id.img_action_mode_together);
+        ImageView imgLightColorBlue = (ImageView) layout.findViewById(R.id.img_light_color_blue);
+        ImageView imgLightColorRed = (ImageView) layout.findViewById(R.id.img_light_color_red);
+        ImageView imgLightColorBlueRed = (ImageView) layout.findViewById(R.id.img_light_color_blue_red);
+        ImageView imgBlinkModeNone = (ImageView) layout.findViewById(R.id.img_blink_mode_none);
+        ImageView imgBlinkModeSlow = (ImageView) layout.findViewById(R.id.img_blink_mode_slow);
+        ImageView imgBlinkModeFast = (ImageView) layout.findViewById(R.id.img_blink_mode_fast);
+        ImageView imgLightModeBeside=(ImageView)layout.findViewById(R.id.img_light_mode_beside);
+        ImageView imgLightModeCenter=(ImageView)layout.findViewById(R.id.img_light_mode_center);
+        ImageView imgLightModeAll=(ImageView)layout.findViewById(R.id.img_light_mode_all);
+        cbVoice = (android.widget.CheckBox) layout.findViewById(R.id.cb_voice);
+        Button btnOk = (Button) layout.findViewById(R.id.btn_ok);
+        Button btnCloseSet = (Button) layout.findViewById(R.id.btn_close_set);
+        final Dialog dialog = new Dialog(this, R.style.dialog_rank);
+
+        dialog.setContentView(layout);
+
+        //设定感应模式checkBox组合的点击事件
+        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
+        actionModeCheckBox = new CheckBox(1, views);
+        new CheckBoxClickListener(actionModeCheckBox);
+        ImageView[] views1 = new ImageView[]{imgLightModeBeside, imgLightModeCenter, imgLightModeAll};
+        lightModeCheckBox = new CheckBox(1, views1);
+        new CheckBoxClickListener(lightModeCheckBox);
+        //设定灯光颜色checkBox组合的点击事件
+        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
+        lightColorCheckBox = new CheckBox(1, views2);
+        new CheckBoxClickListener(lightColorCheckBox);
+        //设定闪烁模式checkbox组合的点击事件
+        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast};
+        blinkModeCheckBox = new CheckBox(1, views3);
+        new CheckBoxClickListener(blinkModeCheckBox);
+
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        btnCloseSet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        return dialog;
     }
 }

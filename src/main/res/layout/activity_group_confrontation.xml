@@ -5,7 +5,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/layout_title_bar_newer"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <include layout="@layout/layout_title_bar_newer" />
+    </LinearLayout>
 
 
     <LinearLayout
@@ -13,80 +17,86 @@
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <ScrollView
-            android:id="@+id/sv_container"
+        <LinearLayout
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:scrollbars="none">
+            android:orientation="vertical">
 
 
             <LinearLayout
-                android:id="@+id/ll_params"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/r1_first"
                     android:layout_width="match_parent"
-                    android:layout_height="250dp"
-                    android:orientation="vertical"
-                    android:weightSum="1"
-                    android:id="@+id/rl_second">
+                    android:layout_height="360dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="45dp"
+                    android:background="@drawable/bg_device"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="80dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingLeft="20dp">
+                        android:layout_marginTop="5dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
                             android:text="每组设备个数:"
-                            android:textSize="@dimen/param_level1_font_size"/>
+                            android:textSize="28sp"/>
 
                         <Spinner
                             android:id="@+id/sp_group_device_num"
-                            android:layout_width="200dp"
+                            android:layout_width="240dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginLeft="15dp"
                             android:background="@drawable/spinner">
 
                         </Spinner>
                     </LinearLayout>
 
-                    <include layout="@layout/layout_line_horizontal"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:background="@color/grey" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="60dp"
+                        android:gravity="center_vertical"
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center_horizontal"
+                            android:layout_marginLeft="70dp"
                             android:text="组别"
-                            android:textSize="@dimen/param_level2_font_size"/>
+                            android:textSize="25sp" />
 
                         <TextView
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center_horizontal"
+                            android:layout_marginLeft="140dp"
                             android:text="设备"
-                            android:textSize="@dimen/param_level2_font_size"/>
+                            android:textSize="25sp" />
+
 
                         <TextView
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center_horizontal"
+                            android:layout_marginLeft="170dp"
                             android:text="备注"
-                            android:textSize="@dimen/param_level2_font_size"/>
+                            android:textSize="25sp" />
 
                     </LinearLayout>
 
@@ -94,114 +104,113 @@
                         android:id="@+id/lv_group"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:textSize="25sp"
                         android:scrollbars="none">
                     </ListView>
 
                 </LinearLayout>
 
-                <include layout="@layout/layout_line_horizontal"/>
-
-                <LinearLayout
-                    android:id="@+id/rl_third"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_below="@id/rl_second"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/bg_downtime"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tv_total_time"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="倒计时:00:00:00"
-                            android:textSize="25sp" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:orientation="horizontal"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        >
-                        <Button
-                            android:id="@+id/btn_begin"
-                            android:layout_width="160dp"
-                            android:layout_height="60dp"
-                            android:layout_marginLeft="0dp"
-                            android:background="@drawable/img_situpbegin"
-                            />
-                        <Button
-                            android:id="@+id/btn_pause"
-                            android:layout_width="160dp"
-                            android:layout_height="60dp"
-                            android:layout_marginLeft="50dp"
-                            android:layout_marginRight="50dp"
-                            android:background="@drawable/img_situppause"
-                            />
-                        <Button
-                            android:id="@+id/btn_stop"
-                            android:layout_width="160dp"
-                            android:layout_height="60dp"
-                            android:layout_marginLeft="0dp"
-                            android:background="@drawable/img_situpstop"
-                            />
-                    </LinearLayout>
-                </LinearLayout>
-
 
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/rl_second"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/r1_first"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
 
-        </ScrollView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_downtime"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-        <include layout="@layout/layout_line_vertical"></include>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="时间倒计时:"
+                        android:textSize="25sp" />
+                    <TextView
+                        android:id="@+id/tv_down_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="00:00:00"
+                        android:textSize="25sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center">
+                    <Button
+                        android:id="@+id/btn_begin"
+                        android:layout_width="160dp"
+                        android:layout_height="60dp"
+                        android:layout_marginLeft="0dp"
+                        android:background="@drawable/img_situpbegin"
+                        />
+                    <Button
+                        android:id="@+id/btn_pause"
+                        android:layout_width="160dp"
+                        android:layout_height="60dp"
+                        android:layout_marginLeft="50dp"
+                        android:layout_marginRight="50dp"
+                        android:background="@drawable/img_situppause"
+                        />
+                    <Button
+                        android:id="@+id/btn_stop"
+                        android:layout_width="160dp"
+                        android:layout_height="60dp"
+                        android:layout_marginLeft="0dp"
+                        android:background="@drawable/img_situpstop"
+                        />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
 
         <!--成绩统计-->
         <LinearLayout
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/white"
             android:orientation="vertical">
-
-            <include layout="@layout/layout_line_horizontal"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="40dp"
+                android:layout_marginRight="15dp"
                 android:orientation="vertical"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
+                android:background="@drawable/group_duikang_bg1">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_marginTop="7dp"
+                    android:layout_marginLeft="255dp"
+
+                    >
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:text="第一组"
-                        android:textSize="@dimen/param_level2_font_size"/>
-
-                    <com.oucb303.training.widget.HorizontalListView
-                        android:id="@+id/hlv_group1"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp">
-
-                    </com.oucb303.training.widget.HorizontalListView>
+                        android:layout_marginTop="7dp"
+                        android:layout_marginLeft="15dp"
+                        android:text="第 一 组"
+                        android:textColor="@color/white"
+                        android:textSize="28dp"
+                        />
 
                 </LinearLayout>
 
@@ -210,30 +219,61 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:text="第二组"
-                        android:textSize="@dimen/param_level2_font_size"/>
+                    <com.oucb303.training.widget.HorizontalListView
+                        android:id="@+id/hlv_group1"
+                        android:layout_width="match_parent"
+                        android:layout_height="165dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginTop="30dp">
+                    </com.oucb303.training.widget.HorizontalListView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    >
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <com.oucb303.training.widget.HorizontalListView
                         android:id="@+id/hlv_group2"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp">
+                        android:layout_height="165dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp">
 
                     </com.oucb303.training.widget.HorizontalListView>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="255dp"
+
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="15dp"
+                        android:text="第 二 组"
+                        android:textColor="@color/white"
+                        android:textSize="28dp"
+                        />
 
                 </LinearLayout>
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btn_begin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="开始"
-                android:textSize="@dimen/param_level2_font_size"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
