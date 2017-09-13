@@ -357,7 +357,7 @@ public class DribblingGameActivity extends AppCompatActivity {
         imgOverTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barOverTime, 0));
     }
 
-    @OnClick({R.id.img_set,R.id.layout_cancel, R.id.btn_begin, R.id.img_help, R.id.btn_on, R.id.btn_off, R.id.img_save_new})
+    @OnClick({R.id.btn_stop,R.id.img_set,R.id.layout_cancel, R.id.btn_begin, R.id.img_help, R.id.btn_on, R.id.btn_off, R.id.img_save_new})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_set:
@@ -421,12 +421,17 @@ public class DribblingGameActivity extends AppCompatActivity {
                 it.putExtras(bundle);
                 startActivity(it);
                 break;
+            case R.id.btn_stop:
+                if(trainningFlag){
+                    stopTraining();
+                }
+                break;
         }
     }
 
     //开始训练
     public void starTraining() {
-        btnBegin.setText("停止");
+//        btnBegin.setText("停止");
         trainningFlag = true;
         //trainingTime是总时间
         trainingTime = (int) (new Double(tvTrainingTime.getText().toString()) * 60 * 1000);
@@ -476,7 +481,7 @@ public class DribblingGameActivity extends AppCompatActivity {
     //停止训练
     public void stopTraining() {
         timer.stopTimer();
-        btnBegin.setText("开始");
+//        btnBegin.setText("开始");
         imgSaveNew.setEnabled(true);
         btnBegin.setEnabled(false);
         trainningFlag = false;

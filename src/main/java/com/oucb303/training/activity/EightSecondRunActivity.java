@@ -298,7 +298,9 @@ public class EightSecondRunActivity extends AppCompatActivity {
                     startTraining();
                 break;
             case R.id.btn_stop:
-                stopTraining();
+                if(trainingFlag){
+                    stopTraining();
+                }
                 break;
             case R.id.btn_on:
                 //totalNum组数，1：每组设备个数，0：类型

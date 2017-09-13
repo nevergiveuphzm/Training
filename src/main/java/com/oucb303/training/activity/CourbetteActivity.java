@@ -169,7 +169,7 @@ public class CourbetteActivity extends AppCompatActivity implements AdapterView.
             switch (msg.what) {
                 //更新计时
                 case Timer.TIMER_FLAG:
-                    tvTotalTime.setText(msg.obj.toString());
+//                    tvTotalTime.setText(msg.obj.toString());
                     //判断结束
                     if (timer.time >= trainingTime) {
                         stopTraining();
@@ -185,6 +185,9 @@ public class CourbetteActivity extends AppCompatActivity implements AdapterView.
                 //更新完成次数
                 case UPDATE_TIMES:
                     largeRecessAdapter.notifyDataSetChanged();
+                    break;
+                case Timer.TIMER_DOWN:
+                    tvTotalTime.setText("倒计时："+msg.obj.toString());
                     break;
             }
         }
@@ -375,7 +378,9 @@ public class CourbetteActivity extends AppCompatActivity implements AdapterView.
                 startActivity(it);
                 break;
             case R.id.btn_stop:
-                stopTraining();
+                if(isTraining){
+                    stopTraining();
+                }
                 break;
             case R.id.btn_begin:
                 if (!device.checkDevice(CourbetteActivity.this))

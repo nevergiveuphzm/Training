@@ -202,7 +202,7 @@ public class GroupConfrontationActivity extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.img_set,R.id.layout_cancel, R.id.img_help, R.id.btn_begin})
+    @OnClick({R.id.btn_stop,R.id.img_set,R.id.layout_cancel, R.id.img_help, R.id.btn_begin})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_set:
@@ -228,15 +228,20 @@ public class GroupConfrontationActivity extends AppCompatActivity {
                     startTraining();
                 break;
             case R.id.img_help:
-                Intent intent = new Intent(this, HelpActivity.class);
-                intent.putExtra("flag", 7);
-                startActivity(intent);
+//                Intent intent = new Intent(this, HelpActivity.class);
+//                intent.putExtra("flag", 7);
+//                startActivity(intent);
+                break;
+            case R.id.btn_stop:
+                if(trainingFlag){
+                    stopTraining();
+                }
                 break;
         }
     }
 
     private void startTraining() {
-        btnBegin.setText("停止");
+//        btnBegin.setText("停止");
         trainingFlag = true;
 
         //初始化每组的设备列表
@@ -285,7 +290,7 @@ public class GroupConfrontationActivity extends AppCompatActivity {
     }
 
     private void stopTraining() {
-        btnBegin.setText("开始");
+//        btnBegin.setText("开始");
         trainingFlag = false;
         ReceiveThread.stopThread();
         device.turnOffAllTheLight();

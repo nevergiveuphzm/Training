@@ -278,7 +278,9 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_stop:
-                stopTraining();
+                if(trainingBeginFlag){
+                    stopTraining();
+                }
                 break;
             case R.id.img_set:
                 set_dialog = createLightSetDialog();

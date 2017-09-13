@@ -1,11 +1,13 @@
 package com.oucb303.training.activity;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -31,10 +33,13 @@ import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.threads.Timer;
 import com.oucb303.training.utils.Constant;
 import com.oucb303.training.utils.DataAnalyzeUtils;
+import com.oucb303.training.utils.DialogUtils;
+import com.oucb303.training.utils.OperateUtils;
 import com.oucb303.training.utils.RandomUtils;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -74,22 +79,24 @@ public class RandomTrainingActivity extends Activity {
     SeekBar barOverTime;
     @Bind(R.id.img_over_time_add)
     ImageView imgOverTimeAdd;
-    @Bind(R.id.img_action_mode_touch)
-    ImageView imgActionModeTouch;
-    @Bind(R.id.img_action_mode_light)
-    ImageView imgActionModeLight;
-    @Bind(R.id.img_action_mode_together)
-    ImageView imgActionModeTogether;
-    @Bind(R.id.img_light_mode_center)
-    ImageView imgLightModeCenter;
-    @Bind(R.id.img_light_mode_all)
-    ImageView imgLightModeAll;
-    @Bind(R.id.img_light_mode_beside)
-    ImageView imgLightModeBeside;
+//    @Bind(R.id.tv_down_time)
+//    TextView tvDownTime;
+//    @Bind(R.id.img_action_mode_touch)
+//    ImageView imgActionModeTouch;
+//    @Bind(R.id.img_action_mode_light)
+//    ImageView imgActionModeLight;
+//    @Bind(R.id.img_action_mode_together)
+//    ImageView imgActionModeTogether;
+//    @Bind(R.id.img_light_mode_center)
+//    ImageView imgLightModeCenter;
+//    @Bind(R.id.img_light_mode_all)
+//    ImageView imgLightModeAll;
+//    @Bind(R.id.img_light_mode_beside)
+//    ImageView imgLightModeBeside;
     @Bind(R.id.btn_begin)
     Button btnBegin;
-    @Bind(R.id.ll_params)
-    LinearLayout llParams;
+//    @Bind(R.id.ll_params)
+//    LinearLayout llParams;
     @Bind(R.id.lv_times)
     ListView lvTimes;
     @Bind(R.id.tv_current_times)
@@ -100,34 +107,34 @@ public class RandomTrainingActivity extends Activity {
     TextView tvAverageTime;
     @Bind(R.id.tv_total_time)
     TextView tvTotalTime;
-    @Bind(R.id.tv_training_time)
-    TextView tvTrainingTime;
-    @Bind(R.id.img_training_time_sub)
-    ImageView imgTrainingTimeSub;
-    @Bind(R.id.bar_training_time)
-    SeekBar barTrainingTime;
-    @Bind(R.id.img_training_time_add)
-    ImageView imgTrainingTimeAdd;
-    @Bind(R.id.ll_training_time)
-    LinearLayout llTrainingTime;
-    @Bind(R.id.ll_training_times)
-    LinearLayout llTrainingTimes;
+//    @Bind(R.id.tv_training_time)
+//    TextView tvTrainingTime;
+//    @Bind(R.id.img_training_time_sub)
+//    ImageView imgTrainingTimeSub;
+//    @Bind(R.id.bar_training_time)
+//    SeekBar barTrainingTime;
+//    @Bind(R.id.img_training_time_add)
+//    ImageView imgTrainingTimeAdd;
+//    @Bind(R.id.ll_training_time)
+//    LinearLayout llTrainingTime;
+//    @Bind(R.id.ll_training_times)
+//    LinearLayout llTrainingTimes;
     @Bind(R.id.img_help)
     ImageView imgHelp;
-    @Bind(R.id.img_save)
+    @Bind(R.id.img_save_new)
     ImageView imgSave;
-    @Bind(R.id.cb_voice)
+//    @Bind(R.id.cb_voice)
     android.widget.CheckBox cbVoice;
-    @Bind(R.id.img_light_color_blue)
-    ImageView imgLightColorBlue;
-    @Bind(R.id.img_light_color_red)
-    ImageView imgLightColorRed;
-    @Bind(R.id.img_light_color_blue_red)
-    ImageView imgLightColorBlueRed;
-    @Bind(R.id.cb_end_voice)
+//    @Bind(R.id.img_light_color_blue)
+//    ImageView imgLightColorBlue;
+//    @Bind(R.id.img_light_color_red)
+//    ImageView imgLightColorRed;
+//    @Bind(R.id.img_light_color_blue_red)
+//    ImageView imgLightColorBlueRed;
+//    @Bind(R.id.cb_end_voice)
     android.widget.CheckBox cbEndVoice;
-    @Bind(R.id.cb_over_time_voice)
-    android.widget.CheckBox cbOverTimeVoice;
+//    @Bind(R.id.cb_over_time_voice)
+//    android.widget.CheckBox cbOverTimeVoice;
     @Bind(R.id.sp_dev_num)
     Spinner spDevNum;
     @Bind(R.id.tv_device_list)
@@ -136,22 +143,22 @@ public class RandomTrainingActivity extends Activity {
     Button btnOn;
     @Bind(R.id.btn_off)
     Button btnOff;
-    @Bind(R.id.img_blink_mode_none)
-    ImageView imgBlinkModeNone;
-    @Bind(R.id.img_blink_mode_slow)
-    ImageView imgBlinkModeSlow;
-    @Bind(R.id.img_blink_mode_fast)
-    ImageView imgBlinkModeFast;
-    @Bind(R.id.img_level_sub)
-    ImageView imgLevelsub;
-    @Bind(R.id.img_level_add)
-    ImageView imgLevelAdd;
-    @Bind(R.id.bar_level)
-    SeekBar barLevel;
-    @Bind(R.id.tv_level)
-    TextView tvLevel;
-    @Bind(R.id.ll_level)
-    LinearLayout lLevel;
+//    @Bind(R.id.img_blink_mode_none)
+//    ImageView imgBlinkModeNone;
+//    @Bind(R.id.img_blink_mode_slow)
+//    ImageView imgBlinkModeSlow;
+//    @Bind(R.id.img_blink_mode_fast)
+//    ImageView imgBlinkModeFast;
+//    @Bind(R.id.img_level_sub)
+//    ImageView imgLevelsub;
+//    @Bind(R.id.img_level_add)
+//    ImageView imgLevelAdd;
+//    @Bind(R.id.bar_level)
+//    SeekBar barLevel;
+//    @Bind(R.id.tv_level)
+//    TextView tvLevel;
+//    @Bind(R.id.ll_level)
+//    LinearLayout lLevel;
 
 
     //感应模式和灯光模式集合
@@ -165,7 +172,7 @@ public class RandomTrainingActivity extends Activity {
     //更新时间,运行次数等信息
     private final int LOST_TIME = 4;
     private final int UPDATE_TIMES = 5;
-
+    private Dialog set_dialog;
     //随机模式 0:次数随机  1:时间随机
     private int randomMode;
 
@@ -249,7 +256,7 @@ public class RandomTrainingActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_randomtraining);
+        setContentView(R.layout.activity_change_goods);
         ButterKnife.bind(this);
         randomMode = getIntent().getIntExtra("randomMode", 0);
         level = getIntent().getIntExtra("level", 0);
@@ -268,6 +275,7 @@ public class RandomTrainingActivity extends Activity {
     protected void onStart() {
         super.onStart();
         imgSave.setEnabled(false);
+        set_dialog = createSetDialog();
     }
 
     @Override
@@ -296,28 +304,29 @@ public class RandomTrainingActivity extends Activity {
         lvTimes.setAdapter(timeAdapter);
         if (randomMode == 0) {
             //次数随机
-            llTrainingTimes.setVisibility(View.VISIBLE);
-            lLevel.setVisibility(View.GONE);
-            llTrainingTime.setVisibility(View.GONE);
-            barTrainingTimes.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTimes, 500));
+//            llTrainingTimes.setVisibility(View.VISIBLE);
+//            lLevel.setVisibility(View.GONE);
+//            llTrainingTime.setVisibility(View.GONE);
+            barTrainingTimes.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTimes, 100));
             imgTrainingTimesSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTimes, 0));
             imgTrainingTimesAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTimes, 1));
-        } else {
-            //时间随机
-            llTrainingTimes.setVisibility(View.GONE);
-            lLevel.setVisibility(View.GONE);
-            llTrainingTime.setVisibility(View.VISIBLE);
-            barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 30));
-            imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
-            imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
         }
-        if (level == 0) {
-            tvTitle.setText("换物跑");
-            lLevel.setVisibility(View.VISIBLE);
-            //初始化训练强度拖动条
-            barLevel.setOnSeekBarChangeListener(new MySeekBarListener(barTrainingTimes,tvLevel, 3));
-            imgLevelsub.setOnTouchListener(new AddOrSubBtnClickListener(barLevel, 0));
-            imgLevelAdd.setOnTouchListener(new AddOrSubBtnClickListener(barLevel, 1));
+//        else {
+//            //时间随机
+//            llTrainingTimes.setVisibility(View.GONE);
+//            lLevel.setVisibility(View.GONE);
+//            llTrainingTime.setVisibility(View.VISIBLE);
+//            barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 30));
+//            imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
+//            imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
+//        }
+//        if (level == 0) {
+//            tvTitle.setText("换物跑");
+//            lLevel.setVisibility(View.VISIBLE);
+//            //初始化训练强度拖动条
+//            barLevel.setOnSeekBarChangeListener(new MySeekBarListener(barTrainingTimes,tvLevel, 3));
+//            imgLevelsub.setOnTouchListener(new AddOrSubBtnClickListener(barLevel, 0));
+//            imgLevelAdd.setOnTouchListener(new AddOrSubBtnClickListener(barLevel, 1));
 //            switch (level) {
 //                case 1:
 //                    level = 20;
@@ -330,10 +339,10 @@ public class RandomTrainingActivity extends Activity {
 //                    break;
 //            }
 //            barTrainingTimes.setProgress(level);
-        }
+//        }
         //设置seekbar 拖动事件的监听器
         barDelayTime.setOnSeekBarChangeListener(new MySeekBarListener(tvDelayTime, 10));
-        barOverTime.setOnSeekBarChangeListener(new MySeekBarListener(tvOverTime, 28, 1));
+        barOverTime.setOnSeekBarChangeListener(new MySeekBarListener(tvOverTime, 30, 0));
         //设置加减按钮的监听事件
         imgDelayTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 0));
         imgDelayTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 1));
@@ -359,39 +368,39 @@ public class RandomTrainingActivity extends Activity {
         });
 
         spDevNum.setSelection(num.length - 1);
-
-        //设定感应模式checkBox组合的点击事件
-        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
-        actionModeCheckBox = new CheckBox(1, views);
-        new CheckBoxClickListener(actionModeCheckBox) {
-            @Override
-            public void doOtherThings(int checkedId) {
-                super.doOtherThings(checkedId);
-                //触碰或全部
-                if (checkedId == 2 || checkedId == 3) {
-                    if (barDelayTime.getProgress() < 2)
-                        barDelayTime.setProgress(2);
-                    imgDelayTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 0, 2));
-                } else {
-                    imgDelayTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 0));
-                }
-            }
-        };
-        //设定灯光模式checkBox组合的点击事件
-        ImageView[] views1 = new ImageView[]{imgLightModeBeside, imgLightModeCenter, imgLightModeAll};
-        lightModeCheckBox = new CheckBox(1, views1);
-        new CheckBoxClickListener(lightModeCheckBox);
-        //设定灯光颜色checkBox组合的点击事件
-        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
-        lightColorCheckBox = new CheckBox(1, views2);
-        new CheckBoxClickListener(lightColorCheckBox);
-        //设定闪烁模式checkBox组合的点击事件
-        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast};
-        blinkModeCheckBox = new CheckBox(1, views3);
-        new CheckBoxClickListener(blinkModeCheckBox);
+//
+//        //设定感应模式checkBox组合的点击事件
+//        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
+//        actionModeCheckBox = new CheckBox(1, views);
+//        new CheckBoxClickListener(actionModeCheckBox) {
+//            @Override
+//            public void doOtherThings(int checkedId) {
+//                super.doOtherThings(checkedId);
+//                //触碰或全部
+//                if (checkedId == 2 || checkedId == 3) {
+//                    if (barDelayTime.getProgress() < 2)
+//                        barDelayTime.setProgress(2);
+//                    imgDelayTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 0, 2));
+//                } else {
+//                    imgDelayTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 0));
+//                }
+//            }
+//        };
+//        //设定灯光模式checkBox组合的点击事件
+//        ImageView[] views1 = new ImageView[]{imgLightModeBeside, imgLightModeCenter, imgLightModeAll};
+//        lightModeCheckBox = new CheckBox(1, views1);
+//        new CheckBoxClickListener(lightModeCheckBox);
+//        //设定灯光颜色checkBox组合的点击事件
+//        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
+//        lightColorCheckBox = new CheckBox(1, views2);
+//        new CheckBoxClickListener(lightColorCheckBox);
+//        //设定闪烁模式checkBox组合的点击事件
+//        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast};
+//        blinkModeCheckBox = new CheckBox(1, views3);
+//        new CheckBoxClickListener(blinkModeCheckBox);
     }
 
-    @OnClick({R.id.btn_begin, R.id.layout_cancel, R.id.img_help, R.id.btn_on, R.id.btn_off, R.id.img_save})
+    @OnClick({R.id.btn_stop,R.id.img_set,R.id.btn_begin, R.id.layout_cancel, R.id.img_help, R.id.btn_on, R.id.btn_off, R.id.img_save_new})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_begin:
@@ -408,9 +417,12 @@ public class RandomTrainingActivity extends Activity {
                 device.turnOffAllTheLight();
                 break;
             case R.id.img_help:
-                Intent intent = new Intent(this, HelpActivity.class);
-                intent.putExtra("flag", 8);
-                startActivity(intent);
+                List<Integer> list = new ArrayList<>();
+                list.add(R.string.singlefootjump_training_method);
+                list.add(R.string.singlefootjump_training_standard);
+                Dialog dialog_help = DialogUtils.createHelpDialog(RandomTrainingActivity.this,list);
+                OperateUtils.setScreenWidth(this, dialog_help, 0.95, 0.7);
+                dialog_help.show();
                 break;
             case R.id.btn_on:
                 //totalNum组数，1：每组设备个数，0：类型
@@ -419,19 +431,20 @@ public class RandomTrainingActivity extends Activity {
             case R.id.btn_off:
                 device.turnOffAllTheLight();
                 break;
-            case R.id.img_save:
+            case R.id.img_save_new:
                 Intent it = new Intent(this, SaveActivity.class);
                 Bundle bundle = new Bundle();
                 //trainingCategory 1:折返跑 2:纵跳摸高 3:仰卧起坐 4:换物跑、时间随机、次数随机 ...
                 bundle.putString("trainingCategory", "4");
-                if (randomMode == 0) {
-                    bundle.putString("trainingName", "次数随机");
+//                if (randomMode == 0) {
+//                    bundle.putString("trainingName", "次数随机");
+//                    trainingTime = (int) allTime;
+//                } else {
+//                    bundle.putString("trainingName", "时间随机");
+//                }
+//
+//                if (level != 0)
                     trainingTime = (int) allTime;
-                } else {
-                    bundle.putString("trainingName", "时间随机");
-                }
-
-                if (level != 0)
                     bundle.putString("trainingName", "换物跑");
                 //训练总时间
                 bundle.putInt("trainingTime", trainingTime);
@@ -441,6 +454,16 @@ public class RandomTrainingActivity extends Activity {
                 bundle.putInt("totalTimes", currentTimes);
                 it.putExtras(bundle);
                 startActivity(it);
+                break;
+            case R.id.img_set:
+                set_dialog = createSetDialog();
+                OperateUtils.setScreenWidth(this, set_dialog, 0.95, 0.7);
+                set_dialog.show();
+                break;
+            case R.id.btn_stop:
+                if(trainingFlag){
+                    stopTraining();
+                }
                 break;
         }
     }
@@ -457,14 +480,13 @@ public class RandomTrainingActivity extends Activity {
     public void startTraining() {
         //训练开始
         trainingFlag = true;
-        btnBegin.setText("停止");
         //运行的总次数
         totalTimes = new Integer(tvTrainingTimes.getText().toString().trim());
         //totalTimes = 10000;
         delayTime = (int) ((new Double(tvDelayTime.getText().toString().trim())) * 1000);
         overTime = new Integer(tvOverTime.getText().toString().trim()) * 1000;
-        //训练总时间
-        trainingTime = (int) ((new Double(tvTrainingTime.getText().toString().trim())) * 60 * 1000);
+//        //训练总时间
+//        trainingTime = (int) ((new Double(tvTrainingTime.getText().toString().trim())) * 60 * 1000);
         Log.d(Constant.LOG_TAG, "系统参数:" + totalTimes + "-" + delayTime + "-" + overTime);
         //数据清空
         currentTimes = 0;
@@ -510,7 +532,6 @@ public class RandomTrainingActivity extends Activity {
     //停止训练
     public void stopTraining() {
         trainingFlag = false;
-        btnBegin.setText("开始");
         btnBegin.setEnabled(false);
         imgSave.setEnabled(true);
         if (overTimeThread != null)
@@ -563,7 +584,7 @@ public class RandomTrainingActivity extends Activity {
         //device.turnOffLight(currentLight);
         device.sendOrder(currentLight,
                 Order.LightColor.NONE,
-                Order.VoiceMode.values()[cbOverTimeVoice.isChecked() ? 1 : 0],
+                Order.VoiceMode.values()[0],
                 Order.BlinkModel.NONE,
                 Order.LightModel.TURN_OFF,
                 Order.ActionModel.TURN_OFF,
@@ -601,5 +622,54 @@ public class RandomTrainingActivity extends Activity {
                 Timer.sleep(100);
             }
         }
+    }
+    public Dialog createSetDialog(){
+        LayoutInflater inflater = LayoutInflater.from(this);//获取实例
+        View v = inflater.inflate(R.layout.layout_dialog_lightset,null);//加载布局
+        LinearLayout layout = (LinearLayout) v.findViewById(R.id.dialog_light_set);
+
+        ImageView imgActionModeTouch = (ImageView) layout.findViewById(R.id.img_action_mode_touch);
+        ImageView imgActionModeLight = (ImageView) layout.findViewById(R.id.img_action_mode_light);
+        ImageView imgActionModeTogether = (ImageView) layout.findViewById(R.id.img_action_mode_together);
+        ImageView imgLightColorBlue = (ImageView) layout.findViewById(R.id.img_light_color_blue);
+        ImageView imgLightColorRed = (ImageView) layout.findViewById(R.id.img_light_color_red);
+        ImageView imgLightColorBlueRed = (ImageView) layout.findViewById(R.id.img_light_color_blue_red);
+        ImageView imgBlinkModeNone = (ImageView) layout.findViewById(R.id.img_blink_mode_none);
+        ImageView imgBlinkModeSlow = (ImageView) layout.findViewById(R.id.img_blink_mode_slow);
+        ImageView imgBlinkModeFast = (ImageView) layout.findViewById(R.id.img_blink_mode_fast);
+        cbVoice = (android.widget.CheckBox) layout.findViewById(R.id.cb_voice);
+        cbEndVoice = (android.widget.CheckBox) layout.findViewById(R.id.cb_endvoice);
+        Button btnOk = (Button) layout.findViewById(R.id.btn_ok);
+        Button btnCloseSet = (Button) layout.findViewById(R.id.btn_close_set);
+
+        final Dialog dialog = new Dialog(this, R.style.dialog_rank);
+
+        dialog.setContentView(layout);
+        //设定感应模式checkBox组合的点击事件
+        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
+        actionModeCheckBox = new CheckBox(1, views);
+        new CheckBoxClickListener(actionModeCheckBox);
+        //设定灯光颜色checkBox组合的点击事件
+        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
+        lightColorCheckBox = new CheckBox(1, views2);
+        new CheckBoxClickListener(lightColorCheckBox);
+        //设定闪烁模式checkbox组合的点击事件
+        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast};
+        blinkModeCheckBox = new CheckBox(1, views3);
+        new CheckBoxClickListener(blinkModeCheckBox);
+
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        btnCloseSet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        return dialog;
     }
 }

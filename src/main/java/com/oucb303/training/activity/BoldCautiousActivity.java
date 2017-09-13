@@ -225,7 +225,7 @@ public class BoldCautiousActivity extends AppCompatActivity {
         lvTimes.setAdapter(boldCautiousAdapter);
     }
 
-    @OnClick({R.id.img_set,R.id.layout_cancel, R.id.btn_begin, R.id.img_help, R.id.btn_on, R.id.btn_off, R.id.img_save_new})
+    @OnClick({R.id.btn_stop,R.id.img_set,R.id.layout_cancel, R.id.btn_begin, R.id.img_help, R.id.btn_on, R.id.btn_off, R.id.img_save_new})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_set:
@@ -275,11 +275,16 @@ public class BoldCautiousActivity extends AppCompatActivity {
             case R.id.btn_off:
                 device.turnOffAllTheLight();
                 break;
+            case R.id.btn_stop:
+                if(trainingFlag){
+                    stopTraining();
+                }
+                break;
         }
     }
 
     public void startTraining() {
-        btnBegin.setText("停止");
+//        btnBegin.setText("停止");
         trainingFlag = true;
         scores = new int[groupNum];
         deviceNum = new String[groupNum];
@@ -365,7 +370,7 @@ public class BoldCautiousActivity extends AppCompatActivity {
 
     private void stopTraining() {
         trainingFlag = false;
-        btnBegin.setText("开始");
+//        btnBegin.setText("开始");
         //结束时间线程
         timer.stopTimer();
         device.turnOffAllTheLight();

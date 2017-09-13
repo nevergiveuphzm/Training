@@ -382,7 +382,9 @@ public class GroupResistActivity extends AppCompatActivity {
                     startTraining();
                 break;
             case R.id.btn_stop:
-                stopTraining();
+                if(trainningFlag){
+                    stopTraining();
+                }
                 break;
 //            case R.id.img_help:
 //                List<Integer> list = new ArrayList<>();

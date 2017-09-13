@@ -294,7 +294,9 @@ public class ThrowingActivity extends AppCompatActivity {
                     startTraining();
                 break;
             case R.id.btn_stop:
-                stopTraining();
+                if(trainingBeginFlag){
+                    stopTraining();
+                }
                 break;
             case R.id.btn_on:
                 //goupNum组数，1：每组设备个数，0：类型

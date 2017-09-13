@@ -185,7 +185,9 @@ public class SequenceRunningActivity extends AppCompatActivity {
                     startTraining();
                 break;
             case R.id.btn_stop:
-                stopTraining();
+                if(isTraning){
+                    stopTraining();
+                }
                 break;
             case R.id.img_set:
                 set_dialog = createLightSetDialog();

@@ -287,9 +287,14 @@ int[] Setting_return_data = new int[5];
         lvTimes.setAdapter(timingModuleAdapter);
     }
 
-    @OnClick({ R.id.img_help,R.id.img_set,R.id.btn_off, R.id.btn_on, R.id.layout_cancel, R.id.btn_begin, R.id.img_save_new})
+    @OnClick({R.id.btn_stop, R.id.img_help,R.id.img_set,R.id.btn_off, R.id.btn_on, R.id.layout_cancel, R.id.btn_begin, R.id.img_save_new})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.btn_stop:
+                if(trainingFlag){
+                    stopTraining();
+                }
+                break;
             case R.id.btn_off:
                 device.turnOffAllTheLight();
                 break;

@@ -433,7 +433,9 @@ public class CrawlActivity extends AppCompatActivity{
                 dialog_help.show();
                 break;
             case R.id.btn_stop:
-                stopTraining();
+                if(trainingFlag){
+                    stopTraining();
+                }
                 break;
         }
     }

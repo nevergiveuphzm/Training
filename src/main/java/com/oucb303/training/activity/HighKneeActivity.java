@@ -253,7 +253,9 @@ public class HighKneeActivity extends AppCompatActivity {
                     startTraining();
                 break;
             case R.id.btn_stop:
-                stopTraining();
+                if(isTraining){
+                    stopTraining();
+                }
                 break;
             case R.id.img_help:
                 List<Integer> list = new ArrayList<>();

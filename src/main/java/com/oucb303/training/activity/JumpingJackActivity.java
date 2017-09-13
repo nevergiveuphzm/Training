@@ -285,7 +285,7 @@ public class JumpingJackActivity extends AppCompatActivity{
     }
 
 
-    @OnClick({R.id.img_set,R.id.layout_cancel, R.id.btn_begin, R.id.img_help, R.id.img_save_new, R.id.btn_on, R.id.btn_off})
+    @OnClick({R.id.btn_stop,R.id.img_set,R.id.layout_cancel, R.id.btn_begin, R.id.img_help, R.id.img_save_new, R.id.btn_on, R.id.btn_off})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_set:
@@ -340,12 +340,17 @@ public class JumpingJackActivity extends AppCompatActivity{
             case R.id.btn_off:
                 device.turnOffAllTheLight();
                 break;
+            case R.id.btn_stop:
+                if(trainingFlag){
+                    stopTraining();
+                }
+                break;
         }
     }
 
     //开始训练
     private void startTraining() {
-        btnBegin.setText("停止");
+//        btnBegin.setText("停止");
         trainingFlag = true;
         trainingTime = 100;
         Intent intent = new Intent(JumpingJackActivity.this,MusicService.class);
@@ -388,7 +393,7 @@ public class JumpingJackActivity extends AppCompatActivity{
     //结束训练
     private void stopTraining() {
         timer.stopTimer();
-        btnBegin.setText("开始");
+//        btnBegin.setText("开始");
         imgSaveNew.setEnabled(true);
         trainingFlag = false;
         Intent intent = new Intent(JumpingJackActivity.this,MusicService.class);

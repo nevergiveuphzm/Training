@@ -502,7 +502,9 @@ public class RandomTimeActivity extends AppCompatActivity {
                 set_dialog.show();
                 break;
             case R.id.btn_stop:
-                stopTraining();
+                if(trainingFlag){
+                    stopTraining();
+                }
                 break;
         }
     }

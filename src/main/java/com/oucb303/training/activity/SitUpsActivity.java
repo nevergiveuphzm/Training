@@ -271,11 +271,12 @@ public class SitUpsActivity extends AppCompatActivity {
         imgSaveNew.setEnabled(false);
 //        imgSave.setEnabled(false);
 
-        Setting_return_data[0]=1;
-        Setting_return_data[1]=1;
+        Setting_return_data[0]=0;
+        Setting_return_data[1]=0;
         Setting_return_data[2]=0;
-        Setting_return_data[3]=0;
-        Setting_return_data[4]=0;
+        Setting_return_data[3]=1;
+        Setting_return_data[4]=1;
+
     }
 
     @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.btn_stop, R.id.img_help, R.id.btn_on,
@@ -320,7 +321,9 @@ public class SitUpsActivity extends AppCompatActivity {
                     startTraining();
                 break;
             case R.id.btn_stop:
-                stopTraining();
+                if(isTraining){
+                    stopTraining();
+                }
                 break;
             case R.id.img_help:
                 List<Integer> list = new ArrayList<>();
@@ -441,12 +444,13 @@ public class SitUpsActivity extends AppCompatActivity {
     }
 
     public void sendOrder(char deviceNum) {
-        device.sendOrder(deviceNum, Order.LightColor.values()[Setting_return_data[1]],
-                Order.VoiceMode.values()[Setting_return_data[3]],
+        device.sendOrder(deviceNum, Order.LightColor.values()[Setting_return_data[3]],
+                Order.VoiceMode.values()[Setting_return_data[1]],
                 Order.BlinkModel.values()[Setting_return_data[2]],
                 Order.LightModel.OUTER,
-                Order.ActionModel.values()[Setting_return_data[0]],
-                Order.EndVoice.values()[Setting_return_data[4]]);
+                Order.ActionModel.values()[Setting_return_data[4]],
+                Order.EndVoice.values()[Setting_return_data[0]]);
+
     }
 
     //查找设备属于第几组

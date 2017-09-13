@@ -315,7 +315,9 @@ public class OrientRunActivity extends AppCompatActivity {
                 set_dialog.show();
                 break;
             case R.id.btn_stop:
-                stopTraining();
+                if(trainningFlag){
+                    stopTraining();
+                }
                 break;
         }
     }
