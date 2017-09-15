@@ -58,18 +58,8 @@ public class GroupConfrontationActivity extends AppCompatActivity {
     @Bind(R.id.tv_down_time)
     TextView tvDownTime;
 
-//    @Bind(R.id.img_action_mode_light)
-//    ImageView imgActionModeLight;
-//    @Bind(R.id.img_action_mode_touch)
-//    ImageView imgActionModeTouch;
-//    @Bind(R.id.img_action_mode_together)
-//    ImageView imgActionModeTogether;
-//    @Bind(R.id.img_light_mode_beside)
-//    ImageView imgLightModeBeside;
-//    @Bind(R.id.img_light_mode_center)
-//    ImageView imgLightModeCenter;
-//    @Bind(R.id.img_light_mode_all)
-//    ImageView imgLightModeAll;
+    @Bind(R.id.btn_stop)
+    Button btnStop;
     android.widget.CheckBox cbVoice;
     @Bind(R.id.btn_begin)
     Button btnBegin;
@@ -81,12 +71,6 @@ public class GroupConfrontationActivity extends AppCompatActivity {
     ImageView imgHelp;
     @Bind(R.id.img_set)
     ImageView imgSet;
-//    @Bind(R.id.img_blink_mode_none)
-//    ImageView imgBlinkModeNone;
-//    @Bind(R.id.img_blink_mode_slow)
-//    ImageView imgBlinkModeSlow;
-//    @Bind(R.id.img_blink_mode_fast)
-//    ImageView imgBlinkModeFast;
 
     private final int TIME_RECEIVE = 1;
     private Device device;
@@ -94,6 +78,7 @@ public class GroupConfrontationActivity extends AppCompatActivity {
     //感应模式和灯光模式集合
     private CheckBox actionModeCheckBox, lightModeCheckBox,lightColorCheckBox,blinkModeCheckBox;
 
+    int flag_endvoice;
     //每组设备个数
     private int groupSize;
     // 训练是否正在进行的标志
@@ -216,6 +201,7 @@ public class GroupConfrontationActivity extends AppCompatActivity {
                 break;
             case R.id.btn_begin:
                 //检测设备
+                flag_endvoice = 1;
                 if (!device.checkDevice(this))
                     return;
                 if (groupSize <= 0) {
@@ -234,6 +220,7 @@ public class GroupConfrontationActivity extends AppCompatActivity {
                 break;
             case R.id.btn_stop:
                 if(trainingFlag){
+                    flag_endvoice=0;
                     stopTraining();
                 }
                 break;
@@ -241,7 +228,7 @@ public class GroupConfrontationActivity extends AppCompatActivity {
     }
 
     private void startTraining() {
-//        btnBegin.setText("停止");
+
         trainingFlag = true;
 
         //初始化每组的设备列表
@@ -276,6 +263,7 @@ public class GroupConfrontationActivity extends AppCompatActivity {
         //亮蓝灯
         turnOnLight(position1, 0, 1);
 
+        Timer.sleep(200);
         int position2 = createRandomNum(0);
         temp = lightInfos[1].get(position2);
         temp.lightFlag = 1;
@@ -290,7 +278,6 @@ public class GroupConfrontationActivity extends AppCompatActivity {
     }
 
     private void stopTraining() {
-//        btnBegin.setText("开始");
         trainingFlag = false;
         ReceiveThread.stopThread();
         device.turnOffAllTheLight();
@@ -361,15 +348,18 @@ public class GroupConfrontationActivity extends AppCompatActivity {
                 if (flag == 1) {
                     //判断另一组设备灯是否全部都亮了
                     if (isGroupLightsOn((groupId + 1) % 2)) {
-                        stopTraining();
+
                         //全亮 表示另一组输了
                         endingMovie(groupId);
+                        stopTraining();
+                        device.turnOffAllTheLight();
                         break;
                     } else {
                         int rand1 = createRandomNum(groupId);
                         lightInfos[groupId].get(rand1).lightFlag = 1;
                         turnOnLight(rand1, groupId, 1);
 
+                        Log.i("------------------0","-----------------------");
                         int groupId2 = (groupId + 1) % 2;
                         int rand2 = createRandomNum(groupId2);
                         lightInfos[groupId2].get(rand2).lightFlag = 2;
@@ -406,8 +396,10 @@ public class GroupConfrontationActivity extends AppCompatActivity {
     //结束动画
     private void endingMovie(int groupId) {
         int temp = 0;
-        while (temp < 5) {
+        btnStop.setEnabled(false);
+        while (temp < 3 ) {
             for (int i = 0; i < groupSize * 2; i++)
+            {
                 device.sendOrder(Device.DEVICE_LIST.get(i).getDeviceNum(),
                         Order.LightColor.values()[groupId + 1],
                         Order.VoiceMode.NONE,
@@ -415,9 +407,12 @@ public class GroupConfrontationActivity extends AppCompatActivity {
                         Order.LightModel.OUTER,
                         Order.ActionModel.NONE,
                         Order.EndVoice.NONE);
+                Timer.sleep(50);
+            }
 
             Timer.sleep(100);
             for (int i = 0; i < groupSize * 2; i++)
+            {
                 device.sendOrder(Device.DEVICE_LIST.get(i).getDeviceNum(),
                         Order.LightColor.NONE,
                         Order.VoiceMode.NONE,
@@ -425,9 +420,14 @@ public class GroupConfrontationActivity extends AppCompatActivity {
                         Order.LightModel.TURN_OFF,
                         Order.ActionModel.NONE,
                         Order.EndVoice.NONE);
+                Timer.sleep(50);
+            }
             Timer.sleep(100);
             temp++;
         }
+        btnStop.setEnabled(true);
+
+
     }
 
     public class GroupLightInfo {

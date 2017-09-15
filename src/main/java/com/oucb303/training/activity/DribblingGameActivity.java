@@ -71,6 +71,8 @@ public class DribblingGameActivity extends AppCompatActivity {
     Spinner spgroupnum;
     @Bind(R.id.lv_group)
     ListView lvGroup;
+    @Bind(R.id.btn_stop)
+    Button btnStop;
     //@Bind(R.id.img_action_mode_light)
     //ImageView imgActionModeLight;
     //@Bind(R.id.img_action_mode_touch)
@@ -589,10 +591,11 @@ public class DribblingGameActivity extends AppCompatActivity {
                 position = i;
             }
         }
-
+        btnStop.setEnabled(false);
         int temp = 0;
-        while (temp < 5) {
+        while (temp < 3) {
             for (int i = 0; i < totalNum; i++)
+            {
                 device.sendOrder(Device.DEVICE_LIST.get(i).getDeviceNum(),
                         Order.LightColor.values()[position + 1],
                         Order.VoiceMode.NONE,
@@ -600,9 +603,12 @@ public class DribblingGameActivity extends AppCompatActivity {
                         Order.LightModel.OUTER,
                         Order.ActionModel.NONE,
                         Order.EndVoice.NONE);
+                Timer.sleep(50);
+            }
 
             Timer.sleep(100);
             for (int i = 0; i < totalNum; i++)
+            {
                 device.sendOrder(Device.DEVICE_LIST.get(i).getDeviceNum(),
                         Order.LightColor.NONE,
                         Order.VoiceMode.NONE,
@@ -610,9 +616,12 @@ public class DribblingGameActivity extends AppCompatActivity {
                         Order.LightModel.TURN_OFF,
                         Order.ActionModel.NONE,
                         Order.EndVoice.NONE);
+                Timer.sleep(50);
+            }
             Timer.sleep(100);
             temp++;
         }
+        btnStop.setEnabled(true);
 
     }
     private Dialog createLightSetDialog() {
