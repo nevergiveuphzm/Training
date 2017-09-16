@@ -366,10 +366,10 @@ public class ThrowingActivity extends AppCompatActivity {
 
     public void turnOnLight(final char deviceNum) {
         //实现Runnable接口
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Timer.sleep(50);
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                Timer.sleep(50);
                 if (!trainingBeginFlag)
                     return;
                 device.sendOrder(deviceNum,
@@ -379,8 +379,34 @@ public class ThrowingActivity extends AppCompatActivity {
                         Order.LightModel.OUTER,
                         Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
                         Order.EndVoice.values()[cbEndVoice.isChecked()?1:0]);
-            }
-        }).start();
+//            }
+//        }).start();
+    }
+    public void turnOnBlinkLight(final char deviceNum) {
+//        //实现Runnable接口
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                Timer.sleep(50);
+//                if (!trainingBeginFlag)
+//                    return;
+                device.sendOrder(deviceNum,
+                        Order.LightColor.RED,
+                        Order.VoiceMode.values()[cbVoice.isChecked()?1:0],
+                        Order.BlinkModel.FAST,
+                        Order.LightModel.OUTER,
+                        Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
+                        Order.EndVoice.values()[cbEndVoice.isChecked()?1:0]);
+                Timer.sleep(1000);
+                device.sendOrder(deviceNum,
+                        Order.LightColor.NONE,
+                        Order.VoiceMode.NONE,
+                        Order.BlinkModel.NONE,
+                        Order.LightModel.TURN_OFF,
+                        Order.ActionModel.TURN_OFF,
+                        Order.EndVoice.NONE);
+//            }
+//        }).start();
     }
 
     //解析返回来的数据
@@ -402,8 +428,12 @@ public class ThrowingActivity extends AppCompatActivity {
                         //finishTimes[groupId]+=1;
                         timeMap.put(groupId,finishTimes[groupId]);
                     }
-                    else
+                    else{
+                        turnOnBlinkLight(info.getDeviceNum());
+                        Timer.sleep(50);
                         turnOnLight(info.getDeviceNum());
+                    }
+
                 }
 
                 Message msg = Message.obtain();
