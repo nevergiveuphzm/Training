@@ -260,8 +260,15 @@ public class BadmintonActivity extends Activity{
     protected void onDestroy() {
         if (trainingFlag)
             stopTraining();
-        device.disconnect();
+
         super.onDestroy();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(device.devCount>0)
+            device.disconnect();
     }
 
     @Override
@@ -420,50 +427,55 @@ public class BadmintonActivity extends Activity{
 
     //获取设备灯编号
     private char getLightNum() {
-        int position = RandomUtils.getRandomNum(100) % 6;
-        currentLight = Device.DEVICE_LIST.get(position).getDeviceNum();
-        Log.d(Constant.LOG_TAG, "turn on :" + currentLight + "-" + currentTimes);
-        return currentLight;
+
+            int position = RandomUtils.getRandomNum(100) % 6;
+            currentLight = Device.DEVICE_LIST.get(position).getDeviceNum();
+            Log.d(Constant.LOG_TAG, "turn on :" + currentLight + "-" + currentTimes);
+            return currentLight;
     }
 
     //开始训练
     public void startTraining() {
         //训练开始
-        trainingFlag = true;
+        if(Device.DEVICE_LIST.size()<6){
+            Toast.makeText(BadmintonActivity.this,"设备个数小于6个，不能运行！",Toast.LENGTH_SHORT).show();
+        }else {
+            trainingFlag = true;
 //        btnBegin.setText("停止");
 
-        //运行的总次数
-        totalTimes = new Integer(tvTrainingTimes.getText().toString().trim());
-        //totalTimes = 10000;
-        delayTime = (int) ((new Double(tvDelayTime.getText().toString().trim())) * 1000);
-        overTime = new Integer(tvOverTime.getText().toString().trim()) * 1000;
-        //训练总时间
+            //运行的总次数
+            totalTimes = new Integer(tvTrainingTimes.getText().toString().trim());
+            //totalTimes = 10000;
+            delayTime = (int) ((new Double(tvDelayTime.getText().toString().trim())) * 1000);
+            overTime = new Integer(tvOverTime.getText().toString().trim()) * 1000;
+            //训练总时间
 //        trainingTime = (int) ((new Double(tvTrainingTime.getText().toString().trim())) * 60 * 1000);
-        Log.d(Constant.LOG_TAG, "系统参数:" + totalTimes + "-" + delayTime + "-" + overTime);
-        //数据清空
-        currentTimes = 0;
-        durationTime = 0;
-        lostTimes = 0;
-        timeList.clear();
-        //平均时间和遗漏次数
-        tvAverageTime.setText("---");
-        tvLostTimes.setText("---");
-        timeAdapter.notifyDataSetChanged();
-        //清除串口数据
-        new ReceiveThread(handler, device.ftDev, ReceiveThread.CLEAR_DATA_THREAD, 0).start();
+            Log.d(Constant.LOG_TAG, "系统参数:" + totalTimes + "-" + delayTime + "-" + overTime);
+            //数据清空
+            currentTimes = 0;
+            durationTime = 0;
+            lostTimes = 0;
+            timeList.clear();
+            //平均时间和遗漏次数
+            tvAverageTime.setText("---");
+            tvLostTimes.setText("---");
+            timeAdapter.notifyDataSetChanged();
+            //清除串口数据
+            new ReceiveThread(handler, device.ftDev, ReceiveThread.CLEAR_DATA_THREAD, 0).start();
 
-        //发送开灯命令
-        turnOnLight();
-        //开启超时线程
-        overTimeThread = new OverTimeThread();
-        overTimeThread.start();
-        //开启接收返回灭灯时间线程
-        new ReceiveThread(handler, device.ftDev, ReceiveThread.TIME_RECEIVE_THREAD, TIME_RECEIVE).start();
-        //开启计时线程
-        beginTime = System.currentTimeMillis();
-        timer = new Timer(timerHandler, trainingTime);
-        timer.setBeginTime(beginTime);
-        timer.start();
+            //发送开灯命令
+            turnOnLight();
+            //开启超时线程
+            overTimeThread = new OverTimeThread();
+            overTimeThread.start();
+            //开启接收返回灭灯时间线程
+            new ReceiveThread(handler, device.ftDev, ReceiveThread.TIME_RECEIVE_THREAD, TIME_RECEIVE).start();
+            //开启计时线程
+            beginTime = System.currentTimeMillis();
+            timer = new Timer(timerHandler, trainingTime);
+            timer.setBeginTime(beginTime);
+            timer.start();
+        }
     }
 
     //判断训练是否结束

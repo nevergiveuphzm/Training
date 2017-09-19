@@ -214,8 +214,8 @@ public class JumpingJackActivity extends AppCompatActivity{
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onPause() {
+        super.onPause();
         if (device.devCount > 0)
             device.disconnect();
     }
@@ -352,7 +352,6 @@ public class JumpingJackActivity extends AppCompatActivity{
     private void startTraining() {
 //        btnBegin.setText("停止");
         trainingFlag = true;
-        trainingTime = 100;
         Intent intent = new Intent(JumpingJackActivity.this,MusicService.class);
         startService(intent);
 
