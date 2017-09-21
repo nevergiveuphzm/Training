@@ -95,8 +95,8 @@ public class OrientRunActivity extends AppCompatActivity {
     @Bind(R.id.img_over_time_add)
     ImageView imgOverTimeAdd;
     android.widget.CheckBox cbVoice;
-    @Bind(R.id.tv_total_time)
-    TextView tvTotalTime;
+//    @Bind(R.id.tv_total_time)
+//    TextView tvTotalTime;
     @Bind(R.id.tv_down_time)
     TextView tvDownTime;
 
@@ -548,7 +548,7 @@ public class OrientRunActivity extends AppCompatActivity {
             switch (msg.what) {
                 //更新计时
                 case Timer.TIMER_FLAG:
-                    tvTotalTime.setText(data);
+                    tvDownTime.setText(data);
                     //判断结束
                     if (timer.time >= trainingTime) {
                         Message message = Message.obtain();

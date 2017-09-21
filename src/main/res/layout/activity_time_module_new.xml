@@ -261,50 +261,104 @@
 
         </RelativeLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_score"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp">
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="450dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_scoretitle"
+                android:id="@+id/relativeLayout2">
+
+                <Button
+                    android:id="@+id/btn_result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="70dp"
+                    android:layout_marginTop="2dp"
+                    android:text="训练结果"
+                    android:textColor="@color/ui_green"
+                    android:textSize="25sp"
+                    android:background="#00000000"/>
+                <View
+                    android:layout_width="2dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="230dp"
+                    android:background="@color/white"/>
+                <Button
+                    android:id="@+id/btn_history_result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="290dp"
+                    android:layout_marginTop="2dp"
+                    android:text="历史成绩"
+                    android:textColor="@color/white"
+                    android:textSize="25sp"
+                    android:background="#00000000"/>
+
+            </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
-            android:layout_weight="1"
-            android:background="@drawable/randon_train_device"
-            android:orientation="vertical">
+            >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:orientation="horizontal">-->
+                <!--<TextView-->
+                    <!--android:layout_marginLeft="150dp"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="总时间: "-->
+                    <!--android:textSize="18sp"/>-->
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_total_time"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="20dp"-->
+                    <!--android:text="-&#45;&#45;"/>-->
+            <!--</LinearLayout>-->
+
+
+
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_marginTop="15dp"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:layout_marginLeft="20dp"-->
+                <!--android:layout_marginRight="20dp"-->
+                <!--android:background="@color/grey" />-->
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_marginLeft="150dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="总时间: "
-                    android:textSize="18sp"/>
-                <TextView
-                    android:id="@+id/tv_total_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:text="---"/>
-            </LinearLayout>
-
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_marginTop="15dp"
-                android:layout_height="1dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:background="@color/grey" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="45dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -350,6 +404,7 @@
             </ListView>
 
         </LinearLayout>
-
+        </RelativeLayout>
+        </RelativeLayout>
         </LinearLayout>
 </LinearLayout>

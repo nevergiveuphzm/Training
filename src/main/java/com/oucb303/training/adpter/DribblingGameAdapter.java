@@ -26,6 +26,8 @@ public class DribblingGameAdapter extends BaseAdapter {
 
     private int[] scores;
     private Context context;
+    private Map<Integer,Integer> timeMap = new HashMap<Integer, Integer>();
+    private int[] keyId;
 
     public DribblingGameAdapter(Context context)
     {
@@ -66,6 +68,27 @@ public class DribblingGameAdapter extends BaseAdapter {
 
         tvGroupNum.setText("第"+ (i+1) + "组");
         tvScore.setText(scores[i] + "");
+        int[] imgId = new int[]{R.drawable.champion,R.drawable.silver,R.drawable.bronze,R.drawable.other};
+        if (i<3){
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            layoutParams.setMargins(310,85,80,0);//4个参数按顺序分别是左上右下
+            tvScore.setLayoutParams(layoutParams);
+
+            RelativeLayout.LayoutParams paramTest = (RelativeLayout.LayoutParams) imgGroupId.getLayoutParams();
+            paramTest.leftMargin = 20;
+            paramTest.topMargin=5;
+            imgGroupId.setLayoutParams(paramTest);
+            imgGroupId.setImageResource(imgId[i]);
+        }else{
+            RelativeLayout.LayoutParams paramImg = (RelativeLayout.LayoutParams) imgGroupId.getLayoutParams();
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            layoutParams.setMargins(310,55,80,0);
+            tvScore.setLayoutParams(layoutParams);
+            paramImg.leftMargin = 80;
+            paramImg.topMargin=38;
+            imgGroupId.setLayoutParams(paramImg);
+            imgGroupId.setImageResource(imgId[3]);
+        }
         if (scores[i]<0)
             tvScore.setText("0");
 
@@ -74,6 +97,17 @@ public class DribblingGameAdapter extends BaseAdapter {
     public void setScores(int[] scores)
     {
         this.scores = scores;
+    }
+    public void setTimeMap(Map<Integer, Integer> timeMap, int[] keyId) {
+        this.timeMap = timeMap;
+        this.keyId = keyId;
+        Iterator iter = timeMap.entrySet().iterator();
+        while (iter.hasNext()) {
+            Map.Entry entry = (Map.Entry) iter.next();
+            int key = (int) entry.getKey();
+            int val = (int) entry.getValue();
+            Log.i("timeMap里有什么", "" + key + "---" + val);
+        }
     }
 
 }

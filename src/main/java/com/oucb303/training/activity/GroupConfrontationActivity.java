@@ -58,7 +58,7 @@ public class GroupConfrontationActivity extends AppCompatActivity {
     @Bind(R.id.tv_down_time)
     TextView tvDownTime;
 
-//    @Bind(R.id.img_action_mode_light)
+    //    @Bind(R.id.img_action_mode_light)
 //    ImageView imgActionModeLight;
 //    @Bind(R.id.img_action_mode_touch)
 //    ImageView imgActionModeTouch;

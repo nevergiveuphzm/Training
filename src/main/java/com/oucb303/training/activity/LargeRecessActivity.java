@@ -120,6 +120,10 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
     Button btnOff;
     @Bind(R.id.tv_maxTime)
     TextView tvMaxTime;
+    @Bind(R.id.btn_result)
+    Button btnResult;
+    @Bind(R.id.btn_history_result)
+    Button btnHistoryResult;
 //    @Bind(R.id.img_blink_mode_none)
 //    ImageView imgBlinkModeNone;
 //    @Bind(R.id.img_blink_mode_slow)
@@ -363,7 +367,7 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
 //    }
 
 
-    @OnClick({R.id.img_set,R.id.layout_cancel, R.id.img_help, R.id.btn_begin, R.id.btn_stop,R.id.img_save_new, R.id.btn_on, R.id.btn_off})
+    @OnClick({R.id.img_set,R.id.layout_cancel, R.id.img_help, R.id.btn_begin, R.id.btn_stop,R.id.img_save_new, R.id.btn_on, R.id.btn_off,R.id.btn_result, R.id.btn_history_result})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_set:
@@ -420,6 +424,16 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
                 break;
             case R.id.btn_off:
                 device.turnOffAllTheLight();
+            case R.id.btn_result:
+                lvTimes.setVisibility(View.VISIBLE);
+                btnResult.setTextColor(this.getResources().getColor(R.color.ui_green));
+                btnHistoryResult.setTextColor(this.getResources().getColor(R.color.white));
+                break;
+            case R.id.btn_history_result:
+                lvTimes.setVisibility(View.INVISIBLE);
+                btnResult.setTextColor(this.getResources().getColor(R.color.white));
+                btnHistoryResult.setTextColor(this.getResources().getColor(R.color.ui_green));
+                break;
 
         }
     }

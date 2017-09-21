@@ -7,13 +7,6 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <include layout="@layout/layout_title_bar_newer" />
-    </LinearLayout>
-
-    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
@@ -31,6 +24,7 @@
                 android:orientation="vertical">
 
             </RelativeLayout>
+
             <LinearLayout
                 android:id="@+id/ll_training_time"
                 android:layout_width="match_parent"
@@ -48,10 +42,10 @@
                 android:id="@+id/training_time"
                 android:layout_width="360dp"
                 android:layout_height="45dp"
+                android:layout_below="@id/title_train"
                 android:layout_marginLeft="130dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/bg_traintime"
-                android:layout_below="@id/title_train">
+                android:background="@drawable/bg_traintime">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -86,9 +80,9 @@
                 android:id="@+id/rl_first"
                 android:layout_width="560dp"
                 android:layout_height="55dp"
+                android:layout_below="@+id/training_time"
                 android:layout_marginLeft="40dp"
-                android:layout_marginTop="15dp"
-                android:layout_below="@+id/training_time">
+                android:layout_marginTop="15dp">
 
                 <ImageView
                     android:id="@+id/img_training_time_sub"
@@ -117,12 +111,12 @@
                     android:progress="10" />
 
                 <TextView
+                    android:id="@+id/tv_maxTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="465dp"
                     android:layout_marginTop="5dp"
                     android:text="50"
-                    android:id="@+id/tv_maxTime"
                     android:textColor="@color/black"
                     android:textSize="30sp" />
 
@@ -143,8 +137,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:background="@drawable/bg_groupdevide"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -218,6 +211,7 @@
                         android:textSize="25sp" />
 
                 </LinearLayout>
+
                 <ListView
                     android:id="@+id/lv_group"
                     android:layout_width="match_parent"
@@ -225,8 +219,7 @@
                     android:layout_alignLeft="@+id/rl_second"
                     android:layout_alignStart="@+id/rl_second"
                     android:layout_below="@+id/linearLayout"
-                    android:scrollbars="none">
-                </ListView>-->
+                    android:scrollbars="none"></ListView>-->
 
             </LinearLayout>
 
@@ -635,13 +628,13 @@
             </LinearLayout>-->
 
             <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="200dip"
-                android:orientation="horizontal"
-                android:padding="10dp"
-                android:id="@+id/linearLayout"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true">
+                android:layout_alignParentStart="true"
+                android:orientation="horizontal"
+                android:padding="10dp">
                 <!--
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -693,6 +686,7 @@
                         android:layout_height="wrap_content"
                         android:text="总时间："
                         android:textSize="25sp" />
+
                     <TextView
                         android:id="@+id/tv_total_time"
                         android:layout_width="wrap_content"
@@ -700,37 +694,37 @@
                         android:text="00:00:00"
                         android:textSize="25sp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
-                    android:orientation="horizontal"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
-                    >
+                    android:orientation="horizontal">
+
                     <Button
                         android:id="@+id/btn_begin"
                         android:layout_width="160dp"
                         android:layout_height="60dp"
                         android:layout_marginLeft="0dp"
-                        android:background="@drawable/img_situpbegin"
-                        />
+                        android:background="@drawable/img_situpbegin" />
+
                     <Button
                         android:id="@+id/btn_pause"
                         android:layout_width="160dp"
                         android:layout_height="60dp"
                         android:layout_marginLeft="50dp"
                         android:layout_marginRight="50dp"
-                        android:background="@drawable/img_situppause"
-                        />
+                        android:background="@drawable/img_situppause" />
+
                     <Button
                         android:id="@+id/btn_stop"
                         android:layout_width="160dp"
                         android:layout_height="60dp"
                         android:layout_marginLeft="0dp"
-                        android:background="@drawable/img_situpstop"
-                        />
+                        android:background="@drawable/img_situpstop" />
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
@@ -744,47 +738,51 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/relativeLayout3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/bg_score"
                 android:layout_margin="20dp"
-                android:id="@+id/relativeLayout3">
+                android:background="@drawable/bg_score">
 
             </RelativeLayout>
+
             <RelativeLayout
 
+                android:id="@+id/relativeLayout2"
                 android:layout_width="450dp"
                 android:layout_height="45dp"
                 android:layout_marginLeft="100dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/bg_scoretitle"
-                android:id="@+id/relativeLayout2">
+                android:background="@drawable/bg_scoretitle">
+
                 <Button
                     android:id="@+id/btn_result"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="70dp"
                     android:layout_marginTop="2dp"
+                    android:background="#00000000"
                     android:text="训练结果"
                     android:textColor="@color/ui_green"
-                    android:textSize="25sp"
-                    android:background="#00000000"/>
+                    android:textSize="25sp" />
+
                 <View
                     android:layout_width="2dp"
-                    android:layout_marginTop="5dp"
                     android:layout_height="30dp"
                     android:layout_marginLeft="230dp"
-                    android:background="@color/white"/>
+                    android:layout_marginTop="5dp"
+                    android:background="@color/white" />
+
                 <Button
                     android:id="@+id/btn_history_result"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="290dp"
                     android:layout_marginTop="2dp"
+                    android:background="#00000000"
                     android:text="历史成绩"
                     android:textColor="@color/white"
-                    android:textSize="25sp"
-                    android:background="#00000000"/>
+                    android:textSize="25sp" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -806,7 +804,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="260dp"
                     android:text="已完成次数"
-                    android:textSize="25sp"/>
+                    android:textSize="25sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -816,29 +814,37 @@
                     android:textSize="25sp" />
 
             </RelativeLayout>
+
             <ListView
 
                 android:id="@+id/lv_times"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="575dp"
+                android:layout_alignEnd="@+id/relativeLayout3"
+                android:layout_alignLeft="@+id/relativeLayout3"
+                android:layout_alignRight="@+id/relativeLayout3"
+                android:layout_alignStart="@+id/relativeLayout3"
                 android:layout_marginTop="130dp"
                 android:divider="#00000000"
-                android:layout_alignLeft="@+id/relativeLayout3"
-                android:layout_alignStart="@+id/relativeLayout3"
-                android:scrollbars="vertical"
-                android:scrollbarSize="7dp"
-                android:verticalScrollbarPosition="right"
-                android:scrollbarStyle="insideOverlay"
                 android:fadeScrollbars="true"
+                android:scrollbarSize="7dp"
+                android:scrollbarStyle="insideOverlay"
                 android:scrollbarThumbVertical="@drawable/listview_scrollbar_thumb"
                 android:scrollbarTrackVertical="@drawable/listview_scrollbar_track"
-                android:layout_alignRight="@+id/relativeLayout3"
-                android:layout_alignEnd="@+id/relativeLayout3">
+                android:scrollbars="vertical"
+                android:verticalScrollbarPosition="right">
 
             </ListView>
 
 
         </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/layout_title_bar_newer" />
     </LinearLayout>
 
 

@@ -264,12 +264,6 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
         lvTimes.setAdapter(shuttleRunAdapter);
 
 
-        //设定checkbox组合的点击事件
-
-        //设定闪烁模式checkBox组合的点击事件
-
-        //设定灯光颜色checkBox组合的点击事件
-
     }
 
 

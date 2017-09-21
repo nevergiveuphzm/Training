@@ -49,9 +49,9 @@ public class EightSecondRunActivity extends AppCompatActivity {
 
     //@Bind(R.id.cb_voice)
     android.widget.CheckBox cbVoice;
-   // @Bind(R.id.cb_end_voice)
+    // @Bind(R.id.cb_end_voice)
     android.widget.CheckBox cbEndVoice;
-   // @Bind(R.id.cb_over_time_voice)
+    // @Bind(R.id.cb_over_time_voice)
     //android.widget.CheckBox cbOverTimeVoice;
     //@Bind(R.id.bt_distance_cancel)
     //ImageView btDistanceCancel;
@@ -71,7 +71,7 @@ public class EightSecondRunActivity extends AppCompatActivity {
     Button btnOff;
     @Bind(R.id.tv_device_list)
     TextView tvDeviceList;
-//    @Bind(R.id.img_action_mode_light)
+    //    @Bind(R.id.img_action_mode_light)
 //    ImageView imgActionModeLight;
 //    @Bind(R.id.img_action_mode_touch)
 //    ImageView imgActionModeTouch;
@@ -173,7 +173,7 @@ public class EightSecondRunActivity extends AppCompatActivity {
                         timeList.addAll(DataAnalyzeUtils.analyzeTimeData(data));
                         if (eightSecondRunAdapter != null) {
                             eightSecondRunAdapter.notifyDataSetChanged();
-                           // lvTimes.setSelection(timeList.size() - 1);
+                            // lvTimes.setSelection(timeList.size() - 1);
                         }
                         isTrainingOver();
                     }
@@ -305,9 +305,11 @@ public class EightSecondRunActivity extends AppCompatActivity {
             case R.id.btn_on:
                 //totalNum组数，1：每组设备个数，0：类型
                 device.turnOnButton(totalNum, 1, 0);
+                btnOn.setClickable(false);
                 break;
             case R.id.btn_off:
                 device.turnOffAllTheLight();
+                btnOn.setClickable(true);
                 break;
         }
     }

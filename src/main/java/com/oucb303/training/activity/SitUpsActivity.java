@@ -287,7 +287,7 @@ public class SitUpsActivity extends AppCompatActivity {
                 CustomDialog dialog = new  CustomDialog(SitUpsActivity.this,"From btn 2",new CustomDialog.ICustomDialogEventListener() {
                     @Override
                     public void customDialogEvent(int id) {
-                       // TextView imageView = (TextView)findViewById(R.id.main_image);
+                        // TextView imageView = (TextView)findViewById(R.id.main_image);
 
                         int aaa = id;
                         String a  =String.valueOf(aaa);
@@ -336,9 +336,11 @@ public class SitUpsActivity extends AppCompatActivity {
             case R.id.btn_on:
                 //groupNum组数，groupSize：每组设备个数，1：类型
                 device.turnOnButton(groupNum, groupSize, 1);
+                btnOn.setClickable(false);
                 break;
             case R.id.btn_off:
                 device.turnOffAllTheLight();
+                btnOn.setClickable(true);
                 break;
             case R.id.img_save_new:
                 Intent it = new Intent(this, SaveActivity.class);
