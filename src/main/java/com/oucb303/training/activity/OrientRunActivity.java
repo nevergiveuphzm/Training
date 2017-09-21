@@ -66,6 +66,10 @@ public class OrientRunActivity extends AppCompatActivity {
     ScrollView svContainer;
     @Bind(R.id.sp_dev_num)
     Spinner spDevNum;
+    @Bind(R.id.btn_on)
+    Button btnOn;
+    @Bind(R.id.btn_off)
+    Button btnOff;
     @Bind(R.id.tv_device_list)
     TextView tvDeviceList;
     @Bind(R.id.sp_group_num)
@@ -275,8 +279,11 @@ public class OrientRunActivity extends AppCompatActivity {
                 }
                 if (trainningFlag)
                     stopTraining();
-                else
+                else {
                     startTraining();
+                    btnOn.setClickable(false);
+                    btnOff.setClickable(false);
+                }
                 break;
             case R.id.img_help:
                 List<Integer> list = new ArrayList<>();
@@ -317,6 +324,8 @@ public class OrientRunActivity extends AppCompatActivity {
             case R.id.btn_stop:
                 if(trainningFlag){
                     stopTraining();
+                    btnOn.setClickable(true);
+                    btnOff.setClickable(true);
                 }
                 break;
         }

@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.List;
 /*
  *电池信息类
- * create ls 2017/9/18
+ * create by ls 2017/9/18
  *
  */
 public class Battery {
@@ -60,6 +60,7 @@ public class Battery {
             Device.DEVICE_LIST.clear();
             //获取电量信息
             Device.DEVICE_LIST.addAll(powerInfos);
+            Log.i("Device.DEVICE_LIST",  Device.DEVICE_LIST.size() + "");
 
             for (int i = 0; i < powerInfos.size(); i++) {
                 for (int j = 0; j < currentListA.size(); j++) {

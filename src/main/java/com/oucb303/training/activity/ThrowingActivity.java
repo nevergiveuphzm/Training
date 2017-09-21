@@ -290,12 +290,17 @@ public class ThrowingActivity extends AppCompatActivity {
                 }
                 if (trainingBeginFlag)
                     stopTraining();
-                else
+                else {
                     startTraining();
+                    btnOn.setClickable(false);
+                    btnOff.setClickable(false);
+                }
                 break;
             case R.id.btn_stop:
                 if(trainingBeginFlag){
                     stopTraining();
+                    btnOn.setClickable(true);
+                    btnOff.setClickable(true);
                 }
                 break;
             case R.id.btn_on:

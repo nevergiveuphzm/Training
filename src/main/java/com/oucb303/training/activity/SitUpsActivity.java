@@ -202,6 +202,7 @@ public class SitUpsActivity extends AppCompatActivity {
         spGroupNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(SitUpsActivity.this, spGroupNum, groupNumChoose) {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
                 groupNum = i;
                 groupListViewAdapter.setGroupNum(i);
                 groupListViewAdapter.notifyDataSetChanged();
@@ -270,12 +271,17 @@ public class SitUpsActivity extends AppCompatActivity {
                 }
                 if (isTraining)
                     stopTraining();
-                else
+                else {
                     startTraining();
+                    btnOn.setClickable(false);
+                    btnOff.setClickable(false);
+                }
                 break;
             case R.id.btn_stop:
                 if(isTraining){
                     stopTraining();
+                    btnOn.setClickable(true);
+                    btnOff.setClickable(true);
                 }
                 break;
             case R.id.img_help:
