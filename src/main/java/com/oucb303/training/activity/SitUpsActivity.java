@@ -117,7 +117,7 @@ public class SitUpsActivity extends AppCompatActivity {
     //设置返回数据
     int[] Setting_return_data = new int[5];
     private int type = 1;
-    Battery battery_;
+    Battery battery;
     private int level=2;
     private Dialog set_dialog;
 
@@ -136,7 +136,7 @@ public class SitUpsActivity extends AppCompatActivity {
             device.initConfig();
         }
         //重新检测设备数目
-        battery_ = new Battery(device,imgSatart);
+        battery = new Battery(device,imgSatart);
     }
 
     @Override
@@ -320,7 +320,7 @@ public class SitUpsActivity extends AppCompatActivity {
                 btnHistoryResult.setTextColor(this.getResources().getColor(R.color.ui_green));
                 break;
             case R.id.img_start:
-                battery_.initDevice();
+                battery.initDevice();
                 break;
         }
     }

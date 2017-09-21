@@ -31,9 +31,9 @@ public class CustomDialog extends Dialog implements View.OnClickListener{
     ImageView imgLightColorBlueRed;
     ImageView imgBlinkModeNone ;
     ImageView imgBlinkModeSlow;
-    ImageView imgBlinkModeFast;
     CheckBox cbVoice;
     CheckBox cbEndVoice;
+    ImageView imgBlinkModeFast;
     private ICustomDialogEventListener mCustomDialogEventListener;
     private Context mContext;
     private String mStr;
