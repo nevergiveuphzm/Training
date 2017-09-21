@@ -68,13 +68,24 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:layout_weight="4.5"
             android:background="#1C1C1C"
             android:orientation="horizontal"
-            android:gravity="center">
+            android:gravity="center"
+            android:weightSum="1">
 
+            <TextView
+                android:id="@+id/img_start"
+                android:layout_width="35dp"
+                android:layout_height="81dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center_vertical"
+                android:text="电"
+                android:textSize="20sp"
+                android:scaleType="center"
+                android:textColor="@color/blue"
+                android:layout_weight="0.32" />
             <ImageView
                 android:id="@+id/img_help"
                 android:layout_width="35dp"

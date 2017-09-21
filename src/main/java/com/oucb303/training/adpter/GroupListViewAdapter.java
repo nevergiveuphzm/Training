@@ -1,6 +1,7 @@
 package com.oucb303.training.adpter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,7 @@ import android.widget.TextView;
 import com.oucb303.training.R;
 import com.oucb303.training.device.Device;
 
-import io.vov.vitamio.utils.Log;
+
 
 /**
  * Created by huzhiming on 16/10/12.

@@ -124,8 +124,6 @@ public class SitUpsTimeListAdapter extends BaseAdapter
             int val = (int) entry.getValue();
             Log.i("timeMap里有什么",""+key+"---"+val);
         }
-//        for (int i=0;i<keyId.length;i++)
-//            Log.i("keyId里有什么",""+keyId[i]);
     }
 
 }

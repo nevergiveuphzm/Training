@@ -100,11 +100,7 @@ public class MainNewActivity extends AppCompatActivity {
                     String data = msg.obj.toString();
                     readPowerData(data);
                     break;
-//                case FIND_BRACELET:
-//                    pbBar.setVisibility(View.GONE);
-//                    imgBracelet.setVisibility(View.VISIBLE);
-//                    braceletManager.stopScan();
-//                    break;
+
                 default:
                     break;
             }
@@ -221,59 +217,9 @@ public class MainNewActivity extends AppCompatActivity {
         else
             btnTest.setVisibility(View.GONE);
         //Switch控件
-//        swBracelet.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-//        {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-//            {
-//                if (isChecked)
-//                {
-//                    pbBar.setVisibility(View.VISIBLE);
-//                    imgBracelet.setVisibility(View.GONE);
-//                    openBraceLet();
-//                } else
-//                {
-//                    pbBar.setVisibility(View.GONE);
-//                    imgBracelet.setVisibility(View.GONE);
-//                    braceletManager.stopScan();
-//                }
-//            }
-//        });
+//
     }
 
-    /**
-     * 开启手环
-     */
-    private void openBraceLet() {
-//        braceletManager = new BraceletManager(this.getApplicationContext(), this);
-//        if (braceletManager.isBluetoothOpen())
-//        {
-//            Log.i("Bluetooth", "蓝牙开启");
-//        } else if (!braceletManager.getAdapter().enable())
-//        {
-//            Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-//            startActivityForResult(intent, 1001);
-//        }
-//        //扫描
-//        braceletManager.scanBracelet();
-//        new Thread(new Runnable()
-//        {
-//            @Override
-//            public void run()
-//            {
-//                while (braceletManager.isScaning())
-//                {
-//                    Timer.sleep(100);
-//                    if (braceletManager.isExist())
-//                    {
-//                        Message msg = Message.obtain();
-//                        msg.what = FIND_BRACELET;
-//                        handler.sendMessage(msg);
-//                    }
-//                }
-//            }
-//        }).start();
-    }
 
     @OnClick({R.id.btn_kinetism, R.id.btn_technique, R.id.btn_combined_train, R.id.btn_hacker_space, R.id.btn_setting, R.id.btn_app_tools,R.id.btn_test,
             R.id.btn_kinetism_1, R.id.btn_technique_1, R.id.btn_combined_train_1, R.id.btn_app_tools_1, R.id.btn_hacker_space_1, R.id.btn_setting_1})
@@ -381,28 +327,6 @@ public class MainNewActivity extends AppCompatActivity {
         }
     }
 
-    /***
-     * 接收意图的结果
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        // TODO Auto-generated method stub
-//        super.onActivityResult(requestCode, resultCode, data);
-//        switch (requestCode)
-//        {
-//            case 1001:
-//                if (resultCode == RESULT_OK)
-//                {
-//                    // 刚打开蓝牙实际还不能立马就能用
-//                } else
-//                {
-//                    Toast.makeText(this, "请打开蓝牙", Toast.LENGTH_SHORT).show();
-//                }
-//                break;
-//            default:
-//                break;
-//        }
-    }
 
     /**
      * 重写 onKeyDown方法

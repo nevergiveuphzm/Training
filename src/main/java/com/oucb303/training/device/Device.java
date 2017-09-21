@@ -45,6 +45,7 @@ public class Device
         try
         {
             ftdid2xx = D2xxManager.getInstance(context);
+            //Log.d("==========",ftdid2xx+"");
         } catch (D2xxManager.D2xxException e)
         {
             e.printStackTrace();
@@ -126,8 +127,8 @@ public class Device
             }
         }
         isConfiged = false;
-        if (ftDev == null)
-            Log.i("AAAA", "sdf");
+       // if (ftDev == null)
+            //Log.i("AAAA", "sdf");
     }
 
     // 更新连接设备列表，当重新打开程序或是熄灭屏幕之后重新打开都会执行此方法，应该次列表的设备数量一般情况下为1
@@ -259,6 +260,8 @@ public class Device
 
         if (ftDev==null)
         {
+
+           // Log.d("--------","-------------------");
             Toast.makeText(CONTEXT,"协调器松动，请检查",Toast.LENGTH_SHORT).show();
             return;
         }

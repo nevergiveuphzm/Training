@@ -69,8 +69,7 @@ public class ShuttleRunAdapter1 extends BaseAdapter
     @Override
     public View getView(int position, View view, ViewGroup viewGroup)
     {
-//            list_time.add(position,finishTime[position]);
-//            Log.i("finish_time里面有什么",""+finishTime[position]);
+
         if (view == null)
             view = LayoutInflater.from(context).inflate(R.layout.item_shuttle_run_group_time1, null);
         TextView tvGroupId = (TextView) view.findViewById(R.id.tv_group_id);
@@ -107,18 +106,7 @@ public class ShuttleRunAdapter1 extends BaseAdapter
 
        if (completedTimes[position]<0)
            tvFinishTimes.setText("0");
-//        if (finishTime[position] != 0)
-//        {
-//            int time = finishTime[position];
-////                Log.i("此时的时间是：",""+time);
-//            int minute = time / (1000 * 60);
-//            int second = (time / 1000) % 60;
-//            int msec = time % 1000;
-//            String res = "";
-//            res += minute == 0 ? "" : minute + ":";
-//            res += second + ":" + msec / 10;
-//            tvGroupTotalTime.setText(res);
-//        }
+
         int Id = keyId[position];
         if (timeMap.get(Id) != 0)
         {
@@ -152,13 +140,7 @@ public class ShuttleRunAdapter1 extends BaseAdapter
     public void setTimeMap(Map<Integer, Integer> timeMap,int[] keyId) {
         this.timeMap = timeMap;
         this.keyId = keyId;
-//        Iterator iter = timeMap.entrySet().iterator();
-//        while (iter.hasNext()) {
-//            Map.Entry entry = (Map.Entry) iter.next();
-//            int key = (int) entry.getKey();
-//            int val = (int) entry.getValue();
-//            Log.i("timeMap里有什么",""+key+"---"+val);
-//        }
+
         for (int i=0;i<keyId.length;i++)
             Log.i("keyId里有什么",""+keyId[i]);
     }

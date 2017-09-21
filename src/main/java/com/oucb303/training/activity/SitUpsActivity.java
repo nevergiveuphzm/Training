@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -26,14 +25,13 @@ import com.oucb303.training.device.Device;
 import com.oucb303.training.device.Order;
 import com.oucb303.training.dialugue.CustomDialog;
 import com.oucb303.training.listener.AddOrSubBtnClickListener;
-import com.oucb303.training.listener.CheckBoxClickListener;
 import com.oucb303.training.listener.MySeekBarListener;
 import com.oucb303.training.listener.SpinnerItemSelectedListener;
-import com.oucb303.training.model.CheckBox;
 import com.oucb303.training.model.PowerInfoComparetor;
 import com.oucb303.training.model.TimeInfo;
 import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.threads.Timer;
+import com.oucb303.training.utils.Battery;
 import com.oucb303.training.utils.DataAnalyzeUtils;
 import com.oucb303.training.utils.DialogUtils;
 import com.oucb303.training.utils.OperateUtils;
@@ -65,18 +63,7 @@ public class SitUpsActivity extends AppCompatActivity {
     SeekBar barTrainingTime;
     @Bind(R.id.img_training_time_add)
     ImageView imgTrainingTimeAdd;
-    //    @Bind(R.id.img_action_mode_touch)
-//    ImageView imgActionModeTouch;
-//    @Bind(R.id.img_action_mode_light)
-//    ImageView imgActionModeLight;
-//    @Bind(R.id.img_action_mode_together)
-//    ImageView imgActionModeTogether;
-//    @Bind(R.id.img_light_mode_center)
-//    ImageView imgLightModeCenter;
-//    @Bind(R.id.img_light_mode_all)
-//    ImageView imgLightModeAll;
-//    @Bind(R.id.img_light_mode_beside)
-//    ImageView imgLightModeBeside;
+
     @Bind(R.id.tv_total_time)
     TextView tvTotalTime;
     @Bind(R.id.btn_begin)
@@ -85,18 +72,13 @@ public class SitUpsActivity extends AppCompatActivity {
     Spinner spGroupNum;
     @Bind(R.id.lv_group)
     ListView lvGroup;
-    //    @Bind(R.id.sv_container)
-//    ScrollView svContainer;
+
     @Bind(R.id.lv_times)
     ListView lvTimes;
-    //    @Bind(R.id.img_light_color_blue)
-//    ImageView imgLightColorBlue;
-//    @Bind(R.id.img_light_color_red)
-//    ImageView imgLightColorRed;
-//    @Bind(R.id.img_light_color_blue_red)
-//    ImageView imgLightColorBlueRed;
-//    @Bind(R.id.cb_voice)
+
     android.widget.CheckBox cbVoice;
+    @Bind(R.id.img_start)
+    TextView imgSatart;
     @Bind(R.id.img_set)
     ImageView imgSet;
     @Bind(R.id.img_help)
@@ -135,7 +117,7 @@ public class SitUpsActivity extends AppCompatActivity {
     //设置返回数据
     int[] Setting_return_data = new int[5];
     private int type = 1;
-
+    Battery battery_;
     private int level=2;
     private Dialog set_dialog;
 
@@ -153,6 +135,8 @@ public class SitUpsActivity extends AppCompatActivity {
             device.connect(this);
             device.initConfig();
         }
+        //重新检测设备数目
+        battery_ = new Battery(device,imgSatart);
     }
 
     @Override
@@ -166,8 +150,6 @@ public class SitUpsActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case Timer.TIMER_FLAG:
-//                    tvTotalTime.setText("训练总时间："+msg.obj.toString());
-
                     if (timer.time >= trainingTime) {
                         stopTraining();
                         return;
@@ -195,11 +177,9 @@ public class SitUpsActivity extends AppCompatActivity {
     private void initView() {
         if (type == 0) {
             tvTitle.setText("交替活动");
-//            lightModecheckBox.setVisibility(View.GONE);
-//            lLevel.setVisibility(View.GONE);
+
         } else {
             tvTitle.setText("仰卧起坐训练");
-//            lLevel.setVisibility(View.VISIBLE);
         }
 
         imgHelp.setVisibility(View.VISIBLE);
@@ -207,18 +187,7 @@ public class SitUpsActivity extends AppCompatActivity {
         ///初始化分组listView
         groupListViewAdapter = new GroupListViewAdapter(SitUpsActivity.this, groupSize);
         lvGroup.setAdapter(groupListViewAdapter);
-        //解决listView 与scrollView的滑动冲突
-//        lvGroup.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View view, MotionEvent motionEvent) {
-//                //从listView 抬起时将控制权还给scrollview
-//                if (motionEvent.getAction() == MotionEvent.ACTION_UP)
-//                    svContainer.requestDisallowInterceptTouchEvent(false);
-//                else
-//                    svContainer.requestDisallowInterceptTouchEvent(true);
-//                return false;
-//            }
-//        });
+
 
         //设备排序
         Collections.sort(Device.DEVICE_LIST, new PowerInfoComparetor());
@@ -237,27 +206,12 @@ public class SitUpsActivity extends AppCompatActivity {
                 groupListViewAdapter.notifyDataSetChanged();
             }
         });
-        //初始化训练强度拖动条
-//        barLevel.setOnSeekBarChangeListener(new MySeekBarListener(barTrainingTime,tvLevel, 2));
-//        imgLevelsub.setOnTouchListener(new AddOrSubBtnClickListener(barLevel, 0));
-//        imgLevelAdd.setOnTouchListener(new AddOrSubBtnClickListener(barLevel, 1));
+
         //训练时间拖动条初始化
         barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 10));
         imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
         imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
-//        switch (level) {
-//            case 1:
-//                level = 2;
-//                break;
-//            case 2:
-//                level = 4;
-//                break;
-//            case 3:
-//                level = 10;
-//                break;
-//        }
-//        Log.d(Constant.LOG_TAG, level + "ddd");
-//        barTrainingTime.setProgress(level);
+
 
         //初始化右侧listview
         sitUpsTimeListAdapter = new SitUpsTimeListAdapter(this);
@@ -267,20 +221,18 @@ public class SitUpsActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
         imgSaveNew.setEnabled(false);
-//        imgSave.setEnabled(false);
-
         Setting_return_data[0]=0;
         Setting_return_data[1]=0;
         Setting_return_data[2]=0;
         Setting_return_data[3]=1;
         Setting_return_data[4]=1;
 
+
     }
 
     @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.btn_stop, R.id.img_help, R.id.btn_on,
-            R.id.btn_off, R.id.img_save_new, R.id.img_set, R.id.btn_result, R.id.btn_history_result})
+            R.id.btn_off, R.id.img_save_new, R.id.img_set, R.id.btn_result, R.id.btn_history_result,R.id.img_start})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_set:
@@ -366,6 +318,9 @@ public class SitUpsActivity extends AppCompatActivity {
                 lvTimes.setVisibility(View.INVISIBLE);
                 btnResult.setTextColor(this.getResources().getColor(R.color.white));
                 btnHistoryResult.setTextColor(this.getResources().getColor(R.color.ui_green));
+                break;
+            case R.id.img_start:
+                battery_.initDevice();
                 break;
         }
     }

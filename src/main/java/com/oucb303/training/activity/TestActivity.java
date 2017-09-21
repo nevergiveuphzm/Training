@@ -77,6 +77,8 @@ public class TestActivity extends AppCompatActivity
     Button btnChange1;
     @Bind(R.id.tv_blockTime)
     TextView tvBlockTime;
+    @Bind(R.id.flght_start)
+    Button flghtStart;
 
     private String[] colors = {"000无", "001蓝", "010红", "011绿","100紫","101青","110黄","111白"};
     private String[] voices = {"00无", "01短响", "10连续响1s", "11连续响2s"};
@@ -218,7 +220,7 @@ public class TestActivity extends AppCompatActivity
 
     @OnClick({R.id.layout_cancel, R.id.btn_send_order, R.id.btn_clear, R.id.btn_get_address,
             R.id.btn_change, R.id.btn_change1, R.id.btn_turn_off_all_lights, R.id.btn_turn_on_all_lights,
-            R.id.btn_add_time, R.id.btn_sub_time})
+            R.id.btn_add_time, R.id.btn_sub_time,R.id.flght_start})
     public void onClick(View view)
     {
         switch (view.getId())
@@ -281,6 +283,21 @@ public class TestActivity extends AppCompatActivity
                             Order.BlinkModel.NONE,
                             Order.LightModel.OUTER,
                             Order.ActionModel.NONE,
+                            Order.EndVoice.NONE);
+                }
+                break;
+
+
+
+            case R.id.flght_start:
+                for (DeviceInfo info : Device.DEVICE_LIST)
+                {
+                    device.sendOrder(info.getDeviceNum(),
+                            Order.LightColor.BLUE_RED_GREEN,
+                            Order.VoiceMode.ONE,
+                            Order.BlinkModel.NONE,
+                            Order.LightModel.ALL,
+                            Order.ActionModel.ALL,
                             Order.EndVoice.NONE);
                 }
                 break;
