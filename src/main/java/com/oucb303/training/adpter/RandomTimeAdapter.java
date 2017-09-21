@@ -5,6 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.oucb303.training.R;
@@ -55,13 +58,40 @@ public class RandomTimeAdapter extends BaseAdapter
     @Override
     public View getView(int i, View view, ViewGroup viewGroup)
     {
-        View v = inflater.inflate(R.layout.item_statistics_time1, null);
+        View v = inflater.inflate(R.layout.item_statistics_time3, null);
         TextView num = (TextView) v.findViewById(R.id.tv_num);
+        ImageView imgGroupId = (ImageView) v.findViewById(R.id.img_group);
         TextView time = (TextView) v.findViewById(R.id.tv_time);
         TextView note = (TextView) v.findViewById(R.id.tv_note);
         TextView lightNum = (TextView) v.findViewById(R.id.tv_light_num);
         num.setText((i + 1) + "");
-        if (timeList.get(i).getTime() == 0)
+        imgGroupId.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        int[] imgId = new int[]{R.drawable.champion,R.drawable.silver,R.drawable.bronze,R.drawable.other};
+        if (i<3){
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            layoutParams.setMargins(168,85,80,0);//4个参数按顺序分别是左上右下
+            time.setLayoutParams(layoutParams);
+
+            layoutParams.setMargins(170,85,80,0);
+            note.setLayoutParams(layoutParams);
+
+            RelativeLayout.LayoutParams paramTest = (RelativeLayout.LayoutParams) imgGroupId.getLayoutParams();
+            paramTest.leftMargin = 10;
+            paramTest.topMargin=5;
+            imgGroupId.setLayoutParams(paramTest);
+            imgGroupId.setImageResource(imgId[i]);
+        }
+        else {
+            RelativeLayout.LayoutParams paramImg = (RelativeLayout.LayoutParams) imgGroupId.getLayoutParams();
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            layoutParams.setMargins(170, 55, 80, 0);
+            time.setLayoutParams(layoutParams);
+            paramImg.leftMargin = 80;
+            paramImg.topMargin = 38;
+            imgGroupId.setLayoutParams(paramImg);
+            imgGroupId.setImageResource(imgId[3]);
+        }
+            if (timeList.get(i).getTime() == 0)
         {
             time.setText("---");
             note.setText("超时");

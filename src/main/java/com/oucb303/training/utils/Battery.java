@@ -4,6 +4,7 @@ package com.oucb303.training.utils;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.widget.Spinner;
 import android.widget.TextView;
 import com.oucb303.training.device.Device;
 import com.oucb303.training.model.DeviceInfo;
@@ -25,14 +26,17 @@ public class Battery {
     private boolean isLeave = false;
     private final int POWER_RECEIVE = 1;
     private AutoCheckPower checkPowerThread;
-
+    Handler handler_battery;
+    //private Handler handler;
+    Spinner spGroupNum;
     List<DeviceInfo> currentListA = new ArrayList<>();
 
     TextView textView;
-    public Battery(Device device, TextView textView)
+    public Battery(Device device, TextView textView, Handler handler_battery)
     {
         this.device = device;
         this.textView = textView;
+        this.handler_battery = handler_battery;
 
     }
 
@@ -67,7 +71,8 @@ public class Battery {
             }
         }
        // Log.i("AAA", powerInfos.size() + "");
-        return powerInfos.size();
+
+        return Device.DEVICE_LIST.size();
     }
 
     /**
@@ -89,6 +94,7 @@ public class Battery {
                 new ReceiveThread(handler, device.ftDev, ReceiveThread.POWER_RECEIVE_THREAD, POWER_RECEIVE).start();
                 Timer.sleep(4000);
             }
+
         }
         public void setPowerFlag(){
             this.powerFlag = false;
@@ -104,6 +110,10 @@ public class Battery {
                     int size =  readPowerData(data);
                     textView.setText(size+"");
                     checkPowerThread.setPowerFlag();
+                    Message msg_battery = Message.obtain();
+                    msg_battery.what = 1;
+                    msg_battery.obj = Device.DEVICE_LIST;
+                    handler_battery.sendMessage(msg_battery);
                     break;
                 default:
                     break;

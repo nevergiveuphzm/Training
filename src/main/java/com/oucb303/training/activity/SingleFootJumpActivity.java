@@ -241,9 +241,11 @@ public class SingleFootJumpActivity extends AppCompatActivity {
                 break;
             case R.id.btn_on:
                 device.turnOnButton(groupNum,groupSize,0);
+                btnOn.setClickable(false);
                 break;
             case R.id.btn_off:
                 device.turnOffAllTheLight();
+                btnOn.setClickable(true);
                 break;
             case R.id.btn_begin:
                 if (!device.checkDevice(this))
@@ -253,9 +255,14 @@ public class SingleFootJumpActivity extends AppCompatActivity {
                     return;
                 }
                 startTraining();
+                btnOn.setClickable(false);
+                btnOff.setClickable(false);
                 break;
-            case R.id.btn_stop:
+            case R.id.btn_stop: {
                 stopTraining();
+                btnOn.setClickable(true);
+                btnOff.setClickable(true);
+            }
                 break;
             case R.id.img_set:
                 set_dialog = createSetDialog();

@@ -380,6 +380,8 @@ public class CourbetteActivity extends AppCompatActivity implements AdapterView.
             case R.id.btn_stop:
                 if(isTraining){
                     stopTraining();
+                    btnOn.setClickable(true);
+                    btnOff.setClickable(true);
                 }
                 break;
             case R.id.btn_begin:
@@ -389,17 +391,23 @@ public class CourbetteActivity extends AppCompatActivity implements AdapterView.
                     Toast.makeText(this, "请选择训练分组", Toast.LENGTH_LONG).show();
                     return;
                 }
-                if (isTraining)
+                if (isTraining) {
                     stopTraining();
+
+                    btnOn.setClickable(false);
+                    btnOff.setClickable(false);
+                }
                 else
                     starTraining();
                 break;
             case R.id.btn_on:
                 //goupNum组数，1：每组设备个数，0：类型
                 device.turnOnButton(goupNum, 1, 0);
+                btnOn.setClickable(false);
                 break;
             case R.id.btn_off:
                 device.turnOffAllTheLight();
+                btnOn.setClickable(true);
 
         }
     }

@@ -27,6 +27,7 @@ import com.oucb303.training.dialugue.CustomDialog;
 import com.oucb303.training.listener.AddOrSubBtnClickListener;
 import com.oucb303.training.listener.MySeekBarListener;
 import com.oucb303.training.listener.SpinnerItemSelectedListener;
+import com.oucb303.training.model.DeviceInfo;
 import com.oucb303.training.model.PowerInfoComparetor;
 import com.oucb303.training.model.TimeInfo;
 import com.oucb303.training.threads.ReceiveThread;
@@ -136,7 +137,7 @@ public class SitUpsActivity extends AppCompatActivity {
             device.initConfig();
         }
         //重新检测设备数目
-        battery = new Battery(device,imgSatart);
+        battery = new Battery(device,imgSatart,handler_battery);
     }
 
     @Override
@@ -441,5 +442,34 @@ public class SitUpsActivity extends AppCompatActivity {
         }
     }
 
+
+    Handler handler_battery = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    Device.DEVICE_LIST =(ArrayList<DeviceInfo>)msg.obj;
+                    Collections.sort(Device.DEVICE_LIST, new PowerInfoComparetor());
+
+                    //初始化分组下拉框
+                    maxGroupNum = Device.DEVICE_LIST.size() / 2;
+                    String[] groupNumChoose = new String[maxGroupNum + 1];
+                    groupNumChoose[0] = " ";
+                    for (int i = 1; i <= maxGroupNum; i++)
+                        groupNumChoose[i] = i + " 组";
+                    spGroupNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(SitUpsActivity.this, spGroupNum, groupNumChoose) {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            groupNum = i;
+                            groupListViewAdapter.setGroupNum(i);
+                            groupListViewAdapter.notifyDataSetChanged();
+                        }
+                    });
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
 }

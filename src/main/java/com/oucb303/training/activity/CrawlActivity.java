@@ -389,8 +389,11 @@ public class CrawlActivity extends AppCompatActivity{
             case R.id.btn_begin:
                 if (!device.checkDevice(this))
                     return;
-                if (!trainingFlag)
+                if (!trainingFlag) {
                     startTraining();
+                    btnOn.setClickable(false);
+                    btnOff.setClickable(false);
+                }
                 else
                     stopTraining();
                 break;
@@ -401,9 +404,11 @@ public class CrawlActivity extends AppCompatActivity{
             case R.id.btn_on:
                 //totalNum组数，1：每组设备个数，0：类型
                 device.turnOnButton(totalNum, 1, 0);
+                btnOn.setClickable(false);
                 break;
             case R.id.btn_off:
                 device.turnOffAllTheLight();
+                btnOn.setClickable(true);
                 break;
             case R.id.img_save_new:
                 Intent it = new Intent(this, SaveActivity.class);
@@ -435,6 +440,8 @@ public class CrawlActivity extends AppCompatActivity{
             case R.id.btn_stop:
                 if(trainingFlag){
                     stopTraining();
+                    btnOn.setClickable(true);
+                    btnOff.setClickable(true);
                 }
                 break;
         }

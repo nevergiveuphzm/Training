@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 /*import android.view.MotionEvent;*/
 import android.view.View;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 import com.oucb303.training.R;
 import com.oucb303.training.adpter.GroupListViewAdapter;
 import com.oucb303.training.adpter.JumpHighAdapter;
+
 import com.oucb303.training.device.Device;
 import com.oucb303.training.device.Order;
 import com.oucb303.training.listener.AddOrSubBtnClickListener;
@@ -41,6 +43,8 @@ import com.oucb303.training.utils.DialogUtils;
 import com.oucb303.training.utils.OperateUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -136,12 +140,19 @@ public class JumpHighActivity extends AppCompatActivity {
     private Device device;
     private CheckBox actionModeCheckBox, lightModeCheckBox, lightColorCheckBox,blinkModeCheckBox;
     private GroupListViewAdapter groupListViewAdapter;
+//    private JumpHighAdapter1 jumpHighAdapter;
     private Timer timer; //计时器
     //同一组的最小间隔
     private int duration = 500;
     private JumpHighAdapter jumpHighAdapter;
     private List<JumpHighTrainingInfo> groupTrainingInfos = new ArrayList<>();
     private List<HashMap<String, Object>> scores = new ArrayList<>();
+//    //训练成绩
+//    private int[] scores;
+//    //key : 组号 value： 成绩
+//    private Map<Integer, Integer> timeMap = new HashMap<Integer, Integer>();
+//    //存放排序后的key值
+//    private int[] keyId;
     //训练的总时间
     private int trainingTime;
     //每组设备个数、分组数
@@ -197,10 +208,11 @@ public class JumpHighActivity extends AppCompatActivity {
                 case TIME_RECEIVE://接收到设备返回的时间
                     if (data.length() < 7)
                         return;
-                    analyseData(data);
+                    analyzeData(data);
                     break;
                 //更新成绩
                 case UPDATE_SCORES:
+
                     jumpHighAdapter.notifyDataSetChanged();
                     break;
             }
@@ -244,7 +256,7 @@ public class JumpHighActivity extends AppCompatActivity {
         tvTitle.setText("原地纵跳摸高");
         imgHelp.setVisibility(View.VISIBLE);
         imgSaveNew.setVisibility(View.VISIBLE);
-        jumpHighAdapter = new JumpHighAdapter(this, scores);
+       jumpHighAdapter = new JumpHighAdapter(this,scores);
         lvScores.setAdapter(jumpHighAdapter);
         imgHelp.setVisibility(View.VISIBLE);
 
@@ -388,14 +400,19 @@ public class JumpHighActivity extends AppCompatActivity {
                     Toast.makeText(this, "未选择分组,不能开始!", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (trainingFlag)
+                if (trainingFlag) {
                     stopTraining();
+                    btnOn.setClickable(false);
+                    btnOff.setClickable(false);
+                }
                 else
                     startTraining();
                 break;
             case R.id.btn_stop:
                 if(trainingFlag){
                     stopTraining();
+                    btnOn.setClickable(true);
+                    btnOff.setClickable(true);
                 }
                 break;
             case R.id.img_help:
@@ -425,9 +442,11 @@ public class JumpHighActivity extends AppCompatActivity {
             case R.id.btn_on:
                 //groupNum组数，groupSize：每组设备个数，1：类型
                 device.turnOnButton(groupNum, groupSize, 1);
+                btnOn.setClickable(false);
                 break;
             case R.id.btn_off:
                 device.turnOffAllTheLight();
+                btnOn.setClickable(true);
                 break;
         }
     }
@@ -436,7 +455,13 @@ public class JumpHighActivity extends AppCompatActivity {
     private void startTraining() {
 
         trainingFlag = true;
-        trainingTime = (int) (new Double(tvTrainingTime.getText().toString()) * 60 * 1000);
+
+
+//        scores = new int[groupNum];
+//        for (int i = 0; i < groupNum; i++) {
+//            timeMap.put(i, 0);
+//        }
+//        keyId = new int[groupNum];
 
 
         groupTrainingInfos.clear();
@@ -445,7 +470,11 @@ public class JumpHighActivity extends AppCompatActivity {
             groupTrainingInfos.add(new JumpHighTrainingInfo());
             scores.add(new HashMap<String, Object>());
         }
+//        jumpHighAdapter.setScores(scores);
+//        jumpHighAdapter.setTimeMap(timeMap,keyId);
         jumpHighAdapter.notifyDataSetChanged();
+        //训练时间
+        trainingTime = (int) (new Double(tvTrainingTime.getText().toString()) * 60 * 1000);
 
         //清除串口数据
         new ReceiveThread(handler, device.ftDev, ReceiveThread.CLEAR_DATA_THREAD, 0).start();
@@ -474,8 +503,36 @@ public class JumpHighActivity extends AppCompatActivity {
         ReceiveThread.stopThread();
         device.turnOffAllTheLight();
     }
-
-    private void analyseData(final String data) {
+//    private void analyzeTimeData(final String data) {
+//        //训练已结束
+//        if (!trainingFlag)
+//            return;
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                List<TimeInfo> infos = DataAnalyzeUtils.analyzeTimeData(data);
+//                for (TimeInfo info : infos) {
+//                    int groupId = findGroupId(info.getDeviceNum());
+//                    Log.d("getDeviceNum----------", "" + info.getDeviceNum());
+//                    Log.d("groupID---------------", "" + groupId);
+//                    char next = Device.DEVICE_LIST.get(groupId * groupSize).getDeviceNum();
+//                    if (next == info.getDeviceNum()) {
+//                        next = Device.DEVICE_LIST.get(groupId * groupSize + 1).getDeviceNum();
+//                        scores[groupId] += 1;
+//                        timeMap.put(groupId, scores[groupId]);
+//                    }
+//                    sendOrder(next);
+//                }
+//                Message msg = Message.obtain();
+//                msg.obj = "";
+//                msg.what = UPDATE_SCORES;
+//                handler.sendMessage(msg);
+//
+//            }
+//        }).start();
+//
+//    }
+    private void analyzeData(final String data) {
         List<TimeInfo> infos = DataAnalyzeUtils.analyzeTimeData(data);
         for (TimeInfo info : infos) {
             int groupId = findGroupId(info.getDeviceNum());
@@ -545,7 +602,24 @@ public class JumpHighActivity extends AppCompatActivity {
         //一次性挥灭所有灯的灯编号
         public ArrayList<String> deviceList = new ArrayList<>();
     }
-
+//    //排序
+//    public void sortTime(Map<Integer, Integer> timeMap) {
+//        List<Map.Entry<Integer, Integer>> list = new ArrayList<Map.Entry<Integer, Integer>>(timeMap.entrySet());
+//        Collections.sort(list, new Comparator<Map.Entry<Integer, Integer>>() {
+//            //升序排序
+//            public int compare(Map.Entry<Integer, Integer> o1,
+//                               Map.Entry<Integer, Integer> o2) {
+//                return o2.getValue().compareTo(o1.getValue());
+//            }
+//        });
+//        int i = 0;
+//        for (Map.Entry<Integer, Integer> mapping : list) {
+//            Log.i("============", "" + mapping.getKey() + ":" + mapping.getValue());
+////            System.out.println(mapping.getKey()+":"+mapping.getValue());
+//            keyId[i] = mapping.getKey();
+//            i++;
+//        }
+//    }
 
 
     public Dialog createLightSetDialog() {

@@ -69,7 +69,7 @@ public class EnduranceActivity extends AppCompatActivity{
     SeekBar barTrainingTime;
     @Bind(R.id.img_training_time_add)
     ImageView imgTrainingTimeAdd;
-//    @Bind(R.id.sp_dev_num)
+    //    @Bind(R.id.sp_dev_num)
 //    Spinner spDevNum;
     @Bind(R.id.sp_group_num)
     Spinner spGroupNum;
@@ -93,17 +93,17 @@ public class EnduranceActivity extends AppCompatActivity{
     ImageView imgLightColorBlueRed;*/
     @Bind(R.id.lv_group)
     ListView lvGroup;
-   /* @Bind(R.id.sv_container)
-    ScrollView svContainer;*/
+    /* @Bind(R.id.sv_container)
+     ScrollView svContainer;*/
     @Bind(R.id.btn_begin)
     Button btnBegin;
     @Bind(R.id.btn_stop)
     Button btnStop;
     @Bind(R.id.tv_total_time)
     TextView tvTotalTime;
-//    @Bind(R.id.cb_voice)
+    //    @Bind(R.id.cb_voice)
     android.widget.CheckBox cbVoice;
-//    @Bind(R.id.cb_end_voice)
+    //    @Bind(R.id.cb_end_voice)
     android.widget.CheckBox cbEndVoice;
     @Bind(R.id.lv_scores)
     ListView lvScores;
@@ -266,15 +266,15 @@ public class EnduranceActivity extends AppCompatActivity{
         String[] lightNum = new String[maxGroupSize];
         for (int i = 0; i < lightNum.length; i++)
             lightNum[i] = (i + 1) + "个";
-                int totalGroupNum = Device.DEVICE_LIST.size() / groupSize;
-                String[] trainGroupNum = new String[totalGroupNum + 1];
-                trainGroupNum[0] = "";
-                for (int j = 1; j <= totalGroupNum; j++)
-                    trainGroupNum[j] = j + "组";
+        int totalGroupNum = Device.DEVICE_LIST.size() / groupSize;
+        String[] trainGroupNum = new String[totalGroupNum + 1];
+        trainGroupNum[0] = "";
+        for (int j = 1; j <= totalGroupNum; j++)
+            trainGroupNum[j] = j + "组";
 
-                ArrayAdapter<String> adapterGroupNum = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, trainGroupNum);
-                adapterGroupNum.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spGroupNum.setAdapter(adapterGroupNum);
+        ArrayAdapter<String> adapterGroupNum = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, trainGroupNum);
+        adapterGroupNum.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spGroupNum.setAdapter(adapterGroupNum);
 
         spGroupNum.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -313,14 +313,19 @@ public class EnduranceActivity extends AppCompatActivity{
                     Toast.makeText(this, "未选择分组,不能开始!", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (trainingFlag)
+                if (trainingFlag) {
                     stopTraining();
+                    btnOn.setClickable(false);
+                    btnOff.setClickable(false);
+                }
                 else
                     startTraining();
                 break;
             case R.id.btn_stop:
                 if(trainingFlag){
                     stopTraining();
+                    btnOn.setClickable(true);
+                    btnOff.setClickable(true);
                 }
                 break;
             case R.id.img_help:
@@ -350,9 +355,11 @@ public class EnduranceActivity extends AppCompatActivity{
             case R.id.btn_on:
                 //groupNum组数，groupSize：每组设备个数，1：类型
                 device.turnOnButton(groupNum, groupSize, 1);
+                btnOn.setClickable(false);
                 break;
             case R.id.btn_off:
                 device.turnOffAllTheLight();
+                btnOn.setClickable(true);
                 break;
         }
     }
@@ -381,7 +388,7 @@ public class EnduranceActivity extends AppCompatActivity{
         //开启全部灯
         for (int i = 0; i < groupNum * groupSize; i++) {
             int color = lightColorCheckBox.getCheckId();
-           sendOrder(Device.DEVICE_LIST.get(i).getDeviceNum());
+            sendOrder(Device.DEVICE_LIST.get(i).getDeviceNum());
         }
         colors = new int[groupNum];
         //开启计时器
@@ -428,7 +435,7 @@ public class EnduranceActivity extends AppCompatActivity{
 
                 for (int i = 0; i < groupSize; i++) {
                     char num = Device.DEVICE_LIST.get(groupNum * groupSize + i).getDeviceNum();
-                   sendOrder(num);
+                    sendOrder(num);
 
 
                 }
@@ -505,7 +512,7 @@ public class EnduranceActivity extends AppCompatActivity{
         new CheckBoxClickListener(actionModeCheckBox);
         ImageView[] views1 = new ImageView[]{imgLightModeBeside, imgLightModeCenter, imgLightModeAll,};
         lightModeCheckBox = new CheckBox(1, views1);
-       new CheckBoxClickListener(lightModeCheckBox);
+        new CheckBoxClickListener(lightModeCheckBox);
         //设定灯光颜色checkBox组合的点击事件
         ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
         lightColorCheckBox = new CheckBox(1, views2);
@@ -530,3 +537,4 @@ public class EnduranceActivity extends AppCompatActivity{
         return dialog;
     }
 }
+
