@@ -11,11 +11,7 @@ import android.widget.TextView;
 import com.oucb303.training.R;
 import com.oucb303.training.device.Device;
 
-<<<<<<< HEAD
 
-=======
-//import io.vov.vitamio.utils.Log;
->>>>>>> origin/wanli
 
 /**
  * Created by huzhiming on 16/10/12.

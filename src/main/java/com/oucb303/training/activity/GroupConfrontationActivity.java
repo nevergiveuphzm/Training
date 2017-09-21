@@ -58,10 +58,10 @@ public class GroupConfrontationActivity extends AppCompatActivity {
     @Bind(R.id.tv_down_time)
     TextView tvDownTime;
 
-<<<<<<< HEAD
+
     @Bind(R.id.btn_stop)
     Button btnStop;
-=======
+
     //    @Bind(R.id.img_action_mode_light)
 //    ImageView imgActionModeLight;
 //    @Bind(R.id.img_action_mode_touch)
@@ -74,7 +74,7 @@ public class GroupConfrontationActivity extends AppCompatActivity {
 //    ImageView imgLightModeCenter;
 //    @Bind(R.id.img_light_mode_all)
 //    ImageView imgLightModeAll;
->>>>>>> origin/wanli
+
     android.widget.CheckBox cbVoice;
     @Bind(R.id.btn_begin)
     Button btnBegin;
