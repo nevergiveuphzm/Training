@@ -274,6 +274,8 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
             case R.id.btn_stop:
                 if(trainingBeginFlag){
                     stopTraining();
+                    btnOn.setClickable(true);
+                    btnOff.setClickable(true);
                 }
                 break;
             case R.id.img_set:
@@ -318,8 +320,11 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
                 }
                 if (trainingBeginFlag)
                     stopTraining();
-                else
+                else {
                     startTraining();
+                    btnOn.setClickable(false);
+                    btnOff.setClickable(false);
+                }
                 break;
             case R.id.btn_on:
                 //goupNum组数，1：每组设备个数，0：类型

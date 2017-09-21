@@ -57,6 +57,10 @@ public class GroupConfrontationActivity extends AppCompatActivity {
     Spinner spGroupDeviceNum;
     @Bind(R.id.tv_down_time)
     TextView tvDownTime;
+    @Bind(R.id.btn_on)
+    Button btnOn;
+    @Bind(R.id.btn_off)
+    Button btnOff;
 
 
     @Bind(R.id.btn_stop)
@@ -225,8 +229,11 @@ public class GroupConfrontationActivity extends AppCompatActivity {
                 }
                 if (trainingFlag)
                     stopTraining();
-                else
+                else {
                     startTraining();
+                    btnOn.setClickable(false);
+                    btnOff.setClickable(false);
+                }
                 break;
             case R.id.img_help:
 //                Intent intent = new Intent(this, HelpActivity.class);
@@ -237,6 +244,8 @@ public class GroupConfrontationActivity extends AppCompatActivity {
                 if(trainingFlag){
                     flag_endvoice=0;
                     stopTraining();
+                    btnOn.setClickable(false);
+                    btnOff.setClickable(false);
                 }
                 break;
         }

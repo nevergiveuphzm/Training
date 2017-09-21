@@ -385,8 +385,11 @@ public class DribblingGameActivity extends AppCompatActivity {
                 }
                 if (trainningFlag)
                     stopTraining();
-                else
+                else {
                     starTraining();
+                    btnOn.setClickable(false);
+                    btnOff.setClickable(false);
+                }
                 break;
             case R.id.img_help:
                 Intent intent = new Intent(this, HelpActivity.class);
@@ -426,6 +429,8 @@ public class DribblingGameActivity extends AppCompatActivity {
             case R.id.btn_stop:
                 if(trainningFlag){
                     stopTraining();
+                    btnOn.setClickable(false);
+                    btnOff.setClickable(false);
                 }
                 break;
         }

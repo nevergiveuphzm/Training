@@ -410,12 +410,17 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
                 }
                 if (isTraining)
                     stopTraining();
-                else
+                else {
                     starTraining();
+                    btnOn.setClickable(false);
+                    btnOff.setClickable(false);
+                }
                 break;
             case R.id.btn_stop:
                 if(isTraining){
                     stopTraining();
+                    btnOn.setClickable(true);
+                    btnOff.setClickable(true);
                 }
                 break;
             case R.id.btn_on:

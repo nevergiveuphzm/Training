@@ -393,12 +393,17 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
                 }
                 if (trainingFlag)
                     stopTraining();
-                else
+                else {
                     startTraining();
+                    btnOn.setClickable(false);
+                    btnOff.setClickable(false);
+                }
                 break;
             case R.id.btn_stop:
                 if(trainingFlag){
                     stopTraining();
+                    btnOn.setClickable(true);
+                    btnOff.setClickable(true);
                 }
                 break;
             case R.id.btn_on:
