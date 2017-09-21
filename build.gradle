@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion '25.0.0'
+    buildToolsVersion '23.0.3'
 
     defaultConfig {
         applicationId "com.oucb303.training"
@@ -36,12 +36,12 @@ dependencies {
 /*greenDAO配置*/
 buildscript {
     repositories {
-        mavenCentral()
+        jcenter()
     }
     dependencies {
         classpath 'org.greenrobot:greendao-gradle-plugin:3.2.0'
         //classpath 'com.android.tools.build:gradle:1.2.3'
-        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.android.tools.build:gradle:2.0.0'
     }
     allprojects {
         repositories {
