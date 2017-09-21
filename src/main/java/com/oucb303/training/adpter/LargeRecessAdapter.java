@@ -6,6 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.oucb303.training.R;
@@ -69,15 +72,38 @@ public class LargeRecessAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         if (view == null)
             view = LayoutInflater.from(context).inflate(R.layout.item_largerecess_completedtimes_list,null);
-        TextView tvGroupId = (TextView) view.findViewById(R.id.tv_group_id);
+        TextView tvGroupNum = (TextView) view.findViewById(R.id.tv_group_id);
+        ImageView imgGroupId = (ImageView) view.findViewById(R.id.img_group);
         TextView tvTimes = (TextView) view.findViewById(R.id.tv_times);
 
 //        int Id = keyId[i];
 //        tvGroupId.setText((Id+1) +" 组");
 //        tvTimes.setText(timeMap.get(Id)+"");
         Log.i("completedTimes[i]是什么",""+completedTimes[i]);
-        tvGroupId.setText("第"+(i+1)+"组");
+        tvGroupNum.setText("第"+(i+1)+"组");
         tvTimes.setText(completedTimes[i]+"");
+
+        int[] imgId = new int[]{R.drawable.champion,R.drawable.silver,R.drawable.bronze,R.drawable.other};
+        if (i<3){
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            layoutParams.setMargins(310,85,80,0);//4个参数按顺序分别是左上右下
+            tvTimes.setLayoutParams(layoutParams);
+
+            RelativeLayout.LayoutParams paramTest = (RelativeLayout.LayoutParams) imgGroupId.getLayoutParams();
+            paramTest.leftMargin = 20;
+            paramTest.topMargin=5;
+            imgGroupId.setLayoutParams(paramTest);
+            imgGroupId.setImageResource(imgId[i]);
+        }else{
+            RelativeLayout.LayoutParams paramImg = (RelativeLayout.LayoutParams) imgGroupId.getLayoutParams();
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            layoutParams.setMargins(310,55,80,0);
+            tvTimes.setLayoutParams(layoutParams);
+            paramImg.leftMargin = 80;
+            paramImg.topMargin=38;
+            imgGroupId.setLayoutParams(paramImg);
+            imgGroupId.setImageResource(imgId[3]);
+        }
         if (completedTimes[i]<0)
             tvTimes.setText("0");
         return view;

@@ -3,6 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Training.iml" filepath="$PROJECT_DIR$/Training.iml" />
+<<<<<<< HEAD
+=======
+      <module fileurl="file://$PROJECT_DIR$/../vitamio/vitamio.iml" filepath="$PROJECT_DIR$/../vitamio/vitamio.iml" />
+>>>>>>> origin/wanli
     </modules>
   </component>
 </project>

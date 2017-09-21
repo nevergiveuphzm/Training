@@ -1937,7 +1937,11 @@ containing a value of this type.
         public static final int zfp=0x7f02014f;
     }
     public static final class id {
+<<<<<<< HEAD
         public static final int action0=0x7f0e0176;
+=======
+        public static final int action0=0x7f0e0177;
+>>>>>>> origin/wanli
         public static final int action_bar=0x7f0e0041;
         public static final int action_bar_activity_content=0x7f0e0000;
         public static final int action_bar_container=0x7f0e0040;
@@ -1946,7 +1950,11 @@ containing a value of this type.
         public static final int action_bar_subtitle=0x7f0e0022;
         public static final int action_bar_title=0x7f0e0021;
         public static final int action_context_bar=0x7f0e0042;
+<<<<<<< HEAD
         public static final int action_divider=0x7f0e017a;
+=======
+        public static final int action_divider=0x7f0e017b;
+>>>>>>> origin/wanli
         public static final int action_menu_divider=0x7f0e0002;
         public static final int action_menu_presenter=0x7f0e0003;
         public static final int action_mode_bar=0x7f0e003e;
@@ -1956,29 +1964,42 @@ containing a value of this type.
         public static final int activity_help=0x7f0e00a8;
         public static final int activity_item_list=0x7f0e00ce;
         public static final int activity_main=0x7f0e0055;
-        public static final int activity_sequence_choose=0x7f0e00e3;
-        public static final int activity_sequence_running=0x7f0e00ea;
+        public static final int activity_sequence_choose=0x7f0e00e6;
+        public static final int activity_sequence_running=0x7f0e00ed;
         public static final int activity_setting=0x7f0e0050;
+<<<<<<< HEAD
         public static final int activity_test=0x7f0e0103;
         public static final int activity_video=0x7f0e0118;
+=======
+        public static final int activity_test=0x7f0e0106;
+        public static final int activity_video=0x7f0e011a;
+>>>>>>> origin/wanli
         public static final int alertTitle=0x7f0e0030;
         public static final int always=0x7f0e001c;
         public static final int bar_delay_time=0x7f0e0066;
-        public static final int bar_level=0x7f0e00d9;
-        public static final int bar_loop_times=0x7f0e00ee;
+        public static final int bar_level=0x7f0e00dc;
+        public static final int bar_loop_times=0x7f0e00f1;
         public static final int bar_over_time=0x7f0e006a;
         public static final int bar_training_time=0x7f0e005d;
         public static final int bar_training_times=0x7f0e0062;
-        public static final int bar_whole_delay_time=0x7f0e00f3;
+        public static final int bar_whole_delay_time=0x7f0e00f6;
         public static final int beginning=0x7f0e0019;
+<<<<<<< HEAD
         public static final int blinkMode_checkBox=0x7f0e0102;
         public static final int bt_distance_cancel=0x7f0e016d;
         public static final int btn23=0x7f0e00bb;
         public static final int btn_add_time=0x7f0e010c;
+=======
+        public static final int blinkMode_checkBox=0x7f0e0105;
+        public static final int bt_distance_cancel=0x7f0e016f;
+        public static final int btn23=0x7f0e00bb;
+        public static final int btn_add_time=0x7f0e010e;
+>>>>>>> origin/wanli
         public static final int btn_app_tools=0x7f0e00c9;
         public static final int btn_app_tools_1=0x7f0e00ca;
         public static final int btn_base_training=0x7f0e00b8;
         public static final int btn_begin=0x7f0e007d;
+<<<<<<< HEAD
         public static final int btn_cancel=0x7f0e012b;
         public static final int btn_change=0x7f0e0113;
         public static final int btn_change1=0x7f0e0115;
@@ -1993,6 +2014,22 @@ containing a value of this type.
         public static final int btn_delete=0x7f0e00df;
         public static final int btn_export=0x7f0e00fb;
         public static final int btn_get_address=0x7f0e010f;
+=======
+        public static final int btn_cancel=0x7f0e012d;
+        public static final int btn_change=0x7f0e0115;
+        public static final int btn_change1=0x7f0e0117;
+        public static final int btn_clear=0x7f0e010d;
+        public static final int btn_close=0x7f0e0132;
+        public static final int btn_close_help=0x7f0e0164;
+        public static final int btn_close_save=0x7f0e016b;
+        public static final int btn_close_set=0x7f0e0160;
+        public static final int btn_combined_train=0x7f0e00c7;
+        public static final int btn_combined_train_1=0x7f0e00c8;
+        public static final int btn_del=0x7f0e0130;
+        public static final int btn_delete=0x7f0e00e2;
+        public static final int btn_export=0x7f0e00fe;
+        public static final int btn_get_address=0x7f0e0111;
+>>>>>>> origin/wanli
         public static final int btn_hacker_space=0x7f0e00cb;
         public static final int btn_hacker_space_1=0x7f0e00cc;
         public static final int btn_history_result=0x7f0e0090;
@@ -2003,32 +2040,48 @@ containing a value of this type.
         public static final int btn_level_three=0x7f0e00b7;
         public static final int btn_level_two=0x7f0e00b6;
         public static final int btn_off=0x7f0e008d;
+<<<<<<< HEAD
         public static final int btn_ok=0x7f0e015d;
+=======
+        public static final int btn_ok=0x7f0e015f;
+>>>>>>> origin/wanli
         public static final int btn_on=0x7f0e008c;
         public static final int btn_pause=0x7f0e0081;
         public static final int btn_pop_dialog_1=0x7f0e00be;
         public static final int btn_pop_dialog_2=0x7f0e00bf;
-        public static final int btn_random=0x7f0e00e1;
+        public static final int btn_random=0x7f0e00e4;
         public static final int btn_result=0x7f0e008f;
+<<<<<<< HEAD
         public static final int btn_save=0x7f0e00dd;
         public static final int btn_select=0x7f0e00de;
         public static final int btn_send_order=0x7f0e010a;
+=======
+        public static final int btn_save=0x7f0e00e0;
+        public static final int btn_select=0x7f0e00e1;
+        public static final int btn_send_order=0x7f0e010c;
+>>>>>>> origin/wanli
         public static final int btn_sequence_training=0x7f0e0088;
         public static final int btn_sequences=0x7f0e0089;
         public static final int btn_setting=0x7f0e00bc;
         public static final int btn_setting_1=0x7f0e00cd;
         public static final int btn_statistic=0x7f0e00ba;
         public static final int btn_stop=0x7f0e0082;
+<<<<<<< HEAD
         public static final int btn_sub_time=0x7f0e010d;
         public static final int btn_sure=0x7f0e012d;
+=======
+        public static final int btn_sub_time=0x7f0e010f;
+        public static final int btn_sure=0x7f0e012f;
+>>>>>>> origin/wanli
         public static final int btn_technique=0x7f0e00c5;
         public static final int btn_technique_1=0x7f0e00c6;
         public static final int btn_test=0x7f0e00b1;
         public static final int btn_time_random=0x7f0e0087;
         public static final int btn_times_random=0x7f0e0086;
-        public static final int btn_turn_off_all_lights=0x7f0e00ff;
-        public static final int btn_turn_on_all_lights=0x7f0e00fe;
+        public static final int btn_turn_off_all_lights=0x7f0e0102;
+        public static final int btn_turn_on_all_lights=0x7f0e0101;
         public static final int buttonPanel=0x7f0e002b;
+<<<<<<< HEAD
         public static final int cancel_action=0x7f0e0177;
         public static final int cb_end_voice=0x7f0e0076;
         public static final int cb_endvoice=0x7f0e015c;
@@ -2036,12 +2089,22 @@ containing a value of this type.
         public static final int cb_voice=0x7f0e0075;
         public static final int checkbox=0x7f0e0039;
         public static final int chronometer=0x7f0e017d;
+=======
+        public static final int cancel_action=0x7f0e0178;
+        public static final int cb_end_voice=0x7f0e0076;
+        public static final int cb_endvoice=0x7f0e015e;
+        public static final int cb_over_time_voice=0x7f0e0077;
+        public static final int cb_voice=0x7f0e0075;
+        public static final int checkbox=0x7f0e0039;
+        public static final int chronometer=0x7f0e017e;
+>>>>>>> origin/wanli
         public static final int collapseActionView=0x7f0e001d;
         public static final int contentPanel=0x7f0e0031;
         public static final int custom=0x7f0e0037;
         public static final int customPanel=0x7f0e0036;
         public static final int decor_content_parent=0x7f0e003f;
         public static final int default_activity_button=0x7f0e0027;
+<<<<<<< HEAD
         public static final int dialog_help=0x7f0e015f;
         public static final int dialog_image1=0x7f0e0125;
         public static final int dialog_image2=0x7f0e0126;
@@ -2070,12 +2133,45 @@ containing a value of this type.
         public static final int gv_item_name=0x7f0e00c2;
         public static final int gv_light=0x7f0e012c;
         public static final int gv_training_list=0x7f0e0117;
+=======
+        public static final int dialog_help=0x7f0e0161;
+        public static final int dialog_image1=0x7f0e0127;
+        public static final int dialog_image2=0x7f0e0128;
+        public static final int dialog_image3=0x7f0e0129;
+        public static final int dialog_image4=0x7f0e012a;
+        public static final int dialog_light_set=0x7f0e015d;
+        public static final int dialog_ranking=0x7f0e0169;
+        public static final int dialog_sequence_set=0x7f0e0135;
+        public static final int dialog_text=0x7f0e012b;
+        public static final int dialog_view=0x7f0e0166;
+        public static final int disableHome=0x7f0e000c;
+        public static final int edit_query=0x7f0e0043;
+        public static final int end=0x7f0e001a;
+        public static final int end_padder=0x7f0e0182;
+        public static final int et_edit_value=0x7f0e0134;
+        public static final int et_light_id=0x7f0e0107;
+        public static final int et_light_num=0x7f0e0114;
+        public static final int et_pan_id=0x7f0e0113;
+        public static final int et_pan_id1=0x7f0e0116;
+        public static final int et_studentNum=0x7f0e014d;
+        public static final int et_title=0x7f0e012c;
+        public static final int expand_activities_button=0x7f0e0025;
+        public static final int expanded_menu=0x7f0e0038;
+        public static final int gv_first=0x7f0e0136;
+        public static final int gv_item_name=0x7f0e00c2;
+        public static final int gv_light=0x7f0e012e;
+        public static final int gv_training_list=0x7f0e0119;
+>>>>>>> origin/wanli
         public static final int hlv_group1=0x7f0e00a4;
         public static final int hlv_group2=0x7f0e00a5;
         public static final int hlv_items=0x7f0e00d4;
         public static final int home=0x7f0e0004;
         public static final int homeAsUp=0x7f0e000d;
+<<<<<<< HEAD
         public static final int horizontal_listview=0x7f0e0154;
+=======
+        public static final int horizontal_listview=0x7f0e0156;
+>>>>>>> origin/wanli
         public static final int icon=0x7f0e0029;
         public static final int ifRoom=0x7f0e001e;
         public static final int image=0x7f0e0026;
@@ -2086,6 +2182,7 @@ containing a value of this type.
         public static final int img_blink_mode_fast=0x7f0e009a;
         public static final int img_blink_mode_none=0x7f0e0098;
         public static final int img_blink_mode_slow=0x7f0e0099;
+<<<<<<< HEAD
         public static final int img_category=0x7f0e0144;
         public static final int img_delay_time_add=0x7f0e0067;
         public static final int img_delay_time_sub=0x7f0e0065;
@@ -2098,10 +2195,25 @@ containing a value of this type.
         public static final int img_light_color_blue=0x7f0e0072;
         public static final int img_light_color_blue_red=0x7f0e0074;
         public static final int img_light_color_green=0x7f0e011b;
+=======
+        public static final int img_category=0x7f0e0146;
+        public static final int img_delay_time_add=0x7f0e0067;
+        public static final int img_delay_time_sub=0x7f0e0065;
+        public static final int img_group=0x7f0e013b;
+        public static final int img_help=0x7f0e0171;
+        public static final int img_help_content=0x7f0e00a9;
+        public static final int img_item_icon=0x7f0e015b;
+        public static final int img_level_add=0x7f0e00dd;
+        public static final int img_level_sub=0x7f0e00db;
+        public static final int img_light_color_blue=0x7f0e0072;
+        public static final int img_light_color_blue_red=0x7f0e0074;
+        public static final int img_light_color_green=0x7f0e011d;
+>>>>>>> origin/wanli
         public static final int img_light_color_red=0x7f0e0073;
         public static final int img_light_mode_all=0x7f0e0071;
         public static final int img_light_mode_beside=0x7f0e006f;
         public static final int img_light_mode_center=0x7f0e0070;
+<<<<<<< HEAD
         public static final int img_load=0x7f0e0165;
         public static final int img_loop_times_add=0x7f0e00ef;
         public static final int img_loop_times_sub=0x7f0e00ed;
@@ -2112,17 +2224,35 @@ containing a value of this type.
         public static final int img_save_new=0x7f0e0172;
         public static final int img_set=0x7f0e0173;
         public static final int img_start=0x7f0e0171;
+=======
+        public static final int img_load=0x7f0e0167;
+        public static final int img_loop_times_add=0x7f0e00f2;
+        public static final int img_loop_times_sub=0x7f0e00f0;
+        public static final int img_over_time_add=0x7f0e006b;
+        public static final int img_over_time_sub=0x7f0e0069;
+        public static final int img_power=0x7f0e014b;
+        public static final int img_save=0x7f0e0172;
+        public static final int img_save_new=0x7f0e0173;
+        public static final int img_set=0x7f0e0174;
+>>>>>>> origin/wanli
         public static final int img_training_time_add=0x7f0e005e;
         public static final int img_training_time_sub=0x7f0e005c;
         public static final int img_training_times_add=0x7f0e0063;
         public static final int img_training_times_sub=0x7f0e0061;
+<<<<<<< HEAD
         public static final int img_whole_delay_time_add=0x7f0e00f4;
         public static final int img_whole_delay_time_sub=0x7f0e00f2;
         public static final int info=0x7f0e0180;
+=======
+        public static final int img_whole_delay_time_add=0x7f0e00f7;
+        public static final int img_whole_delay_time_sub=0x7f0e00f5;
+        public static final int info=0x7f0e0181;
+>>>>>>> origin/wanli
         public static final int iv_app_image=0x7f0e0051;
         public static final int iv_bracelet=0x7f0e00b0;
         public static final int iv_create=0x7f0e00a6;
         public static final int iv_div=0x7f0e00a7;
+<<<<<<< HEAD
         public static final int iv_item=0x7f0e0146;
         public static final int iv_itemGradView=0x7f0e016a;
         public static final int layout_cancel=0x7f0e016c;
@@ -2132,26 +2262,49 @@ containing a value of this type.
         public static final int light_color=0x7f0e0163;
         public static final int line1=0x7f0e017b;
         public static final int line3=0x7f0e017f;
+=======
+        public static final int iv_item=0x7f0e0148;
+        public static final int iv_itemGradView=0x7f0e016c;
+        public static final int layout_cancel=0x7f0e016e;
+        public static final int layout_power1=0x7f0e0149;
+        public static final int layout_power_whole=0x7f0e00b3;
+        public static final int lightMode_checkBox=0x7f0e0104;
+        public static final int light_color=0x7f0e0165;
+        public static final int line1=0x7f0e017c;
+        public static final int line3=0x7f0e0180;
+>>>>>>> origin/wanli
         public static final int linearLayout=0x7f0e00ac;
-        public static final int linearLayout2=0x7f0e00e8;
+        public static final int linearLayout2=0x7f0e00eb;
         public static final int listMode=0x7f0e0009;
         public static final int list_item=0x7f0e0028;
+<<<<<<< HEAD
         public static final int ll_ListView=0x7f0e0152;
         public static final int ll_about=0x7f0e00fc;
+=======
+        public static final int ll_ListView=0x7f0e0154;
+        public static final int ll_about=0x7f0e00ff;
+>>>>>>> origin/wanli
         public static final int ll_back=0x7f0e00cf;
         public static final int ll_category=0x7f0e00d0;
         public static final int ll_center=0x7f0e00d2;
         public static final int ll_check_update=0x7f0e0054;
+<<<<<<< HEAD
         public static final int ll_image=0x7f0e0151;
         public static final int ll_item_list=0x7f0e014d;
         public static final int ll_last=0x7f0e0157;
+=======
+        public static final int ll_image=0x7f0e0153;
+        public static final int ll_item_list=0x7f0e014f;
+        public static final int ll_last=0x7f0e0159;
+>>>>>>> origin/wanli
         public static final int ll_left=0x7f0e0056;
-        public static final int ll_level=0x7f0e00d6;
-        public static final int ll_loop_times=0x7f0e00eb;
+        public static final int ll_level=0x7f0e00d9;
+        public static final int ll_loop_times=0x7f0e00ee;
         public static final int ll_params=0x7f0e0059;
         public static final int ll_right=0x7f0e0058;
         public static final int ll_training_time=0x7f0e005a;
         public static final int ll_training_times=0x7f0e005f;
+<<<<<<< HEAD
         public static final int ll_upload=0x7f0e00f8;
         public static final int ll_whole_delay_time=0x7f0e00f0;
         public static final int llayout01=0x7f0e0148;
@@ -2161,16 +2314,31 @@ containing a value of this type.
         public static final int lv_battery_second=0x7f0e0182;
         public static final int lv_group=0x7f0e008e;
         public static final int lv_ranking=0x7f0e0168;
+=======
+        public static final int ll_upload=0x7f0e00fb;
+        public static final int ll_whole_delay_time=0x7f0e00f3;
+        public static final int llayout01=0x7f0e014a;
+        public static final int log_in_layout=0x7f0e0126;
+        public static final int lv_address=0x7f0e0118;
+        public static final int lv_battery=0x7f0e00b4;
+        public static final int lv_battery_second=0x7f0e0183;
+        public static final int lv_group=0x7f0e008e;
+        public static final int lv_ranking=0x7f0e016a;
+>>>>>>> origin/wanli
         public static final int lv_scores=0x7f0e00a0;
-        public static final int lv_sequence=0x7f0e00e5;
-        public static final int lv_sequenceSet=0x7f0e00e2;
-        public static final int lv_sequence_list=0x7f0e00e4;
-        public static final int lv_student=0x7f0e00dc;
-        public static final int lv_time_list=0x7f0e00e9;
+        public static final int lv_sequence=0x7f0e00e8;
+        public static final int lv_sequenceSet=0x7f0e00e5;
+        public static final int lv_sequence_list=0x7f0e00e7;
+        public static final int lv_student=0x7f0e00df;
+        public static final int lv_time_list=0x7f0e00ec;
         public static final int lv_times=0x7f0e007c;
         public static final int main_dialog_layout=0x7f0e00ad;
         public static final int main_image=0x7f0e00c0;
+<<<<<<< HEAD
         public static final int media_actions=0x7f0e0179;
+=======
+        public static final int media_actions=0x7f0e017a;
+>>>>>>> origin/wanli
         public static final int middle=0x7f0e001b;
         public static final int multiply=0x7f0e0014;
         public static final int never=0x7f0e001f;
@@ -2185,6 +2353,7 @@ containing a value of this type.
         public static final int r1_second=0x7f0e0092;
         public static final int r1_third=0x7f0e0096;
         public static final int radio=0x7f0e003b;
+<<<<<<< HEAD
         public static final int relativeLayout=0x7f0e012f;
         public static final int relativeLayout17=0x7f0e0120;
         public static final int relativeLayout2=0x7f0e0084;
@@ -2196,6 +2365,21 @@ containing a value of this type.
         public static final int rl_first1=0x7f0e011e;
         public static final int rl_first2=0x7f0e0121;
         public static final int rl_first3=0x7f0e0123;
+=======
+        public static final int relativeLayout=0x7f0e0131;
+        public static final int relativeLayout10=0x7f0e00d5;
+        public static final int relativeLayout17=0x7f0e0122;
+        public static final int relativeLayout2=0x7f0e0084;
+        public static final int relativeLayout3=0x7f0e0083;
+        public static final int relativeLayout4=0x7f0e011e;
+        public static final int relativeLayout5=0x7f0e011f;
+        public static final int relativeLayout6=0x7f0e0121;
+        public static final int relativeLayout9=0x7f0e00d6;
+        public static final int rl_first=0x7f0e007e;
+        public static final int rl_first1=0x7f0e0120;
+        public static final int rl_first2=0x7f0e0123;
+        public static final int rl_first3=0x7f0e0125;
+>>>>>>> origin/wanli
         public static final int rl_forth=0x7f0e0095;
         public static final int rl_second=0x7f0e008a;
         public static final int rl_third=0x7f0e007f;
@@ -2218,6 +2402,7 @@ containing a value of this type.
         public static final int showCustom=0x7f0e000f;
         public static final int showHome=0x7f0e0010;
         public static final int showTitle=0x7f0e0011;
+<<<<<<< HEAD
         public static final int sp_action_model=0x7f0e0109;
         public static final int sp_address=0x7f0e0110;
         public static final int sp_blink=0x7f0e0107;
@@ -2230,12 +2415,27 @@ containing a value of this type.
         public static final int sp_light_num=0x7f0e009d;
         public static final int sp_training_times=0x7f0e0100;
         public static final int sp_voice=0x7f0e0106;
+=======
+        public static final int sp_action_model=0x7f0e010b;
+        public static final int sp_address=0x7f0e0112;
+        public static final int sp_blink=0x7f0e0109;
+        public static final int sp_color=0x7f0e009e;
+        public static final int sp_dev_num=0x7f0e0093;
+        public static final int sp_device_num=0x7f0e011c;
+        public static final int sp_group_device_num=0x7f0e00a3;
+        public static final int sp_group_num=0x7f0e008b;
+        public static final int sp_light=0x7f0e010a;
+        public static final int sp_light_num=0x7f0e009d;
+        public static final int sp_training_times=0x7f0e0103;
+        public static final int sp_voice=0x7f0e0108;
+>>>>>>> origin/wanli
         public static final int spacer=0x7f0e002c;
         public static final int spinner2=0x7f0e00bd;
         public static final int split_action_bar=0x7f0e0007;
         public static final int src_atop=0x7f0e0016;
         public static final int src_in=0x7f0e0017;
         public static final int src_over=0x7f0e0018;
+<<<<<<< HEAD
         public static final int status_bar_latest_event_content=0x7f0e0178;
         public static final int submit_area=0x7f0e004c;
         public static final int surface_view=0x7f0e0119;
@@ -2268,10 +2468,46 @@ containing a value of this type.
         public static final int tv_current_times=0x7f0e0078;
         public static final int tv_default_device_num=0x7f0e00f5;
         public static final int tv_del=0x7f0e0150;
+=======
+        public static final int status_bar_latest_event_content=0x7f0e0179;
+        public static final int submit_area=0x7f0e004c;
+        public static final int surface_view=0x7f0e011b;
+        public static final int sv_container=0x7f0e0091;
+        public static final int sw_bracelet=0x7f0e00ae;
+        public static final int tabMode=0x7f0e000b;
+        public static final int text=0x7f0e0176;
+        public static final int text2=0x7f0e017f;
+        public static final int textSpacerNoButtons=0x7f0e0034;
+        public static final int textView=0x7f0e00a1;
+        public static final int textView2=0x7f0e0124;
+        public static final int textView3=0x7f0e00d7;
+        public static final int textView4=0x7f0e009f;
+        public static final int time=0x7f0e017d;
+        public static final int tipTextView=0x7f0e0168;
+        public static final int title=0x7f0e002a;
+        public static final int title_template=0x7f0e002f;
+        public static final int title_train=0x7f0e00ab;
+        public static final int toast_layout_root=0x7f0e0175;
+        public static final int topPanel=0x7f0e002e;
+        public static final int training_time=0x7f0e009b;
+        public static final int training_times=0x7f0e009c;
+        public static final int tv_add=0x7f0e0155;
+        public static final int tv_allData=0x7f0e00de;
+        public static final int tv_allTime=0x7f0e0143;
+        public static final int tv_app_name=0x7f0e0052;
+        public static final int tv_average_time=0x7f0e007a;
+        public static final int tv_beginDate=0x7f0e00fc;
+        public static final int tv_blockTime=0x7f0e0110;
+        public static final int tv_category_name=0x7f0e00d3;
+        public static final int tv_current_times=0x7f0e0078;
+        public static final int tv_default_device_num=0x7f0e00f8;
+        public static final int tv_del=0x7f0e0152;
+>>>>>>> origin/wanli
         public static final int tv_delay_time=0x7f0e0064;
-        public static final int tv_detail=0x7f0e00e0;
+        public static final int tv_detail=0x7f0e00e3;
         public static final int tv_device_count=0x7f0e00b2;
         public static final int tv_device_list=0x7f0e0094;
+<<<<<<< HEAD
         public static final int tv_device_num=0x7f0e0137;
         public static final int tv_down_time=0x7f0e0080;
         public static final int tv_edit_device_num=0x7f0e00f6;
@@ -2301,10 +2537,42 @@ containing a value of this type.
         public static final int tv_note=0x7f0e013a;
         public static final int tv_num=0x7f0e013e;
         public static final int tv_org=0x7f0e0156;
+=======
+        public static final int tv_device_num=0x7f0e0139;
+        public static final int tv_down_time=0x7f0e0080;
+        public static final int tv_edit_device_num=0x7f0e00f9;
+        public static final int tv_edit_title=0x7f0e0133;
+        public static final int tv_endDate=0x7f0e00fd;
+        public static final int tv_finish_times=0x7f0e013f;
+        public static final int tv_groupNum=0x7f0e014c;
+        public static final int tv_group_color=0x7f0e013d;
+        public static final int tv_group_device=0x7f0e0142;
+        public static final int tv_group_finish_times=0x7f0e0144;
+        public static final int tv_group_id=0x7f0e013c;
+        public static final int tv_group_num=0x7f0e0137;
+        public static final int tv_invalid=0x7f0e015a;
+        public static final int tv_itemTextView=0x7f0e016d;
+        public static final int tv_item_name=0x7f0e0147;
+        public static final int tv_item_step=0x7f0e014e;
+        public static final int tv_item_title=0x7f0e015c;
+        public static final int tv_level=0x7f0e00da;
+        public static final int tv_light_num=0x7f0e0141;
+        public static final int tv_loop_times=0x7f0e00ef;
+        public static final int tv_looped_times=0x7f0e00e9;
+        public static final int tv_lost_times=0x7f0e0079;
+        public static final int tv_maxTime=0x7f0e0097;
+        public static final int tv_method=0x7f0e0162;
+        public static final int tv_module_name=0x7f0e00d1;
+        public static final int tv_name=0x7f0e0157;
+        public static final int tv_note=0x7f0e013e;
+        public static final int tv_num=0x7f0e0140;
+        public static final int tv_org=0x7f0e0158;
+>>>>>>> origin/wanli
         public static final int tv_over_time=0x7f0e0068;
-        public static final int tv_pan_id=0x7f0e00f7;
+        public static final int tv_pan_id=0x7f0e00fa;
         public static final int tv_phone=0x7f0e0053;
         public static final int tv_result=0x7f0e0085;
+<<<<<<< HEAD
         public static final int tv_score=0x7f0e0136;
         public static final int tv_sequence_create_time=0x7f0e014f;
         public static final int tv_sequence_name=0x7f0e014e;
@@ -2314,11 +2582,22 @@ containing a value of this type.
         public static final int tv_timeDown=0x7f0e00d5;
         public static final int tv_times=0x7f0e0143;
         public static final int tv_title=0x7f0e016e;
+=======
+        public static final int tv_score=0x7f0e0138;
+        public static final int tv_sequence_create_time=0x7f0e0151;
+        public static final int tv_sequence_name=0x7f0e0150;
+        public static final int tv_standard=0x7f0e0163;
+        public static final int tv_step=0x7f0e00ea;
+        public static final int tv_time=0x7f0e013a;
+        public static final int tv_timeDown=0x7f0e00d8;
+        public static final int tv_times=0x7f0e0145;
+        public static final int tv_title=0x7f0e0170;
+>>>>>>> origin/wanli
         public static final int tv_total_time=0x7f0e007b;
         public static final int tv_training_time=0x7f0e005b;
         public static final int tv_training_times=0x7f0e0060;
-        public static final int tv_version=0x7f0e00fd;
-        public static final int tv_whole_delay_time=0x7f0e00f1;
+        public static final int tv_version=0x7f0e0100;
+        public static final int tv_whole_delay_time=0x7f0e00f4;
         public static final int up=0x7f0e0008;
         public static final int useLogo=0x7f0e0012;
         public static final int vp_combined=0x7f0e0057;

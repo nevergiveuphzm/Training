@@ -264,8 +264,11 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
         lvTimes.setAdapter(shuttleRunAdapter);
 
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> origin/wanli
     }
 
 

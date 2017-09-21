@@ -589,7 +589,7 @@
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
                     android:text="组号"
-                    android:textSize="18sp"/>
+                    android:textSize="25sp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -597,14 +597,13 @@
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
                     android:text="得分"
-                    android:textSize="18sp"/>
+                    android:textSize="25sp"/>
             </LinearLayout>
 
             <ListView
                 android:id="@+id/lv_scores"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="5dp"
                 android:layout_marginLeft="48dp"
                 android:divider="#00000000">
 

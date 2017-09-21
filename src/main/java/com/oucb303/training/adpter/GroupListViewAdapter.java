@@ -11,7 +11,11 @@ import android.widget.TextView;
 import com.oucb303.training.R;
 import com.oucb303.training.device.Device;
 
+<<<<<<< HEAD
 
+=======
+//import io.vov.vitamio.utils.Log;
+>>>>>>> origin/wanli
 
 /**
  * Created by huzhiming on 16/10/12.
@@ -70,7 +74,7 @@ public class GroupListViewAdapter extends BaseAdapter
     @Override
     public View getView(int position, View view, ViewGroup viewGroup)
     {
-        Log.i("执行几次","----------------------");
+//        Log.i("执行几次","----------------------");
         if (view == null)
             view = LayoutInflater.from(context).inflate(R.layout.item_group_divide, null);
         TextView tvGroupNum = (TextView) view.findViewById(R.id.tv_group_num);

@@ -89,7 +89,7 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
     ScrollView svContainer;
     android.widget.CheckBox cbVoice;
 
-//    private int level;
+    //    private int level;
     private Device device;
     //最大分组数目
     private int maxGroupNum;
@@ -404,9 +404,11 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
             case R.id.btn_on:
                 //goupNum组数，1：每组设备个数，0：类型
                 device.turnOnButton(groupNum, groupSize, 0);
+                btnOn.setClickable(false);
                 break;
             case R.id.btn_off:
                 device.turnOffAllTheLight();
+                btnOn.setClickable(true);
                 break;
             case R.id.img_set:
                 set_dialog = createLightSetDialog();

@@ -5,6 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.oucb303.training.R;
@@ -29,7 +32,7 @@ public class EightSecondRunAdapter extends BaseAdapter{
     @Override
     public int getCount() {
         if (timeList == null)
-           return 0;
+            return 0;
         else
             return timeList.size();
     }
@@ -52,8 +55,23 @@ public class EightSecondRunAdapter extends BaseAdapter{
         TextView tvTime = (TextView) view.findViewById(R.id.tv_time);
         TextView tvNote = (TextView) view.findViewById(R.id.tv_note);
         TextView tvLightNum = (TextView) view.findViewById(R.id.tv_light_num);
+        ImageView imgGroupId=(ImageView) view.findViewById(R.id.img_group);
 
         tvNum.setText((i+1)+"");
+        int[] imgId = new int[]{R.drawable.champion,R.drawable.silver,R.drawable.bronze,R.drawable.other};
+        if (i<3){
+            imgGroupId.setImageResource(imgId[i]);
+        }
+        else{
+            RelativeLayout.LayoutParams paramImg = (RelativeLayout.LayoutParams) imgGroupId.getLayoutParams();
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            layoutParams.setMargins(170,55,80,0);
+            paramImg.leftMargin = 80;
+            paramImg.topMargin=38;
+            imgGroupId.setLayoutParams(paramImg);
+            imgGroupId.setImageResource(imgId[3]);
+        }
+
         if ((timeList.get(i).getTime() == 0)||(timeList.get(i).getTime() >= 8000))
         {
             tvTime.setText("---");
