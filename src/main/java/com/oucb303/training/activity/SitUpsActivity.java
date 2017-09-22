@@ -120,7 +120,7 @@ public class SitUpsActivity extends AppCompatActivity {
     private int type = 1;
     Battery battery;
     private int level=2;
-    private Dialog set_dialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

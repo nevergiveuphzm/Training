@@ -24,15 +24,18 @@ import com.oucb303.training.adpter.GroupListViewAdapter;
 import com.oucb303.training.adpter.LargeRecessAdapter;
 import com.oucb303.training.device.Device;
 import com.oucb303.training.device.Order;
+import com.oucb303.training.dialugue.CustomDialog;
 import com.oucb303.training.listener.AddOrSubBtnClickListener;
 import com.oucb303.training.listener.CheckBoxClickListener;
 import com.oucb303.training.listener.MySeekBarListener;
 import com.oucb303.training.listener.SpinnerItemSelectedListener;
 import com.oucb303.training.model.CheckBox;
+import com.oucb303.training.model.DeviceInfo;
 import com.oucb303.training.model.PowerInfoComparetor;
 import com.oucb303.training.model.TimeInfo;
 import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.threads.Timer;
+import com.oucb303.training.utils.Battery;
 import com.oucb303.training.utils.Constant;
 import com.oucb303.training.utils.DataAnalyzeUtils;
 import com.oucb303.training.utils.DialogUtils;
@@ -80,32 +83,12 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
     Spinner spGroupNum;
     @Bind(R.id.lv_group)
     ListView lvGroup;
-    //    @Bind(R.id.img_action_mode_light)
-//    ImageView imgActionModeLight;
-//    @Bind(R.id.img_action_mode_touch)
-//    ImageView imgActionModeTouch;
-//    @Bind(R.id.img_action_mode_together)
-//    ImageView imgActionModeTogether;
-//    @Bind(R.id.img_light_mode_beside)
-//    ImageView imgLightModeBeside;
-//    @Bind(R.id.img_light_mode_center)
-//    ImageView imgLightModeCenter;
-//    @Bind(R.id.img_light_mode_all)
-//    ImageView imgLightModeAll;
-//    @Bind(R.id.img_light_color_blue)
-//    ImageView imgLightColorBlue;
-//    @Bind(R.id.img_light_color_red)
-//    ImageView imgLightColorRed;
-//    @Bind(R.id.img_light_color_blue_red)
-//    ImageView imgLightColorBlueRed;
-//    @Bind(R.id.cb_voice)
+    @Bind(R.id.img_start)
+    TextView imgSatart;
     android.widget.CheckBox cbVoice;
-//    @Bind(R.id.cb_end_voice)
+
     android.widget.CheckBox cbEndVoice;
-//    @Bind(R.id.ll_params)
-//    LinearLayout llParams;
-//    @Bind(R.id.sv_container)
-//    ScrollView svContainer;
+
     @Bind(R.id.img_set)
     ImageView imgSet;
     @Bind(R.id.tv_total_time)
@@ -124,20 +107,7 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
     Button btnResult;
     @Bind(R.id.btn_history_result)
     Button btnHistoryResult;
-//    @Bind(R.id.img_blink_mode_none)
-//    ImageView imgBlinkModeNone;
-//    @Bind(R.id.img_blink_mode_slow)
-//    ImageView imgBlinkModeSlow;
-//    @Bind(R.id.img_blink_mode_fast)
-//    ImageView imgBlinkModeFast;
-//    @Bind(R.id.img_level_sub)
-//    ImageView imgLevelsub;
-//    @Bind(R.id.img_level_add)
-//    ImageView imgLevelAdd;
-//    @Bind(R.id.bar_level)
-//    SeekBar barLevel;
-//    @Bind(R.id.tv_level)
-//    TextView tvLevel;
+
 
     private Device device;
     private int level=2;
@@ -148,8 +118,8 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
     private final int groupSize = 1;//每组所需设备个数
     private GroupListViewAdapter groupListViewAdapter;
     private LargeRecessAdapter largeRecessAdapter;
-    //感应模式和灯光模式集合
-    private CheckBox actionModeCheckBox, lightColorCheckBox, lightModeCheckBox,blinkModeCheckBox;
+
+
     private boolean isTraining = false;//是否正在训练标志
     //每组在规定时间内，完成的训练次数
     private int[] completedTimes;
@@ -158,13 +128,14 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
 
     //上一次完成训练的时间
     private int[] currentTime;
-
+    int[] Setting_return_data = new int[5];
     private final int TIME_RECEIVE = 1;
     private final int POWER_RECEIVE = 2;
     private final int UPDATE_TIMES = 3;
     private final int STOP_TRAINING = 4;
-    private Dialog set_dialog;
 
+
+    Battery battery;
 
     private Handler handler = new Handler() {
         //处理接收过来的数据的方法
@@ -213,13 +184,18 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
             device.connect(this);
             device.initConfig();
         }
+        battery = new Battery(device,imgSatart,handler_battery );
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         imgSaveNew.setEnabled(false);
-        set_dialog = createLightSetDialog();
+        Setting_return_data[0]=0;
+        Setting_return_data[1]=0;
+        Setting_return_data[2]=0;
+        Setting_return_data[3]=1;
+        Setting_return_data[4]=1;
     }
 
     @Override
@@ -298,42 +274,13 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
         groupListViewAdapter = new GroupListViewAdapter(LargeRecessActivity.this, groupSize);
         lvGroup.setAdapter(groupListViewAdapter);
 
-        //解决listView 与scrollView的滑动冲突
-//        lvGroup.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent motionEvent) {
-//                //从listView 抬起时将控制权还给scrollview
-//                if (motionEvent.getAction() == MotionEvent.ACTION_UP)
-//                    svContainer.requestDisallowInterceptTouchEvent(false);
-//                else
-//                    //requestDisallowInterceptTouchEvent（true）方法是用来子View告诉父容器不要拦截我们的事件的
-//                    svContainer.requestDisallowInterceptTouchEvent(true);
-//                return false;
-//            }
-//        });
-
         //初始化右侧listView
         largeRecessAdapter = new LargeRecessAdapter(this);
         lvTimes.setAdapter(largeRecessAdapter);
         lvTimes.setOnItemClickListener(this);
 
 
-//        //设定感应模式的checkbox组合的点击事件
-//        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
-//        actionModeCheckBox = new CheckBox(1, views);
-//        new CheckBoxClickListener(actionModeCheckBox);
-//        //设定灯光模式的checkbox组合的点击事件
-//        ImageView[] views1 = new ImageView[]{imgLightModeBeside, imgLightModeCenter, imgLightModeAll};
-//        lightModeCheckBox = new CheckBox(1, views1);
-//        new CheckBoxClickListener(lightModeCheckBox);
-//        //设定灯光颜色checkBox组合的点击事件
-//        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
-//        lightColorCheckBox = new CheckBox(1, views2);
-//        new CheckBoxClickListener(lightColorCheckBox);
-//        //设定闪烁模式checkbox组合的点击事件
-//        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast,};
-//        blinkModeCheckBox = new CheckBox(1, views3);
-//        new CheckBoxClickListener(blinkModeCheckBox);
+
     }
 
 
@@ -351,29 +298,32 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
         intent.putExtras(bundle);
         startActivity(intent);
     }
-//    private void showListDialog() {
-//        final String[] items = { "我是1","我是2","我是3","我是4" };
-//        AlertDialog.Builder listDialog = new AlertDialog.Builder(this);
-//        listDialog.setTitle("详情");
-//        listDialog.setItems(items, new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int i) {
-//                // which 下标从0开始
-//                // ...To-do
-////                Toast.makeText(this, "你点击了" + items[i], Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        listDialog.show();
-//    }
 
 
-    @OnClick({R.id.img_set,R.id.layout_cancel, R.id.img_help, R.id.btn_begin, R.id.btn_stop,R.id.img_save_new, R.id.btn_on, R.id.btn_off,R.id.btn_result, R.id.btn_history_result})
+
+    @OnClick({R.id.img_set,R.id.layout_cancel, R.id.img_help, R.id.btn_begin, R.id.btn_stop,R.id.img_save_new, R.id.btn_on, R.id.btn_off,R.id.btn_result, R.id.btn_history_result,R.id.img_start})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_set:
-                set_dialog = createLightSetDialog();
-                OperateUtils.setScreenWidth(this, set_dialog, 0.95, 0.7);
-                set_dialog.show();
+                CustomDialog dialog = new CustomDialog(LargeRecessActivity.this,"From btn 2",new CustomDialog.ICustomDialogEventListener() {
+                    @Override
+                    public void customDialogEvent(int id) {
+                        // TextView imageView = (TextView)findViewById(R.id.main_image);
+
+                        int aaa = id;
+                        String a  =String.valueOf(aaa);
+                        for(int i=0;i<5;i++){
+                            Setting_return_data[i] = aaa % 10;
+                            aaa = aaa/10;
+                            Log.i("----------",i+"   "+Setting_return_data[i]+"");
+                            //imageView.append(Setting_shuju[i]+"   ");
+                        }
+                    }
+                },R.style.dialog_rank);
+
+                dialog.show();
+                OperateUtils operateUtils = new OperateUtils();
+                operateUtils.setScreenWidth(LargeRecessActivity.this,dialog, 0.95, 0.7);
                 break;
             case R.id.layout_cancel:
                 this.finish();
@@ -439,6 +389,9 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
                 btnResult.setTextColor(this.getResources().getColor(R.color.white));
                 btnHistoryResult.setTextColor(this.getResources().getColor(R.color.ui_green));
                 break;
+            case R.id.img_start:
+                battery.initDevice();
+                break;
 
         }
     }
@@ -469,12 +422,12 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
         //开全灯
         for (int i = 0; i < goupNum; i++) {
             device.sendOrder(Device.DEVICE_LIST.get(i).getDeviceNum(),
-                    Order.LightColor.values()[lightColorCheckBox.getCheckId()],
-                    Order.VoiceMode.values()[cbVoice.isChecked()? 1:0],
-                    Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
+                    Order.LightColor.values()[Setting_return_data[3]],
+                    Order.VoiceMode.values()[Setting_return_data[1]],
+                    Order.BlinkModel.values()[Setting_return_data[2]],
                     Order.LightModel.OUTER,
-                    Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                    Order.EndVoice.values()[cbEndVoice.isChecked()?1:0]);
+                    Order.ActionModel.values()[Setting_return_data[4]],
+                    Order.EndVoice.values()[Setting_return_data[0]]);
         }
         timer = new Timer(handler, trainingTime);
         timer.setBeginTime(System.currentTimeMillis());
@@ -500,12 +453,12 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
                 if (!isTraining)
                     return;
                 device.sendOrder(deviceNum,
-                        Order.LightColor.values()[lightColorCheckBox.getCheckId()],
-                        Order.VoiceMode.values()[cbVoice.isChecked()?1:0],
-                        Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
+                        Order.LightColor.values()[Setting_return_data[3]],
+                        Order.VoiceMode.values()[Setting_return_data[1]],
+                        Order.BlinkModel.values()[Setting_return_data[2]],
                         Order.LightModel.OUTER,
-                        Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                        Order.EndVoice.values()[cbEndVoice.isChecked()?1:0]);
+                        Order.ActionModel.values()[Setting_return_data[4]],
+                        Order.EndVoice.values()[Setting_return_data[0]]);
             }
         }).start();
     }
@@ -560,54 +513,38 @@ public class LargeRecessActivity extends AppCompatActivity implements AdapterVie
         return position;
     }
 
-    public Dialog createLightSetDialog() {
 
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View v = inflater.inflate(R.layout.layout_dialog_lightset, null);// 得到加载view
 
-        LinearLayout layout = (LinearLayout) v.findViewById(R.id.dialog_light_set);
-        ImageView imgActionModeTouch = (ImageView) layout.findViewById(R.id.img_action_mode_touch);
-        ImageView imgActionModeLight = (ImageView) layout.findViewById(R.id.img_action_mode_light);
-        ImageView imgActionModeTogether = (ImageView) layout.findViewById(R.id.img_action_mode_together);
-        ImageView imgLightColorBlue = (ImageView) layout.findViewById(R.id.img_light_color_blue);
-        ImageView imgLightColorRed = (ImageView) layout.findViewById(R.id.img_light_color_red);
-        ImageView imgLightColorBlueRed = (ImageView) layout.findViewById(R.id.img_light_color_blue_red);
-        ImageView imgBlinkModeNone = (ImageView) layout.findViewById(R.id.img_blink_mode_none);
-        ImageView imgBlinkModeSlow = (ImageView) layout.findViewById(R.id.img_blink_mode_slow);
-        ImageView imgBlinkModeFast = (ImageView) layout.findViewById(R.id.img_blink_mode_fast);
-        cbVoice = (android.widget.CheckBox) layout.findViewById(R.id.cb_voice);
-        cbEndVoice = (android.widget.CheckBox)layout.findViewById(R.id.cb_endvoice);
-        Button btnOk = (Button) layout.findViewById(R.id.btn_ok);
-        Button btnCloseSet = (Button) layout.findViewById(R.id.btn_close_set);
-        final Dialog dialog = new Dialog(this, R.style.dialog_rank);
 
-        dialog.setContentView(layout);
+    //这个Handler作用是刷新Devices以及spanner
+    Handler handler_battery = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    Device.DEVICE_LIST =(ArrayList<DeviceInfo>)msg.obj;
+                    Collections.sort(Device.DEVICE_LIST, new PowerInfoComparetor());
 
-        //设定感应模式checkBox组合的点击事件
-        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
-        actionModeCheckBox = new CheckBox(1, views);
-        new CheckBoxClickListener(actionModeCheckBox);
-        //设定灯光颜色checkBox组合的点击事件
-        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
-        lightColorCheckBox = new CheckBox(1, views2);
-        new CheckBoxClickListener(lightColorCheckBox);
-        //设定闪烁模式checkbox组合的点击事件
-        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast};
-        blinkModeCheckBox = new CheckBox(1, views3);
-        new CheckBoxClickListener(blinkModeCheckBox);
-
-        btnOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
+                    //初始化训练分组下拉框
+                    maxGroupNum = Device.DEVICE_LIST.size();
+                    String[] groupNumChoose = new String[maxGroupNum + 1];
+                    groupNumChoose[0] = "";
+                    for (int i = 1; i <= maxGroupNum; i++) {
+                        groupNumChoose[i] = (i + "组");
+                    }
+                    spGroupNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(LargeRecessActivity.this, spGroupNum, groupNumChoose) {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            super.onItemSelected(adapterView, view, i, l);
+                            goupNum = i;
+                            groupListViewAdapter.setGroupNum(i);
+                            groupListViewAdapter.notifyDataSetChanged();
+                        }
+                    });
+                    break;
+                default:
+                    break;
             }
-        });
-        btnCloseSet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        return dialog;
-    }
+        }
+    };
 }

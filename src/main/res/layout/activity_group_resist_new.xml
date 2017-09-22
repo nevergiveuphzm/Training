@@ -586,46 +586,71 @@
 
         </ScrollView>
         <!--#############################################################################################-->
-
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@drawable/bg_score"
+             android:layout_margin="20dp"
+             >
+         </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="360dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="130dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_scoretitle">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="130dp"
+                    android:layout_marginTop="2dp"
+                    android:text="训练结果"
+                    android:textColor="@color/white"
+                    android:textSize="25sp"
+                    android:background="#00000000"/>
+            </RelativeLayout>
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="620dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_margin="20dp"
-            android:background="@drawable/bg_score">
+            android:layout_margin="20dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_margin="17dp">
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:layout_marginTop="45dp">-->
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:text="总时间:"
-                    android:textSize="18sp"/>
+                <!--<TextView-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center_horizontal"-->
+                    <!--android:text="总时间:"-->
+                    <!--android:textSize="18sp"/>-->
 
-            </LinearLayout>
+            <!--</LinearLayout>-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="5dp">
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:layout_marginBottom="5dp">-->
 
-                <TextView
-                    android:id="@+id/tv_total_time"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:text="---"/>
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_total_time"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center_horizontal"-->
+                    <!--android:text="-&#45;&#45;"/>-->
 
-            </LinearLayout>
+            <!--</LinearLayout>-->
 
             <include layout="@layout/layout_line_horizontal"/>
 
@@ -633,7 +658,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_margin="17dp">
+                android:layout_marginTop="45dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -663,6 +688,8 @@
             </ListView>
 
         </LinearLayout>
+
+        </RelativeLayout>
 
     </LinearLayout>
 

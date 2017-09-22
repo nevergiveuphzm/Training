@@ -108,8 +108,8 @@ public class GroupResistActivity extends AppCompatActivity {
     Button btnBegin;
     @Bind(R.id.sv_container)
     ScrollView svContainer;
-    @Bind(R.id.tv_total_time)
-    TextView tvTotalTime;
+//    @Bind(R.id.tv_total_time)
+//    TextView tvTotalTime;
     @Bind(R.id.lv_scores)
     ListView lvScores;
     android.widget.CheckBox cbVoice;
@@ -170,7 +170,7 @@ public class GroupResistActivity extends AppCompatActivity {
                     break;
                 //更新计时
                 case Timer.TIMER_FLAG:
-                    tvTotalTime.setText(data);
+//                    tvTotalTime.setText(data);
                     //判断是否结束
                     if (timer.time >= trainingTime) {
                         Message message = Message.obtain();
@@ -397,9 +397,11 @@ public class GroupResistActivity extends AppCompatActivity {
             case R.id.btn_on:
                 //totalNum组数，lightEveryNum：每组设备个数，1：类型
                 device.turnOnButton(totalNum, 1, 0);
+                btnOn.setClickable(false);
                 break;
             case R.id.btn_off:
                 device.turnOffAllTheLight();
+                btnOn.setClickable(true);
                 break;
             case R.id.img_save_new:
                 Intent it = new Intent(this, SaveActivity.class);

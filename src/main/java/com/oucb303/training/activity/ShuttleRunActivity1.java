@@ -23,15 +23,18 @@ import com.oucb303.training.adpter.GroupListViewAdapter;
 import com.oucb303.training.adpter.ShuttleRunAdapter1;
 import com.oucb303.training.device.Device;
 import com.oucb303.training.device.Order;
+import com.oucb303.training.dialugue.CustomDialog;
 import com.oucb303.training.listener.AddOrSubBtnClickListener;
 import com.oucb303.training.listener.CheckBoxClickListener;
 import com.oucb303.training.listener.MySeekBarListener;
 import com.oucb303.training.listener.SpinnerItemSelectedListener;
 import com.oucb303.training.model.CheckBox;
+import com.oucb303.training.model.DeviceInfo;
 import com.oucb303.training.model.PowerInfoComparetor;
 import com.oucb303.training.model.TimeInfo;
 import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.threads.Timer;
+import com.oucb303.training.utils.Battery;
 import com.oucb303.training.utils.Constant;
 import com.oucb303.training.utils.DataAnalyzeUtils;
 import com.oucb303.training.utils.DialogUtils;
@@ -85,7 +88,8 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
     Button btnOn;
     @Bind(R.id.btn_off)
     Button btnOff;
-
+    @Bind(R.id.img_start)
+    TextView imgSatart;
     @Bind(R.id.bar_training_time)
     SeekBar barTrainingTime;
 
@@ -110,8 +114,7 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
     private final int groupSize = 1;
     private GroupListViewAdapter groupListViewAdapter;
     private ShuttleRunAdapter1 shuttleRunAdapter;
-    //感应模式和闪烁模式，灯光颜色集合
-    private CheckBox actionModeCheckBox, blinkModeCheckBox, lightColorCheckBox;
+
     //训练开始标志
     private boolean trainingBeginFlag = false;
 
@@ -119,6 +122,8 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
     private int[] completedTimes;
     //每组完成训练所用时间
     private int[] finishTimes;
+    //
+    int[] Setting_return_data = new int[5];
     //key : 组号 value： 时间
     private Map<Integer,Integer> timeMap = new HashMap<Integer, Integer>();
     //存放排序后的key值
@@ -133,10 +138,11 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
     private final int POWER_RECEIVE = 2;
     private final int UPDATE_TIMES = 3;
     private final int STOP_TRAINING = 4;
-
+    //电池信息磊
+    Battery battery;
     private int level=0;
 
-    private Dialog set_dialog;
+
 
     private Handler handler = new Handler() {
         //处理接收过来的数据的方法
@@ -181,14 +187,19 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
             device.initConfig();
         }
         initView();
-
+        battery = new Battery(device,imgSatart,handler_battery );
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         imgSaveNew.setEnabled(false);
-        set_dialog = createLightSetDialog();
+
+        Setting_return_data[0]=0;
+        Setting_return_data[1]=0;
+        Setting_return_data[2]=0;
+        Setting_return_data[3]=1;
+        Setting_return_data[4]=1;
     }
 
     @Override
@@ -268,7 +279,7 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
 
 
     @OnClick({R.id.layout_cancel, R.id.img_help, R.id.btn_begin,R.id.img_set, R.id.img_save_new, R.id.btn_off,
-            R.id.btn_stop,R.id.btn_on , R.id.btn_result, R.id.btn_history_result})
+            R.id.btn_stop,R.id.btn_on , R.id.btn_result, R.id.btn_history_result,R.id.img_start})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_stop:
@@ -279,10 +290,25 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
                 }
                 break;
             case R.id.img_set:
-                set_dialog = createLightSetDialog();
-                OperateUtils.setScreenWidth(this, set_dialog, 0.95, 0.7);
+                CustomDialog dialog = new  CustomDialog(ShuttleRunActivity1.this,"From btn 2",new CustomDialog.ICustomDialogEventListener() {
+                    @Override
+                    public void customDialogEvent(int id) {
+                        // TextView imageView = (TextView)findViewById(R.id.main_image);
 
-                set_dialog.show();
+                        int aaa = id;
+                        String a  =String.valueOf(aaa);
+                        for(int i=0;i<5;i++){
+                            Setting_return_data[i] = aaa % 10;
+                            aaa = aaa/10;
+                            Log.i("----------",i+"   "+Setting_return_data[i]+"");
+                            //imageView.append(Setting_shuju[i]+"   ");
+                        }
+                    }
+                },R.style.dialog_rank);
+
+                dialog.show();
+                OperateUtils operateUtils = new OperateUtils();
+                operateUtils.setScreenWidth(ShuttleRunActivity1.this,dialog, 0.95, 0.7);
                 break;
             case R.id.layout_cancel:
                 this.finish();
@@ -341,6 +367,9 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
                 btnResult.setTextColor(this.getResources().getColor(R.color.white));
                 btnHistoryResult.setTextColor(this.getResources().getColor(R.color.ui_green));
                 break;
+            case R.id.img_start:
+                battery.initDevice();
+                break;
         }
     }
 
@@ -372,12 +401,13 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
         //开全灯
         for (int i = 0; i < groupNum; i++) {
             device.sendOrder(Device.DEVICE_LIST.get(i).getDeviceNum(),
-                    Order.LightColor.values()[lightColorCheckBox.getCheckId()],
-                    Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                    Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
+                    Order.LightColor.values()[Setting_return_data[3]],
+                    Order.VoiceMode.values()[Setting_return_data[1]],
+                    Order.BlinkModel.values()[Setting_return_data[2]],
                     Order.LightModel.OUTER,
-                    Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                    Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
+                    Order.ActionModel.values()[Setting_return_data[4]],
+                    Order.EndVoice.values()[Setting_return_data[0]]);
+
         }
 
         //获得当前的系统时间
@@ -408,12 +438,12 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
                 if (!trainingBeginFlag)
                     return;
                 device.sendOrder(deviceNum,
-                        Order.LightColor.values()[lightColorCheckBox.getCheckId()],
-                        Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                        Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
+                        Order.LightColor.values()[Setting_return_data[3]],
+                        Order.VoiceMode.values()[Setting_return_data[1]],
+                        Order.BlinkModel.values()[Setting_return_data[2]],
                         Order.LightModel.OUTER,
-                        Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                        Order.EndVoice.values()[cbEndVoice.isChecked() ? 1 : 0]);
+                        Order.ActionModel.values()[Setting_return_data[4]],
+                        Order.EndVoice.values()[Setting_return_data[0]]);
             }
         }).start();
     }
@@ -493,55 +523,42 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
     }
 
 
-    public Dialog createLightSetDialog() {
 
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View v = inflater.inflate(R.layout.layout_dialog_lightset, null);// 得到加载view
 
-        LinearLayout layout = (LinearLayout) v.findViewById(R.id.dialog_light_set);
-        ImageView imgActionModeTouch = (ImageView) layout.findViewById(R.id.img_action_mode_touch);
-        ImageView imgActionModeLight = (ImageView) layout.findViewById(R.id.img_action_mode_light);
-        ImageView imgActionModeTogether = (ImageView) layout.findViewById(R.id.img_action_mode_together);
-        ImageView imgLightColorBlue = (ImageView) layout.findViewById(R.id.img_light_color_blue);
-        ImageView imgLightColorRed = (ImageView) layout.findViewById(R.id.img_light_color_red);
-        ImageView imgLightColorBlueRed = (ImageView) layout.findViewById(R.id.img_light_color_blue_red);
-        ImageView imgBlinkModeNone = (ImageView) layout.findViewById(R.id.img_blink_mode_none);
-        ImageView imgBlinkModeSlow = (ImageView) layout.findViewById(R.id.img_blink_mode_slow);
-        ImageView imgBlinkModeFast = (ImageView) layout.findViewById(R.id.img_blink_mode_fast);
-        cbVoice = (android.widget.CheckBox) layout.findViewById(R.id.cb_voice);
+    //这个Handler作用是刷新Devices以及spanner
+    Handler handler_battery = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    Device.DEVICE_LIST =(ArrayList<DeviceInfo>)msg.obj;
+                    //设备排序
+                    Collections.sort(Device.DEVICE_LIST, new PowerInfoComparetor());
 
-        cbEndVoice = (android.widget.CheckBox) layout.findViewById(R.id.cb_endvoice);
-        Button btnOk = (Button) layout.findViewById(R.id.btn_ok);
-        Button btnCloseSet = (Button) layout.findViewById(R.id.btn_close_set);
-        final Dialog dialog = new Dialog(this, R.style.dialog_rank);
+                    //初始化分组下拉框
+                    maxGroupNum = Device.DEVICE_LIST.size();
+                    if (maxGroupNum > 8)
+                        maxGroupNum = 8;
+                    String[] groupNumChoose = new String[maxGroupNum + 1];
+                    groupNumChoose[0] = "";
+                    for (int i = 1; i <= maxGroupNum; i++)
+                        groupNumChoose[i] = (i + " 组");
 
-        dialog.setContentView(layout);
-
-        //设定感应模式checkBox组合的点击事件
-        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
-        actionModeCheckBox = new CheckBox(1, views);
-        new CheckBoxClickListener(actionModeCheckBox);
-        //设定灯光颜色checkBox组合的点击事件
-        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
-        lightColorCheckBox = new CheckBox(1, views2);
-        new CheckBoxClickListener(lightColorCheckBox);
-        //设定闪烁模式checkbox组合的点击事件
-        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast};
-        blinkModeCheckBox = new CheckBox(1, views3);
-        new CheckBoxClickListener(blinkModeCheckBox);
-
-        btnOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
+                    spGroupNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(ShuttleRunActivity1.this, spGroupNum, groupNumChoose) {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            super.onItemSelected(adapterView, view, i, l);
+                            groupNum = i;
+                            finishTimes = new int[groupNum];
+                            groupListViewAdapter.setGroupNum(i);
+                            groupListViewAdapter.notifyDataSetChanged();
+                        }
+                    });
+                    break;
+                default:
+                    break;
             }
-        });
-        btnCloseSet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        return dialog;
-    }
+        }
+    };
+
 }

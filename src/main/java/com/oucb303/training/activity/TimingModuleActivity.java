@@ -66,11 +66,11 @@ public class TimingModuleActivity extends AppCompatActivity {
     ImageView imgTrainingTimeSub;
     @Bind(R.id.bar_training_time)
     SeekBar barTrainingTime;
-    //    @Bind(R.id.tv_maxTime)
+//    @Bind(R.id.tv_maxTime)
 //    TextView tvMaxTime;
     @Bind(R.id.img_training_time_add)
     ImageView imgTrainingTimeAdd;
-    //    @Bind(R.id.ll_training_time)
+//    @Bind(R.id.ll_training_time)
 //    LinearLayout llTrainingTime;
     @Bind(R.id.sp_dev_num)
     Spinner spDevNum;
@@ -80,7 +80,7 @@ public class TimingModuleActivity extends AppCompatActivity {
     Button btnOff;
     @Bind(R.id.tv_device_list)
     TextView tvDeviceList;
-    //    @Bind(R.id.img_action_mode_light)
+//    @Bind(R.id.img_action_mode_light)
 //    ImageView imgActionModeLight;
 //    @Bind(R.id.img_action_mode_touch)
 //    ImageView imgActionModeTouch;
@@ -94,14 +94,14 @@ public class TimingModuleActivity extends AppCompatActivity {
 //    ImageView imgLightColorBlueRed;
 //    @Bind(R.id.cb_voice)
     android.widget.CheckBox cbVoice;
-    //    @Bind(R.id.cb_end_voice)
+//    @Bind(R.id.cb_end_voice)
     android.widget.CheckBox cbEndVoice;
 //    @Bind(R.id.cb_over_time_voice)
 //    android.widget.CheckBox cbOverTimeVoice;
 //    @Bind(R.id.ll_params)
 //    LinearLayout llParams;
 
-    //    @Bind(R.id.tv_total_time)
+//    @Bind(R.id.tv_total_time)
 //    TextView tvTotalTime;
     @Bind(R.id.lv_times)
     ListView lvTimes;
@@ -115,14 +115,14 @@ public class TimingModuleActivity extends AppCompatActivity {
     Button btnResult;
     @Bind(R.id.btn_history_result)
     Button btnHistoryResult;
-    //    @Bind(R.id.img_blink_mode_none)
+//    @Bind(R.id.img_blink_mode_none)
 //    ImageView imgBlinkModeNone;
 //    @Bind(R.id.img_blink_mode_slow)
 //    ImageView imgBlinkModeSlow;
 //    @Bind(R.id.img_blink_mode_fast)
 //    ImageView imgBlinkModeFast;
 //设置返回数据
-    int[] Setting_return_data = new int[5];
+int[] Setting_return_data = new int[5];
     //device里有设备灯列表(设备编号，电量，短地址)，设备数量
     private Device device;
     //所选设备个数
@@ -160,7 +160,7 @@ public class TimingModuleActivity extends AppCompatActivity {
                     //更新计时
                     String time = msg.obj.toString();
                     Log.d("右侧总时间：", "" + time);
-                    //  tvTotalTime.setText(time);  ******************
+                  //  tvTotalTime.setText(time);  ******************
                     //把超时的按顺序罗列出来
                     if (timer.time >= trainingTime) {
                         stopTraining();
@@ -388,12 +388,12 @@ public class TimingModuleActivity extends AppCompatActivity {
         //发送开灯命令
         for (int i = 0; i < totalNum; i++) {
             device.sendOrder(Device.DEVICE_LIST.get(i).getDeviceNum(),
-                    Order.LightColor.values()[lightColorCheckBox.getCheckId()],
-                    Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                    Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
-                    Order.LightModel.OUTER,
-                    Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                    Order.EndVoice.values()[cbEndVoice.isChecked()?1:0]);
+                            Order.LightColor.values()[lightColorCheckBox.getCheckId()],
+                            Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
+                            Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
+                            Order.LightModel.OUTER,
+                            Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
+                            Order.EndVoice.values()[cbEndVoice.isChecked()?1:0]);
             deviceNumList.add(Device.DEVICE_LIST.get(i).getDeviceNum());
         }
 
