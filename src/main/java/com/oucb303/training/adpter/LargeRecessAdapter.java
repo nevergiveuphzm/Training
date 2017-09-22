@@ -104,8 +104,13 @@ public class LargeRecessAdapter extends BaseAdapter {
             imgGroupId.setLayoutParams(paramImg);
             imgGroupId.setImageResource(imgId[3]);
         }
-        if (completedTimes[i]<0)
-            tvTimes.setText("0");
+        if (completedTimes[i]>=0){
+            tvGroupNum.setText((i+1) +" 组");
+            tvTimes.setText(completedTimes[i]+"");
+        }else {
+            tvGroupNum.setText((i + 1) + "组");
+            tvTimes.setText(0 + "");
+        }
         return view;
     }
 }

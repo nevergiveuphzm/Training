@@ -5,6 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.oucb303.training.R;
@@ -63,6 +66,7 @@ public class BoldCautiousAdapter extends BaseAdapter {
         if (view == null)
             view = LayoutInflater.from(context).inflate(R.layout.item_bold_cautious,null);
         TextView tvGroupId = (TextView) view.findViewById(R.id.tv_group_num);
+        ImageView imgGroupId = (ImageView) view.findViewById(R.id.img_group);
         TextView tvScore = (TextView) view.findViewById(R.id.tv_score);
         TextView tvDeviceNum = (TextView) view.findViewById(R.id.tv_device_num);
         TextView tvTime = (TextView) view.findViewById(R.id.tv_time);
@@ -70,6 +74,29 @@ public class BoldCautiousAdapter extends BaseAdapter {
         tvGroupId.setText("第"+(i+1)+"组");
         tvScore.setText(scores[i]+"");
         tvDeviceNum.setText(deviceNum[i]);
+
+        int[] imgId = new int[]{R.drawable.champion,R.drawable.silver,R.drawable.bronze,R.drawable.other};
+        if (i<3){
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            layoutParams.setMargins(310,85,80,0);//4个参数按顺序分别是左上右下
+            tvScore.setLayoutParams(layoutParams);
+
+            RelativeLayout.LayoutParams paramTest = (RelativeLayout.LayoutParams) imgGroupId.getLayoutParams();
+            paramTest.leftMargin = 20;
+            paramTest.topMargin=5;
+            imgGroupId.setLayoutParams(paramTest);
+            imgGroupId.setImageResource(imgId[i]);
+        }else{
+            RelativeLayout.LayoutParams paramImg = (RelativeLayout.LayoutParams) imgGroupId.getLayoutParams();
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            layoutParams.setMargins(310,55,80,0);
+            tvScore.setLayoutParams(layoutParams);
+            paramImg.leftMargin = 80;
+            paramImg.topMargin=38;
+            imgGroupId.setLayoutParams(paramImg);
+            imgGroupId.setImageResource(imgId[3]);
+        }
+
 
         if (finishTime[i] != 0)
         {

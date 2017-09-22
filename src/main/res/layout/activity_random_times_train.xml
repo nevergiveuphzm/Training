@@ -383,7 +383,7 @@
                         <Button
                             android:layout_width="100dp"
                             android:layout_height="50dp"
-                            android:layout_marginLeft="15dp"
+                            android:layout_marginLeft="37dp"
                             android:id="@+id/btn_off"
                             android:background="@drawable/img_closelight"/>
                     </LinearLayout>
@@ -497,21 +497,49 @@
                     </LinearLayout>
             </LinearLayout>
         </ScrollView>
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_score"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp">
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="360dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="130dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_scoretitle">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="130dp"
+                    android:layout_marginTop="2dp"
+                    android:text="训练结果"
+                    android:textColor="@color/white"
+                    android:textSize="25sp"
+                    android:background="#00000000"/>
+            </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
-            android:layout_weight="1"
-            android:background="@drawable/randon_train_device"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="45dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -645,5 +673,6 @@
             </ListView>
 
         </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
 </LinearLayout>
