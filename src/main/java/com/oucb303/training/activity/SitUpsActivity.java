@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -25,8 +26,10 @@ import com.oucb303.training.device.Device;
 import com.oucb303.training.device.Order;
 import com.oucb303.training.dialugue.CustomDialog;
 import com.oucb303.training.listener.AddOrSubBtnClickListener;
+import com.oucb303.training.listener.CheckBoxClickListener;
 import com.oucb303.training.listener.MySeekBarListener;
 import com.oucb303.training.listener.SpinnerItemSelectedListener;
+import com.oucb303.training.model.CheckBox;
 import com.oucb303.training.model.DeviceInfo;
 import com.oucb303.training.model.PowerInfoComparetor;
 import com.oucb303.training.model.TimeInfo;
@@ -64,7 +67,8 @@ public class SitUpsActivity extends AppCompatActivity {
     SeekBar barTrainingTime;
     @Bind(R.id.img_training_time_add)
     ImageView imgTrainingTimeAdd;
-
+    @Bind(R.id.img_start)
+    TextView imgSatart;
     @Bind(R.id.tv_total_time)
     TextView tvTotalTime;
     @Bind(R.id.btn_begin)
@@ -76,10 +80,6 @@ public class SitUpsActivity extends AppCompatActivity {
 
     @Bind(R.id.lv_times)
     ListView lvTimes;
-
-    android.widget.CheckBox cbVoice;
-    @Bind(R.id.img_start)
-    TextView imgSatart;
     @Bind(R.id.img_set)
     ImageView imgSet;
     @Bind(R.id.img_help)
@@ -118,8 +118,9 @@ public class SitUpsActivity extends AppCompatActivity {
     //设置返回数据
     int[] Setting_return_data = new int[5];
     private int type = 1;
-    Battery battery;
+
     private int level=2;
+    Battery battery;
 
 
     @Override
@@ -136,8 +137,7 @@ public class SitUpsActivity extends AppCompatActivity {
             device.connect(this);
             device.initConfig();
         }
-        //重新检测设备数目
-        battery = new Battery(device,imgSatart,handler_battery);
+        battery = new Battery(device,imgSatart,handler_battery );
     }
 
     @Override
@@ -181,6 +181,7 @@ public class SitUpsActivity extends AppCompatActivity {
 
         } else {
             tvTitle.setText("仰卧起坐训练");
+
         }
 
         imgHelp.setVisibility(View.VISIBLE);
@@ -202,7 +203,6 @@ public class SitUpsActivity extends AppCompatActivity {
         spGroupNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(SitUpsActivity.this, spGroupNum, groupNumChoose) {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
                 groupNum = i;
                 groupListViewAdapter.setGroupNum(i);
                 groupListViewAdapter.notifyDataSetChanged();
@@ -230,18 +230,17 @@ public class SitUpsActivity extends AppCompatActivity {
         Setting_return_data[3]=1;
         Setting_return_data[4]=1;
 
-
     }
 
-    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.btn_stop, R.id.img_help, R.id.btn_on,
-            R.id.btn_off, R.id.img_save_new, R.id.img_set, R.id.btn_result, R.id.btn_history_result,R.id.img_start})
+    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.btn_stop, R.id.img_help, R.id.btn_on,R.id.img_start,
+            R.id.btn_off, R.id.img_save_new, R.id.img_set, R.id.btn_result, R.id.btn_history_result})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_set:
                 CustomDialog dialog = new  CustomDialog(SitUpsActivity.this,"From btn 2",new CustomDialog.ICustomDialogEventListener() {
                     @Override
                     public void customDialogEvent(int id) {
-                        // TextView imageView = (TextView)findViewById(R.id.main_image);
+                       // TextView imageView = (TextView)findViewById(R.id.main_image);
 
                         int aaa = id;
                         String a  =String.valueOf(aaa);
@@ -271,18 +270,12 @@ public class SitUpsActivity extends AppCompatActivity {
                 }
                 if (isTraining)
                     stopTraining();
-                else {
+                else
                     startTraining();
-                    btnOn.setClickable(false);
-                    btnOff.setClickable(false);
-                }
                 break;
             case R.id.btn_stop:
-                if(isTraining){
+                if(isTraining)
                     stopTraining();
-                    btnOn.setClickable(true);
-                    btnOff.setClickable(true);
-                }
                 break;
             case R.id.img_help:
                 List<Integer> list = new ArrayList<>();
@@ -335,6 +328,8 @@ public class SitUpsActivity extends AppCompatActivity {
     }
 
     private void startTraining() {
+        btnOn.setClickable(false);
+        btnOff.setClickable(false);
 //        imgSave.setEnabled(true);
         isTraining = true;
 
@@ -366,6 +361,8 @@ public class SitUpsActivity extends AppCompatActivity {
     }
 
     private void stopTraining() {
+        btnOn.setClickable(true);
+        btnOff.setClickable(true);
         isTraining = false;
         imgSaveNew.setEnabled(true);
         //结束时间线程
@@ -447,8 +444,6 @@ public class SitUpsActivity extends AppCompatActivity {
             i++;
         }
     }
-
-
     Handler handler_battery = new Handler() {
         @Override
         public void handleMessage(Message msg) {

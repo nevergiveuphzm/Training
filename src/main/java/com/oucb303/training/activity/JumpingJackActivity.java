@@ -28,6 +28,7 @@ import com.oucb303.training.adpter.GroupListViewAdapter;
 import com.oucb303.training.adpter.JumpHighAdapter;
 import com.oucb303.training.device.Device;
 import com.oucb303.training.device.Order;
+import com.oucb303.training.dialugue.CustomDialog;
 import com.oucb303.training.listener.AddOrSubBtnClickListener;
 import com.oucb303.training.listener.CheckBoxClickListener;
 import com.oucb303.training.listener.MySeekBarListener;
@@ -38,6 +39,7 @@ import com.oucb303.training.model.TimeInfo;
 import com.oucb303.training.service.MusicService;
 import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.threads.Timer;
+import com.oucb303.training.utils.Battery;
 import com.oucb303.training.utils.DataAnalyzeUtils;
 import com.oucb303.training.utils.DialogUtils;
 import com.oucb303.training.utils.OperateUtils;
@@ -63,39 +65,19 @@ public class JumpingJackActivity extends AppCompatActivity{
     ImageView imgHelp;
     @Bind(R.id.img_set)
     ImageView imgSet;
-//    @Bind(R.id.tv_training_time)
-//    TextView tvTrainingTime;
-//    @Bind(R.id.img_training_time_sub)
-//    ImageView imgTrainingTimeSub;
-//    @Bind(R.id.bar_training_time)
-//    SeekBar barTrainingTime;
-//    @Bind(R.id.img_training_time_add)
-//    ImageView imgTrainingTimeAdd;
+
     @Bind(R.id.sp_group_num)
     Spinner spGroupNum;
-//    @Bind(R.id.img_action_mode_light)
-//    ImageView imgActionModeLight;
-//    @Bind(R.id.img_action_mode_touch)
-//    ImageView imgActionModeTouch;
-//    @Bind(R.id.img_action_mode_together)
-//    ImageView imgActionModeTogether;
-//    @Bind(R.id.img_light_color_blue)
-//    ImageView imgLightColorBlue;
-//    @Bind(R.id.img_light_color_red)
-//    ImageView imgLightColorRed;
-//    @Bind(R.id.img_light_color_blue_red)
-//    ImageView imgLightColorBlueRed;
+
     @Bind(R.id.lv_group)
     ListView lvGroup;
-//    @Bind(R.id.sv_container)
-//    ScrollView svContainer;
+
     @Bind(R.id.btn_begin)
     Button btnBegin;
     @Bind(R.id.tv_total_time)
     TextView tvTotalTime;
-    android.widget.CheckBox cbVoice;
-//    @Bind(R.id.cb_end_voice)
-//    android.widget.CheckBox cbEndVoice;
+    @Bind(R.id.img_start)
+    TextView imgSatart;
     @Bind(R.id.lv_scores)
     ListView lvScores;
     @Bind(R.id.img_save_new)
@@ -106,15 +88,9 @@ public class JumpingJackActivity extends AppCompatActivity{
     Button btnOn;
     @Bind(R.id.btn_off)
     Button btnOff;
-//    @Bind(R.id.img_blink_mode_none)
-//    ImageView imgBlinkModeNone;
-//    @Bind(R.id.img_blink_mode_slow)
-//    ImageView imgBlinkModeSlow;
-//    @Bind(R.id.img_blink_mode_fast)
-//    ImageView imgBlinkModeFast;
+
 
     private Device device;
-    private CheckBox actionModeCheckBox, lightModeCheckBox, lightColorCheckBox,blinkModeCheckBox;
     private GroupListViewAdapter groupListViewAdapter;
     private Timer timer; //计时器
     //同一组的最小间隔
@@ -132,9 +108,9 @@ public class JumpingJackActivity extends AppCompatActivity{
 
     private int colors[];
     private int level=2;
-    private Dialog set_dialog;
 
-
+    Battery battery;
+    int[] Setting_return_data = new int[5];
     private Context context;
 
     private Handler handler = new Handler() {
@@ -165,7 +141,7 @@ public class JumpingJackActivity extends AppCompatActivity{
                             score += s;
                             map.put("lights", lights);
                             map.put("score", score);
-//                            turnOnLights(i);
+//
                             jumpHighAdapter.notifyDataSetChanged();
                             trainingInfo.deviceList.clear();
                         }
@@ -204,13 +180,19 @@ public class JumpingJackActivity extends AppCompatActivity{
             device.connect(this);
             device.initConfig();
         }
+        battery = new Battery(device,imgSatart,handler_battery );
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         imgSaveNew.setEnabled(false);
-        set_dialog = createLightSetDialog();
+
+        Setting_return_data[0]=0;
+        Setting_return_data[1]=0;
+        Setting_return_data[2]=0;
+        Setting_return_data[3]=1;
+        Setting_return_data[4]=1;
     }
 
     @Override
@@ -231,25 +213,6 @@ public class JumpingJackActivity extends AppCompatActivity{
         ///初始化分组listView
         groupListViewAdapter = new GroupListViewAdapter(JumpingJackActivity.this, groupSize);
        lvGroup.setAdapter(groupListViewAdapter);
-//        //解决listView 与scrollView的滑动冲突
-//        lvGroup.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View view, MotionEvent motionEvent) {
-//                //从listView 抬起时将控制权还给scrollview
-//                if (motionEvent.getAction() == MotionEvent.ACTION_UP)
-//                    svContainer.requestDisallowInterceptTouchEvent(false);
-//                else
-//                    svContainer.requestDisallowInterceptTouchEvent(true);
-//                return false;
-//            }
-//        });
-        //初始化训练时间拖动条
-//        barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 10));
-//        imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
-//        imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
-
-
-//        barTrainingTime.setProgress(level);
 
         maxGroupSize = Device.DEVICE_LIST.size();
         String[] lightNum = new String[maxGroupSize];
@@ -285,13 +248,30 @@ public class JumpingJackActivity extends AppCompatActivity{
     }
 
 
-    @OnClick({R.id.btn_stop,R.id.img_set,R.id.layout_cancel, R.id.btn_begin, R.id.img_help, R.id.img_save_new, R.id.btn_on, R.id.btn_off})
+    @OnClick({R.id.btn_stop,R.id.img_set,R.id.layout_cancel, R.id.btn_begin, R.id.img_help,
+            R.id.img_save_new, R.id.btn_on, R.id.btn_off,R.id.img_start})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_set:
-                set_dialog = createLightSetDialog();
-                OperateUtils.setScreenWidth(this, set_dialog, 0.95, 0.7);
-                set_dialog.show();
+                CustomDialog dialog = new CustomDialog(JumpingJackActivity.this,"From btn 2",new CustomDialog.ICustomDialogEventListener() {
+                    @Override
+                    public void customDialogEvent(int id) {
+                        // TextView imageView = (TextView)findViewById(R.id.main_image);
+
+                        int aaa = id;
+                        String a  =String.valueOf(aaa);
+                        for(int i=0;i<5;i++){
+                            Setting_return_data[i] = aaa % 10;
+                            aaa = aaa/10;
+                            Log.i("----------",i+"   "+Setting_return_data[i]+"");
+                            //imageView.append(Setting_shuju[i]+"   ");
+                        }
+                    }
+                },R.style.dialog_rank);
+
+                dialog.show();
+                OperateUtils operateUtils = new OperateUtils();
+                operateUtils.setScreenWidth(JumpingJackActivity.this,dialog, 0.95, 0.7);
                 break;
             case R.id.layout_cancel:
                 this.finish();
@@ -345,6 +325,9 @@ public class JumpingJackActivity extends AppCompatActivity{
                     stopTraining();
                 }
                 break;
+            case R.id.img_start:
+                battery.initDevice();
+                break;
         }
     }
 
@@ -371,14 +354,14 @@ public class JumpingJackActivity extends AppCompatActivity{
 
         //开启全部灯
         for (int i = 0; i < groupNum * groupSize; i++) {
-            int color = lightColorCheckBox.getCheckId();
+            int color = Setting_return_data[3];
             device.sendOrder(Device.DEVICE_LIST.get(i).getDeviceNum(),
                     Order.LightColor.values()[color],
-                    Order.VoiceMode.values()[0],
-                    Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
+                    Order.VoiceMode.values()[Setting_return_data[1]],
+                    Order.BlinkModel.values()[Setting_return_data[2]],
                     Order.LightModel.OUTER,
-                    Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                    Order.EndVoice.values()[0]);
+                    Order.ActionModel.values()[Setting_return_data[4]],
+                    Order.EndVoice.values()[Setting_return_data[0]]);
         }
         TurnOnLightThread turnOnLightThread = new TurnOnLightThread();
         turnOnLightThread.start();
@@ -392,7 +375,6 @@ public class JumpingJackActivity extends AppCompatActivity{
     //结束训练
     private void stopTraining() {
         timer.stopTimer();
-//        btnBegin.setText("开始");
         imgSaveNew.setEnabled(true);
         trainingFlag = false;
         Intent intent = new Intent(JumpingJackActivity.this,MusicService.class);
@@ -417,11 +399,8 @@ public class JumpingJackActivity extends AppCompatActivity{
 
     //开灯
     private void turnOnLights(final int groupNum) {
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                timer.sleep(10);
-                int color = lightColorCheckBox.getCheckId();
+
+                int color = Setting_return_data[3];
                 if (color == 3) {
                     color = (colors[groupNum] + 1) % 2;
                     colors[groupNum] = color;
@@ -432,15 +411,14 @@ public class JumpingJackActivity extends AppCompatActivity{
                     char num = Device.DEVICE_LIST.get(groupNum * groupSize + i).getDeviceNum();
                     device.sendOrder(num,
                             Order.LightColor.values()[color],
-                            Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                            Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
+                            Order.VoiceMode.values()[Setting_return_data[1]],
+                            Order.BlinkModel.values()[Setting_return_data[2]],
                             Order.LightModel.OUTER,
-                            Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                            Order.EndVoice.values()[0]);
+                            Order.ActionModel.values()[Setting_return_data[4]],
+                            Order.EndVoice.values()[Setting_return_data[0]]);
 
                 }
-//            }
-//        }).start();
+
     }
 
     class TurnOnLightThread extends Thread{
@@ -460,7 +438,7 @@ public class JumpingJackActivity extends AppCompatActivity{
                     duration_new = 800;
                 }
                 timer.sleep(duration_new);
-                int color = lightColorCheckBox.getCheckId();
+                int color = Setting_return_data[3];
                 if (color == 3) {
                     color = (colors[groupNum] + 1) % 2;
                     colors[groupNum] = color;
@@ -471,11 +449,11 @@ public class JumpingJackActivity extends AppCompatActivity{
                         char num = Device.DEVICE_LIST.get(j * groupSize + i).getDeviceNum();
                         device.sendOrder(num,
                                 Order.LightColor.values()[color],
-                                Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                                Order.BlinkModel.values()[blinkModeCheckBox.getCheckId()-1],
+                                Order.VoiceMode.values()[Setting_return_data[1]],
+                                Order.BlinkModel.values()[Setting_return_data[2]],
                                 Order.LightModel.OUTER,
-                                Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                                Order.EndVoice.values()[0]);
+                                Order.ActionModel.values()[Setting_return_data[4]],
+                                Order.EndVoice.values()[Setting_return_data[0]]);
 
                     }
                 }
@@ -502,52 +480,49 @@ public class JumpingJackActivity extends AppCompatActivity{
         //一次性挥灭所有灯的灯编号
         public ArrayList<String> deviceList = new ArrayList<>();
     }
-    private Dialog createLightSetDialog() {
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View v = inflater.inflate(R.layout.layout_dialog_lightset, null);// 得到加载view
 
-        LinearLayout layout = (LinearLayout) v.findViewById(R.id.dialog_light_set);
-        ImageView imgActionModeTouch = (ImageView) layout.findViewById(R.id.img_action_mode_touch);
-        ImageView imgActionModeLight = (ImageView) layout.findViewById(R.id.img_action_mode_light);
-        ImageView imgActionModeTogether = (ImageView) layout.findViewById(R.id.img_action_mode_together);
-        ImageView imgLightColorBlue = (ImageView) layout.findViewById(R.id.img_light_color_blue);
-        ImageView imgLightColorRed = (ImageView) layout.findViewById(R.id.img_light_color_red);
-        ImageView imgLightColorBlueRed = (ImageView) layout.findViewById(R.id.img_light_color_blue_red);
-        ImageView imgBlinkModeNone = (ImageView) layout.findViewById(R.id.img_blink_mode_none);
-        ImageView imgBlinkModeSlow = (ImageView) layout.findViewById(R.id.img_blink_mode_slow);
-        ImageView imgBlinkModeFast = (ImageView) layout.findViewById(R.id.img_blink_mode_fast);
-        cbVoice = (android.widget.CheckBox) layout.findViewById(R.id.cb_voice);
-        Button btnOk = (Button) layout.findViewById(R.id.btn_ok);
-        Button btnCloseSet = (Button) layout.findViewById(R.id.btn_close_set);
-        final Dialog dialog = new Dialog(this, R.style.dialog_rank);
 
-        dialog.setContentView(layout);
+    Handler handler_battery = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    maxGroupSize = Device.DEVICE_LIST.size();
+                    String[] lightNum = new String[maxGroupSize];
+                    for (int i = 0; i < lightNum.length; i++)
+                        lightNum[i] = (i + 1) + "个";
 
-        //设定感应模式checkBox组合的点击事件
-        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
-        actionModeCheckBox = new CheckBox(1, views);
-        new CheckBoxClickListener(actionModeCheckBox);
-        //设定灯光颜色checkBox组合的点击事件
-        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
-        lightColorCheckBox = new CheckBox(1, views2);
-        new CheckBoxClickListener(lightColorCheckBox);
-        //设定闪烁模式checkbox组合的点击事件
-        ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast};
-        blinkModeCheckBox = new CheckBox(1, views3);
-        new CheckBoxClickListener(blinkModeCheckBox);
 
-        btnOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
+                    int totalGroupNum = Device.DEVICE_LIST.size() / groupSize;
+                    String[] trainGroupNum = new String[totalGroupNum + 1];
+                    trainGroupNum[0] = "";
+                    for (int j = 1; j <= totalGroupNum; j++)
+                        trainGroupNum[j] = j + "组";
+
+                    ArrayAdapter<String> adapterGroupNum = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, trainGroupNum);
+                    adapterGroupNum.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spGroupNum.setAdapter(adapterGroupNum);
+
+                    spGroupNum.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                            groupNum = position;
+
+                            groupListViewAdapter.setGroupSize(groupSize);
+                            groupListViewAdapter.setGroupNum(groupNum);
+                            groupListViewAdapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                        }
+                    });
+                    break;
+                default:
+                    break;
             }
-        });
-        btnCloseSet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        return dialog;
-    }
+        }
+    };
+
+
 }

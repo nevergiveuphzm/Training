@@ -299,15 +299,6 @@
                 android:background="@drawable/bg_scoretitle"
                 android:id="@+id/relativeLayout2">
 
-                <!--<TextView-->
-                    <!--android:id="@+id/tv_result"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginLeft="70dp"-->
-                    <!--android:layout_marginTop="2dp"-->
-                    <!--android:text="训练结果"-->
-                    <!--android:textColor="@color/white"-->
-                    <!--android:textSize="25sp" />-->
                 <Button
                     android:id="@+id/btn_result"
                     android:layout_width="wrap_content"
@@ -334,14 +325,6 @@
                     android:textColor="@color/white"
                     android:textSize="25sp"
                     android:background="#00000000"/>
-                <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginLeft="290dp"-->
-                    <!--android:layout_marginTop="2dp"-->
-                    <!--android:text="历史成绩"-->
-                    <!--android:textColor="@color/white"-->
-                    <!--android:textSize="25sp" />-->
 
             </RelativeLayout>
             <RelativeLayout

@@ -255,13 +255,11 @@ public class SingleFootJumpActivity extends AppCompatActivity {
                     return;
                 }
                 startTraining();
-                btnOn.setClickable(false);
-                btnOff.setClickable(false);
+
                 break;
             case R.id.btn_stop: {
                 stopTraining();
-                btnOn.setClickable(true);
-                btnOff.setClickable(true);
+
             }
                 break;
             case R.id.img_set:
@@ -296,6 +294,8 @@ public class SingleFootJumpActivity extends AppCompatActivity {
     }
 
     public void startTraining() {
+        btnOn.setClickable(false);
+        btnOff.setClickable(false);
         scores = new int[groupNum];
         for (int i = 0; i < groupNum; i++) {
             scores[i] = 0;
@@ -333,6 +333,8 @@ public class SingleFootJumpActivity extends AppCompatActivity {
         timer.stopTimer();
         ReceiveThread.stopThread();
         device.turnOffAllTheLight();
+        btnOn.setClickable(true);
+        btnOff.setClickable(true);
     }
     //解析饭回来的数据,灭一次解析一次，如果同时灭多盏灯，就是解析一次,infos里存放同时灭灯个数
     public void analyzeTimeData(final String data) {

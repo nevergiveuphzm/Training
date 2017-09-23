@@ -504,8 +504,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/bg_score"
-                android:layout_margin="20dp"
-                android:id="@+id/relativeLayout3">
+                android:id="@+id/relativeLayout3"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="50dp">
 
             </RelativeLayout>
             <RelativeLayout

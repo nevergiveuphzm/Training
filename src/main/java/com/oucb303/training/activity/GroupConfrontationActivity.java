@@ -240,7 +240,7 @@ public class GroupConfrontationActivity extends AppCompatActivity {
                 if(trainingFlag){
                     flag_endvoice=0;
                     stopTraining();
-                   
+
                 }
                 break;
         }

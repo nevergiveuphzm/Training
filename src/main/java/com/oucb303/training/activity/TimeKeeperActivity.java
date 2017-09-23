@@ -85,11 +85,11 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
     ImageView imgHelp;
     @Bind(R.id.img_save_new)
     ImageView imgSaveNew;
-    @Bind(R.id.sv_container)
-    ScrollView svContainer;
+   // @Bind(R.id.sv_container)
+   // ScrollView svContainer;
     android.widget.CheckBox cbVoice;
 
-    //    private int level;
+//    private int level;
     private Device device;
     //最大分组数目
     private int maxGroupNum;
@@ -205,7 +205,7 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
     public void initView() {
         tvTitle.setText("计时活动");
         imgSaveNew.setVisibility(View.VISIBLE);
-        imgHelp.setVisibility(View.INVISIBLE);
+        imgHelp.setVisibility(View.VISIBLE);
         //设备排序
         Collections.sort(Device.DEVICE_LIST, new PowerInfoComparetor());
 
@@ -289,10 +289,10 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
             public boolean onTouch(View v, MotionEvent motionEvent) {
                 //从listView 抬起时将控制权还给scrollview
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP)
-                    svContainer.requestDisallowInterceptTouchEvent(false);
+                   ;// svContainer.requestDisallowInterceptTouchEvent(false);
                 else
                     //requestDisallowInterceptTouchEvent（true）方法是用来子View告诉父容器不要拦截我们的事件的
-                    svContainer.requestDisallowInterceptTouchEvent(true);
+                   ;// svContainer.requestDisallowInterceptTouchEvent(true);
                 return false;
             }
         });
@@ -393,17 +393,12 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
                 }
                 if (trainingFlag)
                     stopTraining();
-                else {
+                else
                     startTraining();
-                    btnOn.setClickable(false);
-                    btnOff.setClickable(false);
-                }
                 break;
             case R.id.btn_stop:
                 if(trainingFlag){
                     stopTraining();
-                    btnOn.setClickable(true);
-                    btnOff.setClickable(true);
                 }
                 break;
             case R.id.btn_on:
@@ -424,7 +419,8 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
     }
 
     public void startTraining() {
-
+        btnOn.setClickable(false);
+        btnOff.setClickable(false);
         trainingFlag = true;
         completeTimes = new int[groupNum];
         for (int i = 0; i < groupNum; i++) {
@@ -486,6 +482,8 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
 
     //结束训练
     public void stopTraining() {
+        btnOn.setClickable(true);
+        btnOff.setClickable(true);
         trainingFlag = false;
         imgSaveNew.setEnabled(true);
         //结束时间线程

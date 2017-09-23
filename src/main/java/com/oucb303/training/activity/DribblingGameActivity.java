@@ -53,8 +53,6 @@ import butterknife.OnClick;
 public class DribblingGameActivity extends AppCompatActivity {
 
 
-    //@Bind(R.id.bt_distance_cancel)
-    //ImageView btDistanceCancel;
     @Bind(R.id.layout_cancel)
     LinearLayout layoutCancel;
     @Bind(R.id.tv_title)
@@ -73,22 +71,7 @@ public class DribblingGameActivity extends AppCompatActivity {
     ListView lvGroup;
     @Bind(R.id.btn_stop)
     Button btnStop;
-    //@Bind(R.id.img_action_mode_light)
-    //ImageView imgActionModeLight;
-    //@Bind(R.id.img_action_mode_touch)
-    //ImageView imgActionModeTouch;
-    //@Bind(R.id.img_action_mode_together)
-    //ImageView imgActionModeTogether;
-    //@Bind(R.id.img_light_mode_beside)
-    //ImageView imgLightModeBeside;
-    //@Bind(R.id.img_light_mode_center)
-    //ImageView imgLightModeCenter;
-    //@Bind(R.id.img_light_mode_allr)
-    //ImageView imgLightModeAllr;
     android.widget.CheckBox cbVoice;
-   // android.widget.CheckBox cbEndVoice;
-    //@Bind(R.id.ll_params)
-    //LinearLayout llParams;
     @Bind(R.id.sv_container)
     ScrollView svContainer;
     @Bind(R.id.tv_total_time)
@@ -132,12 +115,6 @@ public class DribblingGameActivity extends AppCompatActivity {
     Button btnOn;
     @Bind(R.id.btn_off)
     Button btnOff;
-    //@Bind(R.id.img_blink_mode_none)
-    //ImageView imgBlinkModeNone;
-    //@Bind(R.id.img_blink_mode_slow)
-    //ImageView imgBlinkModeSlow;
-    //@Bind(R.id.img_blink_mode_fast)
-    //ImageView imgBlinkModeFast;
 
     private Device device;
     //所选设备个数，分组数

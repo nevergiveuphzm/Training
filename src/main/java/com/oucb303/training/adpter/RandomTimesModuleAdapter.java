@@ -93,9 +93,10 @@ if (i<3){
         else{
         RelativeLayout.LayoutParams paramImg = (RelativeLayout.LayoutParams) imgGroupId.getLayoutParams();
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(170,55,80,0);
-        paramImg.leftMargin = 80;
-        paramImg.topMargin=38;
+        layoutParams.setMargins(170,55,0,0);
+//        time.setLayoutParams(layoutParams);
+        paramImg.leftMargin = 60;
+        paramImg.topMargin=85;
         imgGroupId.setLayoutParams(paramImg);
         imgGroupId.setImageResource(imgId[3]);
     }

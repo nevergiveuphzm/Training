@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -27,10 +28,11 @@ import com.oucb303.training.adpter.GroupListViewAdapter;
 import com.oucb303.training.adpter.JumpHighAdapter;
 import com.oucb303.training.device.Device;
 import com.oucb303.training.device.Order;
+import com.oucb303.training.dialugue.CustomDialog;
 import com.oucb303.training.listener.AddOrSubBtnClickListener;
 import com.oucb303.training.listener.CheckBoxClickListener;
 import com.oucb303.training.listener.MySeekBarListener;
-import com.oucb303.training.listener.SpinnerItemSelectedListener;
+
 import com.oucb303.training.model.CheckBox;
 import com.oucb303.training.model.DeviceInfo;
 import com.oucb303.training.model.TimeInfo;
@@ -48,6 +50,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
 
 /**
  * Created by Bai ChangCai on 2017/8/23.
@@ -148,7 +151,7 @@ public class EnduranceActivity extends AppCompatActivity{
 
     private int colors[];
     private int level=2;
-
+    int[] Setting_return_data = new int[5];
     private Context context;
 
     private Handler handler = new Handler() {
@@ -234,6 +237,11 @@ public class EnduranceActivity extends AppCompatActivity{
         super.onStart();
         imgSaveNew.setEnabled(false);
         set_dialog = createLightSetDialog();
+        Setting_return_data[0]=0;
+        Setting_return_data[1]=0;
+        Setting_return_data[2]=0;
+        Setting_return_data[3]=1;
+        Setting_return_data[4]=1;
     }
 
     @Override
@@ -302,9 +310,25 @@ public class EnduranceActivity extends AppCompatActivity{
                 device.turnOffAllTheLight();
                 break;
             case R.id.img_set:
-                set_dialog = createLightSetDialog();
-                OperateUtils.setScreenWidth(this, set_dialog, 0.95, 0.7);
-                set_dialog.show();
+                CustomDialog dialog =new CustomDialog(EnduranceActivity.this,"From btn 2",new CustomDialog.ICustomDialogEventListener(){
+                    @Override
+                    public void customDialogEvent(int id){
+                        int aaa=id;
+                        String a =String.valueOf(aaa);
+                        for (int i=0;i<5;i++){
+                            Setting_return_data[i] = aaa%10;
+                            aaa=aaa/10;
+                            Log.i("----------",i+" "+Setting_return_data[i]+"");
+
+                        }
+                    }
+                },R.style.dialog_rank);
+                dialog.show();
+                OperateUtils operateUtils = new OperateUtils();
+                operateUtils.setScreenWidth(EnduranceActivity.this,dialog,0.95,0.7);
+//                set_dialog = createLightSetDialog();
+//                OperateUtils.setScreenWidth(this, set_dialog, 0.95, 0.7);
+//                set_dialog.show();
                 break;
             case R.id.btn_begin:
                 if (!device.checkDevice(this))
@@ -315,8 +339,7 @@ public class EnduranceActivity extends AppCompatActivity{
                 }
                 if (trainingFlag) {
                     stopTraining();
-                    btnOn.setClickable(false);
-                    btnOff.setClickable(false);
+
                 }
                 else
                     startTraining();
@@ -324,8 +347,7 @@ public class EnduranceActivity extends AppCompatActivity{
             case R.id.btn_stop:
                 if(trainingFlag){
                     stopTraining();
-                    btnOn.setClickable(true);
-                    btnOff.setClickable(true);
+
                 }
                 break;
             case R.id.img_help:
@@ -368,6 +390,8 @@ public class EnduranceActivity extends AppCompatActivity{
     private void startTraining() {
 
         trainingFlag = true;
+        btnOn.setClickable(false);
+        btnOff.setClickable(false);
         trainingTime = (int) (new Double(tvTrainingTime.getText().toString()) * 60 * 1000);
 
 
@@ -405,6 +429,8 @@ public class EnduranceActivity extends AppCompatActivity{
         trainingFlag = false;
         ReceiveThread.stopThread();
         device.turnOffAllTheLight();
+        btnOn.setClickable(true);
+        btnOff.setClickable(true);
     }
 
     private void analyseData(final String data) {
@@ -443,12 +469,12 @@ public class EnduranceActivity extends AppCompatActivity{
         }).start();
     }
     public void sendOrder(char deviceNum) {
-        device.sendOrder(deviceNum, Order.LightColor.values()[lightColorCheckBox.getCheckId()],
-                Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                Order.BlinkModel.values()[blinkModeCheckBox.getCheckId() - 1],
+        device.sendOrder(deviceNum, Order.LightColor.values()[Setting_return_data[3]],
+                Order.VoiceMode.values()[Setting_return_data[1]],
+                Order.BlinkModel.values()[Setting_return_data[2]],
                 Order.LightModel.OUTER,
-                Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                Order.EndVoice.values()[cbEndVoice.isChecked()?1:0]);
+                Order.ActionModel.values()[Setting_return_data[4]],
+                Order.EndVoice.values()[Setting_return_data[0]]);
     }
 
 

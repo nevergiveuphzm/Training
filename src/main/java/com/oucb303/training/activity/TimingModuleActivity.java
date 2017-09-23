@@ -66,12 +66,8 @@ public class TimingModuleActivity extends AppCompatActivity {
     ImageView imgTrainingTimeSub;
     @Bind(R.id.bar_training_time)
     SeekBar barTrainingTime;
-//    @Bind(R.id.tv_maxTime)
-//    TextView tvMaxTime;
     @Bind(R.id.img_training_time_add)
     ImageView imgTrainingTimeAdd;
-//    @Bind(R.id.ll_training_time)
-//    LinearLayout llTrainingTime;
     @Bind(R.id.sp_dev_num)
     Spinner spDevNum;
     @Bind(R.id.btn_on)
@@ -80,29 +76,8 @@ public class TimingModuleActivity extends AppCompatActivity {
     Button btnOff;
     @Bind(R.id.tv_device_list)
     TextView tvDeviceList;
-//    @Bind(R.id.img_action_mode_light)
-//    ImageView imgActionModeLight;
-//    @Bind(R.id.img_action_mode_touch)
-//    ImageView imgActionModeTouch;
-//    @Bind(R.id.img_action_mode_together)
-//    ImageView imgActionModeTogether;
-//    @Bind(R.id.img_light_color_blue)
-//    ImageView imgLightColorBlue;
-//    @Bind(R.id.img_light_color_red)
-//    ImageView imgLightColorRed;
-//    @Bind(R.id.img_light_color_blue_red)
-//    ImageView imgLightColorBlueRed;
-//    @Bind(R.id.cb_voice)
     android.widget.CheckBox cbVoice;
-//    @Bind(R.id.cb_end_voice)
     android.widget.CheckBox cbEndVoice;
-//    @Bind(R.id.cb_over_time_voice)
-//    android.widget.CheckBox cbOverTimeVoice;
-//    @Bind(R.id.ll_params)
-//    LinearLayout llParams;
-
-//    @Bind(R.id.tv_total_time)
-//    TextView tvTotalTime;
     @Bind(R.id.lv_times)
     ListView lvTimes;
     @Bind(R.id.btn_begin)
@@ -115,14 +90,8 @@ public class TimingModuleActivity extends AppCompatActivity {
     Button btnResult;
     @Bind(R.id.btn_history_result)
     Button btnHistoryResult;
-//    @Bind(R.id.img_blink_mode_none)
-//    ImageView imgBlinkModeNone;
-//    @Bind(R.id.img_blink_mode_slow)
-//    ImageView imgBlinkModeSlow;
-//    @Bind(R.id.img_blink_mode_fast)
-//    ImageView imgBlinkModeFast;
-//设置返回数据
-int[] Setting_return_data = new int[5];
+    //设置返回数据
+    int[] Setting_return_data = new int[5];
     //device里有设备灯列表(设备编号，电量，短地址)，设备数量
     private Device device;
     //所选设备个数
@@ -192,8 +161,6 @@ int[] Setting_return_data = new int[5];
 
                         analyzeTimeData(data);
 
-//                        if (timeList.size() == totalNum)
-//                            stopTraining();
                         Message msg1 = Message.obtain();
                         msg1.what = UPDATE_TIMES;
                         msg1.obj = "";
@@ -270,24 +237,12 @@ int[] Setting_return_data = new int[5];
             }
         });
 
-//        //设定感应模式的checkbox组合的点击事件
-//        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
-//        actionModeCheckBox = new CheckBox(1, views);
-//        new CheckBoxClickListener(actionModeCheckBox);
-//        ////设定灯光颜色checkBox组合的点击事件
-//        ImageView[] views1 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
-//        lightColorCheckBox = new CheckBox(1, views1);
-//        new CheckBoxClickListener(lightColorCheckBox);
-//        //设定闪烁模式checkbox组合的点击事件
-//        ImageView[] views2 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast,};
-//        blinkModeCheckBox = new CheckBox(1, views2);
-//        new CheckBoxClickListener(blinkModeCheckBox);
+
 
         //训练时间拖动条初始化
         barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 10));
         imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
         imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
-//        tvMaxTime.setText("100");
 
         //初始化右侧listView
         timingModuleAdapter = new TimingModuleAdapter(this, timeList);
@@ -298,9 +253,8 @@ int[] Setting_return_data = new int[5];
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_stop:
-                if(trainingFlag){
+                if(trainingFlag)
                     stopTraining();
-                }
                 break;
             case R.id.btn_off:
                 device.turnOffAllTheLight();
@@ -322,6 +276,7 @@ int[] Setting_return_data = new int[5];
                     stopTraining();
                 else
                     startTraining();
+
                 break;
             case R.id.img_save_new:
                 Intent it = new Intent(this, SaveActivity.class);
@@ -369,6 +324,8 @@ int[] Setting_return_data = new int[5];
     }
 
     public void startTraining() {
+        btnOn.setClickable(false);
+        btnOff.setClickable(false);
         //训练开始
         trainingFlag = true;
         //训练时间
@@ -408,6 +365,8 @@ int[] Setting_return_data = new int[5];
 
     //结束训练
     public void stopTraining() {
+        btnOn.setClickable(true);
+        btnOff.setClickable(true);
         trainingFlag = false;
         imgSave.setEnabled(true);
         btnBegin.setEnabled(false);

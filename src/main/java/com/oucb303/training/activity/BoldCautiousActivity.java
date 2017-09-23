@@ -49,8 +49,7 @@ import butterknife.OnClick;
  * 胆大心细
  */
 public class BoldCautiousActivity extends AppCompatActivity {
-    //@Bind(R.id.bt_distance_cancel)
-    //ImageView btDistanceCancel;
+
     @Bind(R.id.layout_cancel)
     LinearLayout layoutCancel;
     @Bind(R.id.tv_title)
@@ -69,42 +68,13 @@ public class BoldCautiousActivity extends AppCompatActivity {
     Button btnOff;
     @Bind(R.id.lv_group)
     ListView lvGroup;
-    //@Bind(R.id.img_action_mode_light)
-    //ImageView imgActionModeLight;
-    //@Bind(R.id.img_action_mode_touch)
-    //ImageView imgActionModeTouch;
-    //@Bind(R.id.img_action_mode_together)
-    //ImageView imgActionModeTogether;
-    //@Bind(R.id.img_light_mode_beside)
-    //ImageView imgLightModeBeside;
-    //@Bind(R.id.img_light_mode_center)
-    //ImageView imgLightModeCenter;
-    //@Bind(R.id.img_light_mode_all)
-    //ImageView imgLightModeAll;
-    //@Bind(R.id.img_light_color_blue)
-    //ImageView imgLightColorBlue;
-    //@Bind(R.id.img_light_color_red)
-    //ImageView imgLightColorRed;
-    //@Bind(R.id.img_light_color_blue_red)
-    //ImageView imgLightColorBlueRed;
-    //@Bind(R.id.cb_voice)
     android.widget.CheckBox cbVoice;
-    //@Bind(R.id.ll_params)
-    //LinearLayout llParams;
-    //@Bind(R.id.sv_container)
-    //ScrollView svContainer;
     @Bind(R.id.tv_total_time)
     TextView tvTotalTime;
     @Bind(R.id.lv_times)
     ListView lvTimes;
     @Bind(R.id.btn_begin)
     Button btnBegin;
-    //@Bind(R.id.img_blink_mode_none)
-    //ImageView imgBlinkModeNone;
-    //@Bind(R.id.img_blink_mode_slow)
-    //ImageView imgBlinkModeSlow;
-    //@Bind(R.id.img_blink_mode_fast)
-    //ImageView imgBlinkModeFast;
 
     private int level;
     private Device device;
@@ -189,7 +159,7 @@ public class BoldCautiousActivity extends AppCompatActivity {
         //设备排序
         Collections.sort(Device.DEVICE_LIST, new PowerInfoComparetor());
         //初始化训练分组下拉框
-//        if (maxGroupNum > Device.DEVICE_LIST.size()/2)
+
         maxGroupNum = Device.DEVICE_LIST.size() / 2;
         String[] groupNumChoose = new String[maxGroupNum + 1];
         groupNumChoose[0] = "";
@@ -207,18 +177,6 @@ public class BoldCautiousActivity extends AppCompatActivity {
         //初始化左侧listview
         groupListViewAdapter = new GroupListViewAdapter(this, groupSize);
         lvGroup.setAdapter(groupListViewAdapter);
-        //解决listView 与scrollView的滑动冲突
-        //lvGroup.setOnTouchListener(new View.OnTouchListener() {
-         //   @Override
-          //  public boolean onTouch(View view, MotionEvent motionEvent) {
-                //从listView 抬起时将控制权还给scrollview
-            //    if (motionEvent.getAction() == MotionEvent.ACTION_UP)
-              //      svContainer.requestDisallowInterceptTouchEvent(false);
-               // else
-                 //   svContainer.requestDisallowInterceptTouchEvent(true);
-                //return false;
-           // }
-       // });
 
         //初始化右侧listview
         boldCautiousAdapter = new BoldCautiousAdapter(this);

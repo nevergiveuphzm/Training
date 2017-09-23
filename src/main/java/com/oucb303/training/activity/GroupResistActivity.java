@@ -476,6 +476,8 @@ public class GroupResistActivity extends AppCompatActivity {
 
     //开始训练
     public void startTraining() {
+        btnOn.setClickable(false);
+        btnOff.setClickable(false);
         trainningFlag = true;
         trainingTime = (int) (new Double(tvTrainingTime.getText().toString()) * 60 * 1000);
         delayTime = new Integer(tvDelayTime.getText().toString()) * 1000;
@@ -713,6 +715,8 @@ public class GroupResistActivity extends AppCompatActivity {
 
     //停止训练
     public void stopTraining() {
+        btnOn.setClickable(true);
+        btnOff.setClickable(true);
         timer.stopTimer();
         btnBegin.setEnabled(false);
         imgSaveNew.setEnabled(true);

@@ -156,7 +156,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
-                        android:text="每组设备数"
+                        android:text="设 备 个 数"
                         android:textSize="25sp" />
 
 
@@ -164,7 +164,7 @@
                         android:id="@+id/sp_dev_num"
                         android:layout_width="240dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginLeft="20dp"
                         android:background="@drawable/spinner">
 
                     </Spinner>
@@ -186,7 +186,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="17dp"
+                        android:layout_marginLeft="15dp"
                         android:text="训 练 分 组"
                         android:textSize="25sp" />
 
@@ -427,7 +427,7 @@ android:gravity="center"
                     android:textSize="15sp" />
 
                 <TextView
-                    android:layout_width="120dp"
+                    android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:text="遗漏次数："
 android:gravity="center"
@@ -455,7 +455,7 @@ android:gravity="center"
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="50dp"
+                    android:layout_marginLeft="35dp"
                     android:text="序号"
                     android:textSize="25sp"
                     android:id="@+id/textView4" />
@@ -469,7 +469,7 @@ android:gravity="center"
                     android:layout_alignBottom="@+id/textView4"
                     android:layout_toRightOf="@+id/textView4"
                     android:layout_toEndOf="@+id/textView4"
-                    android:layout_marginLeft="65dp" />
+                    android:layout_marginLeft="45dp" />
 
                 <TextView
                     android:layout_width="wrap_content"

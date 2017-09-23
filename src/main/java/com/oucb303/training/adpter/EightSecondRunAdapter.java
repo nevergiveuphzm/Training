@@ -32,7 +32,7 @@ public class EightSecondRunAdapter extends BaseAdapter{
     @Override
     public int getCount() {
         if (timeList == null)
-            return 0;
+           return 0;
         else
             return timeList.size();
     }

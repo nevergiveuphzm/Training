@@ -59,8 +59,7 @@ import butterknife.OnClick;
 public class ThrowingActivity extends AppCompatActivity {
 
 
-    //    @Bind(R.id.sp_training_times)
-//    Spinner spTrainingTimes;
+
     @Bind(R.id.tv_title)
     TextView tvTitle;
     @Bind(R.id.img_help)

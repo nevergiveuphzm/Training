@@ -67,7 +67,6 @@ public class RandomTimesModuleActivity extends AppCompatActivity {
     ImageView imgHelp;
     @Bind(R.id.img_save_new)
     ImageView imgSave;
-
     @Bind(R.id.tv_training_times)
     TextView tvTrainingTimes;
     @Bind(R.id.img_training_times_sub)
@@ -76,7 +75,6 @@ public class RandomTimesModuleActivity extends AppCompatActivity {
     SeekBar barTrainingTimes;
     @Bind(R.id.img_training_times_add)
     ImageView imgTrainingTimesAdd;
-
     @Bind(R.id.tv_delay_time)
     TextView tvDelayTime;
     @Bind(R.id.img_delay_time_sub)
@@ -103,10 +101,8 @@ public class RandomTimesModuleActivity extends AppCompatActivity {
     Button btnOff;
     @Bind(R.id.tv_device_list)
     TextView tvDeviceList;
-
     android.widget.CheckBox cbVoice;
     android.widget.CheckBox cbEndVoice;
-
     @Bind(R.id.ll_params)
     LinearLayout llParams;
     @Bind(R.id.tv_current_times)
@@ -125,7 +121,6 @@ public class RandomTimesModuleActivity extends AppCompatActivity {
     Spinner spGroupNum;
     @Bind(R.id.lv_group)
     ListView lvGroup;
-
 
 
     private int level;
@@ -289,6 +284,8 @@ public class RandomTimesModuleActivity extends AppCompatActivity {
         //设备排序
         Collections.sort(Device.DEVICE_LIST, new PowerInfoComparetor());
 
+//        TrainingTimes.setVisibility(View.VISIBLE);
+//        TrainingTime.setVisibility(View.GONE);
         barTrainingTimes.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTimes, 100));
         //0为减，1为加
         imgTrainingTimesAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTimes, 1));
@@ -296,7 +293,7 @@ public class RandomTimesModuleActivity extends AppCompatActivity {
 
         //设置延时和超时的 seekbar 拖动事件的监听器
         barDelayTime.setOnSeekBarChangeListener(new MySeekBarListener(tvDelayTime, 10));
-        barOverTime.setOnSeekBarChangeListener(new MySeekBarListener(tvOverTime, 28, 2));
+        barOverTime.setOnSeekBarChangeListener(new MySeekBarListener(tvOverTime, 30, 0));
         //设置加减按钮的监听事件
         imgDelayTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 1));
         imgDelayTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 0));
@@ -365,14 +362,55 @@ public class RandomTimesModuleActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 everyLightNum = i + 1;
-
+//                String[] allColors = {"蓝色", "蓝红", "蓝红紫"};
+//                String[] spColors = new String[Math.min(everyLightNum, 3)];
+//                for (int j = 0; j < spColors.length; j++) {
+//                    spColors[j] = allColors[j];
+//                }
+//                ArrayAdapter<String> adapterColor = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, spColors);
+//                adapterColor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                spColor.setAdapter(adapterColor);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
+//        //灯的颜色
+//        spColor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                colorNum = position + 1;
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
+//        //设定感应模式checkBox组合的点击事件
+//        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
+//        actionModeCheckBox = new CheckBox(1, views);
+//        new CheckBoxClickListener(actionModeCheckBox) {
+//            @Override
+//            public void doOtherThings(int checkedId) {
+//                super.doOtherThings(checkedId);
+//                //触碰或全部
+//                if (checkedId == 2 || checkedId == 3) {
+//                    if (barDelayTime.getProgress() < 2)
+//                        barDelayTime.setProgress(2);
+//                } else {
+//                    imgDelayTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 0));
+//                }
+//            }
+//        };
+//        //设定灯光颜色checkBox组合的点击事件
+//        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
+//        lightColorCheckBox = new CheckBox(1, views2);
+//        new CheckBoxClickListener(lightColorCheckBox);
+//        ImageView[] view3 = new ImageView[]{imgBlinkModeNone,imgBlinkModeSlow,imgBlinkModeFast};
+//        blinkModeCheckBox = new CheckBox(1,view3);
+//        new CheckBoxClickListener(blinkModeCheckBox);
     }
 
     @OnClick({R.id.btn_stop,R.id.btn_begin, R.id.layout_cancel, R.id.img_help, R.id.btn_on, R.id.btn_off, R.id.img_save_new,R.id.img_set})
@@ -401,6 +439,7 @@ public class RandomTimesModuleActivity extends AppCompatActivity {
                 break;
             case R.id.layout_cancel:
                 device.turnOffAllTheLight();
+//                stopTraining();
                 finish();
                 break;
             case R.id.btn_on:
@@ -457,6 +496,8 @@ public class RandomTimesModuleActivity extends AppCompatActivity {
 
     //开始训练
     public void startTraining() {
+        btnOn.setClickable(false);
+        btnOff.setClickable(false);
         trainingFlag = true;
         //运行的总次数
         totalTimes = new Integer(tvTrainingTimes.getText().toString().trim());
@@ -556,6 +597,8 @@ public class RandomTimesModuleActivity extends AppCompatActivity {
 
     //停止训练
     public void stopTraining() {
+        btnOn.setClickable(true);
+        btnOff.setClickable(true);
         trainingFlag = false;
         btnBegin.setEnabled(false);
         imgSave.setEnabled(true);

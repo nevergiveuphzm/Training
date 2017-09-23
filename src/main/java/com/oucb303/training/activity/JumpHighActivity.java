@@ -9,7 +9,7 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
-/*import android.view.MotionEvent;*/
+
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,7 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-/*import android.widget.ScrollView;*/
+
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -29,6 +29,7 @@ import com.oucb303.training.adpter.JumpHighAdapter;
 
 import com.oucb303.training.device.Device;
 import com.oucb303.training.device.Order;
+import com.oucb303.training.dialugue.CustomDialog;
 import com.oucb303.training.listener.AddOrSubBtnClickListener;
 import com.oucb303.training.listener.CheckBoxClickListener;
 import com.oucb303.training.listener.MySeekBarListener;
@@ -38,6 +39,7 @@ import com.oucb303.training.model.DeviceInfo;
 import com.oucb303.training.model.TimeInfo;
 import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.threads.Timer;
+import com.oucb303.training.utils.Battery;
 import com.oucb303.training.utils.DataAnalyzeUtils;
 import com.oucb303.training.utils.DialogUtils;
 import com.oucb303.training.utils.OperateUtils;
@@ -74,37 +76,20 @@ public class JumpHighActivity extends AppCompatActivity {
     Spinner spDevNum;
     @Bind(R.id.sp_group_num)
     Spinner spGroupNum;
-    /*   @Bind(R.id.img_action_mode_light)
-       ImageView imgActionModeLight;
-       @Bind(R.id.img_action_mode_touch)
-       ImageView imgActionModeTouch;
-       @Bind(R.id.img_action_mode_together)
-       ImageView imgActionModeTogether;*/
-//    @Bind(R.id.img_light_mode_beside)
-//    ImageView imgLightModeBeside;
-//    @Bind(R.id.img_light_mode_center)
-//    ImageView imgLightModeCenter;
-//    @Bind(R.id.img_light_mode_all)
-//    ImageView imgLightModeAll;
-   /* @Bind(R.id.img_light_color_blue)
-    ImageView imgLightColorBlue;
-    @Bind(R.id.img_light_color_red)
-    ImageView imgLightColorRed;
-    @Bind(R.id.img_light_color_blue_red)
-    ImageView imgLightColorBlueRed;*/
+
+
     @Bind(R.id.lv_group)
     ListView lvGroup;
-    /*   @Bind(R.id.sv_container)
-       ScrollView svContainer;*/
+
     @Bind(R.id.btn_begin)
     Button btnBegin;
     @Bind(R.id.btn_stop)
     Button btnStop;
     @Bind(R.id.tv_total_time)
     TextView tvTotalTime;
-    //  @Bind(R.id.cb_voice)
+
     android.widget.CheckBox cbVoice;
-    //   @Bind(R.id.cb_end_voice)
+
     android.widget.CheckBox cbEndVoice;
     @Bind(R.id.lv_scores)
     ListView lvScores;
@@ -116,50 +101,34 @@ public class JumpHighActivity extends AppCompatActivity {
     Button btnResult;
     @Bind(R.id.img_set)
     ImageView imgSet;
-   /* @Bind(R.id.img_level_sub)
-    ImageView imgLevelsub;
-    @Bind(R.id.img_level_add)
-    ImageView imgLevelAdd;
-    @Bind(R.id.bar_level)
-    SeekBar barLevel;
-    @Bind(R.id.tv_level)
-    TextView tvLevel;*/
+    @Bind(R.id.img_start)
+    TextView imgSatart;
 
     private final int TIME_RECEIVE = 1, UPDATE_SCORES = 2;
     @Bind(R.id.btn_on)
     Button btnOn;
     @Bind(R.id.btn_off)
     Button btnOff;
-    /*@Bind(R.id.img_blink_mode_none)
-    ImageView imgBlinkModeNone;
-    @Bind(R.id.img_blink_mode_slow)
-    ImageView imgBlinkModeSlow;
-    @Bind(R.id.img_blink_mode_fast)
-    ImageView imgBlinkModeFast;*/
+
 
     private Device device;
     private CheckBox actionModeCheckBox, lightModeCheckBox, lightColorCheckBox,blinkModeCheckBox;
     private GroupListViewAdapter groupListViewAdapter;
-//    private JumpHighAdapter1 jumpHighAdapter;
+
     private Timer timer; //计时器
     //同一组的最小间隔
     private int duration = 500;
     private JumpHighAdapter jumpHighAdapter;
     private List<JumpHighTrainingInfo> groupTrainingInfos = new ArrayList<>();
     private List<HashMap<String, Object>> scores = new ArrayList<>();
-//    //训练成绩
-//    private int[] scores;
-//    //key : 组号 value： 成绩
-//    private Map<Integer, Integer> timeMap = new HashMap<Integer, Integer>();
-//    //存放排序后的key值
-//    private int[] keyId;
+    Battery battery;
     //训练的总时间
     private int trainingTime;
     //每组设备个数、分组数
     private int groupSize = 1, groupNum, maxGroupSize;
     //是否正在训练标志
     private boolean trainingFlag = false;
-
+    int[] Setting_return_data = new int[5];
     private int colors[];
     private int level=2;
     private Dialog set_dialog;
@@ -226,8 +195,7 @@ public class JumpHighActivity extends AppCompatActivity {
         setContentView(R.layout.activity_jump_high);
         ButterKnife.bind(this);
         context = this;
-//        level = getIntent().getIntExtra("level", 1);
-//        level=2;
+
         initView();
         device = new Device(this);
         device.createDeviceList(this);
@@ -236,6 +204,7 @@ public class JumpHighActivity extends AppCompatActivity {
             device.connect(this);
             device.initConfig();
         }
+        battery = new Battery(device,imgSatart,handler_battery );
     }
 
     @Override
@@ -243,6 +212,11 @@ public class JumpHighActivity extends AppCompatActivity {
         super.onStart();
         imgSaveNew.setEnabled(false);
         set_dialog = createLightSetDialog();
+        Setting_return_data[0]=0;
+        Setting_return_data[1]=0;
+        Setting_return_data[2]=0;
+        Setting_return_data[3]=1;
+        Setting_return_data[4]=1;
     }
 
     @Override
@@ -263,38 +237,14 @@ public class JumpHighActivity extends AppCompatActivity {
         ///初始化分组listView
         groupListViewAdapter = new GroupListViewAdapter(JumpHighActivity.this, groupSize);
         lvGroup.setAdapter(groupListViewAdapter);
-        //解决listView 与scrollView的滑动冲突
-    /*    lvGroup.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                //从listView 抬起时将控制权还给scrollview
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP)
-                    svContainer.requestDisallowInterceptTouchEvent(false);
-                else
-                    svContainer.requestDisallowInterceptTouchEvent(true);
-                return false;
-            }
-        });*/
-        //初始化训练强度拖动条
-    /*    barLevel.setOnSeekBarChangeListener(new MySeekBarListener(barTrainingTime,tvLevel, 2));
-        imgLevelsub.setOnTouchListener(new AddOrSubBtnClickListener(barLevel, 0));
-        imgLevelAdd.setOnTouchListener(new AddOrSubBtnClickListener(barLevel, 1));*/
+
+
         //初始化训练时间拖动条
         barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 10));
         imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
         imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
 
-//        switch (level) {
-//            case 1:
-//                level = 2;
-//                break;
-//            case 2:
-//                level = 4;
-//                break;
-//            case 3:
-//                level = 10;
-//                break;
-//        }
+
 
         barTrainingTime.setProgress(level);
 
@@ -307,15 +257,6 @@ public class JumpHighActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 groupSize = i + 1;
-//                Log.d("groupNum",""+groupNum);
-
-//                if (Device.DEVICE_LIST.size() / groupSize < groupNum) {
-////                    Toast.makeText(JumpHighActivity.this, "当前设备数量为" + Device.DEVICE_LIST.size() + ",不能分成" + groupNum + "组!",
-////                            Toast.LENGTH_LONG).show();
-//                    spGroupNum.setSelection(0);
-//                    groupNum = 0;
-//                }
-
 
                 int totalGroupNum = Device.DEVICE_LIST.size() / groupSize;
                 String[] trainGroupNum = new String[totalGroupNum + 1];
@@ -326,13 +267,6 @@ public class JumpHighActivity extends AppCompatActivity {
                 ArrayAdapter<String> adapterGroupNum = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, trainGroupNum);
                 adapterGroupNum.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spGroupNum.setAdapter(adapterGroupNum);
-//                if (Device.DEVICE_LIST.size() / groupSize < groupNum) {
-//                    Toast.makeText(JumpHighActivity.this, "当前设备数量为" + Device.DEVICE_LIST.size() + ",不能分成" + i + "组!",
-//                            Toast.LENGTH_LONG).show();
-//                    spGroupNum.setSelection(0);
-//                    groupNum = 0;
-//                }
-//                groupListViewAdapter.setGroupNum(groupNum)
             }
         });
         spGroupNum.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -349,45 +283,35 @@ public class JumpHighActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-//        String[] trainGroupNum = new String[]
 
-
-//        spGroupNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(this, spGroupNum, new String[]{" ", "一组", "两组", "三组", "四组"}) {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                groupNum = i;
-//
-//                groupListViewAdapter.setGroupNum(groupNum);
-//                groupListViewAdapter.notifyDataSetChanged();
-//            }
-//        });
-
-        //设定感应模式checkBox组合的点击事件
-     /*   ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
-        actionModeCheckBox = new CheckBox(1, views);
-        new CheckBoxClickListener(actionModeCheckBox);*/
-        //设定灯光模式checkBox组合的点击事件
-//        ImageView[] views1 = new ImageView[]{imgLightModeBeside, imgLightModeCenter, imgLightModeAll,};
-//        lightModeCheckBox = new CheckBox(1, views1);
-//        new CheckBoxClickListener(lightModeCheckBox);
-        //设定灯光颜色checkBox组合的点击事件
-       /* ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
-        lightColorCheckBox = new CheckBox(1, views2);
-        new CheckBoxClickListener(lightColorCheckBox);*/
-        //设定闪烁模式checkbox组合的点击事件
-        /*ImageView[] views3 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast,};
-        blinkModeCheckBox = new CheckBox(1, views3);
-        new CheckBoxClickListener(blinkModeCheckBox);*/
     }
 
 
-    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help,  R.id.btn_on, R.id.btn_off,R.id.img_save_new,R.id.btn_result,R.id.img_set,R.id.btn_stop})
+    @OnClick({R.id.layout_cancel, R.id.btn_begin, R.id.img_help,  R.id.btn_on, R.id.btn_off,R.id.img_save_new,
+            R.id.btn_result,R.id.img_set,R.id.btn_stop,R.id.img_start})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_set:
-                set_dialog = createLightSetDialog();
-                OperateUtils.setScreenWidth(this, set_dialog, 0.95, 0.7);
-                set_dialog.show();
+                CustomDialog dialog = new  CustomDialog(JumpHighActivity.this,"From btn 2",new CustomDialog.ICustomDialogEventListener() {
+                    @Override
+                    public void customDialogEvent(int id) {
+                        // TextView imageView = (TextView)findViewById(R.id.main_image);
+
+                        int aaa = id;
+                        String a  =String.valueOf(aaa);
+                        for(int i=0;i<5;i++){
+                            Setting_return_data[i] = aaa % 10;
+                            aaa = aaa/10;
+                            Log.i("----------",i+"   "+Setting_return_data[i]+"");
+                            //imageView.append(Setting_shuju[i]+"   ");
+                        }
+                    }
+                },R.style.dialog_rank);
+
+                dialog.show();
+                OperateUtils operateUtils = new OperateUtils();
+                operateUtils.setScreenWidth(JumpHighActivity.this,dialog, 0.95, 0.7);
+
                 break;
             case R.id.layout_cancel:
                 this.finish();
@@ -402,8 +326,7 @@ public class JumpHighActivity extends AppCompatActivity {
                 }
                 if (trainingFlag) {
                     stopTraining();
-                    btnOn.setClickable(false);
-                    btnOff.setClickable(false);
+
                 }
                 else
                     startTraining();
@@ -411,8 +334,6 @@ public class JumpHighActivity extends AppCompatActivity {
             case R.id.btn_stop:
                 if(trainingFlag){
                     stopTraining();
-                    btnOn.setClickable(true);
-                    btnOff.setClickable(true);
                 }
                 break;
             case R.id.img_help:
@@ -448,6 +369,9 @@ public class JumpHighActivity extends AppCompatActivity {
                 device.turnOffAllTheLight();
                 btnOn.setClickable(true);
                 break;
+            case R.id.img_start:
+                battery.initDevice();
+                break;
         }
     }
 
@@ -455,13 +379,10 @@ public class JumpHighActivity extends AppCompatActivity {
     private void startTraining() {
 
         trainingFlag = true;
+        btnOn.setClickable(false);
+        btnOff.setClickable(false);
 
 
-//        scores = new int[groupNum];
-//        for (int i = 0; i < groupNum; i++) {
-//            timeMap.put(i, 0);
-//        }
-//        keyId = new int[groupNum];
 
 
         groupTrainingInfos.clear();
@@ -470,8 +391,7 @@ public class JumpHighActivity extends AppCompatActivity {
             groupTrainingInfos.add(new JumpHighTrainingInfo());
             scores.add(new HashMap<String, Object>());
         }
-//        jumpHighAdapter.setScores(scores);
-//        jumpHighAdapter.setTimeMap(timeMap,keyId);
+
         jumpHighAdapter.notifyDataSetChanged();
         //训练时间
         trainingTime = (int) (new Double(tvTrainingTime.getText().toString()) * 60 * 1000);
@@ -502,36 +422,10 @@ public class JumpHighActivity extends AppCompatActivity {
         trainingFlag = false;
         ReceiveThread.stopThread();
         device.turnOffAllTheLight();
+        btnOn.setClickable(true);
+        btnOff.setClickable(true);
     }
-//    private void analyzeTimeData(final String data) {
-//        //训练已结束
-//        if (!trainingFlag)
-//            return;
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                List<TimeInfo> infos = DataAnalyzeUtils.analyzeTimeData(data);
-//                for (TimeInfo info : infos) {
-//                    int groupId = findGroupId(info.getDeviceNum());
-//                    Log.d("getDeviceNum----------", "" + info.getDeviceNum());
-//                    Log.d("groupID---------------", "" + groupId);
-//                    char next = Device.DEVICE_LIST.get(groupId * groupSize).getDeviceNum();
-//                    if (next == info.getDeviceNum()) {
-//                        next = Device.DEVICE_LIST.get(groupId * groupSize + 1).getDeviceNum();
-//                        scores[groupId] += 1;
-//                        timeMap.put(groupId, scores[groupId]);
-//                    }
-//                    sendOrder(next);
-//                }
-//                Message msg = Message.obtain();
-//                msg.obj = "";
-//                msg.what = UPDATE_SCORES;
-//                handler.sendMessage(msg);
-//
-//            }
-//        }).start();
-//
-//    }
+
     private void analyzeData(final String data) {
         List<TimeInfo> infos = DataAnalyzeUtils.analyzeTimeData(data);
         for (TimeInfo info : infos) {
@@ -567,12 +461,12 @@ public class JumpHighActivity extends AppCompatActivity {
         }).start();
     }
     public void sendOrder(char deviceNum) {
-        device.sendOrder(deviceNum, Order.LightColor.values()[lightColorCheckBox.getCheckId()],
-                Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
-                Order.BlinkModel.values()[blinkModeCheckBox.getCheckId() - 1],
+        device.sendOrder(deviceNum, Order.LightColor.values()[Setting_return_data[3]],
+                Order.VoiceMode.values()[Setting_return_data[1]],
+                Order.BlinkModel.values()[Setting_return_data[2]],
                 Order.LightModel.OUTER,
-                Order.ActionModel.values()[actionModeCheckBox.getCheckId()],
-                Order.EndVoice.values()[cbEndVoice.isChecked()?1:0]);
+                Order.ActionModel.values()[Setting_return_data[4]],
+                Order.EndVoice.values()[Setting_return_data[0]]);
     }
     //查找设备所属分组
     private int findGroupId(char deviceNum) {
@@ -672,4 +566,50 @@ public class JumpHighActivity extends AppCompatActivity {
         });
         return dialog;
     }
+    Handler handler_battery = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    maxGroupSize = Device.DEVICE_LIST.size();
+                    String[] lightNum = new String[maxGroupSize];
+                    for (int i = 0; i < lightNum.length; i++)
+                        lightNum[i] = (i + 1) + "个";
+
+                    spDevNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(JumpHighActivity.this, spDevNum, lightNum) {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            groupSize = i + 1;
+
+                            int totalGroupNum = Device.DEVICE_LIST.size() / groupSize;
+                            String[] trainGroupNum = new String[totalGroupNum + 1];
+                            trainGroupNum[0] = "";
+                            for (int j = 1; j <= totalGroupNum; j++)
+                                trainGroupNum[j] = j + "组";
+
+                            ArrayAdapter<String> adapterGroupNum = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, trainGroupNum);
+                            adapterGroupNum.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            spGroupNum.setAdapter(adapterGroupNum);
+                        }
+                    });
+                    spGroupNum.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                            groupNum = position;
+
+                            groupListViewAdapter.setGroupSize(groupSize);
+                            groupListViewAdapter.setGroupNum(groupNum);
+                            groupListViewAdapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                        }
+                    });
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 }

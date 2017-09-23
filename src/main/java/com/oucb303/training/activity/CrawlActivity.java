@@ -33,10 +33,12 @@ import com.oucb303.training.listener.CheckBoxClickListener;
 import com.oucb303.training.listener.MySeekBarListener;
 import com.oucb303.training.listener.SpinnerItemSelectedListener;
 import com.oucb303.training.model.CheckBox;
+import com.oucb303.training.model.DeviceInfo;
 import com.oucb303.training.model.PowerInfoComparetor;
 import com.oucb303.training.model.TimeInfo;
 import com.oucb303.training.threads.ReceiveThread;
 import com.oucb303.training.threads.Timer;
+import com.oucb303.training.utils.Battery;
 import com.oucb303.training.utils.DataAnalyzeUtils;
 import com.oucb303.training.utils.DataUtils;
 import com.oucb303.training.utils.DialogUtils;
@@ -75,15 +77,7 @@ public class CrawlActivity extends AppCompatActivity{
     SeekBar barTrainingTime;
     @Bind(R.id.img_training_time_add)
     ImageView imgTrainingTimeAdd;
-//    @Bind(R.id.training_time)
-//    LinearLayout TrainingTime;
 
-
-
-//    @Bind(R.id.tv_training_times)
-//    TextView tvTrainingTimes;
-//    @Bind(R.id.training_times)
-//    LinearLayout TrainingTimes;
     @Bind(R.id.btn_on)
     Button btnOn;
     @Bind(R.id.sp_dev_num)
@@ -92,26 +86,12 @@ public class CrawlActivity extends AppCompatActivity{
     Button btnOff;
     @Bind(R.id.tv_device_list)
     TextView tvDeviceList;
-//    @Bind(R.id.img_action_mode_light)
-//    ImageView imgActionModeLight;
-//    @Bind(R.id.img_action_mode_touch)
-//    ImageView imgActionModeTouch;
-//    @Bind(R.id.img_action_mode_together)
-//    ImageView imgActionModeTogether;
-//    @Bind(R.id.img_light_color_blue)
-//    ImageView imgLightColorBlue;
-//    @Bind(R.id.img_light_color_red)
-//    ImageView imgLightColorRed;
-//    @Bind(R.id.img_light_color_blue_red)
-//    ImageView imgLightColorBlueRed;
-//    @Bind(R.id.cb_voice)
+
+
     android.widget.CheckBox cbVoice;
-//    @Bind(R.id.cb_end_voice)
     android.widget.CheckBox cbEndVoice;
-  //  @Bind(R.id.cb_over_time_voice)
     android.widget.CheckBox cbOverTimeVoice;
-//    @Bind(R.id.ll_params)
-//    LinearLayout llParams;
+
     @Bind(R.id.tv_current_times)
     TextView tvCurrentTimes;
     @Bind(R.id.tv_lost_times)
@@ -130,12 +110,8 @@ public class CrawlActivity extends AppCompatActivity{
     ListView lvGroup;
     @Bind(R.id.img_set)
     ImageView imgSet;
-//    @Bind(R.id.img_blink_mode_none)
-//    ImageView imgBlinkModeNone;
-//    @Bind(R.id.img_blink_mode_slow)
-//    ImageView imgBlinkModeSlow;
-//    @Bind(R.id.img_blink_mode_fast)
-//    ImageView imgBlinkModeFast;
+    @Bind(R.id.img_start)
+    TextView imgSatart;
     @Bind(R.id.sv_container)
     ScrollView svContainer;
     private int level;
@@ -171,7 +147,7 @@ public class CrawlActivity extends AppCompatActivity{
     private int groupSize, groupNum = 1;
     //感应模式和灯光模式集合
     private CheckBox actionModeCheckBox, lightModeCheckBox, lightColorCheckBox, blinkModeCheckBox;
-
+    Battery battery;
 
     private ArrayAdapter<String> adapterDeviceNum;
     private Context context;
@@ -265,6 +241,7 @@ public class CrawlActivity extends AppCompatActivity{
             device.initConfig();
         }
         initView();
+        battery = new Battery(device,imgSatart,handler_battery );
     }
 
     @Override
@@ -303,8 +280,6 @@ public class CrawlActivity extends AppCompatActivity{
         //设备排序
         Collections.sort(Device.DEVICE_LIST, new PowerInfoComparetor());
 
-//        TrainingTimes.setVisibility(View.GONE);
-//        TrainingTime.setVisibility(View.VISIBLE);
 
         barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 10));
         //0为减，1为加
@@ -354,16 +329,7 @@ public class CrawlActivity extends AppCompatActivity{
             }
         });
 
-//        //设定感应模式checkBox组合的点击事件
-//        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
-//        actionModeCheckBox = new CheckBox(1, views);
-//        //设定灯光颜色checkBox组合的点击事件
-//        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
-//        lightColorCheckBox = new CheckBox(1, views2);
-//        new CheckBoxClickListener(lightColorCheckBox);
-//        ImageView[] view3 = new ImageView[]{imgBlinkModeNone,imgBlinkModeSlow,imgBlinkModeFast};
-//        blinkModeCheckBox = new CheckBox(1,view3);
-//        new CheckBoxClickListener(blinkModeCheckBox);
+
 //        //解决listView 与scrollView的滑动冲突
         lvGroup.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -378,7 +344,8 @@ public class CrawlActivity extends AppCompatActivity{
         });
     }
 
-    @OnClick({R.id.btn_stop,R.id.btn_begin, R.id.layout_cancel, R.id.img_help, R.id.btn_on, R.id.btn_off, R.id.img_save_new,R.id.img_set})
+    @OnClick({R.id.btn_stop,R.id.btn_begin, R.id.layout_cancel, R.id.img_help, R.id.btn_on,
+            R.id.btn_off, R.id.img_save_new,R.id.img_set,R.id.img_start})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_set:
@@ -391,8 +358,7 @@ public class CrawlActivity extends AppCompatActivity{
                     return;
                 if (!trainingFlag) {
                     startTraining();
-                    btnOn.setClickable(false);
-                    btnOff.setClickable(false);
+
                 }
                 else
                     stopTraining();
@@ -440,9 +406,11 @@ public class CrawlActivity extends AppCompatActivity{
             case R.id.btn_stop:
                 if(trainingFlag){
                     stopTraining();
-                    btnOn.setClickable(true);
-                    btnOff.setClickable(true);
+
                 }
+                break;
+            case R.id.img_start:
+                battery.initDevice();
                 break;
         }
     }
@@ -450,7 +418,8 @@ public class CrawlActivity extends AppCompatActivity{
     //开始训练
     public void startTraining() {
         trainingFlag = true;
-
+        btnOn.setClickable(false);
+        btnOff.setClickable(false);
         //运行的总次数
 //        totalTimes = new Integer(tvTrainingTimes.getText().toString().trim());
         //训练总时间
@@ -526,7 +495,8 @@ public class CrawlActivity extends AppCompatActivity{
         if (timer != null)
             timer.stopTimer();
         device.turnOffAllTheLight();
-
+        btnOn.setClickable(true);
+        btnOff.setClickable(true);
         //计算平均时间
         int totalTime = 0;
         for (TimeInfo info : timeList) {
@@ -788,4 +758,58 @@ public class CrawlActivity extends AppCompatActivity{
         });
         return dialog;
     }
+
+
+    Handler handler_battery = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    String[] num = new String[Device.DEVICE_LIST.size()];
+                    for (int i = 0; i < num.length; i++)
+                        num[i] = (i + 1) + "个";
+
+                    adapterDeviceNum = new ArrayAdapter<String>(CrawlActivity.this, android.R.layout.simple_spinner_item, num);
+                    spDevNum.setAdapter(adapterDeviceNum);
+
+                    spDevNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(CrawlActivity.this, spDevNum, num) {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            super.onItemSelected(adapterView, view, i, l);
+                            totalNum = i + 1;
+                            String str = "";
+                            for (int j = 0; j < totalNum; j++) {
+                                str += Device.DEVICE_LIST.get(j).getDeviceNum() + "  ";
+                            }
+                            tvDeviceList.setText(str);
+
+                            //初始化分组下拉框
+                            String[] groupNumChoose = new String[totalNum + 1];
+                            groupNumChoose[0] = " ";
+                            for (int j = 1; j <= totalNum; j++)
+                                groupNumChoose[j] = j + " 组";
+                            //分组数的下拉框
+                            spGroupNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(CrawlActivity.this, spGroupNum, groupNumChoose) {
+                                @Override
+                                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                    groupNum = i;
+                                    currentTimes = new int[groupNum];
+                                    if (groupNum == 0)
+                                        groupNum = 1;
+                                    groupSize = totalNum / groupNum;
+                                    ///初始化分组listView
+                                    groupListViewAdapter = new GroupListViewAdapter(CrawlActivity.this, totalNum / groupNum);
+                                    lvGroup.setAdapter(groupListViewAdapter);
+                                    groupListViewAdapter.setGroupNum(i);
+                                    groupListViewAdapter.notifyDataSetChanged();
+                                }
+                            });
+                        }
+                    });
+                default:
+                    break;
+            }
+        }
+    };
+
 }

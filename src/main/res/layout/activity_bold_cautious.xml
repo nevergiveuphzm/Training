@@ -255,15 +255,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="80dp"
+                    android:layout_marginLeft="120dp"
                     android:text="组号"
                     android:textSize="25sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="190dp"
-                    android:text="已完成次数"
+                    android:layout_marginLeft="280dp"
+                    android:text="次数"
                     android:textSize="25sp" />
                 <TextView
                     android:layout_width="wrap_content"
@@ -280,7 +280,6 @@
                     android:textSize="25sp" />
             </RelativeLayout>
             <ListView
-
                 android:id="@+id/lv_times"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

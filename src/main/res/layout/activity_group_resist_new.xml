@@ -374,18 +374,12 @@
 
                         <Spinner
                             android:id="@+id/sp_dev_num"
-                            android:layout_width="200dp"
+                            android:layout_width="260dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="85dp"
+                            android:layout_marginLeft="105dp"
                             android:background="@drawable/spinner">
 
                         </Spinner>
-                        <Button
-                            android:id="@+id/btn_on"
-                            android:layout_width="60dp"
-                            android:layout_height="50dp"
-                            android:layout_marginLeft="10dp"
-                            android:background="@drawable/img_openlight" />
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -427,18 +421,12 @@
 
                         <Spinner
                             android:id="@+id/sp_light_num"
-                            android:layout_width="200dp"
+                            android:layout_width="260dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="25dp"
+                            android:layout_marginLeft="55dp"
                             android:background="@drawable/spinner">
 
                         </Spinner>
-                        <Button
-                            android:id="@+id/btn_off"
-                            android:layout_width="60dp"
-                            android:layout_height="50dp"
-                            android:layout_marginLeft="10dp"
-                            android:background="@drawable/img_closelight" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -476,6 +464,20 @@
                             android:background="@drawable/spinner">
 
                         </Spinner>
+
+                        <Button
+                            android:id="@+id/btn_on"
+                            android:layout_width="80dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="10dp"
+                            android:background="@drawable/img_openlight" />
+
+                        <Button
+                            android:id="@+id/btn_off"
+                            android:layout_width="80dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="10dp"
+                            android:background="@drawable/img_closelight" />
                     </LinearLayout>
 
                     <View
@@ -618,45 +620,45 @@
             android:layout_weight="1"
             android:layout_margin="20dp">
 
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:layout_marginTop="45dp">-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center_horizontal"-->
+                    <!--android:text="总时间:"-->
+                    <!--android:textSize="18sp"/>-->
+
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:layout_marginBottom="5dp">-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_total_time"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center_horizontal"-->
+                    <!--android:text="-&#45;&#45;"/>-->
+
+            <!--</LinearLayout>-->
+
+            <!--<include layout="@layout/layout_line_horizontal"/>-->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="45dp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:text="总时间:"
-                    android:textSize="18sp"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="5dp">
-
-                <TextView
-                    android:id="@+id/tv_total_time"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:text="---"/>
-
-            </LinearLayout>
-
-            <include layout="@layout/layout_line_horizontal"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_margin="17dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -692,4 +694,3 @@
     </LinearLayout>
 
 </LinearLayout>
-

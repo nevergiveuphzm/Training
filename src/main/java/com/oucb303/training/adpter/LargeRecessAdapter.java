@@ -1,4 +1,3 @@
-
 package com.oucb303.training.adpter;
 
 import android.content.Context;
