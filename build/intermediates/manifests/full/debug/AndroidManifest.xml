@@ -174,6 +174,46 @@
         <activity android:name="com.oucb303.training.activity.CombinedTrainingActivity" />
         <activity android:name="com.oucb303.training.activity.ApplicationToolsActivity" />
         <activity android:name="com.oucb303.training.activity.HackerSpaceActivity" />
+        <!-- 快速启动跑基础班 -->
+        <activity android:name="com.oucb303.training.activity.QuickSR_BasicActivity" >
+            <intent-filter>
+                <action android:name="QuickSR_BasicActivity.class" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!-- 快速启动跑升级版1 -->
+        <activity android:name="com.oucb303.training.activity.QuickSR_Upgrade1Activity" >
+            <intent-filter>
+                <action android:name="QuickSR_Upgrade1Activity.class" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!-- 快速启动跑升级版2 -->
+        <activity android:name="com.oucb303.training.activity.QuickSR_Upgrade2Activity" >
+            <intent-filter>
+                <action android:name="QuickSR_Upgrade2Activity.class" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!-- 十字跳 -->
+        <activity android:name="com.oucb303.training.activity.CrossJumpActivity" >
+            <intent-filter>
+                <action android:name="CrossJumpActivity.class" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!-- 加强版十字跳 -->
+        <activity android:name="com.oucb303.training.activity.CrossJumpSTActivity" >
+            <intent-filter>
+                <action android:name="CrossJumpSTActivity.class" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name="com.oucb303.training.activity.EnduranceActivity" >
             <intent-filter>
                 <action android:name="EnduranceActivity.class" />

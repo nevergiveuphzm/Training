@@ -16,16 +16,16 @@ public class MotorTechnique implements Category {
     //中间具体项目
 
 
-    int[][] itemText = {{R.string.technique_run_item0,R.string.technique_run_item1,R.string.technique_run_item2,R.string.technique_run_item3},
-                            {R.string.technique_jump_item0,R.string.technique_jump_item1,R.string.technique_jump_item2},
+    int[][] itemText = {{R.string.technique_run_item0,R.string.technique_run_item1,R.string.technique_run_item2,R.string.technique_run_item3,R.string.technique_run_item4,R.string.technique_run_item5,R.string.technique_run_item6},
+                            {R.string.technique_jump_item0,R.string.technique_jump_item1,R.string.technique_jump_item2,R.string.technique_jump_item3,R.string.technique_jump_item4},
                             {R.string.technique_throw_item1},
                             {R.string.technique_basketball_item0},
                             {},
                             {}
     };
 
-    String[][] targetString = {{"EightSecondRunActivity.class","ShuttleRunActivity1.class","OrientRunActivity.class","HighKneeActivity.class"},
-                                {"JumpHighActivity.class","SingleFootJumpActivity.class","EnduranceActivity.class"},
+    String[][] targetString = {{"EightSecondRunActivity.class","ShuttleRunActivity1.class","OrientRunActivity.class","HighKneeActivity.class","QuickSR_BasicActivity.class","QuickSR_Upgrade1Activity.class","QuickSR_Upgrade2Activity.class"},
+                                {"JumpHighActivity.class","SingleFootJumpActivity.class","EnduranceActivity.class","CrossJumpActivity.class","CrossJumpSTActivity.class"},
                                 {"ThrowingActivity.class"},
                                 {"DribblingGameActivity.class"},
                                 {""},
@@ -35,8 +35,8 @@ public class MotorTechnique implements Category {
     int[] centerImgIds = {R.mipmap.technique_run_bg,R.mipmap.technique_jump_bg,R.mipmap.technique_throw_bg,R.mipmap.technique_basketball_bg,R.mipmap.technique_football_bg,R.mipmap.technique_volleyball_bg};
     //底部滚动栏图片
 
-    int[][] itemImgIds = {{R.drawable.technique_run_item0,R.drawable.technique_run_item1,R.drawable.technique_run_item2,R.drawable.technique_run_item3},
-                            {R.drawable.technique_jump_item0,R.drawable.technique_jump_item1,R.drawable.technique_jump_item2},
+    int[][] itemImgIds = {{R.drawable.technique_run_item0,R.drawable.technique_run_item1,R.drawable.technique_run_item2,R.drawable.technique_run_item3,R.drawable.technique_run_item0,R.drawable.technique_run_item0,R.drawable.technique_run_item0},
+                            {R.drawable.technique_jump_item0,R.drawable.technique_jump_item1,R.drawable.technique_jump_item2,R.drawable.technique_jump_item0,R.drawable.technique_jump_item1},
                             {R.drawable.technique_throw_item1},
                             {R.drawable.technique_basketball_item0},
                             {},

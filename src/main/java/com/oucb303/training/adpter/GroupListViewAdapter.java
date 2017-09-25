@@ -86,6 +86,7 @@ public class GroupListViewAdapter extends BaseAdapter
         for (int i = 0; i < groupSize; i++)
         {
             int n = position * groupSize + i;
+            Log.i("----------------",n+"");
             //设置设备灯的分组
             //Device.DEVICE_LIST.get(n).setGroupNum(position);
             deviceStr += Device.DEVICE_LIST.get(n).getDeviceNum() + " ";

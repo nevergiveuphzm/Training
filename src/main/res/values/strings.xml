@@ -60,12 +60,15 @@
     <string name="technique_run_item1">折返跑</string>
     <string name="technique_run_item2">定向跑</string>
     <string name="technique_run_item3">高抬腿</string>
+    <string name="technique_run_item4">快速启动跑（基础版）</string>
+    <string name="technique_run_item5">快速启动跑（升级1）</string>
+    <string name="technique_run_item6">快速启动跑（升级2）</string>
     <!--跳类-->
-
-    <string name="technique_jump_item1">原地单双脚连续跳</string>
-
     <string name="technique_jump_item0">原地纵跳摸高</string>
+    <string name="technique_jump_item1">原地单双脚连续跳</string>
     <string name="technique_jump_item2">滞空练习</string>
+    <string name="technique_jump_item3">十字跳</string>
+    <string name="technique_jump_item4">加强版十字跳</string>
     <!--投类-->
     <string name="technique_throw_item0">实心球投掷</string>
     <string name="technique_throw_item1">掷准练习</string>

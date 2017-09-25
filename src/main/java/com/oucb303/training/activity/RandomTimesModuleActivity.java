@@ -284,8 +284,7 @@ public class RandomTimesModuleActivity extends AppCompatActivity {
         //设备排序
         Collections.sort(Device.DEVICE_LIST, new PowerInfoComparetor());
 
-//        TrainingTimes.setVisibility(View.VISIBLE);
-//        TrainingTime.setVisibility(View.GONE);
+
         barTrainingTimes.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTimes, 100));
         //0为减，1为加
         imgTrainingTimesAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTimes, 1));
@@ -362,55 +361,14 @@ public class RandomTimesModuleActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 everyLightNum = i + 1;
-//                String[] allColors = {"蓝色", "蓝红", "蓝红紫"};
-//                String[] spColors = new String[Math.min(everyLightNum, 3)];
-//                for (int j = 0; j < spColors.length; j++) {
-//                    spColors[j] = allColors[j];
-//                }
-//                ArrayAdapter<String> adapterColor = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, spColors);
-//                adapterColor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//                spColor.setAdapter(adapterColor);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-//        //灯的颜色
-//        spColor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                colorNum = position + 1;
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
-//        //设定感应模式checkBox组合的点击事件
-//        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
-//        actionModeCheckBox = new CheckBox(1, views);
-//        new CheckBoxClickListener(actionModeCheckBox) {
-//            @Override
-//            public void doOtherThings(int checkedId) {
-//                super.doOtherThings(checkedId);
-//                //触碰或全部
-//                if (checkedId == 2 || checkedId == 3) {
-//                    if (barDelayTime.getProgress() < 2)
-//                        barDelayTime.setProgress(2);
-//                } else {
-//                    imgDelayTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 0));
-//                }
-//            }
-//        };
-//        //设定灯光颜色checkBox组合的点击事件
-//        ImageView[] views2 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
-//        lightColorCheckBox = new CheckBox(1, views2);
-//        new CheckBoxClickListener(lightColorCheckBox);
-//        ImageView[] view3 = new ImageView[]{imgBlinkModeNone,imgBlinkModeSlow,imgBlinkModeFast};
-//        blinkModeCheckBox = new CheckBox(1,view3);
-//        new CheckBoxClickListener(blinkModeCheckBox);
+
+
     }
 
     @OnClick({R.id.btn_stop,R.id.btn_begin, R.id.layout_cancel, R.id.img_help, R.id.btn_on, R.id.btn_off, R.id.img_save_new,R.id.img_set})
@@ -734,8 +692,6 @@ public class RandomTimesModuleActivity extends AppCompatActivity {
                         Order.ActionModel.values()[Setting_return_data[0]],
                         Order.EndVoice.values()[Setting_return_data[4]]);
 
-                //记录这个灯亮起的时间编号
-//                overTimeMap.put(Device.DEVICE_LIST.get(listRand.get(finalListNum)).getDeviceNum(),(int)System.currentTimeMillis());
 
                 //记录这个灯亮起的实时时间
                 duration[listNumGroup[0]][finalListNum] = System.currentTimeMillis();
@@ -797,7 +753,6 @@ public class RandomTimesModuleActivity extends AppCompatActivity {
         public void stopThread() {
             stop = true;
         }
-
         @Override
         public void run() {
             while (!stop) {

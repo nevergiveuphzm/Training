@@ -59,19 +59,17 @@ import butterknife.OnClick;
  *       固定时间内完成次数
  */
 public class JumpingJackActivity extends AppCompatActivity{
+
     @Bind(R.id.tv_title)
     TextView tvTitle;
     @Bind(R.id.img_help)
     ImageView imgHelp;
     @Bind(R.id.img_set)
     ImageView imgSet;
-
     @Bind(R.id.sp_group_num)
     Spinner spGroupNum;
-
     @Bind(R.id.lv_group)
     ListView lvGroup;
-
     @Bind(R.id.btn_begin)
     Button btnBegin;
     @Bind(R.id.tv_total_time)
@@ -141,7 +139,6 @@ public class JumpingJackActivity extends AppCompatActivity{
                             score += s;
                             map.put("lights", lights);
                             map.put("score", score);
-//
                             jumpHighAdapter.notifyDataSetChanged();
                             trainingInfo.deviceList.clear();
                         }
