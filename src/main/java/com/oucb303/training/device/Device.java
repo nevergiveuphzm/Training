@@ -57,7 +57,7 @@ public class Device
     {
         if (devCount <= 0)
         {
-            Toast.makeText(context, "还未插入协调器,请插入协调器!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "请确保协调器插入平板的usb接口!", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (DEVICE_LIST.isEmpty() || DEVICE_LIST.size() == 0)

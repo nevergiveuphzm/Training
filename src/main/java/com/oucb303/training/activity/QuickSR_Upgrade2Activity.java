@@ -253,7 +253,7 @@ public class QuickSR_Upgrade2Activity extends AppCompatActivity {
     }
 
     public void initView() {
-        tvTitle.setText("次数随机");
+        tvTitle.setText("快速启动跑(升级跑2)");
 
         randomTimesModuleAdapter = new RandomTimesModuleAdapter(this, timeList);
         lvTimes.setAdapter(randomTimesModuleAdapter);

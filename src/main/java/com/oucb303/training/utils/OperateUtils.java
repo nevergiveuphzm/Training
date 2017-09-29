@@ -2,6 +2,7 @@ package com.oucb303.training.utils;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.support.v7.app.AlertDialog;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -31,6 +32,7 @@ public class OperateUtils {
 
         dialog.getWindow().setAttributes(p); // 设置生效
     }
+
     //吐司
     public static void toast(Activity activity,String message) {
         View layout = LayoutInflater.from(activity).inflate(

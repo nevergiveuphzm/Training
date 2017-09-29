@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +29,9 @@ import com.oucb303.training.adpter.LargeDetailsAdapter;
 import com.oucb303.training.adpter.TimeKeeperAdapter;
 import com.oucb303.training.device.Device;
 import com.oucb303.training.device.Order;
+import com.oucb303.training.listener.AddOrSubBtnClickListener;
 import com.oucb303.training.listener.CheckBoxClickListener;
+import com.oucb303.training.listener.MySeekBarListener;
 import com.oucb303.training.listener.SpinnerItemSelectedListener;
 import com.oucb303.training.model.CheckBox;
 import com.oucb303.training.model.PowerInfoComparetor;
@@ -61,8 +64,16 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
     LinearLayout layoutCancel;
     @Bind(R.id.tv_title)
     TextView tvTitle;
-    @Bind(R.id.sp_training_times)
-    Spinner spTrainingTimes;
+   // @Bind(R.id.sp_training_times)
+    //Spinner spTrainingTimes;
+    @Bind(R.id.bar_training_time)
+    SeekBar barTrainingTime;
+    @Bind(R.id.tv_training_time)
+    TextView tvTrainingTime;
+    @Bind(R.id.img_training_time_add)
+    ImageView imgTrainingTimeAdd;
+    @Bind(R.id.img_training_time_sub)
+    ImageView imgTrainingTimeSub;
     @Bind(R.id.sp_light_num)
     Spinner spLightNum;
     @Bind(R.id.sp_group_num)
@@ -107,6 +118,10 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
     private boolean trainingFlag = false;
     //每组最终完成训练次数
     private int[] completeTimes;
+   //每组最终完成训练时间
+    private int[] currentTotalTimes;
+    //
+   private int[][] currentTimes;
     //上一次完成训练的时间点
     private int[] currentTime;
     //map里存的是：每组完成每次训练所用时间，组号和相应组号每次的时间
@@ -209,27 +224,14 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
         //设备排序
         Collections.sort(Device.DEVICE_LIST, new PowerInfoComparetor());
 
-        //初始化训练次数下拉框
-        final String[] trainingOptions = new String[10];
-        for (int i = 1; i <= 10; i++) {
-            trainingOptions[i - 1] = i + " 次";
-        }
-        spTrainingTimes.setOnItemSelectedListener(new SpinnerItemSelectedListener(this, spTrainingTimes, trainingOptions) {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                super.onItemSelected(adapterView, view, i, l);
-                totalTrainingTimes = i + 1;
-//                if (totalTrainingTimes != 1) {
-//                    spLightNum.setSelection(0);
-//                    spLightNum.setEnabled(false);
-//                    groupSize = 1;
-//                    groupListViewAdapter.setGroupSize(groupSize);
-//                    groupListViewAdapter.notifyDataSetChanged();
-//                } else {
-//                    spLightNum.setEnabled(true);
-//                }
-            }
-        });
+        //总的训练次数
+
+
+        //训练时间拖动条初始化
+        barTrainingTime.setOnSeekBarChangeListener(new MySeekBarListener(tvTrainingTime, 500,1));
+        imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
+        imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
+
 
         //初始化每组设备个数下拉框
         final String[] lightNumChoose = new String[2];
@@ -275,6 +277,7 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
                 finishTime = new int[groupNum];
                 groupListViewAdapter.setGroupNum(groupNum);
                 groupListViewAdapter.notifyDataSetChanged();
+                totalTrainingTimes =Integer.valueOf(tvTrainingTime.getText().toString());
             }
         });
 
@@ -302,20 +305,7 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
         lvTimes.setAdapter(timeKeeperAdapter);
         lvTimes.setOnItemClickListener(TimeKeeperActivity.this);
 
-//        //设定checkbox组合的点击事件
-//        ImageView[] views = new ImageView[]{imgActionModeLight, imgActionModeTouch, imgActionModeTogether};
-//        actionModeCheckBox = new CheckBox(1, views);
-//        new CheckBoxClickListener(actionModeCheckBox);
-//
-//        //设定灯光颜色checkBox组合的点击事件
-//        ImageView[] views1 = new ImageView[]{imgLightColorBlue, imgLightColorRed, imgLightColorBlueRed};
-//        lightColorCheckBox = new CheckBox(1, views1);
-//        new CheckBoxClickListener(lightColorCheckBox);
-//
-//        //设定闪烁模式checkbox组合的点击事件
-//        ImageView[] views2 = new ImageView[]{imgBlinkModeNone, imgBlinkModeSlow, imgBlinkModeFast,};
-//        blinkModeCheckBox = new CheckBox(1, views2);
-//        new CheckBoxClickListener(blinkModeCheckBox);
+
     }
 
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -332,7 +322,6 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
                 time.add(list_finishTime.get(i).get(position));
                 Log.i("time", "----------" + time);
             }
-//            Log.i("aaaa","aaa---"+list_finishTime.get(i).toString());
         }
 
         largeDetailsAdapter = new LargeDetailsAdapter(this, time, position);
@@ -343,6 +332,7 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
 
             }
         });
+        //OperateUtils.setScreenWidth(this, listDialog,0.95,0.7);
         listDialog.show();
     }
 
@@ -385,6 +375,7 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
                 startActivity(it);
                 break;
             case R.id.btn_begin:
+
                 if (!device.checkDevice(this))
                     return;
                 if (groupNum == 0) {
@@ -419,12 +410,22 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
     }
 
     public void startTraining() {
+        totalTrainingTimes =Integer.valueOf(tvTrainingTime.getText().toString());
+        currentTimes = new int[groupNum][totalTrainingTimes];
+        for(int l =0;l<groupNum;l++)
+            for(int k =0;k<totalTrainingTimes;k++)
+                currentTimes[l][k]=0;
+        Log.i("------------------",totalTrainingTimes+"");
         btnOn.setClickable(false);
         btnOff.setClickable(false);
         trainingFlag = true;
         completeTimes = new int[groupNum];
         for (int i = 0; i < groupNum; i++) {
             completeTimes[i] = 0;
+        }
+        currentTotalTimes = new int[groupNum];
+        for (int i = 0; i < groupNum; i++) {
+            currentTotalTimes[i] = 0;
         }
 
         ids = new Integer[groupSize * groupNum];
@@ -438,7 +439,7 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
 
         list_finishTime.clear();
 
-        timeKeeperAdapter.setCompletedTimes(completeTimes);
+        timeKeeperAdapter.setCompletedTimes(currentTotalTimes);
         timeKeeperAdapter.setFinishTime(finishTime);
         timeKeeperAdapter.notifyDataSetChanged();
 
@@ -498,7 +499,7 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
         new Thread(new Runnable() {
             @Override
             public void run() {
-                timer.sleep(5000);
+                timer.sleep(20);
 
                 if (!trainingFlag)
                     return;
@@ -526,6 +527,7 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
                     Log.i("Info是什么", "" + info);
                     //得到组号
                     int groupId = findDeviceGroupId(info.getDeviceNum());
+                    int times = info.getTime();
 
                     if (totalTrainingTimes == 1 && groupSize == 2) {
                         for (int j = 0; j < groupSize; j++) {
@@ -555,6 +557,8 @@ public class TimeKeeperActivity extends AppCompatActivity implements AdapterView
                     if (groupId > groupNum)
                         continue;
                     completeTimes[groupId] += 1;
+                    currentTotalTimes[groupId]+=times;
+                    //currentTimes[groupId-1][completeTimes[groupId]-1] = times;
                     Log.d("completeTimes[groupId]：", "" + groupId + "---" + completeTimes[groupId]);
                     //map_finishTime存的是组号，和这个组这一次所用的时间
                     Map<Integer, Integer> map_finishTime = new HashMap<Integer, Integer>();
