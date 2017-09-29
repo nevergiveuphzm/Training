@@ -294,11 +294,11 @@ public class TestActivity extends AppCompatActivity
                 {
                     device.sendOrder(info.getDeviceNum(),
                             Order.LightColor.BLUE_RED_GREEN,
-                            Order.VoiceMode.ONE,
+                            Order.VoiceMode.NONE,
                             Order.BlinkModel.NONE,
                             Order.LightModel.ALL,
                             Order.ActionModel.ALL,
-                            Order.EndVoice.NONE);
+                            Order.EndVoice.SHORT);
                 }
                 break;
         }

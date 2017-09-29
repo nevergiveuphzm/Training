@@ -241,8 +241,9 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
 
         //初始化训练强度下拉框
         final String[] trainingOptions = new String[10];
-        for (int i = 1; i <= 10; i++) {
-            trainingOptions[i - 1] = "50米 * " + i * 2;
+        trainingOptions[0] = "50米 * " + 1;
+        for (int i = 1; i < 10; i++) {
+            trainingOptions[i] = "50米 * " + i * 2;
         }
 
 
@@ -266,7 +267,10 @@ public class ShuttleRunActivity1 extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 //总的训练次数
-                totalTrainingTimes = (i + 1) * 2;
+                if(i==0)
+                    totalTrainingTimes = 1;
+                else
+                    totalTrainingTimes = (i) * 2;
             }
         });
 

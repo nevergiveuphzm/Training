@@ -81,7 +81,7 @@
                 android:layout_height="81dp"
                 android:layout_marginRight="20dp"
                 android:gravity="center_vertical"
-                android:text="电"
+                android:text="搜"
                 android:textSize="20sp"
                 android:scaleType="center"
                 android:textColor="@color/blue"

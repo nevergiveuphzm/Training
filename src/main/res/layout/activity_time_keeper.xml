@@ -29,47 +29,124 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/r1_first"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_below="@id/rl_first"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="23dp"
-                android:background="@drawable/bg_device"
-                android:orientation="vertical">
+                <RelativeLayout
+                    android:id="@+id/title_train"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:orientation="vertical">
+
+                </RelativeLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_training_time"
                     android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="40dp">
+                    android:layout_height="220dp"
+                    android:background="@drawable/bg_time"
+                    android:orientation="vertical"
+                    android:layout_alignTop="@+id/training_time"
+                    android:layout_alignLeft="@+id/rl_second"
+                    android:layout_alignStart="@+id/rl_second">
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/training_time"
+                    android:layout_width="360dp"
+                    android:layout_height="45dp"
+                    android:layout_below="@id/title_train"
+                    android:layout_marginLeft="130dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_traintime">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:text="训练次数"
-                        android:textSize="28sp" />
+                        android:layout_marginLeft="55dp"
+                        android:layout_marginTop="2dp"
+                        android:text="训练次数:"
+                        android:textColor="@color/white"
+                        android:textSize="25sp" />
 
-
-                    <Spinner
-                        android:id="@+id/sp_training_times"
-                        android:layout_width="250dp"
+                    <TextView
+                        android:id="@+id/tv_training_time"
+                        android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="115dp"
-                        android:background="@drawable/spinner">
+                        android:layout_marginLeft="200dp"
+                        android:layout_marginTop="2dp"
+                        android:text="10"
+                        android:textColor="@color/white"
+                        android:textSize="25sp" />
 
-                    </Spinner>
-                </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="245dp"
+                        android:layout_marginTop="2dp"
+                        android:text="次"
+                        android:textColor="@color/white"
+                        android:textSize="25sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_first"
+                    android:layout_width="570dp"
+                    android:layout_height="55dp"
+                    android:layout_below="@+id/training_time"
+                    android:layout_marginTop="15dp"
+                    android:layout_alignRight="@+id/rl_second"
+                    android:layout_alignEnd="@+id/rl_second">
+
+                    <ImageView
+                        android:id="@+id/img_training_time_sub"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="5dp"
+                        android:src="@drawable/img_sub" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="52dp"
+                        android:layout_marginTop="5dp"
+                        android:text="0"
+                        android:textColor="@color/black"
+                        android:textSize="30sp" />
+
+                    <SeekBar
+                        android:id="@+id/bar_training_time"
+                        style="@style/Widget.SeekBar.Normal"
+                        android:layout_width="380dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="80dp"
+                        android:layout_marginTop="10dip"
+                        android:max="500"
+                        android:progress="1" />
+
+                    <TextView
+                        android:id="@+id/tv_maxTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="465dp"
+                        android:layout_marginTop="5dp"
+                        android:text="500"
+                        android:textColor="@color/black"
+                        android:textSize="30sp" />
+
+                    <ImageView
+                        android:id="@+id/img_training_time_add"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_marginLeft="520dp"
+                        android:layout_marginTop="5dp"
+                        android:src="@drawable/img_plus" />
+
+                </RelativeLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:layout_marginTop="5dp">
+                    android:layout_marginTop="140dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -89,23 +166,7 @@
                     </Spinner>
                 </LinearLayout>
 
-            </LinearLayout>
-                <RelativeLayout
 
-                    android:layout_width="360dp"
-                    android:layout_height="45dp"
-                    android:layout_marginLeft="130dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/bg_traintime">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="150dp"
-                        android:layout_marginTop="2dp"
-                        android:text="课时训练"
-                        android:textColor="@color/white"
-                        android:textSize="25sp" />
-                </RelativeLayout>
             <LinearLayout
                 android:id="@+id/rl_second"
                 android:layout_width="match_parent"

@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.oucb303.training.R;
+import com.oucb303.training.adpter.CrossJumpViewAdapter;
 import com.oucb303.training.adpter.GroupListViewAdapter;
 import com.oucb303.training.adpter.RandomTimesModuleAdapter;
 import com.oucb303.training.device.Device;
@@ -84,32 +85,13 @@ public class CrossJumpActivity extends AppCompatActivity {
     LinearLayout TrainingTime;
     @Bind(R.id.tv_timeDown)
     TextView tvTimeDown;
-    @Bind(R.id.tv_delay_time)
-    TextView tvDelayTime;
-    @Bind(R.id.img_delay_time_sub)
-    ImageView imgDelayTimeSub;
-    @Bind(R.id.bar_delay_time)
-    SeekBar barDelayTime;
-    @Bind(R.id.img_delay_time_add)
-    ImageView imgDelayTimeAdd;
-    @Bind(R.id.tv_over_time)
-    TextView tvOverTime;
-    @Bind(R.id.img_over_time_sub)
-    ImageView imgOverTimeSub;
-    @Bind(R.id.bar_over_time)
-    SeekBar barOverTime;
-    @Bind(R.id.img_over_time_add)
-    ImageView imgOverTimeAdd;
-    @Bind(R.id.sp_light_num)
-    Spinner spLightNum;
+
     @Bind(R.id.btn_on)
     Button btnOn;
-    @Bind(R.id.sp_dev_num)
-    Spinner spDevNum;
+
     @Bind(R.id.btn_off)
     Button btnOff;
-    @Bind(R.id.tv_device_list)
-    TextView tvDeviceList;
+
     android.widget.CheckBox cbVoice;
     android.widget.CheckBox cbEndVoice;
     @Bind(R.id.tv_current_times)
@@ -160,7 +142,7 @@ public class CrossJumpActivity extends AppCompatActivity {
     private char[][] deviceNums;
     //每组设备灯亮起的时间
     private long[][] duration;
-    private int groupSize, groupNum = 1;
+    private int groupSize =4, groupNum ;
     private Dialog set_dialog;
     //感应模式和灯光模式集合
     private CheckBox actionModeCheckBox, lightModeCheckBox, lightColorCheckBox, blinkModeCheckBox;
@@ -169,9 +151,9 @@ public class CrossJumpActivity extends AppCompatActivity {
 
     private RandomTimesModuleAdapter randomTimesModuleAdapter;
     //存放随机数的list
-    private List<List<Integer>> listRands = new ArrayList<>();
+   private List<List<Integer>> listRands = new ArrayList<>();
     private int[] everyGroupTotalTime;
-    private GroupListViewAdapter groupListViewAdapter;
+    private CrossJumpViewAdapter groupListViewAdapter;
     private int colorNum = 1;//颜色数
     Handler handler = new Handler() {
         @Override
@@ -221,7 +203,7 @@ public class CrossJumpActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //填充屏幕的UI
-        setContentView(R.layout.activity_random_train_new);
+        setContentView(R.layout.activity_cross_jump);
         //返回xml中定义的视图或组件的ID
         ButterKnife.bind(this);
 
@@ -282,79 +264,37 @@ public class CrossJumpActivity extends AppCompatActivity {
         imgTrainingTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 1));
         imgTrainingTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barTrainingTime, 0));
 
-        //设置延时和超时的 seekbar 拖动事件的监听器
-        barDelayTime.setOnSeekBarChangeListener(new MySeekBarListener(tvDelayTime, 10));
-        barOverTime.setOnSeekBarChangeListener(new MySeekBarListener(tvOverTime, 30, 0));
-        //设置加减按钮的监听事件
-        imgDelayTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 1));
-        imgDelayTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barDelayTime, 0));
+        everyLightNum =  1;
+        totalNum = Device.DEVICE_LIST.size()/4;
 
-        imgOverTimeAdd.setOnTouchListener(new AddOrSubBtnClickListener(barOverTime, 1));
-        imgOverTimeSub.setOnTouchListener(new AddOrSubBtnClickListener(barOverTime, 0));
-
-
-        //初始化设备个数spinner
-        String[] num = new String[Device.DEVICE_LIST.size()];
-        for (int i = 0; i < num.length; i++)
-            num[i] = (i + 1) + "个";
-
-        adapterDeviceNum = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, num);
-        spDevNum.setAdapter(adapterDeviceNum);
-
-        spDevNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(this, spDevNum, num) {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                super.onItemSelected(adapterView, view, i, l);
-                totalNum = i + 1;
-                String str = "";
-                for (int j = 0; j < totalNum; j++) {
-                    str += Device.DEVICE_LIST.get(j).getDeviceNum() + "  ";
-                }
-                tvDeviceList.setText(str);
-
-                //初始化分组下拉框
-                String[] groupNumChoose = new String[totalNum + 1];
-                groupNumChoose[0] = " ";
-                for (int j = 1; j <= totalNum; j++)
-                    groupNumChoose[j] = j + " 组";
+        //初始化分组下拉框
+        String[] groupNumChoose = new String[totalNum + 1];
+        groupNumChoose[0] = " ";
+        for (int j = 1; j <= totalNum; j++)
+            groupNumChoose[j] = j + " 组";
                 //分组数的下拉框
-                spGroupNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(CrossJumpActivity.this, spGroupNum, groupNumChoose) {
-                    @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        groupNum = i;
-                        currentTimes = new int[groupNum];
-                        if (groupNum == 0)
-                            groupNum = 1;
-                        groupSize = totalNum / groupNum;
-                        ///初始化分组listView
-                        groupListViewAdapter = new GroupListViewAdapter(CrossJumpActivity.this, totalNum / groupNum);
-                        lvGroup.setAdapter(groupListViewAdapter);
-                        groupListViewAdapter.setGroupNum(i);
-                        groupListViewAdapter.notifyDataSetChanged();
-                        //每次亮灯个数spinner
-                        String[] everyTimeNum = new String[groupSize];
-                        for (int j = 0; j < everyTimeNum.length; j++)
-                            everyTimeNum[j] = (j + 1) + "个";
-
-                        ArrayAdapter<String> adapterEveryNum = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, everyTimeNum);
-                        adapterEveryNum.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        spLightNum.setAdapter(adapterEveryNum);
-                    }
-                });
-            }
-        });
-
-        //初始化每次亮灯个数spinner
-        spLightNum.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spGroupNum.setOnItemSelectedListener(new SpinnerItemSelectedListener(CrossJumpActivity.this, spGroupNum, groupNumChoose) {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                everyLightNum = i + 1;
-            }
+                groupNum = i;
+                currentTimes = new int[groupNum];
+                if (groupNum == 0)
+                    groupNum = 1;
+                groupSize = 4;
+                        ///初始化分组listView
+                groupListViewAdapter = new CrossJumpViewAdapter(CrossJumpActivity.this, 4);
+                lvGroup.setAdapter(groupListViewAdapter);
+                groupListViewAdapter.setGroupNum(i);
+                groupListViewAdapter.notifyDataSetChanged();
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
+
+
+
+
+
 //
     }
 
@@ -419,9 +359,9 @@ public class CrossJumpActivity extends AppCompatActivity {
         trainingFlag = true;
 
         //延迟时间
-        delayTime = (int) ((new Double(tvDelayTime.getText().toString().trim())) * 1000);
+        delayTime = 0;
         //超时时间
-        overTime = new Integer(tvOverTime.getText().toString().trim()) * 1000;
+        overTime = 100* 1000;
         //训练总时间
         trainingTime = (int) ((new Double(tvTrainingTime.getText().toString().trim())) * 60 * 1000);
         //数据清空
@@ -457,7 +397,7 @@ public class CrossJumpActivity extends AppCompatActivity {
             for (int i = 0; i < everyLightNum; i++) {
                 Random random = new Random();
                 int color = random.nextInt(colorNum) + 1;
-                device.sendOrder(Device.DEVICE_LIST.get(listRands.get(j).get(i)).getDeviceNum(),
+                device.sendOrder(Device.DEVICE_LIST.get(j*groupSize).getDeviceNum(),
                         Order.LightColor.values()[color],
                         Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
                         Order.BlinkModel.values()[blinkModeCheckBox.getCheckId() - 1],
@@ -467,7 +407,7 @@ public class CrossJumpActivity extends AppCompatActivity {
                 //每组设备灯亮起的当前时间
                 duration[j][i] = System.currentTimeMillis();
                 //每次开灯的设备编号
-                deviceNums[j][i] = Device.DEVICE_LIST.get(listRands.get(j).get(i)).getDeviceNum();
+                deviceNums[j][i] = Device.DEVICE_LIST.get(j*groupSize).getDeviceNum();
                 //开灯命令发送后 灯持续亮的时间
                 durationTime = 0;
             }
@@ -513,7 +453,7 @@ public class CrossJumpActivity extends AppCompatActivity {
         //结束接收返回灭灯时间线程
         ReceiveThread.stopThread();
         btnBegin.setEnabled(true);
-        showResultDialog();
+        //showResultDialog();
     }
 
     //判断训练是否结束
@@ -568,6 +508,7 @@ public class CrossJumpActivity extends AppCompatActivity {
             if (!trainingFlag)
                 break outterLoop;
             if (timer.time < trainingTime) {
+
                 turnOnLight(groupId, everyId, info.getDeviceNum());
             }
         }
@@ -576,6 +517,7 @@ public class CrossJumpActivity extends AppCompatActivity {
     //开某一组的任意灯
     private void turnOnLight(final int groupId, final int everyId, char deviceNum) {
         int lightNum = 0;
+        final int nextLightNum;
         for (int i = 0; i < Device.DEVICE_LIST.size(); i++) {
             if (deviceNum == Device.DEVICE_LIST.get(i).getDeviceNum()) {
                 //找到了这个设备对应的编号
@@ -583,36 +525,13 @@ public class CrossJumpActivity extends AppCompatActivity {
                 break;
             }
         }
-        Log.i("这个设备对应的编号", "" + lightNum);
-        final int[] listNumGroup = new int[2];//这个设备在随机队列里的序号
-        for (int j = 0; j < listRands.size(); j++) {
-            //如果随机队列里包含这个编号，就找到了这个设备在随机队列里的序号,并且移除
-            for (int k = 0; k < listRands.get(j).size(); k++) {
-                if (listRands.get(j).get(k) == lightNum) {
-                    listNumGroup[0] = j;
-                    listNumGroup[1] = k;
-                    listRands.get(j).remove(k);
-                    break;
-                }
-            }
 
-        }
-
-        Random random = new Random();
-        for (int i = 0; i < groupNum; i++) {
-            while (listRands.get(i).size() < everyLightNum) {
-                //rand对应的是在设备列表里的设备序号
-                int rand = random.nextInt(groupSize) + i * groupSize;
-                if (!listRands.get(i).contains(rand)) {
-                    //将指定的元素插入此列表中的指定位置。
-                    listRands.get(i).add(listNumGroup[1], rand);
-                    deviceNums[groupId][everyId] = Device.DEVICE_LIST.get(rand).getDeviceNum();
-                }
-            }
-        }
-
-        //亮起这一组的新的一盏灯
-        final int finalListNum = listNumGroup[1];
+        if(lightNum%4==3)
+            nextLightNum=lightNum- 4;
+        else
+            nextLightNum=lightNum+1;
+        final int listNumGroup =lightNum/4 ;
+       // final int finalListNum = listNumGroup[1];
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -622,7 +541,7 @@ public class CrossJumpActivity extends AppCompatActivity {
                     return;
                 Random random = new Random();
                 int color = random.nextInt(colorNum) + 1;
-                device.sendOrder(Device.DEVICE_LIST.get(listRands.get(listNumGroup[0]).get(finalListNum)).getDeviceNum(),
+                device.sendOrder(Device.DEVICE_LIST.get(nextLightNum).getDeviceNum(),
                         Order.LightColor.values()[color],
                         Order.VoiceMode.values()[cbVoice.isChecked() ? 1 : 0],
                         Order.BlinkModel.values()[blinkModeCheckBox.getCheckId() - 1],
@@ -634,7 +553,7 @@ public class CrossJumpActivity extends AppCompatActivity {
 //                overTimeMap.put(Device.DEVICE_LIST.get(listRand.get(finalListNum)).getDeviceNum(),(int)System.currentTimeMillis());
 
                 //记录这个灯亮起的实时时间
-                duration[listNumGroup[0]][finalListNum] = System.currentTimeMillis();
+                duration[listNumGroup][nextLightNum] = System.currentTimeMillis();
 
             }
         }).start();
@@ -664,9 +583,11 @@ public class CrossJumpActivity extends AppCompatActivity {
     private void createMoreRandomList() {
         for (int i = 0; i < groupNum; i++) {
             List<Integer> list = new ArrayList<>();
+            int k = 0;
             while (list.size() < everyLightNum) {
-                Random random = new Random();
-                int randonInt = random.nextInt(groupSize) + i * groupSize;
+
+                int randonInt =k + i * groupSize;
+                k++;
                 if (!list.contains(randonInt)) {
                     list.add(randonInt);
                 }

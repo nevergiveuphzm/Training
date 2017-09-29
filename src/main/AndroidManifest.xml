@@ -93,6 +93,21 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <!-- LZ -->
+        <activity android:name=".activity.QuickSquatActivity">
+            <intent-filter>
+                <action android:name="QuickSquatActivity.class" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!-- LZ -->
+        <!-- WL-->
+        <activity android:name=".activity.LateralJumpActivity">
+            <intent-filter>
+                <action android:name="LateralJumpActivity.class" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name=".activity.EightSecondRunActivity">
             <intent-filter>
                 <action android:name="EightSecondRunActivity.class" />
@@ -116,6 +131,13 @@
             <intent-filter>
                 <action android:name="SingleFootJumpActivity.class" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!--单双脚连续起跳-->
+        <activity android:name=".activity.SingleDoubleJumpActivity">
+            <intent-filter>
+                <action android:name="SingleDoubleJumpActivity.class" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

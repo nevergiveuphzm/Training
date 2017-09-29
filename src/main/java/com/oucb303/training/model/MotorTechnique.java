@@ -17,7 +17,7 @@ public class MotorTechnique implements Category {
 
 
     int[][] itemText = {{R.string.technique_run_item0,R.string.technique_run_item1,R.string.technique_run_item2,R.string.technique_run_item3,R.string.technique_run_item4,R.string.technique_run_item5,R.string.technique_run_item6},
-                            {R.string.technique_jump_item0,R.string.technique_jump_item1,R.string.technique_jump_item2,R.string.technique_jump_item3,R.string.technique_jump_item4},
+                            {R.string.technique_jump_item0,R.string.technique_jump_item1,R.string.technique_jump_item2,R.string.technique_jump_item3,R.string.technique_jump_item4,R.string.technique_jump_item5,R.string.technique_jump_item6,R.string.technique_jump_item7},
                             {R.string.technique_throw_item1},
                             {R.string.technique_basketball_item0},
                             {},
@@ -25,7 +25,7 @@ public class MotorTechnique implements Category {
     };
 
     String[][] targetString = {{"EightSecondRunActivity.class","ShuttleRunActivity1.class","OrientRunActivity.class","HighKneeActivity.class","QuickSR_BasicActivity.class","QuickSR_Upgrade1Activity.class","QuickSR_Upgrade2Activity.class"},
-                                {"JumpHighActivity.class","SingleFootJumpActivity.class","EnduranceActivity.class","CrossJumpActivity.class","CrossJumpSTActivity.class"},
+                                {"JumpHighActivity.class","SingleFootJumpActivity.class","EnduranceActivity.class","CrossJumpActivity.class","CrossJumpSTActivity.class","SingleDoubleJumpActivity.class","LateralJumpActivity.class","QuickSquatActivity.class"},
                                 {"ThrowingActivity.class"},
                                 {"DribblingGameActivity.class"},
                                 {""},
@@ -36,7 +36,7 @@ public class MotorTechnique implements Category {
     //底部滚动栏图片
 
     int[][] itemImgIds = {{R.drawable.technique_run_item0,R.drawable.technique_run_item1,R.drawable.technique_run_item2,R.drawable.technique_run_item3,R.drawable.technique_run_item0,R.drawable.technique_run_item0,R.drawable.technique_run_item0},
-                            {R.drawable.technique_jump_item0,R.drawable.technique_jump_item1,R.drawable.technique_jump_item2,R.drawable.technique_jump_item0,R.drawable.technique_jump_item1},
+                            {R.drawable.technique_jump_item0,R.drawable.technique_jump_item1,R.drawable.technique_jump_item2,R.drawable.technique_jump_item0,R.drawable.technique_jump_item1,R.drawable.technique_jump_item0,R.drawable.technique_jump_item0,R.drawable.technique_jump_item0},
                             {R.drawable.technique_throw_item1},
                             {R.drawable.technique_basketball_item0},
                             {},

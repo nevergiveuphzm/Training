@@ -51,7 +51,7 @@
     <string name="technique_running">跑</string>
     <string name="technique_jumping">跳</string>
     <string name="technique_throwing">投</string>
-    <string name="technique_basketball">蓝</string>
+    <string name="technique_basketball">篮</string>
     <string name="technique_football">足</string>
     <string name="technique_volleyball">排</string>
 
@@ -69,6 +69,10 @@
     <string name="technique_jump_item2">滞空练习</string>
     <string name="technique_jump_item3">十字跳</string>
     <string name="technique_jump_item4">加强版十字跳</string>
+    <string name="technique_jump_item5">单双脚连续起跳</string>
+    <string name="technique_jump_item6">横向跳跃练习</string>
+    <string name="technique_jump_item7">快速蹲起练习1</string>
+    <string name="technique_jump_item8">快速蹲起练习2</string>
     <!--投类-->
     <string name="technique_throw_item0">实心球投掷</string>
     <string name="technique_throw_item1">掷准练习</string>
@@ -120,4 +124,7 @@
     <!--羽毛球步伐训练-->
     <string name="badminton_training_method">&#160;&#160;&#160;&#160;挂在球网上的六个灯为指示灯，指示灯的位置对应球场上用于训练用的六个指示灯。\n运动员持羽毛球拍面向球网站在球场中心位置，当观察到指示灯亮起时，迅速移动到对应位置扑灭，然后回到中心位置进行下一次运动，知道结束</string>
     <string name="badminton_training_standard"> &#160;&#160;&#160;&#160;固定时间内扫灭的次数!</string>
+    <!--快速蹲起-->
+    <string name="quicksquat_training_method">&#160;&#160;&#160;&#160;两个光标分别置于站起后双手斜上方和蹲下后双手写下方的位置。\n站起后双臂展开斜向上将光标熄灭，蹲下后双臂展开斜向下将光标熄灭</string>
+    <string name="quicksquat_training_standard">&#160;&#160;&#160;&#160;固定时间内统计熄灭光标的次数。</string>
 </resources>

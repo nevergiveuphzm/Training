@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:layout_marginTop="52dp"
-            android:layout_marginLeft="112dp"
+            android:layout_marginLeft="50dp"
             android:text="---"
             android:textSize="15sp"/>
 

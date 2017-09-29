@@ -194,7 +194,7 @@ public class MainNewActivity extends AppCompatActivity {
             // 未检测到协调器
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("温馨提示");
-            builder.setMessage("                       未检测到协调器，请先插入协调器！\n");
+            builder.setMessage("                       请确保协调器插入平板的usb接口！\n");
             builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
