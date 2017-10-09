@@ -249,7 +249,7 @@ public class CrossJumpActivity extends AppCompatActivity {
     }
 
     public void initView() {
-        tvTitle.setText("时间随机");
+        tvTitle.setText("十字跳");
 
         randomTimesModuleAdapter = new RandomTimesModuleAdapter(this, timeList);
         lvTimes.setAdapter(randomTimesModuleAdapter);
@@ -315,7 +315,7 @@ public class CrossJumpActivity extends AppCompatActivity {
                 break;
             case R.id.btn_on:
                 //totalNum组数，1：每组设备个数，0：类型
-                device.turnOnButton(totalNum, 1, 0);
+                device.turnOnButton(groupNum, 4, 0);
                 break;
             case R.id.btn_off:
                 device.turnOffAllTheLight();
@@ -508,7 +508,6 @@ public class CrossJumpActivity extends AppCompatActivity {
             if (!trainingFlag)
                 break outterLoop;
             if (timer.time < trainingTime) {
-
                 turnOnLight(groupId, everyId, info.getDeviceNum());
             }
         }
@@ -527,10 +526,10 @@ public class CrossJumpActivity extends AppCompatActivity {
         }
 
         if(lightNum%4==3)
-            nextLightNum=lightNum- 4;
+            nextLightNum=lightNum-4+1;
         else
-            nextLightNum=lightNum+1;
-        final int listNumGroup =lightNum/4 ;
+            nextLightNum=lightNum + 1;
+       // final int listNumGroup =lightNum/4 ;
        // final int finalListNum = listNumGroup[1];
         new Thread(new Runnable() {
             @Override
@@ -553,7 +552,7 @@ public class CrossJumpActivity extends AppCompatActivity {
 //                overTimeMap.put(Device.DEVICE_LIST.get(listRand.get(finalListNum)).getDeviceNum(),(int)System.currentTimeMillis());
 
                 //记录这个灯亮起的实时时间
-                duration[listNumGroup][nextLightNum] = System.currentTimeMillis();
+                duration[groupId][everyId] = System.currentTimeMillis();
 
             }
         }).start();
